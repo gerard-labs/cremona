@@ -3,9 +3,6 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * Playwright visual regression — captures Histoire stories at multiple
  * viewports × themes × directions, diffs against committed PNG baselines.
- *
- * Per Q5: no Git LFS for Ring 0. Baselines are versioned as normal git
- * blobs. Reassess if total baseline size exceeds 5MB.
  */
 export default defineConfig({
   testDir: './tests/visual',
