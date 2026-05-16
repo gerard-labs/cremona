@@ -11,43 +11,38 @@ import { sandbox } from './_support.js';
  * transition to end, then removes the element from the DOM and dispatches
  * `tag:dismissed`.
  *
- * Note: the locator `[data-controller~="tag-dismiss"].first()` is a
- * re-evaluating locator. Once the first tag is removed from the DOM, it
- * re-evaluates to the next remaining tag. We use count-based assertions to
- * avoid this instability, and check data-state="dismissing" to confirm the
- * dismiss lifecycle has started correctly.
+ * Every test waits for the first tag to render before counting — on a slow
+ * runner the Histoire story can mount after `networkidle` resolves, so
+ * reading the count too early would see zero tags.
  */
 test.describe('tag-dismiss', () => {
   test('clicking the dismiss button removes the tag from the DOM', async ({ page }) => {
     await page.goto(sandbox('tag'));
     await page.waitForLoadState('networkidle');
 
-    // Find dismissable tags — they all carry data-controller="tag-dismiss".
+    // Dismissable tags all carry data-controller="tag-dismiss".
     const tags = page.locator('[data-controller~="tag-dismiss"]');
+    await expect(tags.first()).toBeVisible();
     const initialCount = await tags.count();
     expect(initialCount).toBeGreaterThan(0);
 
     // Click the dismiss button inside the first dismissable tag.
-    const firstTag = tags.first();
-    const dismissBtn = firstTag.locator('[data-action*="tag-dismiss#dismiss"]');
+    const dismissBtn = tags.first().locator('[data-action*="tag-dismiss#dismiss"]');
     await dismissBtn.click();
 
-    // Dismiss sets data-state="dismissing" on the tag root.
-    // Use a locator that captures the dismissing element by its state attribute
-    // so it is stable even as the global .first() re-evaluates.
+    // Dismiss stamps data-state="dismissing" on the tag root — capture it by
+    // that state attribute so the locator stays stable as .first() shifts.
     const dismissingTag = page.locator('[data-controller~="tag-dismiss"][data-state="dismissing"]');
     await expect(dismissingTag).toHaveCount(1);
 
     // After the CSS opacity transition the tag is removed from the DOM.
-    // The total count of dismissable tags should decrease by one.
-    await expect(tags).toHaveCount(initialCount - 1);
+    await expect(tags).toHaveCount(initialCount - 1, { timeout: 10000 });
   });
 
   test('tag:dismissed custom event is dispatched on removal', async ({ page }) => {
     await page.goto(sandbox('tag'));
     await page.waitForLoadState('networkidle');
 
-    // Capture tag:dismissed events before triggering dismiss.
     await page.evaluate(() => {
       window.__tagDismissedEvents = [];
       document.addEventListener('tag:dismissed', (e) => {
@@ -56,18 +51,21 @@ test.describe('tag-dismiss', () => {
     });
 
     const tags = page.locator('[data-controller~="tag-dismiss"]');
+    await expect(tags.first()).toBeVisible();
     const initialCount = await tags.count();
 
-    const firstTag = tags.first();
-    const dismissBtn = firstTag.locator('[data-action*="tag-dismiss#dismiss"]');
+    const dismissBtn = tags.first().locator('[data-action*="tag-dismiss#dismiss"]');
     await dismissBtn.click();
 
     // Wait for the tag to be removed (CSS transition + DOM removal).
-    await expect(tags).toHaveCount(initialCount - 1);
+    await expect(tags).toHaveCount(initialCount - 1, { timeout: 10000 });
 
+    await page.waitForFunction(
+      () => window.__tagDismissedEvents && window.__tagDismissedEvents.length > 0,
+      { timeout: 5000 },
+    );
     const events = await page.evaluate(() => window.__tagDismissedEvents);
     expect(events.length).toBeGreaterThan(0);
-    // The event detail should include a `label` property.
     expect(typeof events[0].label).toBe('string');
   });
 
@@ -76,13 +74,14 @@ test.describe('tag-dismiss', () => {
     await page.waitForLoadState('networkidle');
 
     const tags = page.locator('[data-controller~="tag-dismiss"]');
+    // Wait for the story to render at least two dismissable tags.
+    await expect(tags.nth(1)).toBeVisible();
     const initialCount = await tags.count();
+    expect(initialCount).toBeGreaterThan(1);
 
-    // Dismiss ALL tags one by one and verify the count drops each time.
-    const secondTag = tags.nth(1);
-    const secondDismissBtn = secondTag.locator('[data-action*="tag-dismiss#dismiss"]');
-    await secondDismissBtn.click();
+    const dismissBtn = tags.nth(1).locator('[data-action*="tag-dismiss#dismiss"]');
+    await dismissBtn.click();
 
-    await expect(tags).toHaveCount(initialCount - 1);
+    await expect(tags).toHaveCount(initialCount - 1, { timeout: 10000 });
   });
 });

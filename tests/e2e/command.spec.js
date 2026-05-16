@@ -69,10 +69,12 @@ test.describe('command', () => {
     await page.goto(sandbox('command'));
     await page.waitForLoadState('networkidle');
 
-    // Open the palette.
+    // Open the palette — focus the body first so the window hotkey lands.
+    await page.locator('body').click();
     await page.keyboard.press('Control+k');
 
     const wrap = page.locator('[data-controller~="command"]').first();
+    await expect(wrap.locator('[data-dialog-target="dialog"]')).toHaveAttribute('open');
     const input = wrap.locator('[data-combobox-target="input"]');
     await expect(input).toBeVisible();
 

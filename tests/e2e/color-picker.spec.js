@@ -52,8 +52,13 @@ test.describe('color-picker', () => {
     await page.goto(sandbox('form-color-picker'));
     await page.waitForLoadState('networkidle');
 
+    // Wait for the mount event — on a slow runner the controller connects
+    // after networkidle resolves, so polling avoids a read-too-early race.
+    await page.waitForFunction(
+      () => window.__cpMountEvents && window.__cpMountEvents.length > 0,
+      { timeout: 10000 },
+    );
     const events = await page.evaluate(() => window.__cpMountEvents);
-    // The story renders 4 color-picker instances; expect at least one mount event.
     expect(events.length).toBeGreaterThan(0);
     expect(typeof events[0].value).toBe('string');
   });

@@ -35,6 +35,10 @@ test.describe('phone-input', () => {
     // intl-tel-input lazy-loads; wait for the ready transition.
     await expect(widget).toHaveAttribute('data-phone-input-state', 'ready', { timeout: 5000 });
 
+    await page.waitForFunction(
+      () => window.__phoneEvents && window.__phoneEvents.length > 0,
+      { timeout: 5000 },
+    );
     const events = await page.evaluate(() => window.__phoneEvents);
     expect(events.length).toBeGreaterThan(0);
   });
@@ -49,6 +53,12 @@ test.describe('phone-input', () => {
     await page.goto(sandbox('form-phone-input'));
     await page.waitForLoadState('networkidle');
 
+    // Poll for the mount event — the controller may connect after
+    // networkidle resolves on a slow runner.
+    await page.waitForFunction(
+      () => window.__mountEvents && window.__mountEvents.length > 0,
+      { timeout: 10000 },
+    );
     const mountCount = await page.evaluate(() => window.__mountEvents.length);
     expect(mountCount).toBeGreaterThan(0);
   });

@@ -51,8 +51,10 @@ test.describe('signature-pad', () => {
     await page.goto(sandbox('form-signature'));
     await page.waitForLoadState('networkidle');
 
+    // Poll for the mount event — the controller may connect after
+    // networkidle resolves on a slow runner.
+    await page.waitForFunction(() => window.__sigPadMounted > 0, { timeout: 10000 });
     const mounted = await page.evaluate(() => window.__sigPadMounted);
-    // At least one pad must have fired mount (story has several sections).
     expect(mounted).toBeGreaterThan(0);
   });
 

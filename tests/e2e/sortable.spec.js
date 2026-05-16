@@ -54,8 +54,14 @@ test.describe('sortable', () => {
     await page.goto(sandbox('data-table'));
     await page.waitForLoadState('networkidle');
 
+    // Poll for the mount event — the controller may connect after
+    // networkidle resolves on a slow runner. sortable:mount fires on
+    // connect() with { group, itemCount }.
+    await page.waitForFunction(
+      () => window.__sortableMountEvents && window.__sortableMountEvents.length > 0,
+      { timeout: 10000 },
+    );
     const events = await page.evaluate(() => window.__sortableMountEvents);
-    // sortable:mount fires on connect() with { group, itemCount }.
     expect(events.length).toBeGreaterThan(0);
     expect(typeof events[0].itemCount).toBe('number');
   });
