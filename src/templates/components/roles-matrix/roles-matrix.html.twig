@@ -53,16 +53,16 @@
 
   <div class="cremona-roles-matrix__scroll-wrap">
     <table class="{{ _tableClasses | join(' ') }}" data-size="md">
-      <caption class="sr-only">{{ caption }}</caption>
-      <thead>
+      <caption class="cremona-table__caption cremona-sr-only">{{ caption }}</caption>
+      <thead class="cremona-table__thead">
         <tr>
-          <th scope="col" class="cremona-roles-matrix__corner"><span class="sr-only">{{ 'theme.roles-matrix.aria.corner'|trans }}</span></th>
+          <th scope="col" class="cremona-roles-matrix__corner"><span class="cremona-sr-only">{{ 'theme.roles-matrix.aria.corner'|trans }}</span></th>
           {%- for perm in permissions -%}
             <th scope="col" class="cremona-roles-matrix__col-header">{{ perm.label }}</th>
           {%- endfor -%}
         </tr>
       </thead>
-      <tbody>
+      <tbody class="cremona-table__tbody">
         {%- for member in members -%}
           <tr>
             <th scope="row" class="cremona-roles-matrix__row-header">

@@ -83,6 +83,33 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright (Chromium)
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build the catalog
+        run: pnpm histoire:build
+
+      - name: E2E — Stimulus controller interactions
+        run: pnpm test:e2e
+
   php:
     name: Symfony bridge (PHPUnit)
     runs-on: ubuntu-latest

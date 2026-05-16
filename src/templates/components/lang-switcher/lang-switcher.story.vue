@@ -26,6 +26,8 @@ function renderLangSwitcher({ id, locales, currentLocale = 'fr' }) {
   const items = locales.map((l) => renderItem(l, currentLocale)).join('');
   return `
     <div class="cremona-popover cremona-dropdown-menu cremona-lang-switcher"
+         data-controller="popover dropdown-menu lang-switcher"
+         data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
          data-popover-placement-value="bottom"
          data-popover-offset-value="8"
          data-popover-open-value="false"
@@ -34,6 +36,7 @@ function renderLangSwitcher({ id, locales, currentLocale = 'fr' }) {
       <button type="button"
               class="cremona-button cremona-lang-switcher__trigger"
               data-variant="ghost" data-size="sm"
+              data-popover-target="trigger"
               aria-haspopup="menu" aria-expanded="false"
               aria-controls="${id}-content"
               aria-label="${t('theme.lang-switcher.aria.trigger')}">
@@ -43,8 +46,9 @@ function renderLangSwitcher({ id, locales, currentLocale = 'fr' }) {
       <div id="${id}-content"
            class="cremona-popover__content cremona-dropdown-menu__content cremona-lang-switcher__content"
            data-popover-target="content"
+           data-state="open"
            role="menu"
-           style="position: relative; display: block;">
+           style="position: relative; display: block; pointer-events: auto;">
         ${items}
       </div>
     </div>`;
@@ -99,7 +103,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/LangSwitcher" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Lang Switcher" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="lang-switcher-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

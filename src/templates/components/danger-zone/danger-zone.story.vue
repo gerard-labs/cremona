@@ -3,11 +3,15 @@
   Sections : inline-default · inline-armed · modal-trigger.
 -->
 <script setup>
+import { onMounted } from 'vue';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
+
+onMounted(() => boot(document.documentElement));
 
 function renderInlineDangerZone({ id, expected = 'SUPPRIMER', preFilled = '' }) {
   const armed = preFilled === expected;
@@ -15,6 +19,7 @@ function renderInlineDangerZone({ id, expected = 'SUPPRIMER', preFilled = '' }) 
     <article class="cremona-card cremona-danger-zone"
              id="${id}"
              data-variant="elevated"
+             data-controller="danger-zone"
              data-danger-zone-variant="inline"
              data-danger-zone-expected-value="${expected}"
              data-danger-zone-match-mode-value="exact"
@@ -29,6 +34,7 @@ function renderInlineDangerZone({ id, expected = 'SUPPRIMER', preFilled = '' }) 
           <input type="text"
                  id="${id}-input"
                  class="cremona-input cremona-danger-zone__input"
+                 data-danger-zone-target="input"
                  value="${preFilled}"
                  placeholder="${t('theme.danger-zone.input.placeholder')}"
                  autocomplete="off" spellcheck="false"
@@ -39,6 +45,7 @@ function renderInlineDangerZone({ id, expected = 'SUPPRIMER', preFilled = '' }) 
       <footer class="cremona-card__footer cremona-danger-zone__footer">
         <button type="button"
                 class="cremona-button cremona-danger-zone__cta"
+                data-danger-zone-target="button"
                 data-variant="destructive" data-size="md"
                 ${armed ? '' : 'disabled aria-disabled="true"'}>
           <span class="cremona-button__label">${t('theme.danger-zone.story.sample.cta')}</span>
@@ -99,7 +106,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/DangerZone" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Danger Zone" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="danger-zone-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

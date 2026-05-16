@@ -12,10 +12,9 @@
 -->
 <script setup>
 import { onMounted } from 'vue';
-import { Application } from '@hotwired/stimulus';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
-import NumberInputController from '../../../js/controllers/number-input_controller.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
@@ -68,11 +67,7 @@ function renderNumberInput({
 }
 
 onMounted(() => {
-  if (!document.body.dataset.numberInputStoryBooted) {
-    const app = Application.start();
-    app.register('number-input', NumberInputController);
-    document.body.dataset.numberInputStoryBooted = '1';
-  }
+  boot(document.documentElement);
 });
 
 const bodyHtml = `
@@ -167,7 +162,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Compounds/NumberInput" group="Ring 2" :layout="{ type: 'single' }">
+  <Story title="Number Input" group="Ring 2" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="ni-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

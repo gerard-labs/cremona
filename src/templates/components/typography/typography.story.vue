@@ -147,7 +147,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Primitives/Typography" group="Ring 1" :layout="{ type: 'single' }">
+  <Story title="Typography" group="Ring 1" :layout="{ type: 'single' }">
     <Variant title="Light · LTR">
       <div dir="ltr" v-html="bodyHtml"></div>
     </Variant>

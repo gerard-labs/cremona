@@ -1,50 +1,109 @@
 /*
  * RolesMatrix — Ring 3 pattern CSS (S4.1c Phase 3, post-ADR-0042).
  *
- * N×M matrix layout : Table + cells with Badge default + inline select on edit.
- * Reusable across 5+ Ring 4 domains.
+ * Roles/permissions grid : a Table primitive (members × permissions) whose
+ * intersection cells carry a Badge by default and lazily swap to an inline
+ * Select on click (edit mode). This file owns ONLY what is matrix-specific —
+ * the wrap, the sticky member/permission headers, the clickable-cell
+ * affordance, and the inline editor envelope. The visual table envelope
+ * (bg, density padding, row hover, header treatment, last-row edge) is
+ * inherited verbatim from the Table primitive via `.cremona-table` +
+ * `.cremona-table__thead` / `.cremona-table__tbody` on the markup.
+ *
+ * Composes:
+ *   - Table primitive  — `.cremona-table` visual envelope.
+ *   - Badge primitive  — per-cell default role chip.
+ *   - Select language  — the inline `__cell-select` mirrors `.cremona-select`.
+ *
+ * RTL-safe by construction (logical properties throughout). Dark mode is
+ * automatic via tokens. Honours prefers-reduced-motion.
  */
 
 .cremona-roles-matrix {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-3);
+  color: var(--color-text-primary);
 }
+
+/* --- Toolbar -------------------------------------------------------- */
 
 .cremona-roles-matrix__toolbar {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
   gap: var(--spacing-2);
 }
 
+/* --- Scroll wrap (bordered, rounded surface) ------------------------ */
+
+/* The wrap is the framed surface — same envelope as the DataTable wrap.
+   It clips the table to the radius and provides the horizontal scroll
+   viewport that the sticky member column / permission header anchor to. */
 .cremona-roles-matrix__scroll-wrap {
+  position: relative;
   overflow-inline: auto;
+  overflow-block: hidden;
+  background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-card);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
 }
 
+/* --- Table — inherits `.cremona-table` from the Table primitive ----- */
+
+/* The wrap already paints the surface bg + border + radius, so the table
+   itself drops its standalone border/radius and merges in (same trick as
+   DataTable). border-collapse stays `separate` (Table default) so sticky
+   header/column cells keep their borders while content scrolls under. */
 .cremona-roles-matrix__table {
-  inline-size: 100%;
-  border-collapse: collapse;
+  border: 0;
+  border-radius: 0;
 }
 
+/* --- Corner cell (sticky on both axes) ------------------------------ */
+
+/* The empty top-start cell. Sits above both the sticky header row and the
+   sticky member column, so it pins to both edges at the highest layer. */
 .cremona-roles-matrix__corner {
-  background-color: var(--color-bg-elevated);
+  position: sticky;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--z-raised);
+  background-color: var(--color-bg-sunken);
+  border-inline-end: 1px solid var(--color-border-default);
 }
 
+/* --- Permission header row (sticky to block-start) ------------------ */
+
+/* Inherits header bg / label type / block-end border from
+   `.cremona-table__thead > tr > th`. Adds vertical grid lines + stickiness
+   so the permission labels stay visible while members scroll. */
 .cremona-roles-matrix__col-header {
-  text-align: start;
-  padding: var(--spacing-2) var(--spacing-3);
-  background-color: var(--color-bg-elevated);
-  border-block-end: 1px solid var(--color-border-subtle);
-  white-space: nowrap;
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-base);
+  border-inline-end: 1px solid var(--color-border-subtle);
 }
 
+.cremona-roles-matrix__col-header:last-child {
+  border-inline-end: 0;
+}
+
+/* --- Member header column (sticky to inline-start) ------------------ */
+
+/* Member name row-headers. The Table primitive gives them density padding,
+   semibold weight + primary text via `.cremona-table__tbody > tr > th`;
+   here we add the inline-end grid line, an opaque bg (so data cells scroll
+   cleanly under it), and inline-start stickiness. */
 .cremona-roles-matrix__row-header {
-  text-align: start;
-  padding: var(--spacing-2) var(--spacing-3);
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: var(--z-base);
   background-color: var(--color-bg-elevated);
-  border-inline-end: 1px solid var(--color-border-subtle);
-  white-space: nowrap;
+  border-inline-end: 1px solid var(--color-border-default);
 }
 
 .cremona-roles-matrix__member-name {
@@ -52,50 +111,81 @@
   color: var(--color-text-primary);
 }
 
+/* --- Intersection cell --------------------------------------------- */
+
+/* Each cell is `role="button"` (lazy-opens the inline editor). Padding,
+   block-end border + vertical-align come from `.cremona-table__tbody`;
+   here we add the vertical grid line, the interactive affordance, and a
+   row-height floor consistent with the comfortable density row. */
 .cremona-roles-matrix__cell {
-  padding: var(--spacing-2) var(--spacing-3);
-  border-block-end: 1px solid var(--color-border-subtle);
   border-inline-end: 1px solid var(--color-border-subtle);
+  min-block-size: var(--density-row-height);
   cursor: pointer;
-  min-block-size: 44px;
-  vertical-align: middle;
-  transition: background-color var(--motion-fast) var(--easing-standard);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.cremona-roles-matrix__cell:hover,
+.cremona-roles-matrix__cell:last-child {
+  border-inline-end: 0;
+}
+
+/* Per-cell hover overlay — a touch stronger than the Table's whole-row
+   hover so the pointer target reads as the individual cell. */
+.cremona-roles-matrix__cell:hover {
+  background-color: var(--color-active-overlay);
+}
+
 .cremona-roles-matrix__cell:focus-visible {
-  background-color: var(--color-bg-hover-overlay, rgb(0 0 0 / 0.04));
-  outline: none;
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: calc(var(--ring-offset-width) * -1);
 }
 
-.cremona-roles-matrix__cell:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: -2px;
-}
+/* --- Inline editor (Select language) -------------------------------- */
 
+/* The native <select> the controller swaps in on cell click. Mirrors the
+   `.cremona-select` trigger envelope (border, radius-input, focus ring)
+   so the editor reads as a kit form control. */
 .cremona-roles-matrix__cell-select {
   inline-size: 100%;
+  min-inline-size: 0;
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-input);
-  background-color: var(--color-bg-base);
+  background-color: var(--color-bg-elevated);
   color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-input);
   font: var(--typography-body);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.cremona-roles-matrix__cell-select:hover {
+  border-color: var(--color-border-strong);
 }
 
 .cremona-roles-matrix__cell-select:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: var(--ring-offset-width);
+  border-color: var(--color-border-focus);
 }
 
-/* Bulk-edit mode visual highlight */
+/* --- Bulk-edit mode ------------------------------------------------- */
+
+/* The controller flips `data-roles-matrix-bulk-edit-value` on toggle; the
+   cells pick up a soft primary wash to signal the whole grid is editable. */
 .cremona-roles-matrix[data-roles-matrix-bulk-edit-value="true"] .cremona-roles-matrix__cell {
-  background-color: var(--color-primary-soft, rgb(0 0 0 / 0.02));
+  background-color: var(--color-primary-soft);
 }
 
-@media (width <= 1023px) {
-  .cremona-roles-matrix__scroll-wrap {
-    overflow-inline: auto;
+.cremona-roles-matrix[data-roles-matrix-bulk-edit-value="true"] .cremona-roles-matrix__cell:hover {
+  background-color: var(--color-selected-bg);
+}
+
+/* --- Reduced motion ------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cremona-roles-matrix__cell,
+  .cremona-roles-matrix__cell-select {
+    transition: none;
   }
 }

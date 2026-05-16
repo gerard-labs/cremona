@@ -3,11 +3,15 @@
   Sections : system-active · light-active · dark-active.
 -->
 <script setup>
+import { onMounted } from 'vue';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
+
+onMounted(() => boot(document.documentElement));
 
 function renderThemeSwitcher({ id, currentMode = 'system', target = 'self' }) {
   const opts = [
@@ -19,6 +23,8 @@ function renderThemeSwitcher({ id, currentMode = 'system', target = 'self' }) {
     <button type="button"
             class="cremona-toggle cremona-toggle-group__item cremona-theme-switcher__item"
             data-size="md" data-variant="default"
+            data-controller="toggle"
+            data-action="click->toggle#toggle"
             data-theme-mode="${o.mode}"
             aria-pressed="${o.mode === currentMode ? 'true' : 'false'}"
             aria-label="${o.label}">
@@ -29,6 +35,10 @@ function renderThemeSwitcher({ id, currentMode = 'system', target = 'self' }) {
       <span id="${id}-label" class="cremona-toggle-group__label">${t('theme.theme-switcher.label.group')}</span>
       <div class="cremona-toggle-group cremona-theme-switcher__group"
            role="group" aria-labelledby="${id}-label"
+           data-controller="toggle-group theme-switcher"
+           data-action="keydown->toggle-group#keydown toggle->toggle-group#onToggle toggle->theme-switcher#onToggle"
+           data-toggle-group-mode-value="single"
+           data-toggle-group-orientation-value="horizontal"
            data-theme-switcher-current-mode-value="${currentMode}"
            data-theme-switcher-storage-key-value="theme.mode"
            data-theme-switcher-target-value="${target}"
@@ -67,7 +77,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/ThemeSwitcher" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Theme Switcher" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="theme-switcher-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

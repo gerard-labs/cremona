@@ -342,6 +342,7 @@ theme/
 | `pnpm histoire:build`  | Static catalog → `.histoire/dist/` |
 | `pnpm test` / `test:run` | Vitest unit tests (watch / single run) |
 | `pnpm test:a11y`       | axe-core accessibility audit (Playwright) |
+| `pnpm test:e2e`        | End-to-end browser tests — real interactions (Playwright) |
 | `pnpm test:visual`     | Visual-regression screenshots (Playwright) |
 | `pnpm lint`            | All 7 lint gates (see below) |
 | `pnpm format`          | Prettier write |
@@ -361,8 +362,8 @@ theme/
 | `lint:composition`| component composition rules |
 
 Beyond lint, CI also runs the unit tests, the library build, the accessibility
-audit, and the Symfony bridge's PHPUnit suite — see
-[the workflow](./.github/workflows/ci.yml).
+audit, the end-to-end browser tests, and the Symfony bridge's PHPUnit suite —
+see [the workflow](./.github/workflows/ci.yml).
 
 ### Symfony bridge tests
 

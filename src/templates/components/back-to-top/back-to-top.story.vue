@@ -3,17 +3,23 @@
   Sections : default-hidden · default-visible · custom-threshold-200.
 -->
 <script setup>
+import { onMounted } from 'vue';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
+
+onMounted(() => boot(document.documentElement));
 
 function renderBackToTop({ id = 'story-back-to-top', threshold = 400, visible = false }) {
   return `
     <button type="button" class="cremona-button cremona-button--primary cremona-back-to-top"
             id="${id}"
+            data-controller="back-to-top"
             data-back-to-top-threshold-value="${threshold}"
+            data-action="click->back-to-top#scrollToTop"
             data-visible="${visible}"
             aria-label="${t('theme.back-to-top.aria.label')}">
       <svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-arrow-up"/></svg>
@@ -44,7 +50,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/BackToTop" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Back To Top" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="back-to-top-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

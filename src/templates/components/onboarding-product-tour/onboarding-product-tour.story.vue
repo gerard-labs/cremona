@@ -3,11 +3,15 @@
   Sections : trigger-idle · with-3-steps · auto-start-demo.
 -->
 <script setup>
+import { onMounted } from 'vue';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
+
+onMounted(() => boot(document.documentElement));
 
 function renderProductTour({ id = 'story-product-tour', triggerLabel, steps, autoStart = false }) {
   return `
@@ -63,7 +67,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/Onboarding-ProductTour" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Onboarding/Product Tour" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="onboarding-product-tour-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

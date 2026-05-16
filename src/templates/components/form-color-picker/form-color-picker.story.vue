@@ -18,14 +18,14 @@ function renderFormColorPicker({ id, label, help, error, defaultColor = '#6366F1
   const swatchesAttr = swatches.length ? ` data-color-picker-swatches-value='${JSON.stringify(swatches)}'` : '';
 
   return `
-    <div class="cremona-field cremona-form-color-picker${invalid}" data-controller="popover color-picker" data-popover-placement-value="bottom-start" data-popover-offset-value="4" data-color-picker-alpha-value="${alpha}" data-color-picker-default-color-value="${defaultColor}" data-color-picker-format-value="hex"${swatchesAttr}>
+    <div class="cremona-field cremona-form-color-picker${invalid}" data-controller="popover color-picker" data-action="click->popover#toggle" data-popover-placement-value="bottom-start" data-popover-offset-value="4" data-color-picker-alpha-value="${alpha}" data-color-picker-default-color-value="${defaultColor}" data-color-picker-format-value="hex"${swatchesAttr}>
       <label class="cremona-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
       <div class="cremona-popover cremona-form-color-picker__wrap">
         <button type="button" class="cremona-button cremona-form-color-picker__trigger" data-popover-target="trigger" data-color-picker-target="trigger" data-variant="outline" aria-label="${t('theme.form.color-picker.aria.trigger')}" aria-haspopup="dialog">
           <span class="cremona-form-color-picker__preview" data-color-picker-target="preview" style="background-color: ${defaultColor};" aria-hidden="true"></span>
           <input type="text" class="cremona-input cremona-form-color-picker__hex" id="${id}-input" name="${id}" value="${defaultColor}" data-color-picker-target="input" placeholder="${t('theme.form.color-picker.placeholder.hex')}"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy} />
         </button>
-        <div class="cremona-popover__content cremona-form-color-picker__panel" data-popover-target="content" role="dialog" aria-label="${t('theme.form.color-picker.aria.trigger')}"></div>
+        <div class="cremona-popover__content cremona-form-color-picker__panel" data-popover-target="content" role="dialog" aria-label="${t('theme.form.color-picker.aria.trigger')}" hidden></div>
       </div>
       ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
       ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
@@ -64,7 +64,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/Form-ColorPicker" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Forms/Color Picker" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="form-color-picker-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

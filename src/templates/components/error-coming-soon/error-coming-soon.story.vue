@@ -62,7 +62,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/Error-ComingSoon" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Errors/Coming Soon" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="error-cs-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

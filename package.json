@@ -37,6 +37,7 @@
     "test:run": "vitest run",
     "test:a11y": "playwright test --config=playwright.a11y.config.js",
     "test:visual": "playwright test --config=playwright.visual.config.js",
+    "test:e2e": "playwright test --config=playwright.e2e.config.js",
     "lint": "pnpm /^lint:/",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint 'src/**/*.js' 'tools/**/*.js' 'tests/**/*.js'",

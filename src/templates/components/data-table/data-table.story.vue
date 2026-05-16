@@ -110,13 +110,16 @@ function checkbox({ id, ariaLabel, checked = false, indeterminate = false, rowId
   if (rowId !== null) {
     dataset.push(`data-data-table-target="rowCheckbox"`);
     dataset.push(`data-data-table-row-id="${rowId}"`);
-    dataset.push(`data-action="change->data-table#toggleRow"`);
+    // NOTE: no individual data-action here — the table wrapper already has
+    // change->data-table#toggleRow via event delegation. Adding it here too
+    // causes the action to fire twice (once on the element, once via bubbling
+    // to the wrapper), which makes toggleSelectAll run twice and undo itself.
   } else if (columnVis !== null) {
     dataset.push(`data-data-table-column-vis="${columnVis}"`);
-    dataset.push(`data-action="change->data-table#toggleColumnVisibility"`);
+    // No individual data-action — handled by the wrapper's event delegation.
   } else {
     dataset.push(`data-data-table-target="selectAllCheckbox"`);
-    dataset.push(`data-action="change->data-table#toggleSelectAll"`);
+    // No individual data-action — handled by the wrapper's event delegation.
   }
   if (indeterminate) dataset.push(`data-indeterminate="true"`);
   return `<span class="cremona-checkbox-wrap" data-size="${sizeAttr}">
@@ -647,7 +650,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Compounds/DataTable" group="Ring 2" :layout="{ type: 'single' }">
+  <Story title="Data Table" group="Ring 2" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="dt-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

@@ -62,7 +62,7 @@ function renderSessionTimeoutModal({
         </header>
         <div class="cremona-dialog__body">
           <p class="cremona-auth-session-timeout-modal__body">
-            ${t('theme.auth.session-timeout-modal.body-before')}<span class="cremona-auth-session-timeout-modal__countdown" aria-live="${ariaLive}">${countdown}</span>${t('theme.auth.session-timeout-modal.body-after')}
+            ${t('theme.auth.session-timeout-modal.body-before')}<span class="cremona-auth-session-timeout-modal__countdown" data-session-timeout-countdown-target="countdown" aria-live="${ariaLive}">${countdown}</span>${t('theme.auth.session-timeout-modal.body-after')}
           </p>
         </div>
         <footer class="cremona-dialog__footer">
@@ -103,7 +103,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/Auth-SessionTimeoutModal" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Auth/Session Timeout Modal" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="auth-session-timeout-modal-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

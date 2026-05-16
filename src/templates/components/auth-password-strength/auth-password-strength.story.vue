@@ -15,11 +15,15 @@
   See `docs/specs/ring3/Auth-PasswordStrength.md` for the full state matrix.
 -->
 <script setup>
+import { onMounted } from 'vue';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
+
+onMounted(() => boot(document.documentElement));
 
 function renderPasswordField({
   htmlId = 'story-pwd',
@@ -45,6 +49,8 @@ function renderPasswordField({
         id="${htmlId}"
         type="password"
         name="password"
+        data-password-strength-target="input"
+        data-action="input->password-strength#evaluate"
         ${value ? `value="${value}"` : ''}
         placeholder="${t('theme.auth.password-strength.input-placeholder')}"
         autocomplete="new-password"
@@ -60,7 +66,7 @@ function renderPasswordField({
 }
 
 function renderMeter({ variant = 'danger', value = 0, ariaLabel }) {
-  return `<progress class="cremona-progress" data-size="sm" data-variant="${variant}" value="${value}" max="100" aria-label="${ariaLabel}"></progress>`;
+  return `<progress class="cremona-progress" data-size="sm" data-variant="${variant}" data-password-strength-target="meter" value="${value}" max="100" aria-label="${ariaLabel}"></progress>`;
 }
 
 function renderHint({ text, htmlId = 'story-pwd' }) {
@@ -143,7 +149,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/Auth-PasswordStrength" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Auth/Password Strength" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="auth-password-strength-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

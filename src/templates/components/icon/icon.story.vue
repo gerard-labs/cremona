@@ -125,7 +125,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Primitives/Icon" group="Ring 1" :layout="{ type: 'single' }">
+  <Story title="Icon" group="Ring 1" :layout="{ type: 'single' }">
     <Variant title="Light · LTR">
       <div dir="ltr" v-html="bodyHtml"></div>
     </Variant>

@@ -272,10 +272,16 @@ function maskInterpolations(literal) {
   return out;
 }
 
+// Catalog-only meta pages (not localized component templates) are exempt
+// from H3 — they are documentation authored once for the catalog, like the
+// <Story>/<Variant> metadata the scanner already skips.
+const H3_EXEMPT = new Set(['src/templates/overview.story.vue']);
+
 const templateFiles = walk(TEMPLATE_DIR);
 let scannedCount = 0;
 for (const file of templateFiles) {
   const rel = relative(ROOT, file);
+  if (H3_EXEMPT.has(rel)) continue;
   const src = readFileSync(file, 'utf8');
   if (TWIG_RE.test(file)) {
     scanTwig(rel, src);

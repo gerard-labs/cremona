@@ -3,11 +3,15 @@
   Sections : default-closed · open-with-greeting · open-with-conversation · typing-indicator.
 -->
 <script setup>
+import { onMounted } from 'vue';
 import frDict from '../../../js/i18n/fr.json';
 import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
+import { boot } from '../../../js/index.js';
 
 setTranslations('fr', frDict);
 setLocale('fr');
+
+onMounted(() => boot(document.documentElement));
 
 function renderMessage({ role = 'bot', text = '' }) {
   return `
@@ -29,6 +33,7 @@ function renderChatbot({ id = 'story-chatbot', open = true, messages = [], typin
   return `
     <div class="cremona-drawer-wrap cremona-chatbot"
          id="${id}"
+         data-controller="drawer chatbot"
          data-drawer-open-value="${open}"
          data-drawer-edge-value="end">
       <dialog class="cremona-drawer cremona-chatbot__dialog"
@@ -44,10 +49,14 @@ function renderChatbot({ id = 'story-chatbot', open = true, messages = [], typin
           </button>
         </header>
         <div class="cremona-drawer__body cremona-chatbot__body">
-          <ol class="cremona-chatbot__messages" aria-live="polite" aria-atomic="false">
+          <ol class="cremona-chatbot__messages"
+              data-chatbot-target="messages"
+              aria-live="polite" aria-atomic="false">
             ${greetingFallback}${messagesHtml}
           </ol>
-          <div class="cremona-chatbot__typing" data-active="${typing}" aria-hidden="${!typing}">
+          <div class="cremona-chatbot__typing"
+               data-chatbot-target="typing"
+               data-active="${typing}" aria-hidden="${!typing}">
             <span class="cremona-chatbot__typing-text">${t('theme.chatbot.typing')}</span>
             <span class="cremona-chatbot__typing-dots" aria-hidden="true">
               <span></span><span></span><span></span>
@@ -55,10 +64,13 @@ function renderChatbot({ id = 'story-chatbot', open = true, messages = [], typin
           </div>
         </div>
         <footer class="cremona-drawer__footer cremona-chatbot__footer">
-          <form class="cremona-chatbot__form" novalidate>
+          <form class="cremona-chatbot__form"
+                data-action="submit->chatbot#send"
+                novalidate>
             <label for="${id}__input" class="cremona-label sr-only">${t('theme.chatbot.input.label')}</label>
             <input type="text" id="${id}__input" class="cremona-input cremona-chatbot__input"
-                   name="message" placeholder="${t('theme.chatbot.placeholder')}" autocomplete="off">
+                   name="message" placeholder="${t('theme.chatbot.placeholder')}" autocomplete="off"
+                   data-chatbot-target="input">
             <button type="submit" class="cremona-button cremona-button--primary cremona-chatbot__send"
                     aria-label="${t('theme.chatbot.aria.send')}">
               <svg class="cremona-icon cremona-icon-bidi" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg>
@@ -115,7 +127,7 @@ const bodyHtml = `
 </script>
 
 <template>
-  <Story title="Patterns/Chatbot" group="Ring 3" :layout="{ type: 'single' }">
+  <Story title="Chatbot" group="Ring 3" :layout="{ type: 'single' }">
     <Variant title="Light · LTR"><div dir="ltr" v-html="bodyHtml"></div></Variant>
     <Variant title="Light · RTL"><div dir="rtl" v-html="bodyHtml"></div></Variant>
     <Variant title="Dark · LTR"><div data-theme="dark" class="chatbot-dark-wrap"><div dir="ltr" v-html="bodyHtml"></div></div></Variant>

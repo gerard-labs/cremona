@@ -27,19 +27,25 @@ export default defineConfig({
     plugins: [vue(), tailwindcss()],
   },
   theme: {
-    title: 'gerard/cremona',
+    title: 'Cremona',
     favicon: undefined,
   },
-  // Ring-based grouping in the sidebar tree. Each story declares
-  // `group="Ring N"` in its <Story> SFC; Histoire requires the id to be
-  // registered here or it emits a "Group X not found" warning and falls
-  // back to ungrouped placement. Build-config polish, no doctrine change.
+  // Sidebar tree groups, shown top-to-bottom in this order.
+  //
+  //  - `Overview` holds the welcome page (src/templates/overview.story.vue).
+  //  - `Ring N` mirrors the kit's ring methodology — each component story
+  //    declares `group="Ring N"`. Histoire requires every id used by a
+  //    story to be registered here, else it warns and falls back to
+  //    ungrouped placement.
+  //
+  // Within a group the tree is built from each story's `title`
+  // ("/" segments = collapsible folders).
   tree: {
     groups: [
-      { id: 'Ring 0', title: 'Ring 0 — Foundations' },
-      { id: 'Ring 1', title: 'Ring 1 — Primitives' },
-      { id: 'Ring 2', title: 'Ring 2 — Compounds' },
-      { id: 'Ring 3', title: 'Ring 3 — Patterns' },
+      { id: 'Overview', title: 'Overview' },
+      { id: 'Ring 1', title: 'Ring 1 · Primitives' },
+      { id: 'Ring 2', title: 'Ring 2 · Compounds' },
+      { id: 'Ring 3', title: 'Ring 3 · Patterns' },
     ],
   },
   responsivePresets: [
