@@ -1,0 +1,68 @@
+/*
+ * Form-Signature — inline signature pad (canvas + lazy signature_pad lib).
+ *
+ * Marker class — composes Card Ring 1 for the surface + Button Ring 1 for Clear.
+ * Canvas is high-DPI-safe (the controller sizes it × devicePixelRatio).
+ */
+
+.theme-form-signature {
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+.theme-form-signature__label {
+  font: var(--typography-label);
+  color: var(--color-text-primary);
+}
+
+.theme-form-signature__surface {
+  /* Compose Card Ring 1 — elevated variant carries the shadow + border + radius. */
+  overflow: hidden;
+}
+
+.theme-form-signature__body {
+  /* Make the canvas fill the Card body ; touch-friendly inline-size. */
+  padding: 0;
+  background: var(--color-bg-base);
+}
+
+.theme-form-signature__canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 10rem;
+  /* Hint browsers that this canvas is for pointer interaction (no scroll). */
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.theme-form-signature__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.theme-form-signature__fallback {
+  /* Collapsible alternative for SR users — typed name. */
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+}
+
+.theme-form-signature__fallback > summary {
+  cursor: pointer;
+  padding-block: var(--spacing-1);
+}
+
+.theme-form-signature__fallback > summary:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset-width);
+  border-radius: var(--radius-sm);
+}
+
+.theme-form-signature__fallback > input[type="text"] {
+  margin-block-start: var(--spacing-2);
+  inline-size: 100%;
+}
+
+.theme-form-signature--invalid .theme-form-signature__surface {
+  border-color: var(--color-danger);
+}

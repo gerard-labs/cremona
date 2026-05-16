@@ -1,0 +1,53 @@
+/*
+ * Typography primitive — wraps the role-mapped `--typography-*` shorthand
+ * tokens (font.css) into a single component, with optional color, weight,
+ * align, and tabular-numerals overrides.
+ *
+ * `base/typography.css` already declares :where(h1..h3, p, small, code)
+ * defaults at specificity 0 so raw HTML pages stay legible. This file
+ * does NOT override those defaults — it adds attribute selectors so a
+ * `<span data-variant="h1">` can adopt h1 typography without semantic
+ * misuse, and so a `<p data-variant="caption">` can shrink to caption
+ * size even when wrapped inside a heading-like context.
+ */
+
+.theme-typography {
+  /* Reset margins so consumers control rhythm via parent or stack. */
+  margin: 0;
+}
+
+.theme-typography[data-variant="display"] {
+  font: var(--typography-display);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.theme-typography[data-variant="h1"]      { font: var(--typography-h1); }
+.theme-typography[data-variant="h2"]      { font: var(--typography-h2); }
+.theme-typography[data-variant="h3"]      { font: var(--typography-h3); }
+.theme-typography[data-variant="body-lg"] { font: var(--typography-body-lg); }
+.theme-typography[data-variant="body"]    { font: var(--typography-body); }
+.theme-typography[data-variant="label"]   { font: var(--typography-label); }
+.theme-typography[data-variant="caption"] { font: var(--typography-caption); }
+
+.theme-typography[data-variant="overline"] {
+  font: var(--typography-overline);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+}
+.theme-typography[data-variant="code"]    { font: var(--typography-code); }
+
+/* Color overrides — map data-color → semantic text token. */
+.theme-typography[data-color="primary"]   { color: var(--color-text-primary); }
+.theme-typography[data-color="secondary"] { color: var(--color-text-secondary); }
+.theme-typography[data-color="tertiary"]  { color: var(--color-text-tertiary); }
+.theme-typography[data-color="disabled"]  { color: var(--color-text-disabled); }
+
+/* Weight overrides — pin a specific weight regardless of variant default. */
+.theme-typography[data-weight="regular"]  { font-weight: var(--font-weight-regular); }
+.theme-typography[data-weight="medium"]   { font-weight: var(--font-weight-medium); }
+.theme-typography[data-weight="semibold"] { font-weight: var(--font-weight-semibold); }
+.theme-typography[data-weight="bold"]     { font-weight: var(--font-weight-bold); }
+
+/* Alignment — logical so RTL flips automatically. */
+.theme-typography[data-align="start"]  { text-align: start; }
+.theme-typography[data-align="center"] { text-align: center; }
+.theme-typography[data-align="end"]    { text-align: end; }

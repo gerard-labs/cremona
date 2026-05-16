@@ -1,0 +1,99 @@
+{#-
+  FileUpload — Drop zone + multi-file + preview + progress + cancel (Ring 2 S2.9).
+
+  Per ADR-0013 :
+    - FilePond v4.x lazy-loaded behind dynamic import (mirror ADR-0011).
+    - Native <input type="file"> always usable ; FilePond enhancement
+      progressive (5-200 ms first-mount delay).
+    - Composes Sonner via window.themeToast.show() on upload-complete /
+      upload-failed.
+
+  Per WAI-ARIA :
+    - role="region" + aria-roledescription="zone de téléversement"
+      (consumer-localized) + aria-label.
+    - Drop zone : aria-dropeffect="copy" stamped on pointerenter (FilePond-managed).
+    - File list : role="list" + role="listitem" per file row (FilePond-managed).
+    - Per-file Cancel : aria-label "Annuler le téléversement de {filename}".
+
+  Parameters :
+    htmlId            (string,  optional) — auto-generated.
+    name              (string,  required) — form field name for the file input.
+    label             (string,  required) — accessible name for the region.
+    accept            (string,  optional) — MIME-type filter (default '*/​*').
+    maxFileSize       (string,  optional) — '10MB' (default).
+    maxFiles          (int,     optional) — 0 = unlimited (default).
+    multiple          (bool,    optional) — auto-derived from maxFiles ≠ 1.
+    server            (string,  optional) — endpoint URL ; empty = consumer-managed.
+    imagePreview      (bool,    optional) — enable image preview thumbnails (default true).
+    locale            (string,  optional) — locale code (default 'fr').
+    roleDescription   (string,  optional) — aria-roledescription text ; empty → kit default.
+    className         (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/file-upload/file-upload.html.twig' with {
+      name: 'documents',
+      label: 'Téléverser des documents'|trans,
+      accept: 'application/pdf,image/*',
+      maxFileSize: '20MB',
+      maxFiles: 5,
+      server: path('media_upload'),
+    } %}
+
+  Events (dispatched on the wrap) :
+    file-upload:mount             — sync on connect().
+    file-upload:ready             — after FilePond enhancement.
+    file-upload:add               — detail.{ file: { name, size, type } }.
+    file-upload:remove            — detail.{ file }.
+    file-upload:upload-start      — detail.{ file }.
+    file-upload:upload-progress   — detail.{ file, progress }.
+    file-upload:upload-complete   — detail.{ file, serverId }.
+    file-upload:upload-error      — detail.{ file, error }.
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-fu-' ~ random()) -%}
+{%- set name            = name            | default('files') -%}
+{%- set label           = label           | default('') -%}
+{%- set accept          = accept          | default('*/*') -%}
+{%- set maxFileSize     = maxFileSize     | default('10MB') -%}
+{%- set maxFiles        = maxFiles        | default(0) -%}
+{%- set multiple        = multiple is defined ? multiple : (maxFiles != 1) -%}
+{%- set server          = server          | default('') -%}
+{%- set imagePreview    = imagePreview is defined ? imagePreview : true -%}
+{%- set locale          = locale          | default('fr') -%}
+{%- set roleDescription = roleDescription | default('zone de téléversement') -%}
+{%- set className       = className       | default('') -%}
+
+{%- set _classes = ['theme-file-upload'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="file-upload"
+  data-file-upload-accept-value="{{ accept }}"
+  data-file-upload-max-file-size-value="{{ maxFileSize }}"
+  data-file-upload-max-files-value="{{ maxFiles }}"
+  data-file-upload-server-value="{{ server }}"
+  data-file-upload-image-preview-value="{{ imagePreview ? 'true' : 'false' }}"
+  data-file-upload-locale-value="{{ locale }}"
+  data-file-upload-role-description-value="{{ roleDescription }}"
+  data-state="idle"
+  role="region"
+  aria-roledescription="{{ roleDescription }}"
+  aria-label="{{ label }}"
+>
+  <input
+    type="file"
+    id="{{ htmlId }}-input"
+    name="{{ name }}{% if multiple %}[]{% endif %}"
+    data-file-upload-target="input"
+    accept="{{ accept }}"
+    {%- if multiple %} multiple{% endif -%}
+    aria-describedby="{{ htmlId }}-affordance"
+  />
+  <label for="{{ htmlId }}-input" class="theme-file-upload__affordance" id="{{ htmlId }}-affordance">
+    <span class="theme-file-upload__icon" aria-hidden="true"></span>
+    <span class="theme-file-upload__affordance-text">{{ label }}</span>
+  </label>
+</div>

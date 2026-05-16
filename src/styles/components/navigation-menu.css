@@ -1,0 +1,33 @@
+/*
+ * NavigationMenu — Horizontal web-navigation menu. Composes Menubar's
+ * mechanics (controller + DropdownMenu children) under a <nav> landmark.
+ *
+ * Visual: same trigger/menubar surface as Menubar (the wrapping element
+ * carries `.theme-menubar` class via the inherited template structure)
+ * with a thin <nav> shell. NavigationMenu adds NO new visual tokens —
+ * the styling is 100% inherited from Menubar + DropdownMenu + Item.
+ *
+ * The `<nav>` shell allows AT users to skip to / from the nav region
+ * via landmark navigation. Per 13-accessibility-baseline §13:
+ * `<nav aria-label="...">` is required when multiple navs exist on a page;
+ * always-on `aria-label` is safe.
+ *
+ * Per OQ-33 (sealed S2.3b opening): submenu items use Item with `as: 'a'
+ * href="..."`. Visual is identical to Menubar items (Item.css handles the
+ * 3 element forms uniformly).
+ *
+ * Per [07-component-catalog Ring 2 §Navigation]: mega-menu (multi-column
+ * dropdown layout) is DEFERRED to Ring 3 `pattern:Nav-MegaMenu`. NavigationMenu
+ * primitive ships simple-column dropdowns only.
+ */
+
+/* The <nav> shell is a layout container; no visual decoration of its own.
+   The actual menubar inside carries the visual (border, padding, bg). */
+.theme-navigation-menu {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* When the consumer adds a Brand / Logo to the left + actions to the right,
+   the kit's flex layout supports it via the consumer's surrounding flex.
+   NavigationMenu doesn't impose structure on what's adjacent to it.        */

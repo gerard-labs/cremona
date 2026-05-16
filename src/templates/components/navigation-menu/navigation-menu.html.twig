@@ -1,0 +1,95 @@
+{#-
+  NavigationMenu — Horizontal web-navigation menu. Wraps a Menubar in a
+  <nav aria-label> landmark + signals identity via data-controller="navigation-menu".
+
+  Per OQ-33 (sealed S2.3b opening): submenu items use Item with `as: 'a'
+  href="..."` (real navigation destinations). aria-current="page" on the
+  active nav item — consumer stamps per the current URL.
+
+  Per OQ-30 architecture (sealed S2.3a): per-submenu DropdownMenus (each
+  fully standalone) + a thin orchestrator (NavigationMenuController extends
+  MenubarController verbatim — same mechanics, different semantic shell).
+
+  Mega-menu (multi-column dropdown layout) is DEFERRED to Ring 3
+  `pattern:Nav-MegaMenu`. S2.3b ships simple-column dropdowns only.
+
+  Composes:
+    - <nav aria-label="..."> landmark (per 13-a11y-baseline §13).
+    - navigation-menu Stimulus controller (extends MenubarController).
+    - N child DropdownMenu compounds (consumer-provided via {% block menus %}).
+    - Submenu items: Item with `as: 'a' href`.
+
+  Parameters:
+    htmlId      (string, optional)  — auto-generated.
+    label       (string, required)  — aria-label on the <nav> shell. Required
+                                       per WCAG 4.1.2 when multiple navs exist;
+                                       always-on is safe.
+    labelledBy  (string, optional)  — aria-labelledby reference (overrides
+                                       label if both present).
+    className   (string, optional)  — extra classes on the <nav> shell.
+    menubarLabel (string, optional) — aria-label on the inner menubar. Default
+                                       is the same as `label` for chain consistency.
+
+  Blocks:
+    menus (required) — N DropdownMenu embeds. Each child's trigger MUST stamp
+                       `data-navigation-menu-target="trigger"` AND
+                       `data-popover-target="trigger"`. Submenu items SHOULD
+                       use Item with `as: 'a' href="..."` (per OQ-33).
+
+  Usage example (3 nav menus):
+
+    {% embed '@theme/components/navigation-menu/navigation-menu.html.twig' with {
+      label: 'Navigation principale'|trans,
+    } %}
+      {% block menus %}
+        {% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' %}
+          {% block trigger %}
+            <button type="button" class="theme-menubar__trigger"
+                    data-popover-target="trigger"
+                    data-navigation-menu-target="trigger"
+                    aria-haspopup="menu" aria-expanded="false">
+              {{ 'Solutions'|trans }}
+            </button>
+          {% endblock %}
+          {% block items %}
+            {% include '@theme/components/item/item.html.twig' with {
+              label: 'Pour les startups'|trans,
+              as: 'a',
+              href: '/solutions/startups',
+              ariaCurrent: app.request.pathInfo == '/solutions/startups' ? 'page' : null,
+            } %}
+            ...
+          {% endblock %}
+        {% endembed %}
+        {# ... more menus ... #}
+      {% endblock %}
+    {% endembed %}
+-#}
+
+{%- set htmlId       = htmlId       | default('theme-nav-menu-' ~ random()) -%}
+{%- set label        = label        | default(null) -%}
+{%- set labelledBy   = labelledBy   | default(null) -%}
+{%- set className    = className    | default('') -%}
+{%- set menubarLabel = menubarLabel | default(label) -%}
+
+{%- set _navClasses = ['theme-navigation-menu'] -%}
+{%- if className -%}{%- set _navClasses = _navClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _menubarClasses = ['theme-menubar'] -%}
+
+<nav
+  id="{{ htmlId }}"
+  class="{{ _navClasses | join(' ') }}"
+  {%- if label %} aria-label="{{ label }}"{% endif -%}
+  {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
+>
+  <div
+    id="{{ htmlId }}-menubar"
+    class="{{ _menubarClasses | join(' ') }}"
+    data-controller="navigation-menu"
+    data-action="keydown->navigation-menu#keydown"
+    {%- if menubarLabel %} aria-label="{{ menubarLabel }}"{% endif -%}
+  >
+    {%- block menus -%}{%- endblock -%}
+  </div>
+</nav>

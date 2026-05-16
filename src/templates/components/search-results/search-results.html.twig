@@ -1,0 +1,76 @@
+{#-
+  Search-Results — search results list (Ring 3 S3.3b-2).
+
+  Pure composition Item Ring 1 list. NO controller. Consumer provides the
+  results array via Twig ; each row is an Item (typically `as: 'a'` with
+  href to the detail page, or `as: 'button'` with click action wired to
+  the consumer's app router).
+
+  Header shows the result count via Intl.PluralRules-aware microcopy.
+  Empty state composed via Empty Ring 1 (consumer renders an Empty
+  wrapper when results.length == 0).
+
+  Parameters:
+    htmlId       (string, optional)
+    query        (string, optional)   — user query, surfaced in header + empty state
+    results      (array, required)    — [{ label, description?, iconLeading?, href?, ariaCurrent? }]
+    countLabel   (string, optional)   — fully-formatted count phrase ; consumer can pre-resolve via Intl.PluralRules
+    showCount    (bool, optional, default true)
+    emptyTitle   (string, optional)
+    emptyBody    (string, optional)
+    className    (string, optional)
+-#}
+
+{%- set htmlId     = htmlId     | default('theme-search-results-' ~ random()) -%}
+{%- set query      = query      | default('') -%}
+{%- set results    = results    | default([]) -%}
+{%- set showCount  = showCount  ?? true -%}
+{%- set emptyTitle = emptyTitle | default('theme.search-results.empty.title'|trans) -%}
+{%- set emptyBody  = emptyBody  | default('theme.search-results.empty.body'|trans) -%}
+
+<section class="theme-search-results{{ className ? ' ' ~ className }}"
+         id="{{ htmlId }}"
+         aria-labelledby="{{ htmlId }}-title"
+         data-query="{{ query }}">
+
+  {% if showCount %}
+    <header class="theme-search-results__header">
+      <h2 id="{{ htmlId }}-title" class="theme-search-results__count">
+        {%- if countLabel is defined and countLabel %}
+          {{ countLabel }}
+        {%- else %}
+          {{- 'theme.search-results.count.fallback'|trans({ '%count%': results|length, '%query%': query }) -}}
+        {%- endif %}
+      </h2>
+    </header>
+  {% endif %}
+
+  {% if results|length > 0 %}
+    <ul class="theme-search-results__list" role="list">
+      {% for result in results %}
+        <li class="theme-search-results__item">
+          {% include '@theme/components/item/item.html.twig' with {
+            label:        result.label,
+            description:  result.description ?? null,
+            iconLeading:  result.iconLeading ?? null,
+            iconTrailing: result.iconTrailing ?? 'chevron-right',
+            as:           result.href is defined ? 'a' : 'button',
+            href:         result.href ?? null,
+            type:         result.type ?? 'button',
+            ariaCurrent:  result.ariaCurrent ?? null,
+            ariaLabel:    result.ariaLabel ?? null,
+          } only %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="theme-search-results__empty">
+      {% include '@theme/components/empty/empty.html.twig' with {
+        icon: 'search',
+        title: emptyTitle,
+        body: emptyBody|format(query),
+      } only %}
+    </div>
+  {% endif %}
+
+</section>

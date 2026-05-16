@@ -1,0 +1,105 @@
+{#-
+  Auth-SessionTimeoutModal — modal with live countdown to session expiry
+  (Ring 3 S3.1b — 2nd new Ring 3 controller).
+
+  Cross-controller compose : `data-controller="dialog session-timeout-
+  countdown"`. Dialog (Ring 2) owns the modal mechanics (focus trap,
+  Esc/backdrop policy, top-layer positioning) ; session-timeout-countdown
+  (NEW) owns the countdown logic + warning threshold + expired event.
+
+  Renders the Dialog markup manually via compose-by-class (mirror Auth-
+  SocialButtons + Auth-PasswordStrength compose-by-class doctrine). The
+  Dialog primitive's Twig hardcodes `data-controller="dialog"` and
+  doesn't expose extra-controller composition ; manual rendering keeps
+  the cross-controller pattern clean.
+
+  closeOnEscape + closeOnBackdropClick BOTH false — the user MUST click
+  Extend or Logout (per destructive-confirm doctrine).
+
+  Microcopy : per [12-microcopy-tone.md §Confirmations] — primary
+  Extend, secondary destructive Logout. Body uses `{count} minute` /
+  `{count} seconde` plural variants via `Intl.PluralRules`.
+
+  See `docs/specs/ring3/Auth-SessionTimeoutModal.md` for full spec.
+-#}
+
+{%- set htmlId                   = htmlId                   | default('theme-auth-session-timeout-modal') -%}
+{%- set title                    = title                    | default('theme.auth.session-timeout-modal.title'|trans) -%}
+{%- set bodyBefore               = bodyBefore               | default('theme.auth.session-timeout-modal.body-before'|trans) -%}
+{%- set bodyAfter                = bodyAfter                | default('theme.auth.session-timeout-modal.body-after'|trans) -%}
+{%- set remainingSeconds         = remainingSeconds         | default(60) -%}
+{%- set warningThresholdSeconds  = warningThresholdSeconds  | default(30) -%}
+{%- set extendLabel              = extendLabel              | default('theme.auth.session-timeout-modal.extend-cta'|trans) -%}
+{%- set logoutLabel              = logoutLabel              | default('theme.auth.session-timeout-modal.logout-cta'|trans) -%}
+{%- set extendHref               = extendHref               | default(null) -%}
+{%- set logoutHref               = logoutHref               | default(null) -%}
+{%- set open                     = open                     | default(false) -%}
+{%- set className                = className                | default('') -%}
+
+{# Initial countdown text — Twig-side stamp. The controller's connect()
+   immediately re-renders on mount with the same locale-aware formatting,
+   so the server-side stamp is a fallback for no-JS environments. #}
+{%- set _initialMinutes = (remainingSeconds / 60)|round(0, 'ceil') -%}
+{%- if remainingSeconds < 60 -%}
+  {%- if remainingSeconds == 1 -%}
+    {%- set _initialCountdown = ('theme.auth.session-timeout-modal.countdown.seconds-one'|trans({'{count}': remainingSeconds})) -%}
+  {%- else -%}
+    {%- set _initialCountdown = ('theme.auth.session-timeout-modal.countdown.seconds-other'|trans({'{count}': remainingSeconds})) -%}
+  {%- endif -%}
+{%- else -%}
+  {%- if _initialMinutes == 1 -%}
+    {%- set _initialCountdown = ('theme.auth.session-timeout-modal.countdown.minutes-one'|trans({'{count}': _initialMinutes})) -%}
+  {%- else -%}
+    {%- set _initialCountdown = ('theme.auth.session-timeout-modal.countdown.minutes-other'|trans({'{count}': _initialMinutes})) -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- set _countdownId = htmlId ~ '-countdown' -%}
+
+{% embed '@theme/components/dialog/dialog.html.twig' with {
+  wrapId: htmlId,
+  htmlId: htmlId ~ '-dialog',
+  size: 'md',
+  className: ('theme-auth-session-timeout-modal ' ~ className) | trim,
+  closeButton: false,
+  closeOnEscape: false,
+  closeOnBackdropClick: false,
+  open: open,
+  controllerExtras: 'session-timeout-countdown',
+  attrs: {
+    'data-session-timeout-countdown-remaining-seconds-value': remainingSeconds,
+    'data-session-timeout-countdown-warning-threshold-seconds-value': warningThresholdSeconds,
+  },
+} %}
+  {% block title %}{{ title }}{% endblock %}
+
+  {% block body %}
+    <p class="theme-auth-session-timeout-modal__body">
+      {{- bodyBefore -}}
+      <span
+        class="theme-auth-session-timeout-modal__countdown"
+        data-session-timeout-countdown-target="countdown"
+        id="{{ _countdownId }}"
+        aria-live="polite"
+      >{{ _initialCountdown }}</span>
+      {{- bodyAfter -}}
+    </p>
+  {% endblock %}
+
+  {% block footer %}
+    {% include '@theme/components/button/button.html.twig' with {
+      label: extendLabel,
+      variant: 'primary',
+      size: 'md',
+      href: extendHref,
+      type: extendHref ? null : 'button',
+    } %}
+    {% include '@theme/components/button/button.html.twig' with {
+      label: logoutLabel,
+      variant: 'destructive',
+      size: 'md',
+      href: logoutHref,
+      type: logoutHref ? null : 'button',
+    } %}
+  {% endblock %}
+{% endembed %}

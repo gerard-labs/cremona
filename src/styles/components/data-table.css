@@ -1,0 +1,222 @@
+/*
+ * DataTable — workhorse data-grid orchestrator.
+ *
+ * Composition pure on top of:
+ *   - Table primitive (visual envelope — `.theme-table` classes verbatim)
+ *   - Pagination compound (footer)
+ *   - Checkbox primitive (bare-mode select-all + per-row)
+ *   - DropdownMenu compound (column-visibility menu)
+ *   - AlertDialog compound (bulk-destructive — consumer-wired)
+ *   - Empty primitive (filtered no-results row inside <tr><td colspan>)
+ *
+ * Zero new design tokens — pure composition of Ring 0 vocabulary.
+ *
+ * Per OQ-34/37/38/39 (sealed S2.4 / S2.4b opening): vanilla implementation,
+ * single-col sort default + opt-in multi-col, text Input filter default,
+ * AlertDialog for bulk-destructive (Sonner Toast-Undo deferred S2.5+).
+ */
+
+.theme-data-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ---- Toolbar (bulk-bar + column-vis trigger) -------------------- */
+
+.theme-data-table__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-3);
+  background-color: var(--color-bg-elevated);
+  border-block-end: 1px solid var(--color-border-subtle);
+  min-block-size: 48px;
+}
+
+/* The bulk-bar takes the natural toolbar position when selection > 0.
+   When `hidden`, it collapses entirely so the column-vis trigger stays
+   at the inline-end via flex justify-content: space-between. */
+.theme-data-table__bulk-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-grow: 1;
+  min-inline-size: 0;
+  animation: theme-data-table-bulk-bar-in var(--motion-duration-base) var(--motion-easing-emphasized);
+}
+
+.theme-data-table__bulk-bar[hidden] {
+  display: none;
+}
+
+@keyframes theme-data-table-bulk-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-data-table__bulk-bar {
+    animation: none;
+  }
+}
+
+.theme-data-table__bulk-count {
+  font: var(--typography-label);
+  color: var(--color-text-primary);
+  font-feature-settings: var(--font-feature-tabular);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.theme-data-table__bulk-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+/* When bulk-bar is hidden, the column-vis trigger sits alone at the
+   inline-end. When visible, it sits on its own row (flex-wrap) on narrow
+   viewports or aligned to the inline-end on wide. */
+.theme-data-table__column-visibility {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Column-visibility menu content — slightly wider than default DropdownMenu
+   to accommodate "Adresse de courriel" + checkbox layouts. */
+.theme-data-table__column-visibility-menu .theme-popover__content {
+  min-inline-size: 220px;
+}
+
+/* Column-visibility menu option — each is a label wrapping a bare-mode
+   Checkbox with the column name. Item.theme-item provides hover state. */
+.theme-data-table__column-visibility-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  inline-size: 100%;
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-2);
+  font: var(--typography-body);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.theme-data-table__column-visibility-option > .theme-checkbox__input {
+  inline-size: 14px;
+  block-size: 14px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+/* ---- Table — inherits .theme-table from Table primitive --------- */
+
+/* DataTable removes the Table's standalone bg + border to merge into the
+   wrap's bg (the wrap already has bg-elevated + border-subtle). */
+.theme-data-table__table {
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+/* Select-all header cell + per-row select cell — narrow column.
+   Width is intrinsic; the checkbox visual + padding define it. */
+.theme-data-table__select-all-cell,
+.theme-data-table__select-cell {
+  inline-size: 1%;
+  white-space: nowrap;
+  padding-inline-end: var(--spacing-2);
+}
+
+/* Sort header button — inherits .theme-table__sort from Table primitive.
+   No DataTable-specific overrides at this level — the button already
+   carries the sort chevron + hover + focus-visible from Table.css. */
+
+/* ---- Filter row (under header row) ------------------------------ */
+
+.theme-data-table__filter-row > th {
+  background-color: var(--color-bg-sunken);
+  border-block-end: 1px solid var(--color-border-subtle);
+  padding-block: var(--spacing-1_5);
+  padding-inline: var(--spacing-2);
+}
+
+.theme-data-table__filter-input {
+  inline-size: 100%;
+  min-inline-size: 0;
+  /* Inherits .theme-input visual envelope. */
+}
+
+/* ---- Empty row (filtered no-results) ---------------------------- */
+
+.theme-data-table__empty-row > td {
+  background-color: var(--color-bg-elevated);
+  padding-block: var(--spacing-8);
+  padding-inline: var(--spacing-4);
+  text-align: center;
+  border-block-end: 0;
+}
+
+/* The Empty primitive's region gets natural padding; we constrain it
+   horizontally so the CTA cluster doesn't span the full table width. */
+.theme-data-table__empty-row .theme-empty {
+  margin-inline: auto;
+  max-inline-size: 480px;
+}
+
+.theme-data-table__empty-cta {
+  display: flex;
+  justify-content: center;
+  margin-block-start: var(--spacing-3);
+}
+
+/* ---- Pagination footer ------------------------------------------ */
+
+/* Override Pagination's standalone border-radius + border so it merges
+   into the DataTable wrap. */
+.theme-data-table__pagination-wrap > .theme-pagination {
+  border: 0;
+  border-radius: 0;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+/* ---- Responsive narrow viewports --------------------------------- */
+
+/* On narrow viewports, the toolbar stacks: bulk-bar (when visible) takes
+   the full row, then column-vis trigger below. Inherits flex-wrap. */
+@media (width <= 575px) {
+  .theme-data-table__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-data-table__column-visibility {
+    align-self: flex-end;
+  }
+}
+
+/* ---- RTL ---------------------------------------------------------- */
+
+/* Toolbar + bulk-bar + filter row are all flex with `align-items: center`
+   and natural inline-axis ; no direction-specific rules needed (browser
+   handles via writing-mode). Sort chevrons inherit Table's bidi-flip. */

@@ -1,0 +1,61 @@
+/*
+ * Label — visible <label> for a form input.
+ *
+ * Anatomy:
+ *   .theme-label                     — root (inline-flex)
+ *     .theme-label__text             — the name itself
+ *     .theme-label__required         — red asterisk (aria-hidden)
+ *     .theme-sr-only                 — "obligatoire" SR-only marker (from base/reset.css)
+ *     .theme-label__optional         — muted "(facultatif)" suffix
+ *     .theme-label__hint             — inline muted caption (e.g. "max. 50 caractères")
+ *
+ * Attributes:
+ *   [data-size="sm|md"]     — sm matches input 14px (default), md = 16px denser forms
+ *   [data-state="disabled"] — dims the whole label when its input is disabled
+ */
+
+.theme-label {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spacing-1_5);
+  font: var(--typography-label);
+  color: var(--color-text-primary);
+  user-select: none;
+}
+
+.theme-label[data-size="md"] {
+  font-size: var(--font-size-base);
+}
+
+.theme-label[data-state="disabled"] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.theme-label__text {
+  font: inherit;
+}
+
+.theme-label__required {
+  color: var(--color-danger);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  /* Pull the asterisk visually tight to the label text; the wrap-gap is
+     already 6px, the extra negative margin trims it to ~3px. */
+  margin-inline-start: calc(var(--spacing-0_5) * -1);
+}
+
+.theme-label__optional,
+.theme-label__hint {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-snug);
+}
+
+.theme-label__hint::before {
+  content: "·";
+  margin-inline-end: var(--spacing-1);
+  color: var(--color-text-disabled);
+}

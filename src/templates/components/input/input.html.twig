@@ -1,0 +1,75 @@
+{#-
+  Input — native HTML5 input styled with kit tokens.
+
+  No Stimulus controller — the input is keyboard-complete natively. Behaviors
+  like clear-button or show-password compose at the InputGroup level (a suffix
+  button dispatches the action). Field wires aria-invalid / aria-describedby /
+  aria-required based on its own state.
+
+  Parameters (enumerated):
+    type          (string, optional)  — text (default) | email | password | tel | url | search | number | date | …
+    name          (string, optional)  — form field name (POST/GET data)
+    htmlId        (string, optional)  — id; required when paired with Label.for or Field's composition
+    value         (string, optional)  — pre-filled value
+    placeholder   (string, optional)  — caller passes {{ 'theme.input.placeholder.X'|trans }}
+    size          (string, optional)  — sm | md (default — inherits density) | lg
+    required      (bool,   optional)  — sets aria-required="true" + HTML `required`
+    disabled      (bool,   optional)  — sets HTML `disabled`
+    readonly      (bool,   optional)  — sets HTML `readonly`
+    invalid       (bool,   optional)  — sets aria-invalid="true" (Field forwards this on error)
+    describedBy   (string, optional)  — space-separated ids for aria-describedby (Field wires help + error ids)
+    autocomplete  (string, optional)  — native autocomplete hint ('email' | 'current-password' | …)
+    maxlength     (int,    optional)
+    minlength     (int,    optional)
+    pattern       (string, optional)  — HTML5 regex (rare — prefer JS validation)
+    inputmode     (string, optional)  — mobile keyboard hint ('numeric' | 'tel' | 'email' | …)
+    spellcheck    (string, optional)  — 'true' | 'false'
+    className     (string, optional)
+    attrs         (map,    optional)  — passthrough of extra data-* / aria-* / wiring
+                                        attributes onto the <input> (ADR-0059)
+-#}
+
+{%- set type         = type         | default('text') -%}
+{%- set name         = name         | default(null) -%}
+{%- set htmlId       = htmlId       | default(null) -%}
+{%- set value        = value        | default(null) -%}
+{%- set placeholder  = placeholder  | default(null) -%}
+{%- set size         = size         | default('md') -%}
+{%- set required     = required     | default(false) -%}
+{%- set disabled     = disabled     | default(false) -%}
+{%- set readonly     = readonly     | default(false) -%}
+{%- set invalid      = invalid      | default(false) -%}
+{%- set describedBy  = describedBy  | default(null) -%}
+{%- set autocomplete = autocomplete | default(null) -%}
+{%- set maxlength    = maxlength    | default(null) -%}
+{%- set minlength    = minlength    | default(null) -%}
+{%- set pattern      = pattern      | default(null) -%}
+{%- set inputmode    = inputmode    | default(null) -%}
+{%- set spellcheck   = spellcheck   | default(null) -%}
+{%- set className    = className    | default('') -%}
+{%- set attrs        = attrs        | default({}) -%}
+
+{%- set _classes = ['theme-input'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<input
+  class="{{ _classes | join(' ') }}"
+  type="{{ type }}"
+  data-size="{{ size }}"
+  {%- if name %} name="{{ name }}"{% endif -%}
+  {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+  {%- if value is not null %} value="{{ value }}"{% endif -%}
+  {%- if placeholder %} placeholder="{{ placeholder }}"{% endif -%}
+  {%- if required %} required aria-required="true"{% endif -%}
+  {%- if disabled %} disabled{% endif -%}
+  {%- if readonly %} readonly{% endif -%}
+  {%- if invalid %} aria-invalid="true"{% endif -%}
+  {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+  {%- if autocomplete %} autocomplete="{{ autocomplete }}"{% endif -%}
+  {%- if maxlength %} maxlength="{{ maxlength }}"{% endif -%}
+  {%- if minlength %} minlength="{{ minlength }}"{% endif -%}
+  {%- if pattern %} pattern="{{ pattern }}"{% endif -%}
+  {%- if inputmode %} inputmode="{{ inputmode }}"{% endif -%}
+  {%- if spellcheck %} spellcheck="{{ spellcheck }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>

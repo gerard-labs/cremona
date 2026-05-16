@@ -1,0 +1,139 @@
+{#-
+  Auth-OTP — 6-digit verification-code pattern (Ring 3 S3.1b).
+
+  Composes `_auth-shell` + InputOTP (Ring 2 S2.7 — verbatim, no new
+  controller) + Button × 1-3 (primary submit "Vérifier" + Resend link
+  + optional email-fallback link) + optional Alert (globalError) +
+  optional footer back-to-login.
+
+  Pure server-rendered form (OQ-55). 0 new Stimulus controller — InputOTP
+  S2.7's `input-otp` controller handles paste auto-distribute + auto-tab +
+  iOS SMS auto-fill + backspace-on-empty.
+
+  Consumer can hook `input-otp:complete` event on the form for auto-
+  submit (typical pattern, 5-line consumer JS — defer to consumer).
+
+  Email-fallback opt-in (mini-OQ S3.1b) — when emailFallbackHref is set,
+  the kit renders a "Recevoir par email" link alongside Resend. Pure
+  static link, no JS. Useful when the consumer ships BOTH SMS-OTP and
+  email-OTP paths.
+
+  See `docs/specs/ring3/Auth-OTP.md` for full spec.
+-#}
+
+{%- set title              = title              | default('theme.auth.otp.title'|trans) -%}
+{%- set subtitle           = subtitle           | default('theme.auth.otp.subtitle'|trans) -%}
+{%- set formAction         = formAction         | default('#') -%}
+{%- set csrfToken          = csrfToken          | default(null) -%}
+{%- set csrfFieldName      = csrfFieldName      | default('_token') -%}
+{%- set otpName            = otpName            | default('code') -%}
+{%- set otpLength          = otpLength          | default(6) -%}
+{%- set otpLabel           = otpLabel           | default('theme.auth.otp.label'|trans) -%}
+{%- set otpValue           = otpValue           | default('') -%}
+{%- set submitLabel        = submitLabel        | default('theme.auth.otp.submit'|trans) -%}
+{%- set loading            = loading            | default(false) -%}
+{%- set globalError        = globalError        | default(null) -%}
+{%- set resendQuestion     = resendQuestion     | default('theme.auth.otp.resend-question'|trans) -%}
+{%- set resendHref         = resendHref         | default(null) -%}
+{%- set resendLabel        = resendLabel        | default('theme.auth.otp.resend-cta'|trans) -%}
+{%- set emailFallbackHref  = emailFallbackHref  | default(null) -%}
+{%- set emailFallbackLabel = emailFallbackLabel | default('theme.auth.otp.email-fallback-cta'|trans) -%}
+{%- set backToLoginHref    = backToLoginHref    | default(null) -%}
+{%- set backToLoginLabel   = backToLoginLabel   | default('theme.auth.otp.back-to-login-cta'|trans) -%}
+{%- set htmlId             = htmlId             | default('theme-auth-otp') -%}
+{%- set className          = className          | default('') -%}
+
+{%- set _formClasses = ['theme-auth-otp'] -%}
+{%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _state = 'default' -%}
+{%- if loading -%}{%- set _state = 'loading' -%}
+{%- elseif globalError -%}{%- set _state = 'error' -%}
+{%- endif -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: title,
+  subtitle: subtitle,
+  htmlId: htmlId,
+  variant: 'default',
+} %}
+  {% block content %}
+    <form
+      class="{{ _formClasses | join(' ') }}"
+      action="{{ formAction }}"
+      method="post"
+      novalidate
+      data-state="{{ _state }}"
+      {%- if loading %} data-loading="true"{% endif -%}
+    >
+      {% if globalError %}
+        {% include '@theme/components/alert/alert.html.twig' with {
+          variant: 'danger',
+          tone: 'soft',
+          body: globalError,
+          hideIcon: false,
+          htmlId: htmlId ~ '-global-error',
+        } %}
+      {% endif %}
+
+      {% if csrfToken %}
+        <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
+      {% endif %}
+
+      {% include '@theme/components/input-otp/input-otp.html.twig' with {
+        htmlId: htmlId ~ '-cluster',
+        name: otpName,
+        length: otpLength,
+        value: otpValue,
+        label: otpLabel,
+        required: true,
+        autocomplete: 'one-time-code',
+      } %}
+
+      {% if resendHref or emailFallbackHref %}
+        <div class="theme-auth-otp__resend-row">
+          {% if resendQuestion %}
+            <span class="theme-auth-otp__resend-question">{{ resendQuestion }}</span>
+          {% endif %}
+          {% if resendHref %}
+            {% include '@theme/components/button/button.html.twig' with {
+              label: resendLabel,
+              variant: 'link',
+              size: 'sm',
+              href: resendHref,
+            } %}
+          {% endif %}
+          {% if emailFallbackHref %}
+            {% include '@theme/components/button/button.html.twig' with {
+              label: emailFallbackLabel,
+              variant: 'link',
+              size: 'sm',
+              href: emailFallbackHref,
+            } %}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% include '@theme/components/button/button.html.twig' with {
+        label: submitLabel,
+        variant: 'primary',
+        size: 'md',
+        type: 'submit',
+        loading: loading,
+        fullWidth: true,
+      } %}
+    </form>
+  {% endblock %}
+
+  {% if backToLoginHref %}
+    {% block footer %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: backToLoginLabel,
+        variant: 'link',
+        size: 'md',
+        href: backToLoginHref,
+        iconLeading: 'arrow-left',
+      } %}
+    {% endblock %}
+  {% endif %}
+{% endembed %}

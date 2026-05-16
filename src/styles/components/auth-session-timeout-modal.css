@@ -1,0 +1,27 @@
+/*
+ * Auth-SessionTimeoutModal — modal with live countdown to session expiry
+ * (Ring 3 S3.1b — 2nd new Ring 3 controller).
+ *
+ * Composes Dialog (Ring 2) + Button × 2. The Dialog primitive handles
+ * the modal mechanics + visual envelope ; this file just emphasizes the
+ * countdown span and bumps it to the warning brand colour at the
+ * threshold crossing (data-state hook reserved for future).
+ *
+ * See `docs/specs/ring3/Auth-SessionTimeoutModal.md` for the full spec.
+ */
+
+.theme-auth-session-timeout-modal__body {
+  /* Inherit Dialog body's typography — no override here. */
+  margin: 0;
+}
+
+.theme-auth-session-timeout-modal__countdown {
+  /* Emphasize the live countdown — tabular-nums prevents layout shift
+     when the digit width changes (1 → 10 → 60). */
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  /* The aria-live="assertive" flip at the warning threshold is purely
+     an a11y signal (no visual change tied to it by default). Consumers
+     can opt-in to a colour shift via data-state="urgent" if desired
+     (controller doesn't stamp this in v1). */
+}

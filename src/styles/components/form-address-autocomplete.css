@@ -1,0 +1,45 @@
+/*
+ * Form-AddressAutocomplete — debounced async autocomplete (sibling Form pattern).
+ *
+ * Marker class — composition only. Field Ring 1 carries the Label + help + error ;
+ * Popover Ring 2 carries the positioning ; address-autocomplete controller owns
+ * the input listener + fetch + suggestion list rendering.
+ */
+
+.theme-form-address-autocomplete__wrap {
+  position: relative;
+}
+
+.theme-form-address-autocomplete__panel {
+  /* The Popover content panel — Floating UI positions this. We override the
+     default Popover styles to make it span the input's inline-size by default. */
+  min-inline-size: 100%;
+  max-inline-size: 40rem;
+}
+
+.theme-form-address-autocomplete__suggestions {
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-1);
+  max-block-size: 16rem;
+  overflow-y: auto;
+}
+
+.theme-form-address-autocomplete__suggestions > li {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-form-address-autocomplete__suggestions > li:hover,
+.theme-form-address-autocomplete__suggestions > li:focus-visible {
+  background: var(--color-hover-overlay);
+  outline: none;
+}
+
+.theme-form-address-autocomplete__suggestions > li[aria-selected="true"] {
+  background: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}

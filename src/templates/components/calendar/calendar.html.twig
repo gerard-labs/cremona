@@ -1,0 +1,144 @@
+{#-
+  Calendar — month-grid date display.
+
+  Foundation compound for DatePicker (S2.7). Displays a single month as a
+  7-column × N-row grid (typically 5-6 rows depending on month length and
+  week-start offset). Pure WAI-ARIA APG "Date Picker Dialog" / "Grid" pattern :
+
+   - role="grid" on the day grid, role="row" per week, role="gridcell" per day.
+   - Roving tabindex on day cells — only the focused day has tabindex=0,
+     all others tabindex=-1.
+   - aria-activedescendant on the grid pointing at the focused day's id.
+   - aria-selected="true" on the selected day (single-select model).
+   - aria-current="date" on today.
+   - aria-disabled="true" on out-of-range, disabled-weekday, OR other-month
+     days.
+
+  Keyboard nav (sealed S2.7) :
+   - ArrowLeft / ArrowRight     ±1 day (chronological — same in LTR and RTL)
+   - ArrowUp / ArrowDown        ±7 days (previous / next week)
+   - PageUp / PageDown          ±1 month
+   - Shift+PageUp / Shift+Page-Dn  ±1 year
+   - Home / End                 first / last day of the focused week
+   - Enter / Space              select the focused day → dispatches calendar:select
+
+  Locale-aware via Intl.DateTimeFormat (NOT Day.js — deferred until relative-
+  time UX surfaces, per OQ-40 doctrine vanilla minimal). Month label
+  "mai 2026" / "May 2026" + weekday narrow labels (L M M J V S D / S M T W T F S)
+  computed at runtime by the controller.
+
+  The Twig template ships the OUTER chrome (header with prev/next + month
+  label, weekday header row) but NOT the day cells — those are rendered
+  imperatively by `calendar_controller.js` on connect() + each prev/next nav
+  (avoid stamping ~42 cells per render in Twig + recompute in JS — single
+  source of truth).
+
+  Parameters:
+    htmlId             (string, optional)  auto-generated theme-calendar-<rand>
+    name               (string, optional)  hidden form input name (form integration)
+    value              (string, optional)  ISO 8601 yyyy-mm-dd of pre-selected date
+    min                (string, optional)  ISO 8601 lower bound
+    max                (string, optional)  ISO 8601 upper bound
+    displayMonth       (string, optional)  YYYY-MM initially shown (default : value's
+                                            month, or current month if no value)
+    weekStart          (int,    optional)  0=Sun | 1=Mon (default ; FR/EU style)
+    locale             (string, optional)  for month + weekday names (default 'fr')
+    disabledWeekdays   (string, optional)  CSV weekday indices to disable
+                                            (e.g. "0,6" → Sun+Sat = weekends off)
+    previousMonthAria  (string, optional)  accessible name for prev button
+    nextMonthAria      (string, optional)  accessible name for next button
+    calendarAria       (string, optional)  accessible name for the grid
+    className          (string, optional)  extra utility classes on the wrap
+-#}
+
+{%- set htmlId            = htmlId            | default('theme-calendar-' ~ random()) -%}
+{%- set name              = name              | default(null) -%}
+{%- set value             = value             | default(null) -%}
+{%- set min               = min               | default(null) -%}
+{%- set max               = max               | default(null) -%}
+{%- set displayMonth      = displayMonth      | default(null) -%}
+{%- set weekStart         = weekStart         | default(1) -%}
+{%- set locale            = locale            | default('fr') -%}
+{%- set disabledWeekdays  = disabledWeekdays  | default('') -%}
+{%- set previousMonthAria = previousMonthAria | default('theme.calendar.aria.previous-month'|trans) -%}
+{%- set nextMonthAria     = nextMonthAria     | default('theme.calendar.aria.next-month'|trans) -%}
+{%- set calendarAria      = calendarAria      | default('theme.calendar.aria.calendar'|trans) -%}
+{%- set className         = className         | default('') -%}
+
+{%- set _classes = ['theme-calendar'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _gridId       = htmlId ~ '-grid' -%}
+{%- set _monthLabelId = htmlId ~ '-month' -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  id="{{ htmlId }}"
+  data-controller="calendar"
+  data-action="keydown->calendar#onKeydown click->calendar#onDayClick"
+  {%- if value is not null %} data-calendar-value-value="{{ value }}"{% endif -%}
+  {%- if min is not null %} data-calendar-min-value="{{ min }}"{% endif -%}
+  {%- if max is not null %} data-calendar-max-value="{{ max }}"{% endif -%}
+  {%- if displayMonth is not null %} data-calendar-display-month-value="{{ displayMonth }}"{% endif -%}
+  data-calendar-week-start-value="{{ weekStart }}"
+  data-calendar-locale-value="{{ locale }}"
+  {%- if disabledWeekdays %} data-calendar-disabled-weekdays-value="{{ disabledWeekdays }}"{% endif -%}
+>
+  <header class="theme-calendar__header">
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      size: 'sm',
+      ariaLabel: previousMonthAria,
+      iconLeadingRaw: '<svg class="theme-icon-bidi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
+      className: 'theme-calendar__nav',
+      attrs: {
+        'data-calendar-target': 'prevButton',
+        'data-action': 'click->calendar#prevMonth',
+      },
+    } only %}
+
+    <h2
+      class="theme-calendar__month-label"
+      id="{{ _monthLabelId }}"
+      data-calendar-target="monthLabel"
+      aria-live="polite"
+      aria-atomic="true"
+    ></h2>
+
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      size: 'sm',
+      ariaLabel: nextMonthAria,
+      iconLeadingRaw: '<svg class="theme-icon-bidi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+      className: 'theme-calendar__nav',
+      attrs: {
+        'data-calendar-target': 'nextButton',
+        'data-action': 'click->calendar#nextMonth',
+      },
+    } only %}
+  </header>
+
+  <div
+    class="theme-calendar__weekdays"
+    data-calendar-target="weekdays"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="theme-calendar__grid"
+    id="{{ _gridId }}"
+    role="grid"
+    aria-labelledby="{{ _monthLabelId }}"
+    aria-label="{{ calendarAria }}"
+    data-calendar-target="grid"
+  ></div>
+
+  {%- if name %}
+  <input
+    type="hidden"
+    name="{{ name }}"
+    data-calendar-target="hiddenInput"
+    {%- if value is not null %} value="{{ value }}"{% endif -%}
+  >
+  {%- endif %}
+</div>

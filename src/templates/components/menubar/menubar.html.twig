@@ -1,0 +1,78 @@
+{#-
+  Menubar — Horizontal app-style nav bar of N DropdownMenu submenus
+  (File / Edit / View / Help). Pure orchestrator wrap; each child is a
+  fully standalone DropdownMenu.
+
+  Per OQ-30 (sealed S2.3a opening): per-submenu DropdownMenus + thin
+  menubar orchestrator (~70 effective controller lines). Per WAI-ARIA APG
+  "Menubar (menu of menus)". Per S2.3b doctrine: keyboard-first; hover-open
+  is opt-in for a future Phase 4 amend if demand emerges.
+
+  Composes:
+    - menubar Stimulus controller (orchestrator).
+    - N child DropdownMenu compounds (consumer-provided via {% block menus %}).
+
+  Parameters:
+    htmlId     (string,  optional) — auto-generated.
+    label      (string,  optional) — aria-label on the menubar wrap (e.g.
+                                      'Application' or 'Main navigation').
+                                      Use when no visible heading nearby.
+    labelledBy (string,  optional) — aria-labelledby reference to a heading
+                                      id. Preferred over label when a
+                                      visible heading exists.
+    className  (string,  optional) — extra classes on the wrap.
+
+  Blocks:
+    menus (required) — N DropdownMenu embeds (or compatible Popover-based
+                       compounds). Each child's trigger MUST stamp
+                       `data-menubar-target="trigger"` (so Menubar can find
+                       it for the roving nav) AND `data-popover-target="trigger"`
+                       (so its co-mounted Popover wires the anchor).
+                       Strongly recommend the `.theme-menubar__trigger`
+                       class for the standard visual.
+
+  Usage example (3 submenus):
+
+    {% embed '@theme/components/menubar/menubar.html.twig' with {
+      label: 'Menubar principal'|trans,
+    } %}
+      {% block menus %}
+        {% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' %}
+          {% block trigger %}
+            <button type="button" class="theme-menubar__trigger"
+                    data-popover-target="trigger"
+                    data-menubar-target="trigger"
+                    aria-haspopup="menu" aria-expanded="false">
+              {{ 'Fichier'|trans }}
+            </button>
+          {% endblock %}
+          {% block items %}
+            {% include '@theme/components/item/item.html.twig' with {
+              label: 'Nouveau'|trans, iconLeading: 'plus', kbdShortcut: ['⌘', 'N'], as: 'div',
+            } %}
+            ...
+          {% endblock %}
+        {% endembed %}
+        {# ... more submenus ... #}
+      {% endblock %}
+    {% endembed %}
+-#}
+
+{%- set htmlId     = htmlId     | default('theme-menubar-' ~ random()) -%}
+{%- set label      = label      | default(null) -%}
+{%- set labelledBy = labelledBy | default(null) -%}
+{%- set className  = className  | default('') -%}
+
+{%- set _classes = ['theme-menubar'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="menubar"
+  data-action="keydown->menubar#keydown"
+  {%- if label %} aria-label="{{ label }}"{% endif -%}
+  {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
+>
+  {%- block menus -%}{%- endblock -%}
+</div>

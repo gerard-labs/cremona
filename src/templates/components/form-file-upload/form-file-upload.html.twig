@@ -1,0 +1,91 @@
+{#-
+  Form-FileUpload — file upload as a Form field (sibling Form pattern).
+
+  Per Forms family doctrine (Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) is the composition keystone — wraps FileUpload Ring 2.
+    - Consumer-side validation — Field's `error` param surfaces server validation ;
+      FileUpload's `acceptedFileTypes` + `maxFileSize` cover client-side validation.
+
+  Composes [FileUpload Ring 2](../file-upload/file-upload.html.twig) lazy FilePond
+  per ADR-0013. The Form-FileUpload
+  pattern is a thin Field wrap around FileUpload — no new controller, no new lazy chunk.
+
+  Parameters:
+    htmlId            (string,  optional) — auto-generated.
+    label             (string,  required) — visible Field label.
+    name              (string,  required) — form field name.
+    help              (string,  optional) — help text below the widget.
+    error             (string,  optional) — error message (sets aria-invalid).
+    required          (bool,    optional) — default false.
+    disabled          (bool,    optional) — default false.
+    acceptedFileTypes (array,   optional) — MIME types whitelist (e.g. ['image/jpeg', 'image/png']).
+    maxFileSize       (string,  optional) — FilePond format (e.g. '2MB' / '500KB').
+    maxFiles          (int,     optional) — default 1.
+    allowImagePreview (bool,    optional) — default true (FilePond image-preview plugin).
+    className         (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/form-file-upload/form-file-upload.html.twig' with {
+      label: 'theme.form.file-upload.label.avatar'|trans,
+      name: 'avatar',
+      acceptedFileTypes: ['image/jpeg', 'image/png'],
+      maxFileSize: '2MB',
+    } %}
+-#}
+
+{%- set htmlId            = htmlId            | default('theme-form-file-upload-' ~ random()) -%}
+{%- set required          = required          | default(false) -%}
+{%- set disabled          = disabled          | default(false) -%}
+{%- set acceptedFileTypes = acceptedFileTypes | default([]) -%}
+{%- set maxFiles          = maxFiles          | default(1) -%}
+{%- set allowImagePreview = allowImagePreview ?? true -%}
+{%- set className         = className         | default('') -%}
+
+{%- set isInvalid = error is defined and error -%}
+{%- set _classes = ['theme-field', 'theme-form-file-upload'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['theme-field--disabled']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set describedByIds = [] -%}
+{%- if help -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-help']) -%}{%- endif -%}
+{%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
+
+<div class="{{ _classes | join(' ') }}">
+  {% include '@theme/components/label/label.html.twig' with {
+    content: label,
+    htmlFor: htmlId ~ '-input',
+    required: required,
+    requiredAriaText: 'theme.form.file-upload.required'|trans,
+  } only %}
+
+  <div
+    class="theme-form-file-upload__widget"
+    data-controller="file-upload"
+    data-file-upload-accepted-file-types-value="{{ acceptedFileTypes | json_encode }}"
+    {%- if maxFileSize is defined %} data-file-upload-max-file-size-value="{{ maxFileSize }}"{% endif -%}
+    data-file-upload-max-files-value="{{ maxFiles }}"
+    data-file-upload-allow-image-preview-value="{{ allowImagePreview ? 'true' : 'false' }}"
+  >
+    <input
+      type="file"
+      id="{{ htmlId }}-input"
+      name="{{ name }}"
+      data-file-upload-target="input"
+      {%- if required %} required aria-required="true"{% endif -%}
+      {%- if disabled %} disabled{% endif -%}
+      {%- if isInvalid %} aria-invalid="true"{% endif -%}
+      {%- if describedByIds | length %} aria-describedby="{{ describedByIds | join(' ') }}"{% endif -%}
+      {%- if acceptedFileTypes | length %} accept="{{ acceptedFileTypes | join(',') }}"{% endif -%}
+      {%- if maxFiles > 1 %} multiple{% endif -%}
+    />
+  </div>
+
+  {%- if help -%}
+    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+  {%- endif -%}
+  {%- if isInvalid -%}
+    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+  {%- endif -%}
+</div>

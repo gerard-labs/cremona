@@ -1,0 +1,122 @@
+{#-
+  Button — native <button type="button"> or <a href> styled like a button.
+
+  Zero Stimulus controller. The native <button> is keyboard-complete
+  (Enter / Space activate, Tab moves), form-data-complete (carries name +
+  value to POST), and gets free `:focus-visible` from base/reset.css.
+
+  When `href` is set, the element renders as <a> styled identically (no
+  visual difference). The `type` / `name` / `value` / form-related props
+  are dropped on the <a> branch (irrelevant to anchors).
+
+  Loading pattern (anti-shift / width-stable):
+    - If `iconLeading` is set AND `loading=true`, the leading icon is
+      REPLACED by an inline Spinner — width stays stable (anti-pattern of
+      "add a spinner on top of the icon" deliberately avoided).
+    - If `iconLeading` is absent AND `loading=true`, the Spinner is
+      prepended in the leading slot — width grows by spinner-size + gap
+      (accepted trade-off: the consumer wanted no leading icon, the
+      spinner is a temporary loading indicator).
+    - `iconTrailing` STAYS visible during loading (it carries semantics —
+      "chevron-down" / "arrow-right" hint at where the action leads).
+    - `label` STAYS unchanged during loading. The consumer may optionally
+      update the label text themselves (e.g. "Sauver" → "Sauvegarde…")
+      via reactive data — the kit doesn't mutate it.
+
+  Parameters (enumerated):
+    label           (string,  required)
+    variant         (string,  optional)  — primary (default) | secondary | ghost | destructive | link
+    size            (string,  optional)  — sm (32) | md (40 — default) | lg (48)
+    type            (string,  optional)  — button (default) | submit | reset
+    href            (string,  optional)  — if set, renders as <a> instead of <button>
+    iconLeading     (string,  optional)  — Lucide icon name
+    iconTrailing    (string,  optional)  — Lucide icon name
+    loading         (bool,    optional)  — true → spinner replaces iconLeading (or prepends), aria-busy, disabled
+    disabled        (bool,    optional)
+    fullWidth       (bool,    optional)  — true → inline-size: 100% (typical form submit pattern)
+    ariaLabel       (string,  optional)  — required when icon-only (no `label`)
+    name            (string,  optional)  — <button> form field name
+    value           (string,  optional)
+    form            (string,  optional)  — <button form="…"> link to an out-of-tree form
+    formaction      (string,  optional)  — submit-only override (rare)
+    className       (string,  optional)
+    attrs           (map,     optional)  — passthrough of extra data-* / aria-* / wiring
+                                           attributes onto the <button> / <a> (ADR-0059)
+-#}
+
+{%- set label        = label        | default(null) -%}
+{%- set variant      = variant      | default('primary') -%}
+{%- set size         = size         | default('md') -%}
+{%- set type         = type         | default('button') -%}
+{%- set href         = href         | default(null) -%}
+{%- set iconLeading  = iconLeading  | default(null) -%}
+{%- set iconLeadingRaw = iconLeadingRaw | default(null) -%}
+{%- set iconTrailing = iconTrailing | default(null) -%}
+{%- set loading      = loading      | default(false) -%}
+{%- set disabled     = disabled     | default(false) -%}
+{%- set fullWidth    = fullWidth    | default(false) -%}
+{%- set ariaLabel    = ariaLabel    | default(null) -%}
+{%- set name         = name         | default(null) -%}
+{%- set value        = value        | default(null) -%}
+{%- set form         = form         | default(null) -%}
+{%- set formaction   = formaction   | default(null) -%}
+{%- set className    = className    | default('') -%}
+{%- set attrs        = attrs        | default({}) -%}
+{%- set htmlId       = htmlId       | default(null) -%}
+{%- set labelAttrs   = labelAttrs   | default({}) -%}
+
+{%- set _classes = ['theme-button'] -%}
+{%- if fullWidth -%}{%- set _classes = _classes | merge(['theme-button--full-width']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{# Spinner size pairs to button size: sm/md button → sm spinner (16 px); lg → md spinner (20 px). #}
+{%- set _spinnerSize = size == 'lg' ? 'md' : 'sm' -%}
+{%- set _iconSize    = size == 'sm' ? 'sm' : 'md' -%}
+
+{%- set _tag = href ? 'a' : 'button' -%}
+
+<{{ _tag }}
+  class="{{ _classes | join(' ') }}"
+  data-variant="{{ variant }}"
+  data-size="{{ size }}"
+  {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+  {%- if href %} href="{{ href }}"{% else %} type="{{ type }}"{% endif -%}
+  {%- if not href and name %} name="{{ name }}"{% endif -%}
+  {%- if not href and value is not null %} value="{{ value }}"{% endif -%}
+  {%- if not href and form %} form="{{ form }}"{% endif -%}
+  {%- if not href and formaction %} formaction="{{ formaction }}"{% endif -%}
+  {%- if disabled or loading %} {{ href ? 'aria-disabled="true"' : 'disabled' }}{% endif -%}
+  {%- if loading %} aria-busy="true"{% endif -%}
+  {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {#- Leading slot: spinner replaces iconLeading when loading, else iconLeading shown. -#}
+  {%- if loading -%}
+    {% include '@theme/components/spinner/spinner.html.twig' with {
+      size: _spinnerSize,
+      inverted: variant == 'primary' or variant == 'destructive',
+      label: '',
+      className: 'theme-button__spinner',
+    } %}
+  {%- elseif iconLeadingRaw -%}
+    <span class="theme-button__icon theme-button__icon--leading" aria-hidden="true">{{ iconLeadingRaw | raw }}</span>
+  {%- elseif iconLeading -%}
+    {% include '@theme/components/icon/icon.html.twig' with {
+      name: iconLeading,
+      decorative: true,
+      size: _iconSize,
+      className: 'theme-button__icon theme-button__icon--leading',
+    } %}
+  {%- endif -%}
+  {%- if label -%}
+    <span class="theme-button__label"{% for _n, _v in labelAttrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor %}>{{ label }}</span>
+  {%- endif -%}
+  {%- if iconTrailing -%}
+    {% include '@theme/components/icon/icon.html.twig' with {
+      name: iconTrailing,
+      decorative: true,
+      size: _iconSize,
+      className: 'theme-button__icon theme-button__icon--trailing',
+    } %}
+  {%- endif -%}
+</{{ _tag }}>

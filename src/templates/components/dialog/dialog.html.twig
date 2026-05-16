@@ -1,0 +1,124 @@
+{#-
+  Dialog — modal native `<dialog>` element.
+
+  Per OQ-20 doctrine [Ring 2 — pending lock-in ADR]: native `<dialog>`
+  with `showModal()`. Top-layer positioning (no z-index war), native
+  `::backdrop`, native focus trap (Tab cycles within), native Esc
+  dismiss. The `dialog` Stimulus controller handles open/close
+  orchestration, focus return-to-trigger, backdrop click dismiss policy,
+  and Esc dismiss policy (for destructive confirms).
+
+  Animations: CSS-only via `@starting-style` + transition `allow-discrete`
+  (Baseline 2024). The browser handles the discrete-step transition
+  between `display: block` and `display: none`. No JS animation
+  orchestration needed. See `src/styles/components/dialog.css` for the
+  motion tokens.
+
+  Parameters:
+    htmlId        (string, optional)  — auto-generated. Used to chain
+                                        aria-labelledby + the title's id.
+    size          (string, optional)  — sm | md (default) | lg
+    closeButton   (bool,   optional)  — true (default). Whether to render
+                                        the inline-end close-X button
+                                        in the header. Disable for
+                                        destructive confirms where users
+                                        must commit via explicit button.
+    closeOnEscape (bool,   optional)  — true (default). false → Esc keydown
+                                        is intercepted and ignored.
+    closeOnBackdropClick (bool, optional) — true (default). false → backdrop
+                                        clicks are ignored.
+    open          (bool,   optional)  — false (default). SSR-open dialogs.
+    closeAriaLabel (string, optional) — accessible name for the close-X
+                                        button. Required when closeButton
+                                        is true (consumer should pre-
+                                        translate, e.g. 'Fermer'|trans).
+    className     (string, optional)  — extra classes on the outer wrap.
+    dialogClassName (string, optional) — extra classes on the `<dialog>`.
+
+  Blocks:
+    trigger (optional) — the element that opens the dialog. The Twig
+                         stamps `data-action="click->dialog#open"` on
+                         the FIRST focusable inside the block (typically
+                         a button). For richer trigger semantics
+                         (analytics + dialog open), the consumer wires
+                         their own action descriptor.
+    title (required)   — heading text. Wrapped in <h2> with the
+                         aria-labelledby anchor.
+    body (required)    — main content.
+    footer (optional)  — button cluster (typically Cancel + Confirm /
+                         Save). Rendered at inline-end, naturally
+                         flipping in RTL via flex-row writing direction
+                         (per 12-microcopy-tone §Confirmations).
+-#}
+
+{%- set htmlId               = htmlId               | default('theme-dialog-' ~ random()) -%}
+{%- set size                 = size                 | default('md') -%}
+{%- set closeButton          = closeButton          ?? true -%}
+{%- set closeOnEscape        = closeOnEscape        ?? true -%}
+{%- set closeOnBackdropClick = closeOnBackdropClick ?? true -%}
+{%- set open                 = open                 | default(false) -%}
+{%- set closeAriaLabel       = closeAriaLabel       | default(null) -%}
+{%- set className            = className            | default('') -%}
+{%- set dialogClassName      = dialogClassName      | default('') -%}
+{%- set controllerExtras     = controllerExtras     | default('') -%}
+{%- set wrapId               = wrapId               | default(null) -%}
+{%- set attrs                = attrs                | default({}) -%}
+
+{%- set _wrapClasses = ['theme-dialog-wrap'] -%}
+{%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _dialogClasses = ['theme-dialog'] -%}
+{%- if dialogClassName -%}{%- set _dialogClasses = _dialogClasses | merge([dialogClassName]) -%}{%- endif -%}
+
+{%- set _titleId = htmlId ~ '-title' -%}
+
+{%- set dialogHtmlId = htmlId -%}
+{%- set dialogTitleId = _titleId -%}
+
+<div
+  class="{{ _wrapClasses | join(' ') }}"
+  {%- if wrapId %} id="{{ wrapId }}"{% endif %}
+  data-controller="dialog{% if controllerExtras %} {{ controllerExtras }}{% endif %}"
+  data-dialog-open-value="{{ open ? 'true' : 'false' }}"
+  data-dialog-close-on-escape-value="{{ closeOnEscape ? 'true' : 'false' }}"
+  data-dialog-close-on-backdrop-click-value="{{ closeOnBackdropClick ? 'true' : 'false' }}"
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {%- if block('trigger') is defined and block('trigger') is not empty -%}
+    {%- block trigger -%}{%- endblock -%}
+  {%- endif -%}
+
+  <dialog
+    id="{{ htmlId }}"
+    class="{{ _dialogClasses | join(' ') }}"
+    data-dialog-target="dialog"
+    data-size="{{ size }}"
+    aria-labelledby="{{ _titleId }}"
+  >
+    <header class="theme-dialog__header">
+      <h2 id="{{ _titleId }}" class="theme-dialog__title">
+        {%- block title -%}{%- endblock -%}
+      </h2>
+      {%- if closeButton and closeAriaLabel -%}
+        {% include '@theme/components/button/button.html.twig' with {
+          variant: 'ghost',
+          size: 'sm',
+          iconLeading: 'x',
+          ariaLabel: closeAriaLabel,
+          className: 'theme-dialog__close',
+          attrs: { 'data-action': 'click->dialog#close' },
+        } only %}
+      {%- endif -%}
+    </header>
+
+    <div class="theme-dialog__body">
+      {%- block body -%}{%- endblock -%}
+    </div>
+
+    {%- if block('footer') is defined and block('footer') is not empty -%}
+      <footer class="theme-dialog__footer">
+        {%- block footer -%}{%- endblock -%}
+      </footer>
+    {%- endif -%}
+  </dialog>
+</div>

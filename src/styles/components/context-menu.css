@@ -1,0 +1,47 @@
+/*
+ * ContextMenu — DropdownMenu's twin opened by right-click at pointer coords.
+ *
+ * Composes Popover (surface) + DropdownMenu (menu semantics) — see
+ * popover.css and dropdown-menu.css for the shared envelope. ContextMenu
+ * adds nothing visual; it only hosts the phantom anchor + the wrap
+ * positioning override needed for the right-click flow.
+ *
+ * The wrap itself MUST stay `display: inline-block` (inherited from
+ * .theme-popover) so the phantom <span> + the absolutely-positioned
+ * popover content live inside the same containing block. Width is zero
+ * — the wrap is a "pure logical container", not a visible element.
+ *
+ * Per Ring 2 S2.3 doctrine: ContextMenu reuses 100 % of DropdownMenu's
+ * surface tokens (radius, shadow, padding, items hover). No new visual
+ * tokens — the right-click trigger is a pure behavior change, not a
+ * visual variant.
+ */
+
+.theme-context-menu {
+  /* The wrap is a logical container — no visible footprint. The phantom
+     trigger is positioned `position: fixed` at (clientX, clientY) when
+     the user right-clicks; the popover content is positioned by Floating
+     UI relative to that phantom. */
+  inline-size: 0;
+  block-size: 0;
+}
+
+.theme-context-menu__phantom {
+  /* Default: out of layout. Position is set inline by the controller at
+     the moment of `contextmenu` event. The pointer-events: none ensures
+     the phantom never intercepts clicks on the underlying area (the
+     consumer's right-clickable region stays interactive). */
+  display: block;
+  inline-size: 0;
+  block-size: 0;
+  pointer-events: none;
+  /* aria-hidden in markup; this rule is belt-and-suspenders. */
+  visibility: hidden;
+}
+
+.theme-context-menu__content {
+  /* Inherits everything from .theme-popover__content + .theme-dropdown-menu__content.
+     Reset the min-inline-size slightly tighter — context menus often
+     hold short verb labels (Cut / Copy / Paste). */
+  min-inline-size: 180px;
+}

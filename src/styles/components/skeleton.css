@@ -1,0 +1,63 @@
+/*
+ * Skeleton primitive — pure-CSS shimmer placeholder.
+ *
+ * Always aria-hidden — the parent widget carries `aria-busy="true"` and
+ * its `aria-live="polite"` region (e.g. the announcer) describes the
+ * loading state in words.
+ *
+ * Shimmer direction is fixed LTR (left → right gradient sweep). It's a
+ * decorative motion that conveys "loading" without semantic direction;
+ * future amend if real-world testing surfaces an RTL preference.
+ *
+ * Reduced-motion: animation off + flat `--color-bg-elevated` fill (still
+ * visible enough to indicate a placeholder is present).
+ */
+
+@keyframes theme-skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.theme-skeleton {
+  display: block;
+  background:
+    linear-gradient(
+      90deg,
+      var(--color-bg-sunken) 0%,
+      var(--color-bg-elevated) 50%,
+      var(--color-bg-sunken) 100%
+    );
+  background-size: 200% 100%;
+  animation: theme-skeleton-shimmer 1500ms linear infinite;
+  border-radius: var(--radius-sm);
+  inline-size: 100%;
+  block-size: 1em;
+}
+
+.theme-skeleton--circle {
+  border-radius: var(--radius-pill);
+  inline-size: 2em;
+  block-size: 2em;
+  aspect-ratio: 1 / 1;
+}
+
+.theme-skeleton--text {
+  border-radius: var(--radius-xs);
+  block-size: 1em;
+}
+
+.theme-skeleton--rect {
+  border-radius: var(--radius-sm);
+}
+
+.theme-skeleton-group {
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-skeleton {
+    animation: none;
+    background: var(--color-bg-elevated);
+  }
+}

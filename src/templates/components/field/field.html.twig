@@ -1,0 +1,115 @@
+{#-
+  Field — composes Label + one of the four text controls + optional
+  help text + optional error message.
+
+  Field is an EMBED target. The consumer provides the inner control via
+  the `control` block; Field exposes the wiring (id, describedBy, invalid,
+  required, disabled) as parent-template variables that the embedded
+  block reads to attach to the actual <input>/<textarea>/<select>.
+
+  Canonical usage:
+
+    {% embed '@theme/components/field/field.html.twig' with {
+      label: 'Adresse email'|trans,
+      htmlId: 'login-email',
+      required: true,
+      help: 'theme.field.help.email-format'|trans,
+      error: errorMessage,
+    } %}
+      {% block control %}
+        {% include '@theme/components/input/input.html.twig' with {
+          htmlId: fieldHtmlId,
+          describedBy: fieldDescribedBy,
+          invalid: fieldInvalid,
+          required: fieldRequired,
+          disabled: fieldDisabled,
+          type: 'email',
+          autocomplete: 'email',
+        } %}
+      {% endblock %}
+    {% endembed %}
+
+  Parameters:
+    label             (string, required)
+    htmlId            (string, optional) — input id; Field generates a stable fallback if absent
+    required          (bool,   optional)
+    disabled          (bool,   optional)
+    optionalText      (string, optional) — passed to Label as the muted suffix (if set, the field is "optional")
+    requiredAriaText  (string, optional) — Label's sr-only "obligatoire" marker
+    hint              (string, optional) — short inline hint inside the Label (e.g. "max. 50 caractères")
+    help              (string, optional) — help paragraph BELOW the input; SR reads via aria-describedby
+    error             (string, optional) — error paragraph BELOW the input; truthy ⇒ field is invalid
+    labelSize         (string, optional) — sm (default) | md (Label's size)
+    className         (string, optional)
+
+  Exposed to the {% block control %}:
+    fieldHtmlId       — string id to put on the inner control
+    fieldDescribedBy  — space-separated string of help / error ids (or null)
+    fieldInvalid      — bool — true when `error` is set
+    fieldRequired     — bool
+    fieldDisabled     — bool
+-#}
+
+{%- set label            = label            | default('') -%}
+{%- set htmlId           = htmlId           | default(null) -%}
+{%- set required         = required         | default(false) -%}
+{%- set disabled         = disabled         | default(false) -%}
+{%- set optionalText     = optionalText     | default(null) -%}
+{%- set requiredAriaText = requiredAriaText | default('obligatoire') -%}
+{%- set hint             = hint             | default(null) -%}
+{%- set help             = help             | default(null) -%}
+{%- set error            = error            | default(null) -%}
+{%- set labelSize        = labelSize        | default('sm') -%}
+{%- set className        = className        | default('') -%}
+
+{# Stable id fallback: when the consumer doesn't pass one, derive a slug
+   from the label. NOT cryptographically unique — for one-form-per-page
+   contexts. Multi-instance pages must pass htmlId explicitly. #}
+{%- if htmlId is null -%}
+  {%- set htmlId = ('field-' ~ (label | lower | replace({' ': '-', "'": '-', '@': '-at-', '"': '-'}))[:40]) -%}
+{%- endif -%}
+
+{%- set _hasError = error is not null and error != '' -%}
+{%- set _helpId  = htmlId ~ '-help' -%}
+{%- set _errorId = htmlId ~ '-error' -%}
+
+{# Compute aria-describedby — space-separated help + error ids. #}
+{%- set _describedByList = [] -%}
+{%- if help -%}{% set _describedByList = _describedByList | merge([_helpId]) %}{% endif -%}
+{%- if _hasError -%}{% set _describedByList = _describedByList | merge([_errorId]) %}{% endif -%}
+{%- set _describedBy = _describedByList ? (_describedByList | join(' ')) : null -%}
+
+{# Expose to the embedded {% block control %}. #}
+{%- set fieldHtmlId      = htmlId -%}
+{%- set fieldDescribedBy = _describedBy -%}
+{%- set fieldInvalid     = _hasError -%}
+{%- set fieldRequired    = required -%}
+{%- set fieldDisabled    = disabled -%}
+
+{%- set _classes = ['theme-field'] -%}
+{%- if _hasError -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['theme-field--disabled']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div class="{{ _classes | join(' ') }}">
+  {% include '@theme/components/label/label.html.twig' with {
+    content: label,
+    htmlFor: htmlId,
+    required: required,
+    requiredAriaText: requiredAriaText,
+    optionalText: required ? null : optionalText,
+    hint: hint,
+    size: labelSize,
+    disabled: disabled,
+  } %}
+
+  {% block control %}{% endblock %}
+
+  {% if help %}
+    <p id="{{ _helpId }}" class="theme-field__help">{{ help }}</p>
+  {% endif %}
+
+  {% if _hasError %}
+    <p id="{{ _errorId }}" class="theme-field__error" role="alert" aria-live="polite">{{ error }}</p>
+  {% endif %}
+</div>

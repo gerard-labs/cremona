@@ -1,0 +1,74 @@
+{#-
+  Textarea — native HTML5 multi-line field, optionally auto-resizing.
+
+  Auto-resize wiring: when `autosize: true`, the template attaches a
+  `data-controller="textarea-autosize"` plus `data-action="input->textarea-autosize#resize"`
+  and `data-textarea-autosize-{min-rows,max-rows}-value="…"`. The controller
+  measures scrollHeight on every input event and clamps between min and max.
+
+  No JS when `autosize: false` — the textarea keeps the rows= fixed height.
+
+  Parameters:
+    name          (string, optional)
+    htmlId        (string, optional) — id (for label/Field binding)
+    value         (string, optional) — initial content
+    placeholder   (string, optional) — caller passes {{ 'theme.textarea.placeholder.X'|trans }}
+    rows          (int,    optional) — initial visible rows when autosize is off (default 3)
+    autosize      (bool,   optional) — wires the Stimulus controller (default false)
+    minRows       (int,    optional) — autosize floor (default 2)
+    maxRows       (int,    optional) — autosize ceiling (default 8)
+    size          (string, optional) — sm | md (default) | lg
+    required      (bool,   optional)
+    disabled      (bool,   optional)
+    readonly      (bool,   optional)
+    invalid       (bool,   optional) — sets aria-invalid="true"
+    describedBy   (string, optional) — space-separated ids (Field wires help + error)
+    maxlength     (int,    optional)
+    minlength     (int,    optional)
+    spellcheck    (string, optional) — 'true' (default) | 'false'
+    className     (string, optional)
+    attrs         (map,    optional) — passthrough of extra data-* / aria-* / wiring
+                                       attributes onto the <textarea> (ADR-0059)
+-#}
+
+{%- set name        = name        | default(null) -%}
+{%- set htmlId      = htmlId      | default(null) -%}
+{%- set value       = value       | default(null) -%}
+{%- set placeholder = placeholder | default(null) -%}
+{%- set rows        = rows        | default(3) -%}
+{%- set autosize    = autosize    | default(false) -%}
+{%- set minRows     = minRows     | default(2) -%}
+{%- set maxRows     = maxRows     | default(8) -%}
+{%- set size        = size        | default('md') -%}
+{%- set required    = required    | default(false) -%}
+{%- set disabled    = disabled    | default(false) -%}
+{%- set readonly    = readonly    | default(false) -%}
+{%- set invalid     = invalid     | default(false) -%}
+{%- set describedBy = describedBy | default(null) -%}
+{%- set maxlength   = maxlength   | default(null) -%}
+{%- set minlength   = minlength   | default(null) -%}
+{%- set spellcheck  = spellcheck  | default('true') -%}
+{%- set className   = className   | default('') -%}
+{%- set attrs       = attrs       | default({}) -%}
+
+{%- set _classes = ['theme-textarea'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<textarea
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  rows="{{ rows }}"
+  {%- if autosize %} data-controller="textarea-autosize" data-action="input->textarea-autosize#resize" data-textarea-autosize-min-rows-value="{{ minRows }}" data-textarea-autosize-max-rows-value="{{ maxRows }}"{% endif -%}
+  {%- if name %} name="{{ name }}"{% endif -%}
+  {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+  {%- if placeholder %} placeholder="{{ placeholder }}"{% endif -%}
+  {%- if required %} required aria-required="true"{% endif -%}
+  {%- if disabled %} disabled{% endif -%}
+  {%- if readonly %} readonly{% endif -%}
+  {%- if invalid %} aria-invalid="true"{% endif -%}
+  {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+  {%- if maxlength %} maxlength="{{ maxlength }}"{% endif -%}
+  {%- if minlength %} minlength="{{ minlength }}"{% endif -%}
+  {%- if spellcheck %} spellcheck="{{ spellcheck }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>{{ value }}</textarea>

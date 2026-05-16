@@ -1,0 +1,104 @@
+{#-
+  Drawer — modal side-panel using native <dialog>, sliding from a viewport
+  edge. The drawer Stimulus controller extends DialogController (same modal
+  mechanics: showModal, focus snapshot+return, cancel/close events,
+  backdrop-click policy, Esc dismiss policy) and adds an `edge` value.
+
+  Per Ring 2 S2.2 OQ-25: motion tokens REUSED (duration-slow emphasized
+  entry, duration-base accelerate exit) — no new tokens. Slide direction
+  + corner radius are entirely CSS-time via data-edge selectors.
+
+  Parameters:
+    htmlId          (string, optional) — auto-generated. Used to chain
+                                         aria-labelledby + title's id.
+    edge            (string, optional) — start | end (default) | top | bottom.
+    open            (bool,   optional) — false (default). SSR-open drawers.
+    closeButton     (bool,   optional) — true (default). Render close-X in
+                                         header.
+    closeOnEscape   (bool,   optional) — true (default).
+    closeOnBackdropClick (bool, optional) — true (default).
+    closeAriaLabel  (string, optional) — required if closeButton true.
+    className       (string, optional) — extra classes on the outer wrap.
+    drawerClassName (string, optional) — extra classes on the <dialog>.
+
+  Blocks:
+    trigger (optional) — the element that opens the drawer. Stamps
+                         `data-action="click->drawer#open"`.
+    title   (required) — <h2> heading.
+    body    (required) — main content (scrolls when overflows).
+    footer  (optional) — button cluster at flex-end.
+-#}
+
+{%- set htmlId               = htmlId               | default('theme-drawer-' ~ random()) -%}
+{%- set edge                 = edge                 | default('end') -%}
+{%- set open                 = open                 | default(false) -%}
+{%- set closeButton          = closeButton          ?? true -%}
+{%- set closeOnEscape        = closeOnEscape        ?? true -%}
+{%- set closeOnBackdropClick = closeOnBackdropClick ?? true -%}
+{%- set closeAriaLabel       = closeAriaLabel       | default(null) -%}
+{%- set className            = className            | default('') -%}
+{%- set drawerClassName      = drawerClassName      | default('') -%}
+{%- set wrapId               = wrapId               | default(null) -%}
+{%- set controllerExtras     = controllerExtras     | default('') -%}
+{%- set headerClass          = headerClass          | default('') -%}
+{%- set bodyClass            = bodyClass            | default('') -%}
+{%- set footerClass          = footerClass          | default('') -%}
+
+{%- set _wrapClasses = ['theme-drawer-wrap'] -%}
+{%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _drawerClasses = ['theme-drawer'] -%}
+{%- if drawerClassName -%}{%- set _drawerClasses = _drawerClasses | merge([drawerClassName]) -%}{%- endif -%}
+
+{%- set _titleId = htmlId ~ '-title' -%}
+
+{%- set drawerHtmlId = htmlId -%}
+{%- set drawerTitleId = _titleId -%}
+
+<div
+  class="{{ _wrapClasses | join(' ') }}"
+  {%- if wrapId %} id="{{ wrapId }}"{% endif %}
+  data-controller="drawer{% if controllerExtras %} {{ controllerExtras }}{% endif %}"
+  data-drawer-open-value="{{ open ? 'true' : 'false' }}"
+  data-drawer-edge-value="{{ edge }}"
+  data-drawer-close-on-escape-value="{{ closeOnEscape ? 'true' : 'false' }}"
+  data-drawer-close-on-backdrop-click-value="{{ closeOnBackdropClick ? 'true' : 'false' }}"
+>
+  {%- if block('trigger') is defined and block('trigger') is not empty -%}
+    {%- block trigger -%}{%- endblock -%}
+  {%- endif -%}
+
+  <dialog
+    id="{{ htmlId }}"
+    class="{{ _drawerClasses | join(' ') }}"
+    data-drawer-target="dialog"
+    data-edge="{{ edge }}"
+    aria-labelledby="{{ _titleId }}"
+  >
+    <header class="theme-drawer__header{% if headerClass %} {{ headerClass }}{% endif %}">
+      <h2 id="{{ _titleId }}" class="theme-drawer__title">
+        {%- block title -%}{%- endblock -%}
+      </h2>
+      {%- if closeButton and closeAriaLabel -%}
+        {% include '@theme/components/button/button.html.twig' with {
+          variant: 'ghost',
+          size: 'sm',
+          iconLeading: 'x',
+          ariaLabel: closeAriaLabel,
+          className: 'theme-drawer__close',
+          attrs: { 'data-action': 'click->drawer#close' },
+        } only %}
+      {%- endif -%}
+    </header>
+
+    <div class="theme-drawer__body{% if bodyClass %} {{ bodyClass }}{% endif %}">
+      {%- block body -%}{%- endblock -%}
+    </div>
+
+    {%- if block('footer') is defined and block('footer') is not empty -%}
+      <footer class="theme-drawer__footer{% if footerClass %} {{ footerClass }}{% endif %}">
+        {%- block footer -%}{%- endblock -%}
+      </footer>
+    {%- endif -%}
+  </dialog>
+</div>

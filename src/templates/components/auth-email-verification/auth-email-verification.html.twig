@@ -1,0 +1,69 @@
+{#-
+  Auth-EmailVerification — terminal "check your email" pattern (Ring 3 S3.1b).
+
+  Composes `_auth-shell` (title null — inner Empty owns the h1) + Empty
+  (lg, h1, icon=check — see §1 Doctrine for icon-choice rationale) +
+  Button × 1-2 (primary Resend + optional secondary Back-to-login).
+
+  Pure server-rendered terminal page (OQ-55). 0 Stimulus controller.
+  Typical entry point : post-Register flow (user signs up → consumer's
+  auth back-end sends a verification email → redirects user here).
+
+  Microcopy : body verbatim from 12-microcopy §Auth §"Email sent" :
+    "Email envoyé. Vérifie ta boîte (et tes spams)."
+
+  Icon choice : `check` (action-complete) instead of envelope/mail. The
+  Lucide curated 30-set sealed S1.1 does NOT include `mail.svg`. Pre-
+  existing S3.1 bug : Auth-Register + Auth-ForgotPassword success states
+  reference `icon: 'mail'` which would throw at render time. This pattern
+  uses the curated `check` substitut to ship a working integration.
+  Ring 3 lock-in ADR-NN+ should either add mail.svg to curated set OR
+  rewrite S3.1 templates. See spec §1 Doctrine + §Open trade-offs.
+
+  See `docs/specs/ring3/Auth-EmailVerification.md` for the full spec.
+-#}
+
+{%- set title             = title             | default('theme.auth.email-verification.title'|trans) -%}
+{%- set body              = body              | default('theme.auth.email-verification.body'|trans) -%}
+{%- set resendLabel       = resendLabel       | default('theme.auth.email-verification.resend-cta'|trans) -%}
+{%- set resendHref        = resendHref        | default('#') -%}
+{%- set backToLoginLabel  = backToLoginLabel  | default('theme.auth.email-verification.back-to-login-cta'|trans) -%}
+{%- set backToLoginHref   = backToLoginHref   | default(null) -%}
+{%- set htmlId            = htmlId            | default('theme-auth-email-verification') -%}
+{%- set className         = className         | default('') -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: null,
+  htmlId: htmlId,
+  variant: 'default',
+  className: ('theme-auth-email-verification ' ~ className)|trim,
+} %}
+  {% block content %}
+    {% embed '@theme/components/empty/empty.html.twig' with {
+      title: title,
+      body: body,
+      icon: 'check',
+      size: 'lg',
+      titleLevel: 'h1',
+      htmlId: htmlId ~ '-empty',
+    } %}
+      {% block actions %}
+        {% include '@theme/components/button/button.html.twig' with {
+          label: resendLabel,
+          variant: 'secondary',
+          size: 'md',
+          href: resendHref,
+        } %}
+        {% if backToLoginHref %}
+          {% include '@theme/components/button/button.html.twig' with {
+            label: backToLoginLabel,
+            variant: 'ghost',
+            size: 'md',
+            href: backToLoginHref,
+            iconLeading: 'arrow-left',
+          } %}
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}

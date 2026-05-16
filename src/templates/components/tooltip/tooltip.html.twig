@@ -1,0 +1,62 @@
+{#-
+  Tooltip — hover/focus-triggered descriptive popup.
+
+  Wrapper around a trigger (icon button, abbreviation, etc.) plus a
+  `<span role="tooltip">` sibling. The CSS toggles tooltip visibility on
+  `.theme-tooltip-wrap:hover` and `.theme-tooltip-wrap:focus-within`.
+  The 400 ms show delay (anti-flash on accidental hover) is CSS
+  `transition-delay`. The hide is instant (no delay-out — feels snappy).
+
+  Esc dismiss requires JS — a minimal Stimulus controller `tooltip`
+  (≈ 15 lines) stamps `data-state="dismissed"` on the wrapper when Esc
+  fires inside it, suppressing the show until the user moves focus out
+  and back in. Per [13-accessibility-baseline.md §2] "Tooltip — Hover or
+  focus shows; Esc dismisses".
+
+  Positioning is CSS-only (OQ-14 doctrine): 4 placements via
+  `data-placement` (top default | bottom | start | end). The caller is
+  responsible for ensuring the viewport edge doesn't clip the tooltip.
+  JS-positioned tooltips with viewport-collision detection live in the
+  Ring 2 Popover Compound (which can compose Tooltip).
+
+  Parameters:
+    label       (string, required)  — tooltip text content (already |trans'd)
+    placement   (string, optional)  — top (default) | bottom | start | end
+    htmlId      (string, optional)  — id of the tooltip span (used by trigger's
+                                      aria-describedby). Auto-generated if absent.
+    triggerId   (string, optional)  — id stamped on the trigger element (so
+                                      external scripts can reference it)
+    className   (string, optional)
+
+  Block `trigger` (required):
+    The trigger element — typically a <button> (icon-only or text), an <a>,
+    or an <abbr>. The kit doesn't auto-stamp aria-describedby; the consumer
+    MUST add `aria-describedby="{{ tooltipHtmlId }}"` to the trigger inside
+    the block. The variable `tooltipHtmlId` is exposed to the block.
+-#}
+
+{%- set label      = label      | default(null) -%}
+{%- set placement  = placement  | default('top') -%}
+{%- set htmlId     = htmlId     | default('theme-tt-' ~ random()) -%}
+{%- set triggerId  = triggerId  | default(null) -%}
+{%- set className  = className  | default('') -%}
+
+{%- set tooltipHtmlId = htmlId -%}
+
+{%- set _classes = ['theme-tooltip-wrap'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<span
+  class="{{ _classes | join(' ') }}"
+  data-controller="tooltip"
+  data-action="keydown.esc->tooltip#dismiss focusout->tooltip#reset"
+  data-placement="{{ placement }}"
+>
+  {%- block trigger -%}{%- endblock -%}
+  <span
+    class="theme-tooltip"
+    id="{{ htmlId }}"
+    role="tooltip"
+    data-placement="{{ placement }}"
+  >{{ label }}</span>
+</span>

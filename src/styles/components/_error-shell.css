@@ -1,0 +1,75 @@
+/*
+ * _error-shell — centered viewport-min-height layout shell for Error patterns.
+ *
+ * Composed by Error-{404,403,401,500,503,Maintenance,Offline,RateLimited,
+ * BrowserUnsupported,ComingSoon} via {% embed %} with `content` block (see
+ * `_error-shell.html.twig` header).
+ *
+ * Layout (default + hero variants):
+ *
+ *   ┌─────────────────────────────────────────────┐
+ *   │  <main class="theme-error-shell">           │
+ *   │  ┌───────────────────────────────────────┐  │
+ *   │  │  <section class="…__panel">           │  │
+ *   │  │   Empty primitive                     │  │
+ *   │  │   (illustration + title + body        │  │
+ *   │  │    + actions)                         │  │
+ *   │  │  ─────────────────────────────────    │  │
+ *   │  │   <footer> (optional)                 │  │
+ *   │  └───────────────────────────────────────┘  │
+ *   └─────────────────────────────────────────────┘
+ *       block-axis centered, 100vh / 100dvh height
+ *
+ * The "default" variant has a smaller panel max-inline-size (40rem ~640px)
+ * sized for icon-feel error pages. The "hero" variant widens to 50rem
+ * (~800px) to accommodate the larger custom SVG illustration.
+ *
+ * Reduced-motion: nothing animates at shell level. Inner Button + Empty
+ * keep their own 120 ms transitions per their primitive's CSS.
+ *
+ * Doctrine cascade : mirror `_auth-shell.css` verbatim where possible. The
+ * `_pattern-shell` generic future (Onboarding-WelcomeScreens S3.2 may reuse)
+ * inherits this layout doctrine.
+ */
+
+.theme-error-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 100vh;
+  /* 100dvh handles mobile viewport quirks (Safari URL-bar shrink). */
+  min-block-size: 100dvh;
+  background-color: var(--color-bg-base);
+  box-sizing: border-box;
+  /* Honor safe-area insets for iOS notch + bottom bar. */
+  padding-block: max(var(--spacing-6), env(safe-area-inset-top)) max(var(--spacing-6), env(safe-area-inset-bottom));
+  padding-inline: max(var(--spacing-4), env(safe-area-inset-left)) max(var(--spacing-4), env(safe-area-inset-right));
+}
+
+/* ----- panel -------------------------------------------------------- */
+
+.theme-error-shell__panel {
+  inline-size: 100%;
+  max-inline-size: 40rem; /* ~640 px — error-feel pages */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8);
+  text-align: center;
+}
+
+.theme-error-shell--hero .theme-error-shell__panel {
+  max-inline-size: 50rem; /* ~800 px — accommodate hero SVG */
+}
+
+/* ----- footer ------------------------------------------------------- */
+
+.theme-error-shell__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2) var(--spacing-4);
+  color: var(--color-text-secondary);
+  font: var(--typography-body);
+}

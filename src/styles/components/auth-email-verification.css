@@ -1,0 +1,15 @@
+/*
+ * Auth-EmailVerification — terminal "check your email" pattern (Ring 3 S3.1b).
+ *
+ * Composes `_auth-shell` (title null) + Empty (lg, h1) + Button × 1-2.
+ * The shell + Empty + Button do all the layout. This file's only job is
+ * to tint the check icon with the success brand colour (vs the default
+ * decorative tertiary) — visually signals "action succeeded server-side"
+ * to reinforce the body message "Email envoyé."
+ *
+ * See `docs/specs/ring3/Auth-EmailVerification.md` for the full spec.
+ */
+
+.theme-auth-email-verification .theme-empty__illustration {
+  color: var(--color-success);
+}

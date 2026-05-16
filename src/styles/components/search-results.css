@@ -1,0 +1,54 @@
+/*
+ * Search-Results — search results list (Ring 3 S3.3b-2).
+ *
+ * Pure composition Item Ring 1 list. No controller. Consumer provides
+ * the results array via Twig + handles row click (each row is an
+ * `<a href>` or `<button>` Item per consumer choice).
+ *
+ * Bundle budget : ~0.20 kB gzip (per ADR-0031 Path X corrected baseline
+ * for thin marker class).
+ */
+
+.theme-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  inline-size: 100%;
+}
+
+.theme-search-results__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-3);
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+}
+
+.theme-search-results__count {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.theme-search-results__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0_5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theme-search-results__item {
+  /*
+   * Each list item wraps an Item Ring 1 instance. The Item primitive
+   * carries its own focus/hover/selected/disabled visuals; we add no
+   * overrides — separation of concerns per Item.md.
+   */
+}
+
+.theme-search-results__empty {
+  /* Empty state slot — consumer composes Empty Ring 1 here. */
+}

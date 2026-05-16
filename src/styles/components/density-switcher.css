@@ -1,0 +1,25 @@
+/*
+ * DensitySwitcher — density picker (Ring 3 S3.3b-1).
+ *
+ * Composes ToggleGroup Ring 1. Marker class adds minor spacing tweaks
+ * for the inline label + slightly tighter group rendering than generic
+ * ToggleGroup. The actual data-density attribute is flipped by the
+ * `density-switcher` controller on documentElement (or other configurable
+ * target).
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
+ */
+
+.theme-density-switcher {
+  display: inline-grid;
+  gap: var(--spacing-1_5);
+  align-items: center;
+}
+
+.theme-density-switcher__group {
+  /* Inherits ToggleGroup envelope. Marker reserved for per-instance overrides. */
+}
+
+.theme-density-switcher__item {
+  white-space: nowrap;
+}

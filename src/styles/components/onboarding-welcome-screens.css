@@ -1,0 +1,97 @@
+/*
+ * Onboarding-WelcomeScreens — multi-step welcome flow (Ring 3 S3.2).
+ *
+ * No dedicated shell per mid-session OQ-64 resolution. Composes Card +
+ * Stepper directly.
+ *
+ * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-onboarding-welcome-screens {
+  min-block-size: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-8);
+  padding-inline: var(--spacing-4);
+  background-color: var(--color-bg-base);
+}
+
+.theme-onboarding-welcome-screens__card {
+  max-inline-size: 32rem;
+  inline-size: 100%;
+}
+
+.theme-onboarding-welcome-screens__header {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.theme-onboarding-welcome-screens__title {
+  text-align: center;
+}
+
+.theme-onboarding-welcome-screens__stepper .theme-stepper {
+  margin: 0;
+}
+
+.theme-onboarding-welcome-screens__body {
+  display: grid;
+  gap: var(--spacing-3);
+  text-align: center;
+  padding-block: var(--spacing-6);
+}
+
+.theme-onboarding-welcome-screens__step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 64px;
+  block-size: 64px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-soft-foreground);
+  margin-inline: auto;
+}
+
+.theme-onboarding-welcome-screens__step-heading {
+  color: var(--color-text-primary);
+}
+
+.theme-onboarding-welcome-screens__step-body {
+  color: var(--color-text-secondary);
+  font: var(--typography-body);
+  max-inline-size: 38ch;
+  margin-inline: auto;
+}
+
+.theme-onboarding-welcome-screens__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.theme-onboarding-welcome-screens__nav {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+/* Mobile : stack the footer CTAs. */
+@media (width <= 600px) {
+  .theme-onboarding-welcome-screens__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-onboarding-welcome-screens__nav {
+    flex-direction: column-reverse;
+  }
+}
+
+/* iOS safe-area-inset. */
+@supports (padding: env(safe-area-inset-top)) {
+  .theme-onboarding-welcome-screens {
+    padding-block: max(var(--spacing-8), env(safe-area-inset-top)) max(var(--spacing-8), env(safe-area-inset-bottom));
+  }
+}

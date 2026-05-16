@@ -1,0 +1,56 @@
+/*
+ * Form-ColorPicker — color selection input (HSV/RGB/HSL/HEX + preset palette + optional alpha).
+ *
+ * Marker class — composition only. Field Ring 1 carries the Label + help + error ;
+ * Popover Ring 2 carries the positioning ; color-picker controller owns lazy
+ * Coloris load + preview sync.
+ *
+ * Coloris theme-aware CSS vars (--clr-*) overridden here to match kit tokens.
+ */
+
+.theme-form-color-picker__wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.theme-form-color-picker__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-1);
+  min-block-size: 2.5rem;
+}
+
+.theme-form-color-picker__preview {
+  display: inline-block;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-default);
+  flex-shrink: 0;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-form-color-picker__hex {
+  /* Compact hex input inside the trigger — uppercase + monospace for clarity. */
+  inline-size: 7rem;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.theme-form-color-picker__panel {
+  /* Coloris's picker UI renders inside this Popover content area. */
+  min-inline-size: 14rem;
+  padding: var(--spacing-3);
+}
+
+/* Override Coloris CSS variables to match kit tokens (theme-aware light/dark). */
+.theme-form-color-picker {
+  --clr-bg: var(--color-bg-elevated);
+  --clr-border: var(--color-border-default);
+  --clr-text: var(--color-text-primary);
+  --clr-input-bg: var(--color-bg-base);
+  --clr-input-border: var(--color-border-default);
+}

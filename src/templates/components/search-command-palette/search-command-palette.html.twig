@@ -1,0 +1,64 @@
+{#-
+  Search-CommandPalette — global ⌘K command palette wrapper (Ring 3 S3.3b-2).
+
+  Pure composition Command Ring 2 with search-themed defaults + optional
+  consumer-provided launcher button (typically in app header). NO new
+  controller — Command Ring 2 already ships its own (dialog+combobox+command).
+
+  The wrapper is value-add :
+    - Provides the marker class `.theme-search-command-palette` for
+      consumer styling differentiation.
+    - Defaults placeholder + hotkey to search-focused values.
+    - Documents the launcher button pattern (header button + ⌘K hint
+      Kbd inline).
+
+  Fuzzy search : NO. Command's substring filter (inherited from Combobox)
+  suffices. Fuse.js stays manifest.thirdPartyLibs.fuzzy:FuseJS = candidate
+  ring 2 — future Ring 4+ amend if typo-tolerant search needed (per
+  OQ-NEW sealed at S3.3b-2 opening).
+
+  Parameters (pass-through to Command Ring 2):
+    htmlId       (string, optional)
+    label        (string, optional, default 'Recherche globale')
+    placeholder  (string, optional, default 'Rechercher projets, tâches, documents…')
+    hotkey       (string, optional, default 'k')
+    commands     (array,  required)  — see Command Ring 2 spec for shape
+    kbdFooter    (array,  optional)  — Kbd hint cluster in footer
+
+  Optional consumer-provided launcher button (rendered separately by the
+  consumer in the app header) — example template :
+
+      <button type="button"
+              class="theme-button theme-search-command-palette__launcher"
+              data-variant="ghost"
+              onclick="window.themeCommand.open()">
+        <svg class="theme-icon" data-size="sm" aria-hidden="true">
+          <use href="#icon-search"/>
+        </svg>
+        <span>{{ 'Rechercher…'|trans }}</span>
+        <kbd class="theme-kbd theme-search-command-palette__launcher-kbd">⌘K</kbd>
+      </button>
+-#}
+
+{%- set htmlId      = htmlId      | default('theme-search-command-palette-' ~ random()) -%}
+{%- set label       = label       | default('theme.search-command-palette.label'|trans) -%}
+{%- set placeholder = placeholder | default('theme.search-command-palette.placeholder'|trans) -%}
+{%- set hotkey      = hotkey      | default('k') -%}
+{%- set commands    = commands    | default([]) -%}
+{%- set kbdFooter   = kbdFooter   | default([
+  { keys: ['↑', '↓'], label: 'theme.command.footer.navigate'|trans },
+  { keys: ['⏎'],      label: 'theme.command.footer.execute'|trans },
+  { keys: ['Esc'],    label: 'theme.command.footer.dismiss'|trans },
+]) -%}
+
+{# Defer to Command Ring 2 with search-themed defaults + marker class. #}
+<div class="theme-search-command-palette">
+  {% include '@theme/components/command/command.html.twig' with {
+    htmlId:      htmlId,
+    label:       label,
+    placeholder: placeholder,
+    hotkey:      hotkey,
+    commands:    commands,
+    kbdFooter:   kbdFooter,
+  } only %}
+</div>

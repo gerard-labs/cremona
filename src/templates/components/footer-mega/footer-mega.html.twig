@@ -1,0 +1,74 @@
+{#-
+  Footer-Mega — site-level multi-column footer (Ring 3 S3.2).
+
+  Composes Item Ring 1 (link rows) + optional newsletter aside + optional
+  social icons + legal row + copyright. Mirror per Nav-Header.md §1.
+
+  Parameters:
+    htmlId      (string, optional)
+    ariaLabel   (string, optional)  — distinguishes from app footer
+    columns     (array, required)   — [{heading, items: [{href, label}]}]
+    aside       (object, optional)  — {heading, body, html} consumer-driven content
+    social      (array, optional)   — [{href, label, icon}] consumer raw SVG via |raw
+    legal       (array, optional)   — [{href, label}]
+    copyright   (string, optional)
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-footer-mega-' ~ random()) -%}
+{%- set ariaLabel = ariaLabel | default('theme.nav.footer.aria.label'|trans) -%}
+{%- set aside     = aside     | default(null) -%}
+{%- set social    = social    | default([]) -%}
+{%- set legal     = legal     | default([]) -%}
+{%- set copyright = copyright | default(null) -%}
+
+<footer class="theme-footer-mega" id="{{ htmlId }}" aria-label="{{ ariaLabel }}">
+  <div class="theme-footer-mega__top">
+    <div class="theme-footer-mega__columns">
+      {%- for column in columns -%}
+        <section class="theme-footer-mega__column">
+          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: column.heading, className: 'theme-footer-mega__column-heading' } only %}
+          <ul class="theme-footer-mega__column-items">
+            {%- for item in column.items -%}
+              <li><a href="{{ item.href }}" class="theme-footer-mega__item">{{ item.label }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </section>
+      {%- endfor -%}
+    </div>
+
+    {%- if aside -%}
+      <aside class="theme-footer-mega__aside" aria-labelledby="{{ htmlId }}-aside">
+        {%- if aside.heading -%}{% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: aside.heading, htmlId: htmlId ~ '-aside' } only %}{%- endif -%}
+        {%- if aside.body -%}<p class="theme-footer-mega__aside-body">{{ aside.body }}</p>{%- endif -%}
+        {%- if aside.html -%}<div class="theme-footer-mega__aside-html">{{ aside.html|raw }}</div>{%- endif -%}
+
+        {%- if social|length > 0 -%}
+          <ul class="theme-footer-mega__social">
+            {%- for item in social -%}
+              <li>
+                <a href="{{ item.href }}" class="theme-footer-mega__social-link" aria-label="{{ item.label }}" rel="noopener noreferrer" target="_blank">
+                  {{ item.icon|raw }}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </aside>
+    {%- endif -%}
+  </div>
+
+  {%- if legal|length > 0 or copyright -%}
+    <div class="theme-footer-mega__bottom">
+      {%- if legal|length > 0 -%}
+        <ul class="theme-footer-mega__legal">
+          {%- for item in legal -%}
+            <li><a href="{{ item.href }}" class="theme-footer-mega__legal-link">{{ item.label }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- if copyright -%}
+        <p class="theme-footer-mega__copyright">{{ copyright }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</footer>

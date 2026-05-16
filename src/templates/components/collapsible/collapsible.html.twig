@@ -1,0 +1,97 @@
+{#-
+  Collapsible — disclosure widget (single show/hide region).
+
+  Custom `<button aria-expanded>` + content sibling with the CSS-only
+  `grid-template-rows: 0fr → 1fr` animation trick (OQ-16 doctrine — native
+  `<details>` doesn't animate without JS interception, the custom path gives
+  a clean controlled visual).
+
+  Stimulus controller `collapsible`:
+    - `toggle()` flips aria-expanded + flips data-state on the content wrapper
+      + dispatches `collapsible:toggle` (bubbles, composed) with detail.open.
+    - `connect()` syncs data-state from the initial aria-expanded so the CSS
+      animation doesn't flicker on mount.
+
+  Accordion (the orchestrator compound) listens for `collapsible:toggle` on
+  bubble — see Accordion.html.twig.
+
+  Parameters:
+    triggerLabel       (string, optional)  — visible text label on the button.
+                                              Required unless the `trigger`
+                                              block is overridden.
+    iconChevron        (bool,   optional)  — true (default). Show a trailing
+                                              chevron-down icon that rotates
+                                              180° on open.
+    open               (bool,   optional)  — false (default). Initial state
+                                              (mounts in the open state).
+    htmlId             (string, optional)  — auto-generated; used to chain
+                                              aria-controls + aria-labelledby.
+    triggerClassName   (string, optional)  — extra utility classes on the trigger.
+    contentClassName   (string, optional)  — extra utility classes on the content.
+    className          (string, optional)  — extra utility classes on the wrapper.
+
+  Blocks (one required):
+    trigger — overrides triggerLabel for rich trigger content (e.g. avatar +
+              name, or `<h3>` heading). The block content lives inside the
+              `<button>` element — don't wrap another `<button>` inside.
+    content — the content to show / hide. **Required** in all cases.
+-#}
+
+{%- set triggerLabel     = triggerLabel     | default(null) -%}
+{%- set iconChevron      = iconChevron      | default(true) -%}
+{%- set open             = open             | default(false) -%}
+{%- set htmlId           = htmlId           | default('theme-collapsible-' ~ random()) -%}
+{%- set triggerClassName = triggerClassName | default('') -%}
+{%- set contentClassName = contentClassName | default('') -%}
+{%- set className        = className        | default('') -%}
+
+{%- set _triggerId = htmlId ~ '-trigger' -%}
+{%- set _contentId = htmlId ~ '-content' -%}
+
+{%- set _classes = ['theme-collapsible'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _triggerClasses = ['theme-collapsible__trigger'] -%}
+{%- if triggerClassName -%}{%- set _triggerClasses = _triggerClasses | merge([triggerClassName]) -%}{%- endif -%}
+
+{%- set _contentClasses = ['theme-collapsible__content'] -%}
+{%- if contentClassName -%}{%- set _contentClasses = _contentClasses | merge([contentClassName]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="collapsible"
+  data-action="click->collapsible#toggle"
+>
+  <button
+    type="button"
+    id="{{ _triggerId }}"
+    class="{{ _triggerClasses | join(' ') }}"
+    aria-expanded="{{ open ? 'true' : 'false' }}"
+    aria-controls="{{ _contentId }}"
+  >
+    {%- if block('trigger') is defined and block('trigger') is not empty -%}
+      {%- block trigger -%}{%- endblock -%}
+    {%- else -%}
+      <span class="theme-collapsible__label">{{ triggerLabel }}</span>
+    {%- endif -%}
+    {%- if iconChevron -%}
+      {% include '@theme/components/icon/icon.html.twig' with {
+        name: 'chevron-down',
+        decorative: true,
+        size: 'sm',
+        className: 'theme-collapsible__chevron',
+      } %}
+    {%- endif -%}
+  </button>
+  <div
+    id="{{ _contentId }}"
+    class="{{ _contentClasses | join(' ') }}"
+    role="region"
+    aria-labelledby="{{ _triggerId }}"
+    data-state="{{ open ? 'open' : 'closed' }}"
+  >
+    <div class="theme-collapsible__content-inner">
+      {%- block content -%}{%- endblock -%}
+    </div>
+  </div>
+</div>

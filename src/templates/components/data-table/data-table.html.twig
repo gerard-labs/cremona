@@ -1,0 +1,419 @@
+{#-
+  DataTable — the kit's fully-featured workhorse compound for tabular data.
+
+  Composes the 4 S2.4a tables foundations (Table + Pagination + ScrollArea +
+  Resizable — the last two are consumer's opt-in wrap) + 4 selection primitives
+  (Checkbox bare-mode for select-all header + row checkboxes ; DropdownMenu
+  for column-visibility ; AlertDialog for bulk-destructive — wired by the
+  consumer via the dispatched `data-table:bulk-action` event).
+
+  Per OQ-34 (vanilla — sealed S2.4 opening), OQ-37 (single-col sort default,
+  opt-in multi-col), OQ-38 (text Input filter default), OQ-39 (AlertDialog
+  for bulk-destructive ; Sonner Toast-with-Undo deferred to S2.5+).
+
+  Composes:
+    - 1 Stimulus controller `data-table` (orchestrates sort + selection +
+      column-visibility + bulk + filter — see data-table_controller.js).
+    - [Table](../table/) primitive — `.theme-table` classes verbatim + the
+      block-override hook (we render our own <thead> + <tbody> inside).
+    - [Pagination](../pagination/) compound — footer with inline page-size.
+    - [Checkbox](../checkbox/) primitive — bare-mode for select-all header
+      + per-row checkboxes (S1.3 indeterminate doctrine via
+      `el.indeterminate = true`, browser-managed aria-checked="mixed").
+    - [Empty](../empty/) primitive — empty-state row when rows array is
+      empty (composed via `<tr><td colspan="N">`).
+    - [Icon](../icon/) primitive (curated 30 set) — settings, trash-2, etc.
+
+  Per WAI-ARIA APG: native `<table>` semantic (NOT `role="grid"` — see
+  DataTable.md §7 doctrine). aria-sort on sortable headers, aria-selected
+  on selected rows, aria-checked="mixed" auto-emitted by the browser when
+  el.indeterminate is true (S1.3 doctrine — NEVER stamp manually).
+
+  Parameters:
+    htmlId                (string,  optional) — auto-generated.
+    caption               (string,  optional) — accessible caption.
+    captionSrOnly         (bool,    optional) — true → caption visually hidden
+                                                but announced.
+    size                  (string,  optional) — sm | md (default) | lg.
+                                                Forwarded to Table.
+    variant               (string,  optional) — default | striped. Forwarded.
+    columns               (array,   required) — column definitions.
+      Each: { id, label, sortable?, sortDir?, filterType?, filterValue?,
+             filterPlaceholder?, align?, numeric?, visible?, togglable? }
+    rows                  (array,   required) — row data.
+      Each: { id, cells: [{ content, numeric?, align? }, …], selected? }
+    page                  (int,     optional) — initial pagination page.
+    pageSize              (int,     optional) — initial rows per page.
+    totalRows             (int,     optional) — total across pages.
+    pageSizes             (array,   optional) — [10, 25, 50, 100].
+    paginationLabels      (array,   optional) — { label, pageSizeLabel,
+                                                  firstAriaLabel, … } for
+                                                  the Pagination compound.
+    selectable            (bool,    optional) — default true. Adds select-all
+                                                + per-row checkboxes.
+    selectedRows          (array,   optional) — SSR pre-selection (row.id).
+    multiColumnSort       (bool,    optional) — default false. OQ-37 opt-in.
+    showColumnVisibility  (bool,    optional) — default true.
+    columnVisibilityLabel (string,  optional) — default 'Colonnes'.
+    bulkActions           (array,   optional) — toolbar bulk-action buttons.
+      Each: { id, label, variant?, iconLeading?, destructive? }
+    emptyTitle            (string,  optional) — empty-row title.
+    emptyBody             (string,  optional) — empty-row body.
+    emptyCta              (string,  optional) — empty-row CTA label (secondary).
+    emptyCtaAction        (string,  optional) — Stimulus action descriptor
+                                                fired on emptyCta click (e.g.
+                                                "click->myConsumer#clearFilters").
+
+  Blocks:
+    toolbar — extra toolbar content (e.g. a "Nouveau" primary button).
+    empty   — full Empty primitive composition (overrides emptyTitle/Body/Cta).
+
+  Events emitted (raw CustomEvent on the wrap):
+    data-table:sort-change       — detail.{column, direction, isMultiCol}
+    data-table:selection-change  — detail.{selectedRows, count}
+    data-table:column-visibility-change — detail.{visibleColumns}
+    data-table:bulk-action       — detail.{actionId, selectedRows}
+    data-table:filter-change     — detail.{column, query, allFilters}
+
+  Bubbled from nested compounds:
+    pagination:change            — detail.{page, pageSize, from, to, total,
+                                           totalPages}
+    popover:open / popover:close — from the column-visibility DropdownMenu
+-#}
+
+{%- set htmlId               = htmlId               | default('theme-data-table-' ~ random()) -%}
+{%- set caption              = caption              | default(null) -%}
+{%- set captionSrOnly        = captionSrOnly        | default(true) -%}
+{%- set size                 = size                 | default('md') -%}
+{%- set variant              = variant              | default('default') -%}
+{%- set columns              = columns              | default([]) -%}
+{%- set rows                 = rows                 | default([]) -%}
+{%- set page                 = page                 | default(1) -%}
+{%- set pageSize             = pageSize             | default(25) -%}
+{%- set totalRows            = totalRows            | default(rows | length) -%}
+{%- set pageSizes            = pageSizes            | default([10, 25, 50, 100]) -%}
+{%- set paginationLabels     = paginationLabels     | default({}) -%}
+{%- set selectable           = selectable           | default(true) -%}
+{%- set selectedRows         = selectedRows         | default([]) -%}
+{%- set multiColumnSort      = multiColumnSort      | default(false) -%}
+{%- set showColumnVisibility = showColumnVisibility | default(true) -%}
+{%- set columnVisibilityLabel = columnVisibilityLabel | default('Colonnes') -%}
+{%- set columnVisibilityAria = columnVisibilityAria | default('Afficher / masquer les colonnes') -%}
+{%- set bulkActions          = bulkActions          | default([]) -%}
+{%- set emptyTitle           = emptyTitle           | default('Aucun résultat') -%}
+{%- set emptyBody            = emptyBody            | default('Aucun élément ne correspond aux filtres.') -%}
+{%- set emptyCta             = emptyCta             | default(null) -%}
+{%- set emptyCtaAction       = emptyCtaAction       | default(null) -%}
+{%- set ariaSelectAll        = ariaSelectAll        | default('Tout sélectionner') -%}
+{%- set ariaDeselect         = ariaDeselect         | default('Désélectionner') -%}
+{%- set ariaSelectRow        = ariaSelectRow        | default('Sélectionner la ligne') -%}
+{%- set ariaFilter           = ariaFilter           | default('Filtrer') -%}
+{%- set className            = className            | default('') -%}
+{# controllerExtras (array, optional, default []) — additional Stimulus controllers
+   to compose on the same wrap element (e.g. ['sortable'] for sortable rows).
+   Per ADR-0048 Ring 2 amend ; consumer MUST NOT include 'data-table' (auto-injected). #}
+{%- set controllerExtras     = controllerExtras     | default([]) -%}
+
+{# Build the list of all visible column ids — used for the initial visibleColumns value. #}
+{%- set _visibleIds = [] -%}
+{%- for col in columns -%}
+  {%- if col.visible | default(true) -%}
+    {%- set _visibleIds = _visibleIds | merge([col.id]) -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{# Build the total column count for empty-row colspan (visible cols + select cell if selectable). #}
+{%- set _colspanTotal = _visibleIds | length + (selectable ? 1 : 0) -%}
+
+{# Does any column have a filter? Drives the conditional filter row render. #}
+{%- set _hasAnyFilter = false -%}
+{%- for col in columns -%}
+  {%- if col.filterType is defined and col.filterType -%}
+    {%- set _hasAnyFilter = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- set _classes = ['theme-data-table'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="{{ (['data-table'] | merge(controllerExtras)) | join(' ') }}"
+  data-action="click->data-table#toggleSort change->data-table#toggleRow change->data-table#toggleSelectAll change->data-table#toggleColumnVisibility input->data-table#filter click->data-table#bulkAction click->data-table#clearSelection"
+  data-data-table-sort-column-value=""
+  data-data-table-sort-dir-value="none"
+  data-data-table-selected-rows-value="{{ selectedRows | json_encode }}"
+  data-data-table-visible-columns-value="{{ _visibleIds | json_encode }}"
+  data-data-table-total-rows-value="{{ totalRows }}"
+  data-data-table-multi-column-sort-value="{{ multiColumnSort ? 'true' : 'false' }}"
+>
+
+  {# ---- Toolbar (bulk-bar + column-vis) ---- #}
+  {%- if selectable or bulkActions | length > 0 or showColumnVisibility -%}
+    <div class="theme-data-table__toolbar">
+
+      {%- if selectable or bulkActions | length > 0 -%}
+        <div
+          class="theme-data-table__bulk-bar"
+          data-data-table-target="bulkBar"
+          hidden
+        >
+          <span
+            class="theme-data-table__bulk-count"
+            data-data-table-target="bulkCount"
+            aria-live="polite"
+            aria-atomic="true"
+          ></span>
+          <div class="theme-data-table__bulk-actions" role="group">
+            {% include '@theme/components/button/button.html.twig' with {
+              label: ariaDeselect,
+              variant: 'ghost',
+              size: 'sm',
+              attrs: { 'data-action': 'click->data-table#clearSelection' },
+            } only %}
+            {%- for action in bulkActions -%}
+              {% include '@theme/components/button/button.html.twig' with {
+                label: action.label,
+                variant: action.variant | default('secondary'),
+                size: 'sm',
+                iconLeading: action.iconLeading | default(null),
+                attrs: { 'data-bulk-action-id': action.id, 'data-action': 'click->data-table#bulkAction' },
+              } only %}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if showColumnVisibility -%}
+        <div
+          class="theme-data-table__column-visibility"
+          data-data-table-target="columnVisibilityTrigger"
+        >
+          {% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' with {
+            htmlId: htmlId ~ '-col-vis',
+            placement: 'bottom-end',
+            offset: 4,
+            closeOnItemClick: false,
+            className: 'theme-data-table__column-visibility-menu',
+          } %}
+            {% block trigger %}
+              {% include '@theme/components/button/button.html.twig' with {
+                label: columnVisibilityLabel,
+                variant: 'secondary',
+                size: 'sm',
+                iconLeading: 'settings',
+                attrs: {
+                  'data-popover-target': 'trigger',
+                  'aria-haspopup': 'menu',
+                  'aria-expanded': 'false',
+                  'aria-controls': popoverHtmlId,
+                  'aria-label': columnVisibilityAria,
+                },
+              } only %}
+            {% endblock %}
+            {% block items %}
+              {%- for col in columns -%}
+                {%- if col.togglable | default(true) -%}
+                  {% embed '@theme/components/item/item.html.twig' with { attrs: { role: 'menuitem' } } %}
+                    {% block content %}
+                      <label class="theme-data-table__column-visibility-option">
+                        <input
+                          type="checkbox"
+                          class="theme-checkbox__input"
+                          data-data-table-column-vis="{{ col.id }}"
+                          data-action="change->data-table#toggleColumnVisibility"
+                          {%- if col.visible | default(true) %} checked{% endif -%}
+                        >
+                        <span>{{ col.label }}</span>
+                      </label>
+                    {% endblock %}
+                  {% endembed %}
+                {%- endif -%}
+              {%- endfor -%}
+            {% endblock %}
+          {% endembed %}
+        </div>
+      {%- endif -%}
+
+    </div>
+  {%- endif -%}
+
+  {# ---- Table — composes the Table primitive via the block override path. ---- #}
+  {% embed '@theme/components/table/table.html.twig' with {
+    htmlId: htmlId ~ '-table',
+    caption: caption,
+    captionSrOnly: captionSrOnly,
+    size: size,
+    variant: variant,
+    className: 'theme-data-table__table',
+  } %}
+    {% block thead %}
+      <thead class="theme-table__thead" data-data-table-target="table-thead">
+        <tr>
+          {% if selectable %}
+            <th class="theme-data-table__select-all-cell">
+              {% include '@theme/components/checkbox/checkbox.html.twig' with {
+                size: 'sm',
+                ariaLabel: ariaSelectAll,
+                attrs: {
+                  'data-data-table-target': 'selectAllCheckbox',
+                  'data-action': 'change->data-table#toggleSelectAll',
+                },
+              } only %}
+            </th>
+          {% endif %}
+          {% for col in columns %}
+            {%- set colSortable = col.sortable | default(false) -%}
+            {%- set colSortDir = col.sortDir | default('none') -%}
+            {%- set colAlign = col.numeric | default(false) ? 'end' : (col.align | default(null)) -%}
+            {%- set colNumeric = col.numeric | default(false) -%}
+            {%- set colVisible = col.visible | default(true) -%}
+            <th
+              data-data-table-column="{{ col.id }}"
+              data-data-table-column-cell="{{ col.id }}"
+              {%- if colAlign %} data-align="{{ colAlign }}"{% endif -%}
+              {%- if colNumeric %} data-numeric="true"{% endif -%}
+              {%- if colSortable %} data-sortable="true" aria-sort="{{ colSortDir }}"{% endif -%}
+              {%- if not colVisible %} hidden{% endif -%}
+            >
+              {%- if colSortable -%}
+                <button
+                  type="button"
+                  class="theme-table__sort"
+                  data-data-table-column="{{ col.id }}"
+                  data-sort-dir="{{ colSortDir }}"
+                >
+                  <span class="theme-table__sort-label">{{ col.label }}</span>
+                  <span class="theme-table__sort-icon" aria-hidden="true"></span>
+                </button>
+              {%- else -%}
+                {{ col.label }}
+              {%- endif -%}
+            </th>
+          {% endfor %}
+        </tr>
+
+        {% if _hasAnyFilter %}
+          <tr class="theme-data-table__filter-row" data-data-table-target="filterRow">
+            {% if selectable %}<th></th>{% endif %}
+            {% for col in columns %}
+              {%- set colVisible = col.visible | default(true) -%}
+              <th
+                data-data-table-column-cell="{{ col.id }}"
+                {%- if not colVisible %} hidden{% endif -%}
+              >
+                {%- if col.filterType is defined and col.filterType -%}
+                  {%- if col.filterType != 'text' -%}
+                    {# OQ-38: combobox/date filterType warn-fallback to text in S2.4b #}
+                  {%- endif -%}
+                  {% include '@theme/components/input/input.html.twig' with {
+                    type: 'text',
+                    size: 'sm',
+                    value: col.filterValue | default(''),
+                    placeholder: col.filterPlaceholder | default(ariaFilter),
+                    className: 'theme-data-table__filter-input',
+                    attrs: {
+                      'data-data-table-filter-column': col.id,
+                      'data-action': 'input->data-table#filter',
+                      'aria-label': col.label,
+                    },
+                  } only %}
+                {%- endif -%}
+              </th>
+            {% endfor %}
+          </tr>
+        {% endif %}
+      </thead>
+    {% endblock %}
+
+    {% block tbody %}
+      <tbody class="theme-table__tbody">
+        {%- if rows | length > 0 -%}
+          {%- for row in rows -%}
+            {%- set rowSelected = row.selected | default(false) or row.id in selectedRows -%}
+            <tr
+              data-data-table-row-id="{{ row.id }}"
+              {%- if rowSelected %} data-selected="true" aria-selected="true"{% endif -%}
+            >
+              {%- if selectable -%}
+                <td class="theme-data-table__select-cell">
+                  {% include '@theme/components/checkbox/checkbox.html.twig' with {
+                    size: 'sm',
+                    checked: rowSelected,
+                    ariaLabel: ariaSelectRow ~ ' ' ~ row.id,
+                    attrs: {
+                      'data-data-table-target': 'rowCheckbox',
+                      'data-data-table-row-id': row.id,
+                      'data-action': 'change->data-table#toggleRow',
+                    },
+                  } only %}
+                </td>
+              {%- endif -%}
+              {%- for i, cell in row.cells -%}
+                {%- set col = columns[i] | default(null) -%}
+                {%- if col is not null -%}
+                  {%- set cellAlign = cell.numeric | default(false) ? 'end' : (cell.align | default(col.align | default(null))) -%}
+                  {%- set cellNumeric = cell.numeric | default(col.numeric | default(false)) -%}
+                  {%- set colVisible = col.visible | default(true) -%}
+                  <td
+                    data-data-table-column-cell="{{ col.id }}"
+                    {%- if cellAlign %} data-align="{{ cellAlign }}"{% endif -%}
+                    {%- if cellNumeric %} data-numeric="true"{% endif -%}
+                    {%- if not colVisible %} hidden{% endif -%}
+                  >{{- cell.content | raw -}}</td>
+                {%- endif -%}
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        {%- else -%}
+          {# Empty state row — colspan total = visible cols + (selectable ? 1 : 0) #}
+          <tr
+            class="theme-data-table__empty-row"
+            data-data-table-target="emptyState"
+          >
+            <td colspan="{{ _colspanTotal }}">
+              {% include '@theme/components/empty/empty.html.twig' with {
+                size: 'sm',
+                titleLevel: 'h3',
+                title: emptyTitle,
+                body: emptyBody,
+                icon: 'search',
+              } only %}
+              {%- if emptyCta and emptyCtaAction -%}
+                <div class="theme-data-table__empty-cta">
+                  {% include '@theme/components/button/button.html.twig' with {
+                    label: emptyCta,
+                    variant: 'secondary',
+                    size: 'sm',
+                    attrs: { 'data-action': emptyCtaAction },
+                  } only %}
+                </div>
+              {%- endif -%}
+            </td>
+          </tr>
+        {%- endif -%}
+      </tbody>
+    {% endblock %}
+  {% endembed %}
+
+  {# ---- Pagination footer — only when totalRows > pageSize. ---- #}
+  {%- if totalRows > pageSize -%}
+    <div class="theme-data-table__pagination-wrap" data-data-table-target="paginationMount">
+      {% include '@theme/components/pagination/pagination.html.twig' with {
+        htmlId: htmlId ~ '-pagination',
+        page: page,
+        pageSize: pageSize,
+        totalItems: totalRows,
+        pageSizes: pageSizes,
+        label: paginationLabels.label | default('Pagination'),
+        pageSizeLabel: paginationLabels.pageSizeLabel | default('Lignes par page'),
+        firstAriaLabel: paginationLabels.firstAriaLabel | default('Première page'),
+        prevAriaLabel: paginationLabels.prevAriaLabel | default('Page précédente'),
+        nextAriaLabel: paginationLabels.nextAriaLabel | default('Page suivante'),
+        lastAriaLabel: paginationLabels.lastAriaLabel | default('Dernière page'),
+      } only %}
+    </div>
+  {%- endif -%}
+
+</div>

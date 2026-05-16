@@ -1,0 +1,197 @@
+/*
+ * Alert — inline status banner.
+ *
+ * 4 variants (info / warning / danger / success) × 2 tones (soft / solid).
+ *
+ * Tones exercise the full token matrix asserted in tools/check-tokens.js:
+ *   - solid: `*` bg + `*-foreground` text  (no border)
+ *   - soft:  `*-soft` bg + `*-soft-foreground` text + `*-border` border (1 px)
+ *
+ * The icon stays at inline-start (logical CSS — RTL flips visually).
+ * The dismiss button sits at inline-end and inherits the variant foreground
+ * color so the X is legible on any tone.
+ *
+ * Doctrine:
+ *   - role="alert" (danger) → assertive aria-live implicit, no extra attrs.
+ *   - role="status" (others) → polite aria-live implicit.
+ *   - Animation appear: opacity + small translateY, 180 ms emphasized (per
+ *     14-motion-baseline §1 "Popover/dropdown open" pattern, subtle variant).
+ *   - Animation dismiss: opacity 1→0, 120 ms accelerate; controller listens
+ *     for transitionend then removes the element + announces.
+ */
+
+.theme-alert {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  /* Appear animation — fires once on mount. */
+  animation: theme-alert-appear var(--motion-duration-base) var(--motion-easing-emphasized);
+  /* Dismiss transition prepared — actual property change driven by
+     `data-state="dismissing"` (set by controller). */
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-accelerate);
+}
+
+@keyframes theme-alert-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dismiss state — controller stamps this just before removal. */
+.theme-alert[data-state="dismissing"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ----- variant + tone matrix -------------------------------------- */
+
+/* -- info -- */
+.theme-alert[data-variant="info"][data-tone="solid"] {
+  background-color: var(--color-info);
+  color: var(--color-info-foreground);
+}
+
+.theme-alert[data-variant="info"][data-tone="soft"] {
+  background-color: var(--color-info-soft);
+  color: var(--color-info-soft-foreground);
+  border-color: var(--color-info-border);
+}
+
+/* -- warning -- */
+.theme-alert[data-variant="warning"][data-tone="solid"] {
+  background-color: var(--color-warning);
+  color: var(--color-warning-foreground);
+}
+
+.theme-alert[data-variant="warning"][data-tone="soft"] {
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning-soft-foreground);
+  border-color: var(--color-warning-border);
+}
+
+/* -- danger -- */
+.theme-alert[data-variant="danger"][data-tone="solid"] {
+  background-color: var(--color-danger);
+  color: var(--color-danger-foreground);
+}
+
+.theme-alert[data-variant="danger"][data-tone="soft"] {
+  background-color: var(--color-danger-soft);
+  color: var(--color-danger-soft-foreground);
+  border-color: var(--color-danger-border);
+}
+
+/* -- success -- */
+.theme-alert[data-variant="success"][data-tone="solid"] {
+  background-color: var(--color-success);
+  color: var(--color-success-foreground);
+}
+
+.theme-alert[data-variant="success"][data-tone="soft"] {
+  background-color: var(--color-success-soft);
+  color: var(--color-success-soft-foreground);
+  border-color: var(--color-success-border);
+}
+
+/* ----- inner anatomy ---------------------------------------------- */
+
+.theme-alert__icon {
+  flex-shrink: 0;
+  /* Pull icon down so its visual centroid aligns with the title's cap-height
+     rather than the body's center — a typographic micro-adjustment. */
+  margin-block-start: 2px;
+}
+
+.theme-alert__content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  /* Allow long content to wrap inside flex. */
+  min-inline-size: 0;
+}
+
+.theme-alert__title {
+  font: var(--typography-label);
+  font-weight: var(--font-weight-semibold);
+  /* Title inherits the alert's color (variant-driven) — no override. */
+  margin: 0;
+}
+
+.theme-alert__body {
+  font: var(--typography-body);
+  /* Body slightly lighter than the title via inherited color (the variant
+     tone already establishes the readable pair). */
+  margin: 0;
+}
+
+.theme-alert__body p {
+  margin: 0;
+}
+
+.theme-alert__body p + p {
+  margin-block-start: var(--spacing-2);
+}
+
+.theme-alert__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  margin-block-start: var(--spacing-2);
+}
+
+/* ----- dismiss button --------------------------------------------- */
+
+.theme-alert__dismiss {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  /* Pull up slightly so the X aligns with the title's cap-height. */
+  margin-block-start: 2px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0.7;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-alert__dismiss:hover {
+  opacity: 1;
+  /* Subtle bg darken — works on both solid (foreground/8% on bg) and soft
+     (foreground/8% on soft bg) tones because color is currentColor. */
+  background-color: color-mix(in oklch, currentColor 10%, transparent);
+}
+
+.theme-alert__dismiss:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--ring-width) currentColor;
+  opacity: 1;
+}
+
+/* Touch hardening: 44 px tap area under coarse pointer. */
+@media (pointer: coarse) {
+  .theme-alert__dismiss {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+  }
+}

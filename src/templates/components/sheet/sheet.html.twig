@@ -1,0 +1,109 @@
+{#-
+  Sheet — responsive variant of Drawer. Per Ring 2 S2.2 OQ-26 doctrine
+  (sealed at S2.2 opening): the responsive pivot lives at 768 px (Tailwind
+  `md` breakpoint).
+    - Desktop (≥ 768 px): behaves per the consumer-configured `edge`
+      (side-drawer / top-drawer / bottom-drawer)
+    - Mobile (< 768 px): forces bottom-sheet semantics REGARDLESS of edge
+      (the CSS @media query overrides pinning + transform)
+
+  Sheet's Stimulus controller extends DrawerController (same modal mechanics,
+  inherited `edge` value) and dispatches `sheet:open` / `sheet:close` instead
+  of `drawer:*` so consumer listeners can filter by intent.
+
+  Parameters:
+    htmlId          (string, optional) — auto-generated.
+    edge            (string, optional) — start | end (default) | top | bottom.
+                                         On mobile, this is ignored visually
+                                         but still reported in event detail.
+    open            (bool,   optional) — false (default). SSR-open sheets.
+    closeButton     (bool,   optional) — true (default).
+    closeOnEscape   (bool,   optional) — true (default).
+    closeOnBackdropClick (bool, optional) — true (default).
+    closeAriaLabel  (string, optional) — required if closeButton true.
+    showHandle      (bool,   optional) — true (default). The drag-handle visual
+                                         affordance, displayed on mobile
+                                         bottom-sheets via the media query.
+                                         Hidden on desktop via CSS.
+    className       (string, optional) — extra classes on the outer wrap.
+    sheetClassName  (string, optional) — extra classes on the <dialog>.
+
+  Blocks:
+    trigger (optional) — opens the sheet (`data-action="click->sheet#open"`).
+    title   (required) — <h2> heading.
+    body    (required) — main content (scrolls internally when overflow).
+    footer  (optional) — button cluster.
+-#}
+
+{%- set htmlId               = htmlId               | default('theme-sheet-' ~ random()) -%}
+{%- set edge                 = edge                 | default('end') -%}
+{%- set open                 = open                 | default(false) -%}
+{%- set closeButton          = closeButton          ?? true -%}
+{%- set closeOnEscape        = closeOnEscape        ?? true -%}
+{%- set closeOnBackdropClick = closeOnBackdropClick ?? true -%}
+{%- set closeAriaLabel       = closeAriaLabel       | default(null) -%}
+{%- set showHandle           = showHandle           ?? true -%}
+{%- set className            = className            | default('') -%}
+{%- set sheetClassName       = sheetClassName       | default('') -%}
+
+{%- set _wrapClasses = ['theme-sheet-wrap'] -%}
+{%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _sheetClasses = ['theme-sheet'] -%}
+{%- if sheetClassName -%}{%- set _sheetClasses = _sheetClasses | merge([sheetClassName]) -%}{%- endif -%}
+
+{%- set _titleId = htmlId ~ '-title' -%}
+
+{%- set sheetHtmlId = htmlId -%}
+{%- set sheetTitleId = _titleId -%}
+
+<div
+  class="{{ _wrapClasses | join(' ') }}"
+  data-controller="sheet"
+  data-sheet-open-value="{{ open ? 'true' : 'false' }}"
+  data-sheet-edge-value="{{ edge }}"
+  data-sheet-close-on-escape-value="{{ closeOnEscape ? 'true' : 'false' }}"
+  data-sheet-close-on-backdrop-click-value="{{ closeOnBackdropClick ? 'true' : 'false' }}"
+>
+  {%- if block('trigger') is defined and block('trigger') is not empty -%}
+    {%- block trigger -%}{%- endblock -%}
+  {%- endif -%}
+
+  <dialog
+    id="{{ htmlId }}"
+    class="{{ _sheetClasses | join(' ') }}"
+    data-sheet-target="dialog"
+    data-edge="{{ edge }}"
+    aria-labelledby="{{ _titleId }}"
+  >
+    {%- if showHandle -%}
+      <span class="theme-sheet__handle" aria-hidden="true"></span>
+    {%- endif -%}
+
+    <header class="theme-sheet__header">
+      <h2 id="{{ _titleId }}" class="theme-sheet__title">
+        {%- block title -%}{%- endblock -%}
+      </h2>
+      {%- if closeButton and closeAriaLabel -%}
+        {% include '@theme/components/button/button.html.twig' with {
+          variant: 'ghost',
+          size: 'sm',
+          iconLeading: 'x',
+          ariaLabel: closeAriaLabel,
+          className: 'theme-sheet__close',
+          attrs: { 'data-action': 'click->sheet#close' },
+        } only %}
+      {%- endif -%}
+    </header>
+
+    <div class="theme-sheet__body">
+      {%- block body -%}{%- endblock -%}
+    </div>
+
+    {%- if block('footer') is defined and block('footer') is not empty -%}
+      <footer class="theme-sheet__footer">
+        {%- block footer -%}{%- endblock -%}
+      </footer>
+    {%- endif -%}
+  </dialog>
+</div>

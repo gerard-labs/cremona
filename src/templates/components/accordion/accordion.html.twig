@@ -1,0 +1,53 @@
+{#-
+  Accordion — orchestrates N Collapsible items with optional single-mode
+  mutex + roving tabindex + Arrow / Home / End keyboard navigation between
+  triggers.
+
+  Composes N Collapsible children (consumer-provided via the `items` block).
+  Each item is a full Collapsible — Accordion does NOT render the triggers
+  itself, it just listens to bubbled `collapsible:toggle` events.
+
+  Modes:
+    - single  (default) — only ONE Collapsible may be open at a time.
+                          Opening one closes the others (mutex).
+    - multi             — each Collapsible toggles independently.
+                          (Functionally equivalent to N standalone Collapsibles;
+                          Accordion still provides the keyboard nav.)
+
+  Keyboard pattern (WAI-ARIA APG "Accordion" pattern, except we omit
+  Ctrl+PgUp/Down which is rarely needed for the kit's use cases):
+    Tab / Shift+Tab → enter/leave the group on the active trigger.
+    Arrow Down       → next trigger (cyclic).
+    Arrow Up         → previous trigger (cyclic).
+    Home             → first trigger.
+    End              → last trigger.
+    Enter / Space    → toggle the focused Collapsible (native button activation).
+
+  Parameters:
+    htmlId       (string, optional)  — auto-generated.
+    mode         (string, optional)  — single (default) | multi.
+    className    (string, optional)  — extra utility classes on the wrapper.
+
+  Blocks (one required):
+    items — N Collapsible includes. Each Collapsible carries its own controller
+            + its own aria-* contract. The Accordion does NOT touch the inner
+            ARIA attributes (single source of truth — the inner Collapsible).
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-accordion-' ~ random()) -%}
+{%- set mode      = mode      | default('single') -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-accordion'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  id="{{ htmlId }}"
+  data-controller="accordion"
+  data-action="collapsible:toggle->accordion#onChildToggle keydown->accordion#keydown"
+  data-accordion-mode-value="{{ mode }}"
+  data-mode="{{ mode }}"
+>
+  {%- block items -%}{%- endblock -%}
+</div>

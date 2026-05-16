@@ -1,0 +1,150 @@
+/*
+ * Footer-Mega — site-level multi-column footer (Ring 3 S3.2).
+ *
+ * 4-col @ desktop → 2-col @ tablet → 1-col @ mobile.
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-footer-mega {
+  background-color: var(--color-bg-sunken);
+  border-block-start: 1px solid var(--color-border-default);
+  padding-block: var(--spacing-12);
+  padding-inline: var(--spacing-6);
+}
+
+.theme-footer-mega__top {
+  max-inline-size: 1280px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
+}
+
+@media (width >= 1024px) {
+  .theme-footer-mega__top:has(.theme-footer-mega__aside) {
+    grid-template-columns: 1fr 320px;
+  }
+}
+
+.theme-footer-mega__columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+}
+
+@media (width >= 768px) {
+  .theme-footer-mega__columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width >= 1024px) {
+  .theme-footer-mega__columns {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+.theme-footer-mega__column-heading {
+  color: var(--color-text-tertiary);
+  margin-block-end: var(--spacing-3);
+}
+
+.theme-footer-mega__column-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+.theme-footer-mega__item {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-footer-mega__item:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.theme-footer-mega__item:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: 2px;
+}
+
+.theme-footer-mega__aside {
+  display: grid;
+  gap: var(--spacing-3);
+}
+
+.theme-footer-mega__aside-body {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.theme-footer-mega__social {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.theme-footer-mega__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 36px;
+  block-size: 36px;
+  border-radius: var(--radius-button);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard), color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-footer-mega__social-link:hover {
+  background-color: var(--color-hover-overlay);
+  color: var(--color-text-primary);
+}
+
+.theme-footer-mega__bottom {
+  max-inline-size: 1280px;
+  margin-inline: auto;
+  margin-block-start: var(--spacing-8);
+  padding-block-start: var(--spacing-6);
+  border-block-start: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.theme-footer-mega__legal {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.theme-footer-mega__legal-link {
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-footer-mega__legal-link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.theme-footer-mega__copyright {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+}

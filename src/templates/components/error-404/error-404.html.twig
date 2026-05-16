@@ -1,0 +1,61 @@
+{#-
+  Error-404 — "Page not found" page (Ring 3 S3.1c).
+
+  Foundation pattern of the Errors family. Composes _error-shell (default) +
+  Empty (lg, h1) + Icon `search` (substitut per OQ-57b — visual: couldn't-find)
+  + Button × 1 (primary "Retour à l'accueil").
+
+  Microcopy verbatim from [12-microcopy-tone.md §"Pages" §404] :
+    - title FR "Cette page n'existe pas." / EN "This page doesn't exist."
+    - body  FR "Le lien est peut-être ancien, ou la page a déménagé."
+            EN "The link may be old, or the page may have moved."
+    - cta   FR "Retour à l'accueil" / EN "Back to home"
+
+  See `docs/specs/ring3/Error-404.md` §1 for shared Errors family doctrine.
+-#}
+
+{%- set title         = title         | default('theme.error.404.title'|trans) -%}
+{%- set body          = body          | default('theme.error.404.body'|trans) -%}
+{%- set primaryLabel  = primaryLabel  | default('theme.error.404.primary-cta'|trans) -%}
+{%- set primaryHref   = primaryHref   | default('/') -%}
+{%- set secondaryLabel = secondaryLabel | default(null) -%}
+{%- set secondaryHref = secondaryHref | default(null) -%}
+{%- set htmlId        = htmlId        | default('theme-error-404') -%}
+{%- set className     = className     | default('') -%}
+
+{%- set _classes = ['theme-error-404'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{% embed '@theme/components/_error-shell/_error-shell.html.twig' with {
+  variant: 'default',
+  htmlId: htmlId,
+  className: _classes | join(' '),
+} %}
+  {% block content %}
+    {% embed '@theme/components/empty/empty.html.twig' with {
+      size: 'lg',
+      titleLevel: 'h1',
+      icon: 'search',
+      title: title,
+      body: body,
+      htmlId: htmlId ~ '-empty',
+    } %}
+      {% block actions %}
+        {% include '@theme/components/button/button.html.twig' with {
+          label: primaryLabel,
+          variant: 'primary',
+          size: 'md',
+          href: primaryHref,
+        } %}
+        {% if secondaryLabel and secondaryHref %}
+          {% include '@theme/components/button/button.html.twig' with {
+            label: secondaryLabel,
+            variant: 'ghost',
+            size: 'md',
+            href: secondaryHref,
+          } %}
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}

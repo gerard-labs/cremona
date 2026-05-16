@@ -1,0 +1,160 @@
+/*
+ * Nav-SidebarApp — app-level vertical nav (Ring 3 S3.2).
+ *
+ * 3-zone : workspace header + nav sections (flex-grow) + user footer.
+ * Collapsed mode shrinks to 56 px icons-only. Hidden < 768 px.
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-nav-sidebar-app {
+  display: flex;
+  flex-direction: column;
+  inline-size: 240px;
+  block-size: 100dvh;
+  background-color: var(--color-bg-elevated);
+  border-inline-end: 1px solid var(--color-border-default);
+  transition: inline-size var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.theme-nav-sidebar-app--collapsed {
+  inline-size: 56px;
+}
+
+.theme-nav-sidebar-app__workspace {
+  padding: var(--spacing-3);
+  border-block-end: 1px solid var(--color-border-subtle);
+}
+
+.theme-nav-sidebar-app__workspace-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-button);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-nav-sidebar-app__workspace-link:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-nav-sidebar-app__workspace-name {
+  flex-grow: 1;
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-nav-sidebar-app__sections {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-2);
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.theme-nav-sidebar-app__section-heading {
+  color: var(--color-text-tertiary);
+  margin-block-end: var(--spacing-1);
+  padding-inline: var(--spacing-2);
+}
+
+.theme-nav-sidebar-app__section-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--spacing-px);
+}
+
+.theme-nav-sidebar-app__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+  min-block-size: 36px;
+}
+
+.theme-nav-sidebar-app__item:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-nav-sidebar-app__item[aria-current="page"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}
+
+.theme-nav-sidebar-app__item:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: -2px;
+}
+
+.theme-nav-sidebar-app__user {
+  padding: var(--spacing-2);
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.theme-nav-sidebar-app__user-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  inline-size: 100%;
+  padding: var(--spacing-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-button);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-nav-sidebar-app__user-trigger:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-nav-sidebar-app__user-meta {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.theme-nav-sidebar-app__user-name {
+  font-weight: var(--font-weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theme-nav-sidebar-app__user-role {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* Collapsed mode — hide labels + roles + workspace name. Icons + avatars stay. */
+.theme-nav-sidebar-app--collapsed .theme-nav-sidebar-app__workspace-name,
+.theme-nav-sidebar-app--collapsed .theme-nav-sidebar-app__item-label,
+.theme-nav-sidebar-app--collapsed .theme-nav-sidebar-app__user-meta,
+.theme-nav-sidebar-app--collapsed .theme-nav-sidebar-app__section-heading {
+  display: none;
+}
+
+@media (width <= 767.98px) {
+  .theme-nav-sidebar-app {
+    display: none;
+  }
+}
+
+/* iOS safe-area-inset bottom for the user footer. */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .theme-nav-sidebar-app__user {
+    padding-block-end: max(var(--spacing-2), env(safe-area-inset-bottom));
+  }
+}

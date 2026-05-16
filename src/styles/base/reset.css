@@ -1,0 +1,99 @@
+/*
+ * Base reset — minimal modern reset.
+ * Specificity 0 via :where() so components can always override.
+ *
+ * Tailwind v4 ships its own preflight; this file ONLY adds kit-specific
+ * defaults that preflight doesn't cover: focus-visible ring, body font,
+ * logical text-align, reduced-motion safety net.
+ */
+
+:where(html) {
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+:where(body) {
+  margin: 0;
+  font: var(--typography-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-base);
+  text-align: start;
+  font-feature-settings: "ss01", "cv11";
+}
+
+:where(:focus) {
+  outline: none;
+}
+
+:where(:focus-visible) {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset-width);
+}
+
+:where(a) {
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+:where(a:hover) {
+  color: var(--color-text-link-hover);
+}
+
+:where(img, svg, video, canvas) {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+:where(button) {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:where([disabled], [aria-disabled="true"]) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+:where(table) {
+  border-collapse: collapse;
+}
+
+/* Reduced-motion safety net (in addition to tokens/motion.css). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visually hidden but accessible to screen readers. */
+.theme-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Shared aria-live announcer region — single instance per page. */
+#theme-announcer {
+  position: absolute;
+  inset-inline-start: -10000px;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+}

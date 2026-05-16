@@ -1,0 +1,232 @@
+/*
+ * Drawer — modal side-panel using native <dialog>, pinned to a viewport
+ * edge with a slide-in/out animation. Inherits modal mechanics (showModal,
+ * ::backdrop, focus trap, Esc dismiss) from native <dialog>. The drawer
+ * Stimulus controller extends DialogController — same open/close + policy
+ * semantics, just different event names + an `edge` value.
+ *
+ * Per Ring 2 S2.2 OQ-25 doctrine: motion tokens REUSED, no new tokens.
+ *   - Entry: duration-slow (260 ms) + easing-emphasized — per 14-motion-baseline §3
+ *   - Exit:  duration-base (180 ms) + easing-accelerate
+ *
+ * Edges (`data-edge="start|end|top|bottom"`):
+ *   - start  : slides in from inline-start (LTR: left, RTL: right)
+ *   - end    : slides in from inline-end   (LTR: right, RTL: left) — default
+ *   - top    : slides in from top
+ *   - bottom : slides in from bottom
+ *
+ * RTL handling: inline-axis drawers (start/end) use --theme-drawer-flip to
+ * invert the transform direction in RTL. The inset-* properties are already
+ * logical, so the pinning is correct in both directions. Top/bottom drawers
+ * are unaffected by direction. Cohérent 15-i18n-and-rtl §"Animation
+ * directions" — no physical-CSS exception needed.
+ *
+ * Corner radius: only the 2 corners AWAY from the edge are rounded (the 2
+ * touching the edge are flush with the viewport). Uses logical corners:
+ *   - edge=end:    border-start-start + border-end-start = rounded
+ *   - edge=start:  border-start-end + border-end-end = rounded
+ *   - edge=top:    border-end-start + border-end-end = rounded
+ *   - edge=bottom: border-start-start + border-start-end = rounded
+ *
+ * Default inline-size for side drawers: clamp(min(420px, 100vw)).
+ * Default block-size for top/bottom drawers: clamp(min(420px, 100dvh)).
+ * Consumers override via inline style or a custom class for app-specific
+ * sizes (Sidebar Drawer typically wider, mobile drawers full-width).
+ */
+
+:root {
+  --theme-drawer-flip: 1;
+}
+
+[dir="rtl"] {
+  --theme-drawer-flip: -1;
+}
+
+.theme-drawer {
+  /* Override native <dialog> centering (margin: auto). */
+  margin: 0;
+  padding-block: var(--spacing-5);
+  padding-inline: var(--spacing-6);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-dialog);
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* Closed-state transition properties. The transform value is set per
+     edge below (off-screen direction depends on edge + dir). The display
+     and overlay discrete-transitions let the slide-out complete before
+     the dialog leaves the top-layer (Baseline 2024 pattern). */
+  transition:
+    transform var(--motion-duration-base) var(--motion-easing-accelerate),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+/* Open state — translated to its target position (uniform across edges). */
+.theme-drawer[open] {
+  transform: translate3d(0, 0, 0);
+  transition-duration: var(--motion-duration-slow);
+  transition-timing-function: var(--motion-easing-emphasized);
+}
+
+/* ----- Backdrop ------------------------------------------------------ */
+
+.theme-drawer::backdrop {
+  background-color: var(--color-bg-overlay);
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-base) var(--motion-easing-accelerate),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+.theme-drawer[open]::backdrop {
+  opacity: 1;
+  transition-timing-function: var(--motion-easing-standard);
+}
+
+@starting-style {
+  .theme-drawer[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* ----- Edge: end (inline-end — right in LTR, left in RTL) ---------- */
+
+.theme-drawer[data-edge="end"] {
+  inset-block: 0;
+  inset-inline: auto 0;
+  inline-size: min(420px, 100vw);
+  max-inline-size: 100vw;
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  border-start-start-radius: var(--radius-dialog);
+  border-end-start-radius: var(--radius-dialog);
+  border-inline-end: none;
+  /* Closed: off-screen at inline-end (flipped in RTL). */
+  transform: translate3d(calc(100% * var(--theme-drawer-flip)), 0, 0);
+}
+
+@starting-style {
+  .theme-drawer[open][data-edge="end"] {
+    transform: translate3d(calc(100% * var(--theme-drawer-flip)), 0, 0);
+  }
+}
+
+/* ----- Edge: start (inline-start — left in LTR, right in RTL) ------ */
+
+.theme-drawer[data-edge="start"] {
+  inset-block: 0;
+  inset-inline: 0 auto;
+  inline-size: min(420px, 100vw);
+  max-inline-size: 100vw;
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  border-start-end-radius: var(--radius-dialog);
+  border-end-end-radius: var(--radius-dialog);
+  border-inline-start: none;
+  /* Closed: off-screen at inline-start (flipped in RTL). */
+  transform: translate3d(calc(-100% * var(--theme-drawer-flip)), 0, 0);
+}
+
+@starting-style {
+  .theme-drawer[open][data-edge="start"] {
+    transform: translate3d(calc(-100% * var(--theme-drawer-flip)), 0, 0);
+  }
+}
+
+/* ----- Edge: top --------------------------------------------------- */
+
+.theme-drawer[data-edge="top"] {
+  inset-block: 0 auto;
+  inset-inline: 0;
+  inline-size: 100vw;
+  max-inline-size: 100vw;
+  block-size: min(420px, 100dvh);
+  max-block-size: 100dvh;
+  border-end-start-radius: var(--radius-dialog);
+  border-end-end-radius: var(--radius-dialog);
+  border-block-start: none;
+  transform: translate3d(0, -100%, 0);
+}
+
+@starting-style {
+  .theme-drawer[open][data-edge="top"] {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* ----- Edge: bottom ----------------------------------------------- */
+
+.theme-drawer[data-edge="bottom"] {
+  inset-block: auto 0;
+  inset-inline: 0;
+  inline-size: 100vw;
+  max-inline-size: 100vw;
+  block-size: min(420px, 100dvh);
+  max-block-size: 100dvh;
+  border-start-start-radius: var(--radius-dialog);
+  border-start-end-radius: var(--radius-dialog);
+  border-block-end: none;
+  transform: translate3d(0, 100%, 0);
+}
+
+@starting-style {
+  .theme-drawer[open][data-edge="bottom"] {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* ----- Layout: header / body / footer ------------------------------ */
+
+.theme-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  margin-block-end: var(--spacing-4);
+  flex: 0 0 auto;
+}
+
+.theme-drawer__title {
+  font: var(--typography-h2);
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.theme-drawer__close {
+  flex: 0 0 auto;
+}
+
+.theme-drawer__body {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  flex: 1 1 auto;
+  overflow: auto;
+  min-block-size: 0;
+}
+
+.theme-drawer__body > * + * {
+  margin-block-start: var(--spacing-3);
+}
+
+.theme-drawer__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+  margin-block-start: var(--spacing-5);
+  flex: 0 0 auto;
+}
+
+/* ----- dark mode --------------------------------------------------- */
+
+[data-theme="dark"] .theme-drawer {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-default);
+}

@@ -1,0 +1,81 @@
+{#-
+  HoverCard — Popover variant opened by hover (with delay) for visual
+  previews. Composes the `popover` controller (positioning + animation +
+  Esc/click-outside dismiss) and the `hover-card` controller (mouseenter
+  / mouseleave triggers with delays).
+
+  Per OQ-29 doctrine (sealed S2.3a opening): reuse Tooltip's 400 ms open
+  doctrine via inline timing, NO new motion token. Close delay 200 ms
+  (anti-flash on fast pointer movement). HoverCard is a *visual preview*
+  surface — does NOT open on focus (≠ Tooltip). Esc still dismisses.
+
+  Use HoverCard for: user mention previews (avatar + name + role + bio),
+  link previews (favicon + title + summary), tag previews (description).
+
+  Use Tooltip (Ring 1) for: short descriptive text on icon-only buttons.
+  Use Popover (Ring 2) for: click-to-open contextual surfaces with action.
+
+  Touch behavior: HoverCard is desktop-first. On touch (no hover), the
+  card effectively doesn't open. For touch-friendly preview surfaces, use
+  Popover or DropdownMenu instead.
+
+  Parameters:
+    htmlId       (string, optional) — auto-generated. Stamped on content
+                                      for aria-controls chaining.
+    placement    (string, optional) — Floating UI placement. Default 'top'
+                                      (HoverCard convention — preview
+                                      sits above the inline trigger).
+    offset       (int, optional)    — gap from trigger in px (default 8).
+    openDelay    (int, optional)    — ms before open (default 400).
+    closeDelay   (int, optional)    — ms before close (default 200).
+    open         (bool, optional)   — false (default). SSR-open hover cards.
+    className    (string, optional) — extra classes on the wrap.
+
+  Blocks:
+    trigger (required) — the inline element the user hovers over. Typically
+                         an inline `<a>` (mention link), `<span>` with
+                         tabindex (preview anchor), or an avatar. Consumer
+                         stamps `data-popover-target="trigger"`,
+                         `aria-haspopup="dialog"`, `aria-expanded` (false),
+                         `aria-controls="{{ hoverCardHtmlId }}"`.
+    content (required) — the preview surface body. Composes Card-style
+                         envelope (avatar + heading + paragraph + actions).
+                         Consumer-provided HTML.
+-#}
+
+{%- set htmlId     = htmlId     | default('theme-hover-card-' ~ random()) -%}
+{%- set placement  = placement  | default('top') -%}
+{%- set offset     = offset     | default(8) -%}
+{%- set openDelay  = openDelay  | default(400) -%}
+{%- set closeDelay = closeDelay | default(200) -%}
+{%- set open       = open       | default(false) -%}
+{%- set className  = className  | default('') -%}
+
+{%- set _classes = ['theme-popover', 'theme-hover-card'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set hoverCardHtmlId = htmlId -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="popover hover-card"
+  data-action="mouseenter->hover-card#enter mouseleave->hover-card#leave keydown.esc@window->popover#close"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="{{ offset }}"
+  data-popover-open-value="{{ open ? 'true' : 'false' }}"
+  data-hover-card-open-delay-value="{{ openDelay }}"
+  data-hover-card-close-delay-value="{{ closeDelay }}"
+>
+  {%- block trigger -%}{%- endblock -%}
+  <div
+    id="{{ htmlId }}"
+    class="theme-popover__content theme-hover-card__content"
+    data-popover-target="content"
+    data-state="{{ open ? 'open' : 'closed' }}"
+    data-placement="{{ placement }}"
+    role="dialog"
+    {{ open ? '' : 'hidden' }}
+  >
+    {%- block content -%}{%- endblock -%}
+  </div>
+</div>

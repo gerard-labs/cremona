@@ -1,0 +1,18 @@
+/*
+ * Auth-AccountLocked — terminal account-lock-out pattern (Ring 3 S3.1b).
+ *
+ * Composes `_auth-shell` (title null) + Empty (lg, h1) + Button × 1-2.
+ * The shell + Empty + Button do the layout heavy-lifting. This file's
+ * only job is to tint the alert-triangle icon to the warning brand
+ * colour (vs the default decorative tertiary).
+ *
+ * The warning hue carries the "blocked, but not destructive" signal —
+ * mirrors Error-RateLimited's icon treatment for visual consistency
+ * (both patterns use `alert-triangle` per OQ-57b substitut path).
+ *
+ * See `docs/specs/ring3/Auth-AccountLocked.md` for the full spec.
+ */
+
+.theme-auth-account-locked .theme-empty__illustration {
+  color: var(--color-warning);
+}

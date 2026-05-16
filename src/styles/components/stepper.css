@@ -1,0 +1,274 @@
+/*
+ * Stepper — step-by-step progress indicator (declarative).
+ *
+ * Per the mini-OQ Stepper resolution sealed at S2.8 opening :
+ *  - Pure declarative — consumer drives `currentStep` via the controller value.
+ *  - Each step paints its own indicator state based on `data-state` attribute
+ *    set by the controller (`completed` / `current` / `upcoming` / `disabled`).
+ *
+ * Anatomy :
+ *   <ol class="theme-stepper" data-orientation="horizontal" data-size="md">
+ *     <li class="theme-stepper__step" data-state="completed">
+ *       <span class="theme-stepper__indicator" aria-hidden="true">
+ *         \3c !-- checkmark for completed, number for current/upcoming -->
+ *       </span>
+ *       <div class="theme-stepper__text">
+ *         <span class="theme-stepper__label">Compte</span>
+ *         <span class="theme-stepper__description">Email + mot de passe</span>
+ *       </div>
+ *     </li>
+ *     <span class="theme-stepper__connector"></span>  \3c !-- line between steps -->
+ *     <li class="theme-stepper__step" data-state="current" aria-current="step">…</li>
+ *   </ol>
+ *
+ * Variants by `data-orientation` :
+ *   - horizontal (default) — steps in a row, connectors horizontal between
+ *     them, indicators on top of label.
+ *   - vertical — steps stacked, connectors vertical on the inline-start side
+ *     of each indicator.
+ *
+ * Sizes by `data-size` : sm (28 px indicator), md (default, 36 px), lg (44 px).
+ *
+ * State paints :
+ *   - completed → indicator filled primary, checkmark mask-image white.
+ *   - current   → indicator border 2px primary, text primary bold.
+ *   - upcoming  → indicator border 1px border-default, text-tertiary.
+ *   - disabled  → opacity 0.5, no interaction signal.
+ */
+
+.theme-stepper {
+  /* Reset native <ol> styling. */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  inline-size: 100%;
+}
+
+.theme-stepper[data-orientation="vertical"] {
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ----- step (each <li>) -------------------------------------------- */
+
+.theme-stepper__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex: 1 1 0;
+  min-inline-size: 0;
+  position: relative;
+}
+
+.theme-stepper[data-orientation="vertical"] .theme-stepper__step {
+  flex-direction: row;
+  align-items: flex-start;
+  flex: 0 0 auto;
+  gap: var(--spacing-3);
+  padding-block-end: var(--spacing-6);
+}
+
+.theme-stepper[data-orientation="vertical"] .theme-stepper__step:last-child {
+  padding-block-end: 0;
+}
+
+/* ----- indicator (the circular number / check pill) --------------- */
+
+.theme-stepper__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: 36px;
+  block-size: 36px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-tertiary);
+  font: var(--typography-label);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--motion-duration-base) var(--motion-easing-standard),
+    border-color var(--motion-duration-base) var(--motion-easing-standard),
+    color var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.theme-stepper[data-size="sm"] .theme-stepper__indicator {
+  inline-size: 28px;
+  block-size: 28px;
+  font-size: var(--font-size-xs);
+}
+
+.theme-stepper[data-size="lg"] .theme-stepper__indicator {
+  inline-size: 44px;
+  block-size: 44px;
+  font-size: var(--font-size-base);
+}
+
+/* State paints. */
+
+.theme-stepper__step[data-state="current"] .theme-stepper__indicator {
+  border-color: var(--color-primary);
+  border-width: 2px;
+  color: var(--color-primary);
+  background-color: var(--color-bg-elevated);
+}
+
+.theme-stepper__step[data-state="completed"] .theme-stepper__indicator {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+
+.theme-stepper__step[data-state="completed"] .theme-stepper__indicator-number {
+  display: none;
+}
+
+.theme-stepper__step[data-state="completed"] .theme-stepper__indicator-check {
+  display: inline-block;
+  inline-size: 60%;
+  block-size: 60%;
+  background-color: currentColor;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.theme-stepper__step:not([data-state="completed"]) .theme-stepper__indicator-check {
+  display: none;
+}
+
+.theme-stepper__step[data-state="upcoming"] .theme-stepper__indicator {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-default);
+  color: var(--color-text-tertiary);
+}
+
+.theme-stepper__step[data-state="disabled"] {
+  opacity: 0.5;
+}
+
+/* ----- text slot --------------------------------------------------- */
+
+.theme-stepper__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+  text-align: center;
+}
+
+.theme-stepper[data-orientation="vertical"] .theme-stepper__text {
+  text-align: start;
+  align-items: flex-start;
+  padding-block-start: var(--spacing-1);
+}
+
+.theme-stepper__label {
+  font: var(--typography-label);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+  line-height: var(--line-height-snug);
+  transition: color var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.theme-stepper__step[data-state="current"] .theme-stepper__label,
+.theme-stepper__step[data-state="completed"] .theme-stepper__label {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-stepper__description {
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+  line-height: var(--line-height-snug);
+}
+
+.theme-stepper[data-size="sm"] .theme-stepper__label {
+  font-size: var(--font-size-xs);
+}
+
+.theme-stepper[data-size="lg"] .theme-stepper__label {
+  font-size: var(--font-size-base);
+}
+
+/* ----- connector (line between steps) ----------------------------- */
+
+.theme-stepper__step::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 18px;
+  inset-inline-start: 50%;
+  inline-size: 100%;
+  block-size: 1px;
+  background-color: var(--color-border-default);
+  z-index: -1;
+}
+
+.theme-stepper[data-size="sm"] .theme-stepper__step::after {
+  inset-block-start: 14px;
+}
+
+.theme-stepper[data-size="lg"] .theme-stepper__step::after {
+  inset-block-start: 22px;
+}
+
+.theme-stepper__step:last-child::after {
+  display: none;
+}
+
+.theme-stepper__step[data-state="completed"]::after {
+  background-color: var(--color-primary);
+}
+
+/* Vertical orientation : connector becomes a vertical line on the
+   inline-start side of each step's indicator. */
+.theme-stepper[data-orientation="vertical"] .theme-stepper__step::after {
+  inset-block-start: 36px;
+  inset-inline: 18px auto;
+  inline-size: 1px;
+  block-size: calc(100% - 36px);
+}
+
+.theme-stepper[data-orientation="vertical"][data-size="sm"] .theme-stepper__step::after {
+  inset-block-start: 28px;
+  inset-inline-start: 14px;
+  block-size: calc(100% - 28px);
+}
+
+.theme-stepper[data-orientation="vertical"][data-size="lg"] .theme-stepper__step::after {
+  inset-block-start: 44px;
+  inset-inline-start: 22px;
+  block-size: calc(100% - 44px);
+}
+
+/* ----- touch target hardening ------------------------------------- */
+
+@media (pointer: coarse) {
+  .theme-stepper__indicator {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+  }
+
+  .theme-stepper[data-size="sm"] .theme-stepper__indicator {
+    min-inline-size: 36px;  /* preserve some compactness on touch but keep ≥36 */
+    min-block-size: 36px;
+  }
+}
+
+/* ----- responsive — narrow screens collapse description ---------- */
+
+@media (width <= 575.98px) {
+  .theme-stepper:not([data-orientation="vertical"]) .theme-stepper__description {
+    display: none;
+  }
+}

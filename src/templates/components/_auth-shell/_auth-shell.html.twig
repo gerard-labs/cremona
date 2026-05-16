@@ -1,0 +1,117 @@
+{#-
+  _auth-shell — centered viewport-min-height layout shell for Auth patterns.
+
+  Composed by Auth-Login, Auth-Register, Auth-ForgotPassword, Auth-ResetPassword
+  (Ring 3 S3.1) and every future Auth pattern that needs the same centered-card
+  layout (Auth-OTP / MagicLink / EmailVerification / PasswordStrength /
+  AccountLocked — Ring 3 S3.1b/c).
+
+  Composition pattern — Twig {% embed %} with blocks:
+
+    {% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+      title: 'theme.auth.login.title'|trans,
+      subtitle: 'theme.auth.login.subtitle'|trans,
+      htmlId: 'auth-login',
+    } %}
+      {% block brand %}  <a href="/"><img src="/logo.svg" alt="…"></a>  {% endblock %}
+      {% block content %}  <form>…</form>  {% endblock %}
+      {% block footer %}   <p>Pas encore de compte ? …</p>  {% endblock %}
+    {% endembed %}
+
+  Why {% embed %} and NOT {% include with content: '<form>...' %}:
+    - The shell hosts arbitrary form Twig (Field / Input / Button composition
+      + interpolated server-side CSRF token + per-pattern data-* attributes).
+    - {% include with content: "<form>…</form>" %} would force the consumer
+      to render the form as a string and pass it via |raw — fragile and
+      bypasses Twig autoescape.
+    - {% embed %} keeps the form as Twig source under autoescape and aligns
+      with the kit's established composition pattern (mirror [Card][1] +
+      [Empty][2] Ring 1 keystone).
+    - The mini-OQ-53a "include with content" recommendation in S3.1 opening
+      was about the SEMANTIC ("include this shared shell, pass it your
+      content") — not literal Twig {% include %}. Documented in the S3.1
+      session log of `docs/STATE.md`.
+
+    [1] src/templates/components/card/card.html.twig
+    [2] src/templates/components/empty/empty.html.twig
+
+  Variants:
+    - default — single-column centered. Single panel, no side illustration.
+                Mobile-first; the canonical Auth visual.
+    - split   — illustration aside + panel side-by-side from ≥ 1024 px.
+                Below 1024 px, falls back to single-column (illustration is
+                hidden at < 1024 px to preserve form prominence on mobile).
+
+  Layout: see CSS file header for the box model.
+
+  Parameters:
+    title       (string, required)         — h1 inside the Card header
+    subtitle    (string, optional)         — caption below the h1
+    htmlId      (string, optional)         — auto-generated; used for `aria-labelledby`
+    variant     (string, optional)         — default | split (default = default)
+    className   (string, optional)         — extra utility classes on <main>
+
+  Blocks (all optional except `content`):
+    brand        — branded header (consumer logo / wordmark) above the Card
+    illustration — side <aside> illustration (only rendered when variant='split')
+    content      — REQUIRED — form body (consumers ALWAYS supply this)
+    footer       — link block below the form ("Pas encore de compte ?", etc.)
+
+  Accessibility:
+    - <main> landmark — the auth screen is the page's primary content.
+    - <article aria-labelledby> — the Card's accessible name is the h1 title.
+      When `title` is null (terminal patterns like Auth-AccountLocked where
+      the inner Empty primitive owns the h1), the aria-labelledby attribute
+      is omitted to avoid a dangling ID reference (the Empty inside owns
+      its own role=region + aria-labelledby chain so SR users still get
+      proper landmark semantics). This conditional was added in S3.1b
+      opening (Phase 2) as a forward-compat tweak for Ring 3+ terminal
+      patterns that don't have a "page title + sub-section" structure.
+    - illustration <aside aria-hidden="true"> — decorative; the title + body
+      carry the semantic content.
+-#}
+
+{%- set title       = title       | default(null) -%}
+{%- set subtitle    = subtitle    | default(null) -%}
+{%- set htmlId      = htmlId      | default('theme-auth-shell-' ~ random()) -%}
+{%- set variant     = variant     | default('default') -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _titleId = htmlId ~ '-title' -%}
+
+{%- set _classes = ['theme-auth-shell'] -%}
+{%- if variant == 'split' -%}{%- set _classes = _classes | merge(['theme-auth-shell--split']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<main class="{{ _classes | join(' ') }}" data-variant="{{ variant }}">
+  {%- if variant == 'split' and block('illustration') is defined and block('illustration') is not empty -%}
+    <aside class="theme-auth-shell__illustration" aria-hidden="true">
+      {%- block illustration -%}{%- endblock -%}
+    </aside>
+  {%- endif -%}
+
+  <section class="theme-auth-shell__panel">
+    {%- if block('brand') is defined and block('brand') is not empty -%}
+      <header class="theme-auth-shell__brand">{%- block brand -%}{%- endblock -%}</header>
+    {%- endif -%}
+
+    <article class="theme-card theme-auth-shell__card"{% if title %} aria-labelledby="{{ _titleId }}"{% endif %}>
+      {%- if title -%}
+        <header class="theme-card__header theme-auth-shell__card-header">
+          <h1 id="{{ _titleId }}" class="theme-auth-shell__title">{{ title }}</h1>
+          {%- if subtitle -%}<p class="theme-auth-shell__subtitle">{{ subtitle }}</p>{%- endif -%}
+        </header>
+      {%- endif -%}
+
+      <div class="theme-card__body theme-auth-shell__card-body">
+        {%- block content -%}{%- endblock -%}
+      </div>
+
+      {%- if block('footer') is defined and block('footer') is not empty -%}
+        <footer class="theme-card__footer theme-auth-shell__card-footer">
+          {%- block footer -%}{%- endblock -%}
+        </footer>
+      {%- endif -%}
+    </article>
+  </section>
+</main>

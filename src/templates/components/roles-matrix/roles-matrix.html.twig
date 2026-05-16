@@ -1,0 +1,93 @@
+{#-
+  RolesMatrix — Ring 3 pattern (S4.1c Phase 3, added post-Ring-3-lock-in per ADR-0042).
+
+  Role-matrix UX composing Table layout (rows × cols intersection) + per-cell
+  Badge default + Combobox lazy-instantiated on cell click (edit mode).
+
+  Per OQ-NEW-S4.1c-Team-Roles-Matrix-perf-strategy sealed (c) : ~200× perf
+  gain by lazy-mounting Combobox only on cell click (vs 200 Combobox at mount).
+
+  Parameters: htmlId, caption, members, permissions, cells, roles, bulkEdit, className.
+-#}
+
+{%- set htmlId      = htmlId      | default('roles-matrix-' ~ random()) -%}
+{%- set caption     = caption     | default('') -%}
+{%- set members     = members     | default([]) -%}
+{%- set permissions = permissions | default([]) -%}
+{%- set cells       = cells       | default({}) -%}
+{%- set roles       = roles       | default([]) -%}
+{%- set bulkEdit    = bulkEdit    | default(false) -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _classes = ['theme-roles-matrix'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{# Build a role lookup for variant + label resolution #}
+{%- set _roleVariants = {} -%}
+{%- set _roleLabels   = {} -%}
+{%- for role in roles -%}
+  {%- set _roleVariants = _roleVariants | merge({(role.value): role.badgeVariant | default('default')}) -%}
+  {%- set _roleLabels   = _roleLabels   | merge({(role.value): role.label}) -%}
+{%- endfor -%}
+
+{%- set _tableClasses = ['theme-table', 'theme-roles-matrix__table'] -%}
+
+<div id="{{ htmlId }}"
+     class="{{ _classes | join(' ') }}"
+     data-controller="roles-matrix"
+     data-roles-matrix-bulk-edit-value="{{ bulkEdit ? 'true' : 'false' }}"
+     data-roles-matrix-roles-value="{{ roles | json_encode | e('html_attr') }}">
+
+  <div class="theme-roles-matrix__toolbar">
+    {% include '@theme/components/button/button.html.twig' with {
+      label: 'theme.roles-matrix.bulk-edit.label'|trans,
+      variant: bulkEdit ? 'primary' : 'secondary',
+      size: 'sm',
+      attrs: {
+        'data-roles-matrix-target': 'bulkEditToggle',
+        'data-action': 'click->roles-matrix#toggleBulkEdit',
+        'aria-pressed': bulkEdit ? 'true' : 'false',
+      },
+    } only %}
+  </div>
+
+  <div class="theme-roles-matrix__scroll-wrap">
+    <table class="{{ _tableClasses | join(' ') }}" data-size="md">
+      <caption class="sr-only">{{ caption }}</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="theme-roles-matrix__corner"><span class="sr-only">{{ 'theme.roles-matrix.aria.corner'|trans }}</span></th>
+          {%- for perm in permissions -%}
+            <th scope="col" class="theme-roles-matrix__col-header">{{ perm.label }}</th>
+          {%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for member in members -%}
+          <tr>
+            <th scope="row" class="theme-roles-matrix__row-header">
+              <span class="theme-roles-matrix__member-name">{{ member.name }}</span>
+            </th>
+            {%- for perm in permissions -%}
+              {%- set _cellRole = cells[member.id][perm.id] | default('none') -%}
+              {%- set _variant  = _roleVariants[_cellRole] | default('muted') -%}
+              {%- set _label    = _roleLabels[_cellRole]   | default(_cellRole) -%}
+              <td class="theme-roles-matrix__cell"
+                  data-roles-matrix-target="cell"
+                  data-action="click->roles-matrix#openEditor keydown->roles-matrix#keyOpenEditor"
+                  data-row="{{ member.id }}"
+                  data-col="{{ perm.id }}"
+                  data-current-role="{{ _cellRole }}"
+                  role="button"
+                  tabindex="0"
+                  aria-label="{{ 'theme.roles-matrix.aria.cell'|trans({'{member}': member.name, '{perm}': perm.label, '{role}': _label}) }}">
+                {% include '@theme/components/badge/badge.html.twig' with { variant: _variant, label: _label } only %}
+              </td>
+            {%- endfor -%}
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+
+</div>

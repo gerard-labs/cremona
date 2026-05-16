@@ -1,0 +1,30 @@
+/*
+ * Motion tokens — duration + easing.
+ * Reduced-motion compresses every duration to 0ms so transitions still
+ * fire (preserving state-change feedback) but without animation.
+ */
+
+:root {
+  /* Duration */
+  --motion-duration-instant: 0ms;
+  --motion-duration-fast: 120ms;
+  --motion-duration-base: 180ms;
+  --motion-duration-slow: 260ms;
+  --motion-duration-slower: 360ms;
+
+  /* Easing */
+  --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-decelerate: cubic-bezier(0, 0, 0, 1);
+  --motion-easing-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-linear: linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(:root) {
+    --motion-duration-fast: 0ms;
+    --motion-duration-base: 0ms;
+    --motion-duration-slow: 0ms;
+    --motion-duration-slower: 0ms;
+  }
+}

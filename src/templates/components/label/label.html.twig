@@ -1,0 +1,56 @@
+{#-
+  Label — visible <label> for a form input.
+
+  Standalone usage: pass `content` + `htmlFor` (id of the input).
+  Composition (inside Field): Field wires `htmlFor` automatically and
+  forwards `required` / `disabled` from its own props.
+
+  Parameters:
+    content          (string, required)  — visible label text, already |trans'd
+    htmlFor          (string, optional)  — `for` attribute pointing at the input's id.
+                                            Required when used standalone; Field passes it.
+    required         (bool,   optional)  — renders the red asterisk + sr-only marker.
+                                            The semantic aria-required="true" must also be
+                                            set on the INPUT itself, not the label
+                                            (per WAI-ARIA). Mutually exclusive with `optionalText`.
+    requiredAriaText (string, optional)  — already-translated sr-only marker; defaults to FR "obligatoire".
+                                            Consumers should pass {{ 'theme.label.required-aria'|trans }}.
+    optionalText     (string, optional)  — already-translated muted suffix (e.g. "(facultatif)").
+                                            If set AND `required` is false, the suffix renders.
+                                            Consumers should pass {{ 'theme.label.optional-suffix'|trans }}.
+    hint             (string, optional)  — short inline caption (e.g. "max. 50 caractères"), already translated.
+    size             (string, optional)  — sm (default — matches input text 14px) | md (16px, denser forms)
+    disabled         (bool,   optional)  — dim the label when its input is disabled
+    className        (string, optional)
+-#}
+
+{%- set content          = content          | default('') -%}
+{%- set htmlFor          = htmlFor          | default(null) -%}
+{%- set required         = required         | default(false) -%}
+{%- set requiredAriaText = requiredAriaText | default('obligatoire') -%}
+{%- set optionalText     = optionalText     | default(null) -%}
+{%- set hint             = hint             | default(null) -%}
+{%- set size             = size             | default('sm') -%}
+{%- set disabled         = disabled         | default(false) -%}
+{%- set className        = className        | default('') -%}
+
+{%- set _classes = ['theme-label'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<label
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  {%- if htmlFor %} for="{{ htmlFor }}"{% endif -%}
+  {%- if disabled %} data-state="disabled"{% endif -%}
+>
+  <span class="theme-label__text">{{ content }}</span>
+  {%- if required -%}
+    <span class="theme-label__required" aria-hidden="true">*</span>
+    <span class="theme-sr-only">{{ requiredAriaText }}</span>
+  {%- elseif optionalText -%}
+    <span class="theme-label__optional">{{ optionalText }}</span>
+  {%- endif -%}
+  {%- if hint -%}
+    <span class="theme-label__hint">{{ hint }}</span>
+  {%- endif -%}
+</label>

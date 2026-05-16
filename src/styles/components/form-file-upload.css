@@ -1,0 +1,27 @@
+/*
+ * Form-FileUpload — Field-wrapped FileUpload Ring 2 (sibling Form pattern).
+ *
+ * Marker class — composition only. Field Ring 1 carries the Label + help +
+ * error display ; FileUpload Ring 2 carries the drop zone + FilePond preview.
+ * Form-FileUpload positions the two together.
+ */
+
+.theme-form-file-upload {
+  /* Inherits .theme-field base layout (display: grid + gap). */
+}
+
+.theme-form-file-upload__widget {
+  /* Subtle inset border to delineate the file widget from the Field wrap.
+     FilePond injects its own CSS chrome on top async ; this is fallback /
+     initial visual before the chunk fetches. */
+  min-block-size: 8rem;
+  border: 1px dashed var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  background: var(--color-bg-sunken);
+  transition: border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-field--invalid .theme-form-file-upload__widget {
+  border-color: var(--color-danger-border);
+}

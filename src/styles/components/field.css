@@ -1,0 +1,50 @@
+/*
+ * Field — vertical stack of Label + control + help + error.
+ *
+ * Anatomy:
+ *   .theme-field
+ *     ├── <label class="theme-label">         (sm by default, label-size px)
+ *     ├── <input|textarea|select|inputGroup>   (the actual control)
+ *     ├── <p class="theme-field__help">       (optional, muted)
+ *     └── <p class="theme-field__error">      (optional, danger, role=alert)
+ *
+ * Spacing: `--density-form-gap` is the legacy form-row gap token (16 px
+ * comfortable); Field uses a tighter `--spacing-1_5` (6 px) between
+ * the parts of a single field, and the consumer's form layout handles
+ * row-to-row gap via density tokens.
+ *
+ * State propagation: Field's class modifiers (--invalid, --disabled) are
+ * mostly defensive — the inner Label and control carry their own state
+ * styling. They exist to let consumers add field-level decorations (e.g.
+ * a left-edge indicator bar) without touching the control's styles.
+ */
+
+.theme-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1_5);
+  inline-size: 100%;
+}
+
+.theme-field__help,
+.theme-field__error {
+  margin: 0;
+  font: var(--typography-caption);
+  line-height: var(--line-height-snug);
+}
+
+.theme-field__help {
+  color: var(--color-text-tertiary);
+}
+
+.theme-field__error {
+  color: var(--color-danger-soft-foreground);
+  font-weight: var(--font-weight-medium);
+}
+
+/* When both help and error coexist, slightly tighten the gap between them
+   so they read as a coordinated pair (help + corrective error). The order
+   is fixed by the Twig template: help then error. */
+.theme-field__help + .theme-field__error {
+  margin-block-start: calc(var(--spacing-1) * -1);
+}

@@ -1,0 +1,128 @@
+/*
+ * Form-WithSteps — multi-step form wizard (foundation pattern of the Forms family).
+ *
+ * Marker class — the heavy lifting lives in Stepper Ring 2 + Field Ring 1 +
+ * Button Ring 1. This stylesheet defines per-pattern layout : title +
+ * Stepper indicator + step bodies + announcer (sr-only) + 3-CTA footer.
+ *
+ * Per Forms family doctrine §8 : Skip (ghost, inline-start) · Previous +
+ * Next/Submit cluster (mid + inline-end).
+ *
+ * Step transition cross-fade : the form-with-steps controller toggles the
+ * `hidden` attribute on inactive `<fieldset>` ; CSS animates opacity for
+ * a soft swap. Reduced-motion : instant (duration → 0 via the global
+ * motion token override).
+ */
+
+.theme-form-with-steps {
+  display: grid;
+  gap: var(--spacing-6);
+  max-inline-size: 36rem;          /* ~576 px ; consumer can override via className */
+  margin-inline: auto;
+  padding: var(--spacing-6);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.theme-form-with-steps__title {
+  margin-block-end: 0;
+  color: var(--color-text-primary);
+}
+
+.theme-form-with-steps__indicator {
+  /* Stepper Ring 2 already styled — no override needed beyond positioning. */
+  margin-block-end: var(--spacing-2);
+}
+
+.theme-form-with-steps__steps {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.theme-form-with-steps__step {
+  /* <fieldset> reset — kit doesn't ship a default fieldset style elsewhere. */
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--spacing-4);
+  opacity: 1;
+  transition: opacity var(--motion-duration-base) var(--motion-easing-emphasized);
+}
+
+.theme-form-with-steps__step[hidden] {
+  /* Override [hidden] { display: none } to allow the opacity transition. The
+     controller relies on `hidden` for accessibility (browsers map to
+     aria-hidden="true") ; the visual cross-fade is purely cosmetic. */
+  display: none;
+}
+
+.theme-form-with-steps__announcer {
+  /* sr-only utility ; the kit's reset provides .sr-only at the base layer. */
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.theme-form-with-steps__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding-block-start: var(--spacing-4);
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.theme-form-with-steps__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-inline-start: auto;       /* push Previous/Next/Submit to inline-end ; Skip stays inline-start */
+}
+
+.theme-form-with-steps__skip {
+  /* Skip ghost stays inline-start (default flex-start ; no override needed beyond margin reset). */
+  margin-inline-end: auto;
+}
+
+/* Mobile : stack CTAs vertically below 576 px. Per Forms family doctrine §9 +
+   [13-a11y §6 Touch target sizing]. */
+@media (width <= 575.98px) {
+  .theme-form-with-steps {
+    padding: var(--spacing-4);
+  }
+
+  .theme-form-with-steps__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-form-with-steps__nav {
+    flex-direction: column;
+    gap: var(--spacing-2);
+    margin-inline-start: 0;
+  }
+
+  .theme-form-with-steps__skip {
+    margin-inline-end: 0;
+  }
+
+  /* Full-width buttons on mobile per [13-a11y §6] touch-target requirements. */
+  .theme-form-with-steps__footer .theme-button {
+    inline-size: 100%;
+  }
+}
+
+/* Safe-area-inset for iOS notch (mirror _auth-shell precedent). */
+@supports (padding: max(0px)) {
+  .theme-form-with-steps {
+    padding-block-end: max(var(--spacing-6), env(safe-area-inset-block-end));
+  }
+}

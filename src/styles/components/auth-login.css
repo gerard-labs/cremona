@@ -1,0 +1,64 @@
+/*
+ * Auth-Login — login pattern (Ring 3 S3.1).
+ *
+ * Composes _auth-shell (layout) + Ring 1 primitives (Field / Input / Button /
+ * Checkbox / Alert). This file only adds the inline-axis row that pairs the
+ * remember-me checkbox with the forgot-password link, and the footer
+ * question text styling. Everything else inherits from the composed
+ * primitives' CSS.
+ *
+ * See `_auth-shell.css` for the centered viewport-min-height layout.
+ */
+
+.theme-auth-login {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  /* No padding — the form sits inside the _auth-shell Card body which
+     already owns the inset. */
+}
+
+/* ----- remember-me + forgot link row ------------------------------- */
+
+.theme-auth-login__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  margin-block: var(--spacing-1) var(--spacing-1);
+}
+
+/* The forgot link pushes itself to the inline-end when the remember-me
+   checkbox is present. When only the forgot link is rendered (no
+   rememberMe), justify-content: space-between still keeps it inline-end
+   (sole flex child wraps left in `space-between`, so we promote via
+   margin). */
+.theme-auth-login__row:has(> .theme-auth-login__forgot:only-child) > .theme-auth-login__forgot {
+  margin-inline-start: auto;
+}
+
+/* The forgot link is a small "ghost" link visually; the Button link variant
+   already paints it correctly. Just align its block-axis with the checkbox
+   row so it doesn't sit on its own baseline. */
+.theme-auth-login__forgot {
+  /* Inherit Button[data-variant="link"] surface — no overrides needed. */
+}
+
+/* ----- footer question text ---------------------------------------- */
+
+.theme-auth-login__footer-question {
+  /* The footer is centered text (per `_auth-shell.css` `__card-footer`);
+     the question reads as plain body alongside the inline link. */
+  margin-inline-end: var(--spacing-1);
+}
+
+/* ----- error / rate-limited Alerts inside the form ----------------- */
+
+/*
+ * Alerts have their own surface visuals (per Alert.md). When stacked
+ * inside the form's flex column, they sit above the Fields with the
+ * natural gap of var(--spacing-4) inherited from `.theme-auth-login`.
+ *
+ * No overrides needed.
+ */

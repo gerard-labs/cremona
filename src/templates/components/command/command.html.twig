@@ -1,0 +1,171 @@
+{#-
+  Command — ⌘K Command palette (Ring 2 S2.9 heavyweight).
+
+  Per OQ-47 (sealed S2.9 opening) :
+    - Vanilla custom — no ninja-keys adapter (manifest reject for theme cohesion).
+    - Cross-controller compose via data-controller="dialog combobox command"
+      on the SAME wrap (mirror DatePicker S2.7 pattern verbatim).
+    - ⌘K / Ctrl+K global hotkey (window-scoped) opens the palette.
+    - Grouped results : Twig renders <li role="presentation"> section
+      headers between options (controller-agnostic).
+
+  Per WAI-ARIA APG "Combobox with listbox popup" + "Dialog" :
+    - Wrap : role="dialog" + aria-modal="true" (native <dialog>).
+    - Input : role="combobox" + aria-haspopup="listbox" + aria-expanded.
+    - Listbox : role="listbox".
+    - Each option : role="option" + aria-selected.
+    - Section headers : role="presentation" + aria-hidden (not an option).
+    - Footer Kbd hints : sr-hidden visual only (Kbd primitives).
+
+  Parameters :
+    htmlId          (string, optional) — auto-generated.
+    label           (string, optional) — dialog accessible name (default
+                                          'Palette de commandes').
+    placeholder     (string, optional) — input placeholder (default kit i18n).
+    hotkey          (string, optional) — single-letter hotkey (default 'k').
+    commands        (array,  optional) — initial command list (SSR seed) ; the
+                                          consumer can also call
+                                          window.themeCommand.register([...])
+                                          at boot.
+                                          [{ id, label, group?, icon?,
+                                             kbdHint?, action? }] (action is
+                                          client-only — Twig doesn't serialize it).
+    kbdFooter       (array,  optional) — footer hints [{ keys: ['⏎'], label: 'Exécuter' }, ...].
+    emptyTitle      (string, optional) — empty-state title (default i18n).
+    emptyBody       (string, optional) — empty-state body (default i18n).
+    className       (string, optional)
+
+  Usage:
+
+    {% include '@theme/components/command/command.html.twig' with {
+      label: 'Palette de commandes'|trans,
+      hotkey: 'k',
+      commands: [
+        { id: 'go.home',     label: 'Aller à l\'accueil'|trans, group: 'Navigation'|trans },
+        { id: 'create.proj', label: 'Nouveau projet'|trans,     group: 'Création'|trans },
+      ],
+    } %}
+
+  Events (dispatched on the wrap) :
+    command:open      — palette opened (via hotkey or window.themeCommand.open()).
+    command:close     — palette closed.
+    command:execute   — detail.{ id, label, group } when user selects.
+-#}
+
+{%- set htmlId      = htmlId      | default('theme-cmd-' ~ random()) -%}
+{%- set label       = label       | default('Palette de commandes') -%}
+{%- set placeholder = placeholder | default('Rechercher projets, tâches, documents…') -%}
+{%- set hotkey      = hotkey      | default('k') -%}
+{%- set commands    = commands    | default([]) -%}
+{%- set kbdFooter   = kbdFooter   | default([]) -%}
+{%- set emptyTitle  = emptyTitle  | default('Aucun résultat') -%}
+{%- set emptyBody   = emptyBody   | default('Essaie un autre terme.') -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _classes = ['theme-command'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{#- Group commands by `group` for the section headers. Commands without a
+    group fall under a generic 'general' bucket rendered last. -#}
+{%- set _grouped = {} -%}
+{%- for cmd in commands -%}
+  {%- set _g = cmd.group | default('') -%}
+  {%- if not _grouped[_g] is defined -%}
+    {%- set _grouped = _grouped | merge({ (_g): [] }) -%}
+  {%- endif -%}
+  {%- set _grouped = _grouped | merge({ (_g): _grouped[_g] | merge([cmd]) }) -%}
+{%- endfor -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="dialog combobox command"
+  data-command-hotkey-value="{{ hotkey }}"
+  data-command-placeholder-value="{{ placeholder }}"
+  data-combobox-placeholder-value="{{ placeholder }}"
+>
+  <dialog
+    class="theme-command__dialog theme-dialog"
+    data-dialog-target="dialog"
+    aria-labelledby="{{ htmlId }}-title"
+  >
+    <h2 id="{{ htmlId }}-title" class="theme-command__sr-only">{{ label }}</h2>
+
+    <div class="theme-command__input-wrap">
+      <span class="theme-command__search-icon" aria-hidden="true"></span>
+      <input
+        type="text"
+        class="theme-command__input theme-input"
+        data-combobox-target="input"
+        data-action="input->combobox#filter keydown->combobox#keydown"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="true"
+        aria-haspopup="listbox"
+        aria-controls="{{ htmlId }}-listbox"
+        placeholder="{{ placeholder }}"
+      />
+      <kbd class="theme-command__esc-hint theme-kbd" aria-hidden="true">Esc</kbd>
+    </div>
+
+    <ul
+      id="{{ htmlId }}-listbox"
+      class="theme-command__listbox"
+      role="listbox"
+      data-combobox-target="optionsContainer"
+    >
+      {%- set _optIdx = 0 -%}
+      {%- for groupName, groupCmds in _grouped -%}
+        {%- if groupName -%}
+          <li role="presentation" class="theme-command__group-header" aria-hidden="true">{{ groupName }}</li>
+        {%- endif -%}
+        {%- for cmd in groupCmds -%}
+          {%- set _optIdx = _optIdx + 1 -%}
+          <li
+            id="{{ htmlId }}-opt-{{ _optIdx }}"
+            class="theme-command__option"
+            role="option"
+            data-combobox-target="option"
+            data-value="{{ cmd.id }}"
+            aria-selected="false"
+          >
+            {%- if cmd.icon -%}
+              <span class="theme-command__option-icon" aria-hidden="true">{{ cmd.icon | raw }}</span>
+            {%- endif -%}
+            <span class="theme-item__label">{{ cmd.label }}</span>
+            {%- if cmd.kbdHint -%}
+              <kbd class="theme-command__option-kbd theme-kbd">{{ cmd.kbdHint }}</kbd>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- endfor -%}
+    </ul>
+
+    <div
+      class="theme-command__empty"
+      data-combobox-target="empty"
+      hidden
+      role="status"
+      aria-live="polite"
+    >
+      <strong class="theme-command__empty-title">{{ emptyTitle }}</strong>
+      <span class="theme-command__empty-query">
+        {{ '' }}<strong data-combobox-target="emptyQuery"></strong>
+      </span>
+      <span class="theme-command__empty-body">{{ emptyBody }}</span>
+    </div>
+
+    {%- if kbdFooter | length > 0 -%}
+      <footer class="theme-command__footer">
+        {%- for hint in kbdFooter -%}
+          <span class="theme-command__footer-hint">
+            {%- for k in hint.keys -%}
+              <kbd class="theme-kbd">{{ k }}</kbd>
+            {%- endfor -%}
+            <span class="theme-command__footer-label">{{ hint.label }}</span>
+          </span>
+        {%- endfor -%}
+      </footer>
+    {%- endif -%}
+  </dialog>
+</div>

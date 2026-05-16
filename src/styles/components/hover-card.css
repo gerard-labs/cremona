@@ -1,0 +1,64 @@
+/*
+ * HoverCard — Popover variant opened by hover for visual previews.
+ *
+ * Composes [Popover](popover.css) surface — same shadow / radius / border
+ * envelope. HoverCard adds:
+ *   - Slightly larger min/max inline-size (preview content is richer than
+ *     a typical popover — avatar + heading + body + footer actions)
+ *   - Padding bumped from spacing-3 to spacing-4 (matches Card body
+ *     padding for the visual coherence with Card content inside)
+ *
+ * The wrap inherits .theme-popover's `display: inline-block` so the
+ * trigger sits inline with surrounding text (typical mention-link pattern).
+ *
+ * Per OQ-29: NO new motion token — the open/close delays (400 ms / 200 ms)
+ * are JS-side timeouts in the hover-card controller, NOT CSS timing
+ * (CSS handles the visual fade via Popover's existing motion-base /
+ * motion-fast). The total user-perceived delay is timer + animation.
+ *
+ * NO cursor change on the trigger — HoverCard is purely informational
+ * (the user can keep working; the card doesn't trap their click).
+ * If the consumer wraps the trigger in <a>, the link's underline + cursor
+ * remain — that's the consumer's call.
+ */
+
+.theme-hover-card__content {
+  /* Larger envelope than Popover defaults — preview content is richer. */
+  min-inline-size: 240px;
+  max-inline-size: 320px;
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-4);
+}
+
+/* HoverCard preview body — typical layout: avatar header + body + actions. */
+.theme-hover-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-block-end: var(--spacing-2);
+}
+
+.theme-hover-card__title {
+  font: var(--typography-h3);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.theme-hover-card__subtitle {
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.theme-hover-card__body {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.theme-hover-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-block-start: var(--spacing-3);
+}

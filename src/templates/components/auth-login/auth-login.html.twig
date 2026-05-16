@@ -1,0 +1,184 @@
+{#-
+  Auth-Login — login pattern (Ring 3 S3.1).
+
+  Composes:
+    - _auth-shell (sub-template) for the centered viewport layout
+    - Field + Input + Label (Ring 1) for the email + password fields
+    - Checkbox (Ring 1) for the remember-me toggle
+    - Button (Ring 1) for the primary submit + link forgot + link register
+    - Alert (Ring 1) for cross-field global errors + rate-limited notice
+
+  No Stimulus controller — pure server-rendered form (OQ-55 doctrine). The
+  consumer's app (Symfony, Rails, Express) wires the `<form action>` POST
+  handler natively. The kit does not ship JS-side validation in S3.1.
+
+  See `docs/specs/ring3/Auth-Login.md` for the full API + a11y + state
+  documentation.
+-#}
+
+{%- set title             = title             | default('theme.auth.login.title'|trans) -%}
+{%- set subtitle          = subtitle          | default('theme.auth.login.subtitle'|trans) -%}
+{%- set formAction        = formAction        | default('#') -%}
+{%- set csrfToken         = csrfToken         | default(null) -%}
+{%- set csrfFieldName     = csrfFieldName     | default('_token') -%}
+{%- set emailLabel        = emailLabel        | default('theme.auth.login.email'|trans) -%}
+{%- set emailPlaceholder  = emailPlaceholder  | default('theme.auth.login.email-placeholder'|trans) -%}
+{%- set emailValue        = emailValue        | default(null) -%}
+{%- set emailError        = emailError        | default(null) -%}
+{%- set passwordLabel     = passwordLabel     | default('theme.auth.login.password'|trans) -%}
+{%- set passwordError     = passwordError     | default(null) -%}
+{%- set rememberMe        = rememberMe        | default(true) -%}
+{%- set rememberLabel     = rememberLabel     | default('theme.auth.login.remember'|trans) -%}
+{%- set rememberChecked   = rememberChecked   | default(false) -%}
+{%- set submitLabel       = submitLabel       | default('theme.auth.login.submit'|trans) -%}
+{%- set loading           = loading           | default(false) -%}
+{%- set forgotHref        = forgotHref        | default(null) -%}
+{%- set forgotLabel       = forgotLabel       | default('theme.auth.login.forgot'|trans) -%}
+{%- set noAccountQuestion = noAccountQuestion | default('theme.auth.login.no-account'|trans) -%}
+{%- set registerHref      = registerHref      | default(null) -%}
+{%- set registerLabel     = registerLabel     | default('theme.auth.login.register'|trans) -%}
+{%- set globalError       = globalError       | default(null) -%}
+{%- set rateLimitedNotice = rateLimitedNotice | default(null) -%}
+{%- set htmlId            = htmlId            | default('theme-auth-login') -%}
+{%- set className         = className         | default('') -%}
+
+{%- set _formClasses = ['theme-auth-login'] -%}
+{%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _state = 'default' -%}
+{%- if loading -%}{%- set _state = 'loading' -%}
+{%- elseif rateLimitedNotice -%}{%- set _state = 'error-rate-limited' -%}
+{%- elseif globalError or emailError or passwordError -%}{%- set _state = 'error' -%}
+{%- endif -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: title,
+  subtitle: subtitle,
+  htmlId: htmlId,
+  variant: 'default',
+} %}
+  {% block content %}
+    <form
+      class="{{ _formClasses | join(' ') }}"
+      action="{{ formAction }}"
+      method="post"
+      novalidate
+      data-state="{{ _state }}"
+      {%- if loading %} data-loading="true"{% endif -%}
+    >
+      {% if globalError %}
+        {% include '@theme/components/alert/alert.html.twig' with {
+          variant: 'danger',
+          tone: 'soft',
+          body: globalError,
+          hideIcon: false,
+          htmlId: htmlId ~ '-global-error',
+        } %}
+      {% endif %}
+
+      {% if rateLimitedNotice %}
+        {% include '@theme/components/alert/alert.html.twig' with {
+          variant: 'warning',
+          tone: 'soft',
+          body: rateLimitedNotice,
+          hideIcon: false,
+          htmlId: htmlId ~ '-rate-limited',
+        } %}
+      {% endif %}
+
+      {% if csrfToken %}
+        <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
+      {% endif %}
+
+      {% embed '@theme/components/field/field.html.twig' with {
+        label: emailLabel,
+        htmlId: htmlId ~ '-email',
+        required: true,
+        error: emailError,
+      } %}
+        {% block control %}
+          {% include '@theme/components/input/input.html.twig' with {
+            htmlId: fieldHtmlId,
+            describedBy: fieldDescribedBy,
+            invalid: fieldInvalid,
+            required: fieldRequired,
+            disabled: fieldDisabled,
+            type: 'email',
+            name: 'email',
+            value: emailValue,
+            placeholder: emailPlaceholder,
+            autocomplete: 'email',
+            inputmode: 'email',
+            spellcheck: 'false',
+          } %}
+        {% endblock %}
+      {% endembed %}
+
+      {% embed '@theme/components/field/field.html.twig' with {
+        label: passwordLabel,
+        htmlId: htmlId ~ '-password',
+        required: true,
+        error: passwordError,
+      } %}
+        {% block control %}
+          {% include '@theme/components/input/input.html.twig' with {
+            htmlId: fieldHtmlId,
+            describedBy: fieldDescribedBy,
+            invalid: fieldInvalid,
+            required: fieldRequired,
+            disabled: fieldDisabled,
+            type: 'password',
+            name: 'password',
+            autocomplete: 'current-password',
+          } %}
+        {% endblock %}
+      {% endembed %}
+
+      {% if rememberMe or forgotHref %}
+        <div class="theme-auth-login__row">
+          {% if rememberMe %}
+            {% include '@theme/components/checkbox/checkbox.html.twig' with {
+              name: 'remember_me',
+              htmlId: htmlId ~ '-remember',
+              value: '1',
+              checked: rememberChecked,
+              label: rememberLabel,
+              size: 'sm',
+            } %}
+          {% endif %}
+          {% if forgotHref %}
+            {% include '@theme/components/button/button.html.twig' with {
+              label: forgotLabel,
+              variant: 'link',
+              size: 'sm',
+              href: forgotHref,
+              className: 'theme-auth-login__forgot',
+            } %}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% include '@theme/components/button/button.html.twig' with {
+        label: submitLabel,
+        variant: 'primary',
+        size: 'md',
+        type: 'submit',
+        loading: loading,
+        disabled: rateLimitedNotice ? true : false,
+        fullWidth: true,
+      } %}
+    </form>
+  {% endblock %}
+
+  {% if registerHref %}
+    {% block footer %}
+      <span class="theme-auth-login__footer-question">{{ noAccountQuestion }}</span>
+      {% include '@theme/components/button/button.html.twig' with {
+        label: registerLabel,
+        variant: 'link',
+        size: 'md',
+        href: registerHref,
+      } %}
+    {% endblock %}
+  {% endif %}
+{% endembed %}

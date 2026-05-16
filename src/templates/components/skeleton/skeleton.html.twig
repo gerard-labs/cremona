@@ -1,0 +1,35 @@
+{#-
+  Skeleton — pure-CSS shimmer placeholder. Always aria-hidden (the parent
+  widget carries aria-busy + the actual SR announcement).
+
+  Parameters:
+    shape       (string, optional) rect (default) | circle | text
+    width       (string, optional) any CSS length; default 100% (rect/text), 2em (circle)
+    height      (string, optional) any CSS length; default 1em (rect/text), =width (circle)
+    count       (int,    optional) for shape=text, render N stacked lines; default 1
+    className   (string, optional)
+-#}
+
+{%- set shape     = shape     | default('rect') -%}
+{%- set width     = width     | default(null) -%}
+{%- set height    = height    | default(null) -%}
+{%- set count     = count     | default(1) -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-skeleton', 'theme-skeleton--' ~ shape] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _style = [] -%}
+{%- if width  -%}{%- set _style = _style | merge(['inline-size: ' ~ width]) -%}{%- endif -%}
+{%- if height -%}{%- set _style = _style | merge(['block-size: ' ~ height]) -%}{%- endif -%}
+{%- set _styleAttr = _style | join('; ') -%}
+
+{%- if shape == 'text' and count > 1 -%}
+<div class="theme-skeleton-group" aria-hidden="true">
+  {%- for i in 1..count -%}
+    <div class="{{ _classes | join(' ') }}" data-shape="{{ shape }}"{% if _styleAttr %} style="{{ _styleAttr }}"{% endif %}></div>
+  {%- endfor -%}
+</div>
+{%- else -%}
+<div class="{{ _classes | join(' ') }}" data-shape="{{ shape }}"{% if _styleAttr %} style="{{ _styleAttr }}"{% endif %} aria-hidden="true"></div>
+{%- endif -%}

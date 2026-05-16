@@ -1,0 +1,129 @@
+/*
+ * Divider — visual separator with optional center slot.
+ *
+ * Two visual modes:
+ *   - No content (`.theme-divider` only) → single border line (visually
+ *     equivalent to Separator). Use Separator for pure decoration.
+ *   - With content (`--with-content`) → two flex-grow line segments
+ *     framing a centered text/icon ("──── ou ────" pattern).
+ *
+ * The line segments are <span class="theme-divider__line"> elements
+ * with a `border-block-start` (horizontal) or `border-inline-start`
+ * (vertical), so the divider's color follows --color-border-default
+ * and a brand preset that overrides that token re-skins every divider.
+ *
+ * RTL: every property is logical. Vertical orientation flips visually
+ * (line segments stack on the block-axis with center between them).
+ */
+
+.theme-divider {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  /* Default (no content) — single line via the container's own border. */
+  border-block-start: 1px solid var(--color-border-default);
+  min-block-size: 0;
+}
+
+/* Vertical (no-content) — single inline-start border, grows on block-axis. */
+.theme-divider[data-orientation="vertical"] {
+  inline-size: auto;
+  block-size: auto;
+  align-self: stretch;
+  min-inline-size: 1px;
+  min-block-size: 1em;
+  border-block-start: 0;
+  border-inline-start: 1px solid var(--color-border-default);
+}
+
+/* Variant: dashed (overrides the default's solid border). */
+.theme-divider--dashed {
+  border-block-start-style: dashed;
+}
+
+.theme-divider--dashed[data-orientation="vertical"] {
+  border-block-start-style: solid;
+  border-inline-start-style: dashed;
+}
+
+/* Variant: dotted. */
+.theme-divider--dotted {
+  border-block-start-style: dotted;
+}
+
+.theme-divider--dotted[data-orientation="vertical"] {
+  border-block-start-style: solid;
+  border-inline-start-style: dotted;
+}
+
+/* ----- With-content mode: two line segments + center slot --------- */
+
+.theme-divider--with-content {
+  /* The container itself drops its own border — the two __line spans
+     handle the visible lines on either side of the content. */
+  border-block-start: 0;
+  border-inline-start: 0;
+  gap: var(--spacing-3);
+}
+
+.theme-divider--with-content[data-orientation="horizontal"] {
+  flex-direction: row;
+}
+
+.theme-divider--with-content[data-orientation="vertical"] {
+  flex-direction: column;
+  inline-size: auto;
+  align-self: stretch;
+  min-block-size: 4em;
+}
+
+.theme-divider__line {
+  flex: 1 1 auto;
+  background: transparent;
+  border: 0;
+}
+
+.theme-divider--with-content[data-orientation="horizontal"] .theme-divider__line {
+  border-block-start: 1px solid var(--color-border-default);
+  block-size: 0;
+}
+
+.theme-divider--with-content[data-orientation="vertical"] .theme-divider__line {
+  border-inline-start: 1px solid var(--color-border-default);
+  inline-size: 0;
+}
+
+.theme-divider--with-content.theme-divider--dashed .theme-divider__line {
+  border-style: dashed;
+}
+
+.theme-divider--with-content.theme-divider--dotted .theme-divider__line {
+  border-style: dotted;
+}
+
+.theme-divider__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1_5);
+  flex-shrink: 0;
+  padding-inline: var(--spacing-2);
+  padding-block: 0;
+  color: var(--color-text-tertiary);
+  font: var(--typography-caption);
+  font-weight: var(--font-weight-medium);
+  text-transform: none;
+  background-color: var(--color-bg-base);
+}
+
+.theme-divider--with-content[data-orientation="vertical"] .theme-divider__content {
+  padding-inline: 0;
+  padding-block: var(--spacing-2);
+}
+
+.theme-divider__icon {
+  flex-shrink: 0;
+}
+
+.theme-divider__label {
+  white-space: nowrap;
+}

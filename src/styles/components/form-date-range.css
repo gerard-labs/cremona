@@ -1,0 +1,70 @@
+/*
+ * Form-DateRange — date range pair (compose 2 DatePicker Ring 2 pure).
+ *
+ * Per the S3.3a-1 user-validated decision : compose 2 DatePicker instances
+ * without Ring 2 amend (per ADR-0015 immutability). Marker class only.
+ */
+
+.theme-form-date-range__fieldset {
+  /* Reset native <fieldset> styling. */
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--spacing-3);
+}
+
+.theme-form-date-range__legend {
+  /* Visible label using .theme-label vocabulary. */
+  display: block;
+  padding: 0;
+}
+
+.theme-form-date-range__wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.theme-form-date-range__field {
+  display: grid;
+  gap: var(--spacing-1);
+  flex: 1 1 14rem;
+  min-inline-size: 12rem;
+}
+
+.theme-form-date-range__label {
+  font: var(--typography-caption);
+  color: var(--color-text-secondary);
+}
+
+.theme-form-date-range__separator {
+  /* Visual arrow between start + end. Logical CSS — auto-flips in RTL via
+     direction inheritance ; "→" is a Unicode arrow, RTL renders it mirrored
+     via `unicode-bidi` natively. */
+  align-self: center;
+  font: var(--typography-body-lg);
+  color: var(--color-text-tertiary);
+  padding-block: var(--spacing-3);
+}
+
+.theme-form-date-range__error {
+  flex-basis: 100%;
+  margin-block: var(--spacing-1) 0;
+  font: var(--typography-caption);
+  color: var(--color-danger);
+}
+
+/* Mobile : stack vertically below 480 px. */
+@media (width <= 479.98px) {
+  .theme-form-date-range__wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-form-date-range__separator {
+    align-self: center;
+    transform: rotate(90deg);  /* arrow becomes ↓ on stacked mobile layout */
+  }
+}

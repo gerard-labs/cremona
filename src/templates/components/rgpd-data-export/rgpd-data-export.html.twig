@@ -1,0 +1,93 @@
+{#-
+  RGPD-DataExport — RGPD data portability affordance (Ring 3 S3.3b-2).
+
+  Pure composition Card Ring 1 (variant=elevated) + Button Ring 1. NO
+  controller. The consumer wires the API call + state machine (consumer
+  sets `data-rgpd-data-export-state` on the outer Card to flip between
+  idle / loading / success / error).
+
+  Legal context : RGPD Article 20 — right to data portability. The user
+  can request a copy of their data in a machine-readable format (JSON,
+  CSV, etc.). The consumer's backend handles the actual export (async
+  job + email link OR direct download).
+
+  Parameters:
+    htmlId          (string, optional)
+    title           (string, optional, default 'Exporter mes données')
+    description     (string, optional, default RGPD legal description)
+    format          (string, optional)  — display "Format : JSON" line
+    estimatedSize   (string, optional)  — display "Taille estimée : ~2 MB"
+    estimatedTime   (string, optional)  — display "Temps estimé : 5 min"
+    state           (string, optional, default 'idle') — idle | loading | success | error
+    buttonLabel     (string, optional)  — per-state ; default resolves via i18n by state
+    actionUrl       (string, optional)  — consumer's form action (POST endpoint)
+    csrfTokenName   (string, optional)
+    csrfTokenValue  (string, optional)
+-#}
+
+{%- set htmlId         = htmlId         | default('theme-rgpd-data-export-' ~ random()) -%}
+{%- set title          = title          | default('theme.rgpd-data-export.title'|trans) -%}
+{%- set description    = description    | default('theme.rgpd-data-export.description'|trans) -%}
+{%- set state          = state          | default('idle') -%}
+{%- set format         = format         | default(null) -%}
+{%- set estimatedSize  = estimatedSize  | default(null) -%}
+{%- set estimatedTime  = estimatedTime  | default(null) -%}
+{%- set buttonLabel    = buttonLabel    | default(('theme.rgpd-data-export.button.' ~ state)|trans) -%}
+{%- set actionUrl      = actionUrl      | default('#') -%}
+
+{% embed '@theme/components/card/card.html.twig' with {
+  variant: 'elevated',
+  htmlId: htmlId,
+  className: 'theme-rgpd-data-export',
+  attrs: {
+    'data-rgpd-data-export-state': state,
+    'aria-labelledby': htmlId ~ '-title',
+  },
+} %}
+  {% block header %}
+    <h2 id="{{ htmlId }}-title" class="theme-card__title">{{ title }}</h2>
+    <p class="theme-card__description">{{ description }}</p>
+  {% endblock %}
+
+  {% block body %}
+    {% if format or estimatedSize or estimatedTime %}
+      <ul class="theme-rgpd-data-export__meta" role="list">
+        {% if format %}
+          <li class="theme-rgpd-data-export__meta-item">
+            {% include '@theme/components/icon/icon.html.twig' with { name: 'edit-3', decorative: true, size: 'sm' } %}
+            <span>{{ 'theme.rgpd-data-export.meta.format'|trans({ '%format%': format }) }}</span>
+          </li>
+        {% endif %}
+        {% if estimatedSize %}
+          <li class="theme-rgpd-data-export__meta-item">
+            <span>{{ 'theme.rgpd-data-export.meta.size'|trans({ '%size%': estimatedSize }) }}</span>
+          </li>
+        {% endif %}
+        {% if estimatedTime %}
+          <li class="theme-rgpd-data-export__meta-item">
+            <span>{{ 'theme.rgpd-data-export.meta.time'|trans({ '%time%': estimatedTime }) }}</span>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+
+    <p class="theme-rgpd-data-export__legal-note">{{ 'theme.rgpd-data-export.legal-note'|trans }}</p>
+  {% endblock %}
+
+  {% block footer %}
+    <form method="POST" action="{{ actionUrl }}">
+      {% if csrfTokenName and csrfTokenValue %}
+        <input type="hidden" name="{{ csrfTokenName }}" value="{{ csrfTokenValue }}">
+      {% endif %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: buttonLabel,
+        variant: 'primary',
+        type: 'submit',
+        iconLeading: (state == 'success' ? 'arrow-right' : (state == 'loading' ? 'option' : (state == 'error' ? 'alert-triangle' : null))),
+        disabled: state == 'loading',
+        className: 'theme-rgpd-data-export__button-state',
+        attrs: state == 'loading' ? { 'aria-disabled': 'true' } : {},
+      } only %}
+    </form>
+  {% endblock %}
+{% endembed %}

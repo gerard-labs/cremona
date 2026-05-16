@@ -1,0 +1,56 @@
+/*
+ * Font tokens — family, weight, size, line-height, letter-spacing,
+ * and semantic typography roles (shortcut shorthands).
+ */
+
+:root {
+  /* Family */
+  --font-sans: "Inter", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Weight */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Size (px-based modular scale) */
+  --font-size-2xs: 10px;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
+  --font-size-5xl: 48px;
+
+  /* Line height */
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* Letter spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-wider: 0.04em;
+
+  /* Numeric feature */
+  --font-feature-tabular: "tnum";
+
+  /* Semantic typography shorthands (weight size/line-height family) */
+  --typography-display: var(--font-weight-bold) var(--font-size-4xl) / var(--line-height-tight) var(--font-sans);
+  --typography-h1: var(--font-weight-bold) var(--font-size-2xl) / var(--line-height-snug) var(--font-sans);
+  --typography-h2: var(--font-weight-semibold) var(--font-size-xl) / var(--line-height-snug) var(--font-sans);
+  --typography-h3: var(--font-weight-semibold) var(--font-size-lg) / var(--line-height-snug) var(--font-sans);
+  --typography-body: var(--font-weight-regular) var(--font-size-sm) / var(--line-height-normal) var(--font-sans);
+  --typography-body-lg: var(--font-weight-regular) var(--font-size-base) / var(--line-height-normal) var(--font-sans);
+  --typography-label: var(--font-weight-medium) var(--font-size-sm) / var(--line-height-snug) var(--font-sans);
+  --typography-caption: var(--font-weight-regular) var(--font-size-xs) / var(--line-height-snug) var(--font-sans);
+  --typography-overline: var(--font-weight-semibold) var(--font-size-2xs) / var(--line-height-snug) var(--font-sans);
+  --typography-code: var(--font-weight-regular) var(--font-size-sm) / var(--line-height-normal) var(--font-mono);
+}

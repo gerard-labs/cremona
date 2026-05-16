@@ -1,0 +1,70 @@
+{#-
+  Auth-AccountLocked — terminal account-lock-out pattern (Ring 3 S3.1b).
+
+  Composes `_auth-shell` (title null — inner Empty owns the h1) + Empty
+  (lg, h1, icon=alert-triangle substitut OQ-57b) + Button × 1-2 (primary
+  Contact-support + optional secondary Back-to-login).
+
+  Pure server-rendered terminal page (OQ-55). 0 Stimulus controller. The
+  consumer's auth back-end determines when an account becomes locked
+  (typically after N failed Auth-Login attempts beyond the soft
+  `rateLimitedNotice` threshold) and surfaces this pattern on the
+  /account/locked route.
+
+  Relationship to Error-RateLimited :
+    Auth-AccountLocked is the **terminal graduation** of the transient
+    rate-limit. Error-RateLimited shows "retry in X min" (recoverable) ;
+    Auth-AccountLocked shows "contact support" (terminal until manual
+    unlock).
+
+  Icon choice : `alert-triangle` is the OQ-57b substitut for the missing
+  `lock` / `shield` curated-set icon. Same visual signal as
+  Error-RateLimited.
+
+  See `docs/specs/ring3/Auth-AccountLocked.md` for full spec.
+-#}
+
+{%- set title             = title             | default('theme.auth.account-locked.title'|trans) -%}
+{%- set body              = body              | default('theme.auth.account-locked.body'|trans) -%}
+{%- set supportLabel      = supportLabel      | default('theme.auth.account-locked.support-cta'|trans) -%}
+{%- set supportHref       = supportHref       | default('#') -%}
+{%- set backToLoginLabel  = backToLoginLabel  | default('theme.auth.account-locked.back-to-login-cta'|trans) -%}
+{%- set backToLoginHref   = backToLoginHref   | default(null) -%}
+{%- set htmlId            = htmlId            | default('theme-auth-account-locked') -%}
+{%- set className         = className         | default('') -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: null,
+  htmlId: htmlId,
+  variant: 'default',
+  className: ('theme-auth-account-locked ' ~ className)|trim,
+} %}
+  {% block content %}
+    {% embed '@theme/components/empty/empty.html.twig' with {
+      title: title,
+      body: body,
+      icon: 'alert-triangle',
+      size: 'lg',
+      titleLevel: 'h1',
+      htmlId: htmlId ~ '-empty',
+    } %}
+      {% block actions %}
+        {% include '@theme/components/button/button.html.twig' with {
+          label: supportLabel,
+          variant: 'primary',
+          size: 'md',
+          href: supportHref,
+        } %}
+        {% if backToLoginHref %}
+          {% include '@theme/components/button/button.html.twig' with {
+            label: backToLoginLabel,
+            variant: 'ghost',
+            size: 'md',
+            href: backToLoginHref,
+            iconLeading: 'arrow-left',
+          } %}
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}

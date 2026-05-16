@@ -1,0 +1,187 @@
+{#-
+  Table — Pure-CSS HTML <table> structural primitive.
+
+  Foundation for DataTable (S2.4b) — DataTable composes the same `.theme-table`
+  CSS classes via a Stimulus controller that generates rows reactively. This
+  template covers the "static table" use case (Settings tables, audit logs,
+  rendered server-side) AND exposes the structural classes for richer compounds.
+
+  Per OQ-34 doctrine (sealed S2.4 opening): vanilla implementation; no
+  Tabulator adapter at this layer. Per [13-accessibility-baseline.md §8]:
+  sortable th carries `aria-sort` (none|ascending|descending); selected
+  rows carry `aria-selected` + `data-selected` for CSS.
+
+  Composes:
+    - 0 Stimulus controller (pure CSS).
+    - Optional [Icon](../icon/) primitive for sort indicators (chevron-up,
+      chevron-down, chevrons-up-down for unsorted). Tree-shaken.
+
+  Parameters:
+    htmlId          (string,  optional) — auto-generated.
+    caption         (string,  optional) — accessible caption (often sr-only).
+    captionSrOnly   (bool,    optional) — true → caption visually hidden but
+                                          announced to screen readers.
+    size            (string,  optional) — sm | md (default) | lg. Maps to
+                                          density-driven row height.
+    variant         (string,  optional) — default (zebra rows off) | striped
+                                          (alternating row bg via :nth-child).
+    columns         (array,   optional) — for the params-driven render mode.
+                                          Each item: { label, scope?,
+                                          sortable?, sortDir?, align?,
+                                          numeric? }.
+                                          - label    : column label string.
+                                          - scope    : 'col' (default).
+                                          - sortable : true → wraps label in
+                                                       a <button> + aria-sort.
+                                          - sortDir  : 'none' (default) |
+                                                       'ascending' |
+                                                       'descending'.
+                                          - align    : 'start' | 'center' |
+                                                       'end' (logical; numeric
+                                                       implies 'end').
+                                          - numeric  : true → tabular-nums +
+                                                       text-align: end.
+    rows            (array,   optional) — for the params-driven render mode.
+                                          Each item: { cells: […], selected? }.
+                                          Each cell: { content, header?,
+                                          numeric?, align? }.
+    className       (string,  optional) — extra classes on the <table>.
+
+  Blocks (alternative override path — for richer use cases like DataTable):
+    caption — caption content; falls back to {{ caption }}.
+    thead   — full <thead>; falls back to params-driven render.
+    tbody   — full <tbody>; falls back to params-driven render.
+    tfoot   — full <tfoot>; empty by default.
+
+  Usage — params mode:
+
+    {% include '@theme/components/table/table.html.twig' with {
+      caption: 'Membres'|trans,
+      captionSrOnly: true,
+      columns: [
+        { label: 'Nom'|trans, sortable: true, sortDir: 'ascending' },
+        { label: 'Email'|trans },
+        { label: 'Score'|trans, numeric: true, sortable: true },
+      ],
+      rows: [
+        {
+          selected: true,
+          cells: [
+            { content: 'Marie Curie' },
+            { content: 'marie@example.com' },
+            { content: '142', numeric: true },
+          ],
+        },
+        { cells: [
+          { content: 'Pierre Bayard' },
+          { content: 'pierre@example.com' },
+          { content: '98', numeric: true },
+        ] },
+      ],
+    } %}
+
+  Usage — block override (DataTable-style):
+
+    {% embed '@theme/components/table/table.html.twig' with { size: 'sm' } %}
+      {% block thead %}
+        <thead class="theme-table__thead">
+          <tr>
+            <th scope="col" data-sortable="true" aria-sort="ascending">…</th>
+          </tr>
+        </thead>
+      {% endblock %}
+      {% block tbody %}…{% endblock %}
+    {% endembed %}
+-#}
+
+{%- set htmlId        = htmlId        | default('theme-table-' ~ random()) -%}
+{%- set caption       = caption       | default(null) -%}
+{%- set captionSrOnly = captionSrOnly | default(false) -%}
+{%- set size          = size          | default('md') -%}
+{%- set variant       = variant       | default('default') -%}
+{%- set columns       = columns       | default([]) -%}
+{%- set rows          = rows          | default([]) -%}
+{%- set className     = className     | default('') -%}
+
+{%- set _classes = ['theme-table'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<table
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  data-variant="{{ variant }}"
+>
+  {%- if caption is not null or block('caption') is defined -%}
+    <caption class="theme-table__caption{% if captionSrOnly %} sr-only{% endif %}">
+      {%- block caption -%}{{ caption | raw }}{%- endblock -%}
+    </caption>
+  {%- endif -%}
+
+  {%- if block('thead') is defined -%}
+    {%- block thead -%}{%- endblock -%}
+  {%- elseif columns | length > 0 -%}
+    <thead class="theme-table__thead">
+      <tr>
+        {%- for col in columns -%}
+          {%- set colScope   = col.scope   | default('col') -%}
+          {%- set colSortable = col.sortable | default(false) -%}
+          {%- set colSortDir = col.sortDir | default('none') -%}
+          {%- set colAlign   = col.numeric ? 'end' : (col.align | default(null)) -%}
+          {%- set colNumeric = col.numeric | default(false) -%}
+          <th
+            scope="{{ colScope }}"
+            {%- if colAlign %} data-align="{{ colAlign }}"{% endif -%}
+            {%- if colNumeric %} data-numeric="true"{% endif -%}
+            {%- if colSortable %} data-sortable="true" aria-sort="{{ colSortDir }}"{% endif -%}
+          >
+            {%- if colSortable -%}
+              <button type="button" class="theme-table__sort" data-sort-dir="{{ colSortDir }}">
+                <span class="theme-table__sort-label">{{ col.label | raw }}</span>
+                <span class="theme-table__sort-icon" aria-hidden="true"></span>
+              </button>
+            {%- else -%}
+              {{ col.label | raw }}
+            {%- endif -%}
+          </th>
+        {%- endfor -%}
+      </tr>
+    </thead>
+  {%- endif -%}
+
+  {%- if block('tbody') is defined -%}
+    {%- block tbody -%}{%- endblock -%}
+  {%- elseif rows | length > 0 -%}
+    <tbody class="theme-table__tbody">
+      {%- for row in rows -%}
+        {%- set rowSelected = row.selected | default(false) -%}
+        <tr
+          {%- if rowSelected %} data-selected="true" aria-selected="true"{% endif -%}
+        >
+          {%- for cell in row.cells | default([]) -%}
+            {%- set cellAlign   = cell.numeric ? 'end' : (cell.align | default(null)) -%}
+            {%- set cellNumeric = cell.numeric | default(false) -%}
+            {%- if cell.header | default(false) -%}
+              <th
+                scope="row"
+                {%- if cellAlign %} data-align="{{ cellAlign }}"{% endif -%}
+                {%- if cellNumeric %} data-numeric="true"{% endif -%}
+              >{{- cell.content | raw -}}</th>
+            {%- else -%}
+              <td
+                {%- if cellAlign %} data-align="{{ cellAlign }}"{% endif -%}
+                {%- if cellNumeric %} data-numeric="true"{% endif -%}
+              >{{- cell.content | raw -}}</td>
+            {%- endif -%}
+          {%- endfor -%}
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  {%- endif -%}
+
+  {%- if block('tfoot') is defined -%}
+    <tfoot class="theme-table__tfoot">
+      {%- block tfoot -%}{%- endblock -%}
+    </tfoot>
+  {%- endif -%}
+</table>

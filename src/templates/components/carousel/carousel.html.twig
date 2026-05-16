@@ -1,0 +1,188 @@
+{#-
+  Carousel — slide carousel with optional autoplay + touch swipe + keyboard nav.
+
+  Per OQ-43 (sealed S2.8 opening) :
+    - Autoplay OFF by default ; opt-in via `autoplayInterval` > 0 (ms).
+    - Pause-on-pointerenter + pause-on-focuswithin built-in.
+    - Skip autoplay sous prefers-reduced-motion (controller window.matchMedia).
+    - Loop direction : back-to-first after last (cyclic).
+    - Pause/play button rendered when autoplay active (WCAG SC 2.2.2).
+
+  Per WAI-ARIA APG "Carousel" :
+    - role=region + aria-roledescription (consumer-localized via
+      `roleDescriptionCarousel` param ; defaults to "carousel") + aria-label.
+    - Each slide: role=group + aria-roledescription (consumer-localized via
+      `roleDescriptionSlide` param ; defaults to "diapositive") + aria-label
+      ("{index} sur {total}" — kit provides the Intl.PluralRules-driven
+      shape via the slide.label parameter).
+    - aria-hidden on inactive slides (controller-stamped).
+
+  Composes the `carousel` Stimulus controller (currentSlide tracking +
+  prev/next/goTo actions + autoplay loop + touch swipe + keyboard nav +
+  dispatches `carousel:slide-change`).
+
+  Parameters:
+    htmlId            (string, optional) — auto-generated.
+    label             (string, optional) — aria-label on the wrap
+                                            (default 'Carousel').
+    slides            (array,  required) — list of slide descriptors :
+                                            { id?, label, content }. The
+                                            `content` is raw HTML (consumer
+                                            owns sanitization per [I-3]).
+    currentSlide      (int,    optional) — 0-indexed initial slide
+                                            (default 0).
+    autoplayInterval  (int,    optional) — autoplay tick in ms ; 0 = OFF
+                                            (default 0, per OQ-43).
+    loop              (bool,   optional) — cyclic loop (default true,
+                                            per OQ-mini-43a).
+    showNav           (bool,   optional) — render prev / next buttons
+                                            (default true).
+    showDots          (bool,   optional) — render pagination dots
+                                            (default true).
+    showAutoplayToggle (bool,  optional) — render the play/pause toggle
+                                            (default true when
+                                            autoplayInterval > 0, else
+                                            false).
+    prevAriaLabel     (string, optional) — aria-label on prev button.
+    nextAriaLabel     (string, optional) — aria-label on next button.
+    autoplayAriaLabel (string, optional) — aria-label on the play/pause toggle.
+    dotAriaLabel      (string, optional) — aria-label template for dots ;
+                                            ICU-style `{index}` /
+                                            `{total}` placeholders. Default
+                                            'Aller au slide {index} sur {total}'.
+    slideAriaLabel    (string, optional) — aria-label template for slides
+                                            (default '{index} sur {total}').
+    className         (string, optional)
+
+  Usage:
+
+    {% include '@theme/components/carousel/carousel.html.twig' with {
+      label: 'Témoignages clients'|trans,
+      autoplayInterval: 5000,
+      slides: [
+        { content: '<blockquote>...</blockquote>' },
+        { content: '<blockquote>...</blockquote>' },
+      ],
+    } %}
+
+  Events (dispatched on the wrap):
+    carousel:slide-change — detail.{ currentSlide, previousSlide, totalSlides,
+                                      direction: 'next' | 'prev' | 'jump' }
+-#}
+
+{%- set htmlId             = htmlId             | default('theme-carousel-' ~ random()) -%}
+{%- set label              = label              | default('Carousel') -%}
+{%- set slides             = slides             | default([]) -%}
+{%- set currentSlide       = currentSlide       | default(0) -%}
+{%- set autoplayInterval   = autoplayInterval   | default(0) -%}
+{%- set loop               = loop is defined ? loop : true -%}
+{%- set showNav            = showNav is defined ? showNav : true -%}
+{%- set showDots           = showDots is defined ? showDots : true -%}
+{%- set showAutoplayToggle = showAutoplayToggle is defined ? showAutoplayToggle : (autoplayInterval > 0) -%}
+{%- set prevAriaLabel      = prevAriaLabel      | default('Slide précédent') -%}
+{%- set nextAriaLabel      = nextAriaLabel      | default('Slide suivant') -%}
+{%- set autoplayAriaLabel  = autoplayAriaLabel  | default('Lecture automatique') -%}
+{%- set slideAriaLabel     = slideAriaLabel     | default('{index} sur {total}') -%}
+{%- set dotAriaLabel       = dotAriaLabel       | default('Aller au slide {index} sur {total}') -%}
+{%- set roleDescriptionCarousel = roleDescriptionCarousel | default('carousel') -%}
+{%- set roleDescriptionSlide    = roleDescriptionSlide    | default('diapositive') -%}
+{%- set className          = className          | default('') -%}
+{%- set total              = slides | length -%}
+
+{%- set _classes = ['theme-carousel'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="carousel"
+  data-carousel-current-slide-value="{{ currentSlide }}"
+  data-carousel-autoplay-interval-value="{{ autoplayInterval }}"
+  data-carousel-loop-value="{{ loop ? 'true' : 'false' }}"
+  role="region"
+  aria-roledescription="{{ roleDescriptionCarousel }}"
+  aria-label="{{ label }}"
+>
+  <div class="theme-carousel__viewport" data-carousel-target="viewport">
+    <div class="theme-carousel__track" data-carousel-target="track">
+      {%- for slide in slides -%}
+        {%- set idx = loop.index -%}
+        {%- set slideLabel = slideAriaLabel | replace({ '{index}': idx, '{total}': total }) -%}
+        {%- set isActive = (loop.index0 == currentSlide) -%}
+        <article
+          id="{{ htmlId }}-slide-{{ loop.index0 }}"
+          class="theme-carousel__slide"
+          data-carousel-target="slide"
+          role="group"
+          aria-roledescription="{{ roleDescriptionSlide }}"
+          aria-label="{{ slideLabel }}"
+          data-state="{{ isActive ? 'active' : 'inactive' }}"
+          tabindex="{{ isActive ? '0' : '-1' }}"
+          {%- if not isActive %} aria-hidden="true"{% endif -%}
+        >
+          {{ slide.content | default('') | raw }}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if showNav -%}
+    <div class="theme-carousel__controls">
+      <button
+        type="button"
+        class="theme-carousel__nav theme-carousel__nav--prev"
+        data-carousel-target="prev"
+        data-action="click->carousel#prev"
+        aria-label="{{ prevAriaLabel }}"
+        aria-controls="{{ htmlId }}"
+      >
+        <span class="theme-carousel__nav-icon" aria-hidden="true"></span>
+      </button>
+      <button
+        type="button"
+        class="theme-carousel__nav theme-carousel__nav--next"
+        data-carousel-target="next"
+        data-action="click->carousel#next"
+        aria-label="{{ nextAriaLabel }}"
+        aria-controls="{{ htmlId }}"
+      >
+        <span class="theme-carousel__nav-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  {%- endif -%}
+
+  {%- if showDots -%}
+    <div class="theme-carousel__pagination">
+      {%- for slide in slides -%}
+        {%- set idx = loop.index -%}
+        {%- set dotLabel = dotAriaLabel | replace({ '{index}': idx, '{total}': total }) -%}
+        {%- set isActive = (loop.index0 == currentSlide) -%}
+        <button
+          type="button"
+          class="theme-carousel__dot"
+          data-carousel-target="dot"
+          data-slide-index="{{ loop.index0 }}"
+          data-action="click->carousel#goTo"
+          aria-label="{{ dotLabel }}"
+          aria-controls="{{ htmlId }}-slide-{{ loop.index0 }}"
+          data-state="{{ isActive ? 'active' : 'inactive' }}"
+          {%- if isActive %} aria-current="true"{% endif -%}
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if showAutoplayToggle -%}
+    <button
+      type="button"
+      class="theme-carousel__autoplay-toggle"
+      data-carousel-target="autoplayToggle"
+      data-action="click->carousel#toggleAutoplay"
+      aria-label="{{ autoplayAriaLabel }}"
+      aria-pressed="false"
+      data-state="playing"
+    >
+      <span class="theme-carousel__autoplay-icon" aria-hidden="true"></span>
+    </button>
+  {%- endif -%}
+</div>

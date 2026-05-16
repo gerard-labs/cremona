@@ -1,0 +1,118 @@
+/*
+ * Onboarding-ProductTour — driver.js lazy adapter (Ring 3 S3.2).
+ *
+ * Two parts :
+ *   1. `.theme-onboarding-product-tour` — the trigger wrapper (minimal).
+ *   2. `.theme-product-tour` — driver.js's popoverClass override. This
+ *       is the marker class the controller passes to driver.js's config
+ *       so the dynamically-appended overlay + step card uses the kit's
+ *       tokens (vs driver.js's default chrome).
+ *
+ * driver.js v1.x CSS class names this overrides :
+ *   .driver-popover                — the step card
+ *   .driver-popover-title          — the step heading
+ *   .driver-popover-description    — the step body
+ *   .driver-popover-progress-text  — the "X of N" indicator
+ *   .driver-popover-navigation-btns — the button row
+ *   .driver-popover-prev-btn / -next-btn / -close-btn — individual buttons
+ *
+ * Version pin policy per ADR-0020 §"Version pin policy" : caret ^1.x.x.
+ * Manual review at every major bump for CSS class name changes.
+ *
+ * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-onboarding-product-tour__trigger {
+  display: inline-flex;
+}
+
+/* driver.js popover override — kit tokens. */
+.theme-product-tour.driver-popover {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+  padding: var(--spacing-4);
+  font-family: var(--font-sans);
+  max-inline-size: 320px;
+}
+
+.theme-product-tour .driver-popover-title {
+  font: var(--typography-h3);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2);
+}
+
+.theme-product-tour .driver-popover-description {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.theme-product-tour .driver-popover-progress-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.theme-product-tour .driver-popover-navigation-btns {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-block-start: var(--spacing-3);
+}
+
+/* driver.js buttons inherit our Button primitive styling via the
+   .theme-button + variant classes. Adding fallback styles in case
+   driver.js applies its own classes that need overriding. */
+.theme-product-tour .driver-popover-prev-btn,
+.theme-product-tour .driver-popover-next-btn,
+.theme-product-tour .driver-popover-close-btn {
+  font: var(--typography-label);
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-3);
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-product-tour .driver-popover-next-btn {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border: 0;
+}
+
+.theme-product-tour .driver-popover-next-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.theme-product-tour .driver-popover-prev-btn {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+}
+
+.theme-product-tour .driver-popover-prev-btn:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-product-tour .driver-popover-close-btn {
+  background-color: transparent;
+  color: var(--color-text-tertiary);
+  border: 0;
+}
+
+.theme-product-tour .driver-popover-close-btn:hover {
+  color: var(--color-text-primary);
+}
+
+/* Dim overlay color override. */
+.driver-overlay {
+  fill: var(--color-bg-overlay);
+}
+
+/* Mobile : step card full-width-minus-padding. */
+@media (width <= 480px) {
+  .theme-product-tour.driver-popover {
+    max-inline-size: calc(100vw - var(--spacing-6));
+  }
+}

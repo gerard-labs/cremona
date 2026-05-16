@@ -1,0 +1,31 @@
+/*
+ * Auth-Register — registration pattern (Ring 3 S3.1).
+ *
+ * Same composition doctrine as Auth-Login : _auth-shell layout + Field
+ * stack + primary submit. Auth-Register adds the terms checkbox row.
+ *
+ * Everything else is inherited from the composed Ring 1 primitives.
+ */
+
+.theme-auth-register {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+/* ----- terms checkbox row + inline error -------------------------- */
+
+.theme-auth-register__terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1_5);
+  /* The terms Checkbox uses the .theme-checkbox-row form (label-wrapping)
+     so it self-contains its own visual. The inline error sits below as a
+     sibling paragraph (matching Field's __error pattern). */
+}
+
+/* ----- footer question text --------------------------------------- */
+
+.theme-auth-register__footer-question {
+  margin-inline-end: var(--spacing-1);
+}

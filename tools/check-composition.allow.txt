@@ -1,0 +1,6 @@
+# check-composition.allow.txt — ADR-0058 transitional baseline.
+# Files with pre-existing inline-reproduction violations, grandfathered
+# until remediated. This list can only SHRINK; delete the file when empty.
+# Bootstrap only: node tools/check-composition.js --write-baseline
+src/templates/components/_auth-shell/_auth-shell.html.twig  # PERMANENT-EXCEPTION block-bearing shell; cannot embed Card without breaking consumers' content-block override
+src/templates/components/command/command.html.twig  # PERMANENT-EXCEPTION ⌘K command-palette — bespoke <dialog>-based Ring 2 heavyweight; sr-only title + search input + results listbox + kbd footer is not Dialog's header/body/footer composition; theme-dialog reproduced for element-level modal base styling; embedding Dialog would impose header chrome + theme-dialog__body wrapper and distort the palette

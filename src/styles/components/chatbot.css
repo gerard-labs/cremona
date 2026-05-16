@@ -1,0 +1,140 @@
+/*
+ * Chatbot — conversational UI panel (Ring 3 S3.3c — FINAL Ring 3 pattern).
+ *
+ * Pure composition Drawer Ring 2 + Input Ring 1 + Item Ring 1. Marker
+ * class + auto-scroll target + message bubble alignment + typing
+ * indicator visual.
+ *
+ * Bundle budget : ~0.20 kB gzip per ADR-0034 Path X² CSS marker baseline
+ * (Typical bucket).
+ */
+
+.theme-chatbot__dialog {
+  /* Drawer at size that fits a chat panel comfortably on desktop while
+     staying tactile on mobile (Drawer-default 320 px is too narrow for
+     comfortable conversation reading). */
+  inline-size: min(420px, 95vw);
+  block-size: 100dvh;
+}
+
+.theme-chatbot__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  overflow: hidden;
+}
+
+.theme-chatbot__messages {
+  flex: 1 1 auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.theme-chatbot__message {
+  display: flex;
+}
+
+.theme-chatbot__message[data-role="user"] {
+  justify-content: flex-end;
+}
+
+.theme-chatbot__message[data-role="user"] .theme-item {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  max-inline-size: 80%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-md);
+}
+
+.theme-chatbot__message[data-role="bot"] .theme-item {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  max-inline-size: 80%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-md);
+}
+
+.theme-chatbot__message[data-role="system"] .theme-item {
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-tertiary);
+  font: var(--typography-caption);
+  text-align: center;
+  inline-size: 100%;
+}
+
+.theme-chatbot__typing {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-inline: var(--spacing-3);
+  color: var(--color-text-tertiary);
+  font: var(--typography-caption);
+  min-block-size: var(--spacing-5);
+}
+
+.theme-chatbot__typing[data-active="false"] {
+  visibility: hidden;
+}
+
+.theme-chatbot__typing-dots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.theme-chatbot__typing-dots span {
+  inline-size: 4px;
+  block-size: 4px;
+  background-color: var(--color-text-tertiary);
+  border-radius: var(--radius-pill);
+  animation: theme-chatbot-typing 1.2s infinite ease-in-out;
+}
+
+.theme-chatbot__typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.theme-chatbot__typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes theme-chatbot-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.theme-chatbot__form {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.theme-chatbot__input {
+  flex: 1 1 auto;
+}
+
+.theme-chatbot__send {
+  flex: 0 0 auto;
+  inline-size: 40px;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-chatbot__typing-dots span {
+    animation: none;
+    opacity: 0.6;
+  }
+}

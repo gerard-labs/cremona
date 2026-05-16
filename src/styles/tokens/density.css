@@ -1,0 +1,38 @@
+/*
+ * Density tokens — 3 modes via data-density="comfortable|cozy|compact"
+ * on any container. Components consume these via var(--density-*).
+ *
+ * Per-container override allowed (e.g. a DataTable can be compact while
+ * the surrounding page is comfortable).
+ */
+
+:root {
+  /* Comfortable (default) */
+  --density-row-height: 48px;
+  --density-row-padding-y: var(--spacing-3);
+  --density-row-padding-x: var(--spacing-4);
+  --density-cell-padding-y: var(--spacing-3);
+  --density-cell-padding-x: var(--spacing-4);
+  --density-form-gap: var(--spacing-4);
+  --density-button-height: 40px;
+  --density-button-padding-x: var(--spacing-4);
+  --density-input-height: 40px;
+}
+
+[data-density="cozy"] {
+  --density-row-height: 40px;
+  --density-row-padding-y: var(--spacing-2);
+  --density-cell-padding-y: var(--spacing-2);
+  --density-form-gap: var(--spacing-3);
+  --density-button-height: 36px;
+  --density-input-height: 36px;
+}
+
+[data-density="compact"] {
+  --density-row-height: 32px;
+  --density-row-padding-y: var(--spacing-1);
+  --density-cell-padding-y: var(--spacing-1);
+  --density-form-gap: var(--spacing-2);
+  --density-button-height: 28px;
+  --density-input-height: 28px;
+}

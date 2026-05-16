@@ -1,0 +1,90 @@
+{#-
+  Popover — floating panel anchored to a trigger.
+
+  JS-positioned (Floating UI v1.7 via the `popover` Stimulus controller) with
+  viewport-aware collision detection (flip + shift). Per OQ-19 doctrine
+  [ADR-0009]: the kit's overlay foundation; downstream compounds (Combobox,
+  DropdownMenu, ContextMenu, HoverCard, DatePicker, Select) all compose this.
+
+  Popover is **non-modal** — the trigger keeps focus on open; the user Tabs
+  into the content when they choose. For modal flows (focus trap, backdrop,
+  blocks rest of page), use `Dialog` (Ring 2 S2.1 too).
+
+  Stimulus controller `popover`:
+    - `toggle()` flips openValue; the value-changed callback dispatches
+      show()/hide().
+    - `open()` / `close()` — explicit methods (consumers wiring custom
+      semantics).
+    - `popover:open` / `popover:close` raw CustomEvents (bubbles + composed)
+      with detail.placement (resolved after Floating UI's `flip`).
+    - Esc dismiss via @window binding (closes any open popover when Esc is
+      pressed anywhere).
+    - Click-outside dismiss via document-capture-phase listener.
+
+  Positioning is **physical** (px-based `left` / `top` set inline by Floating
+  UI). The kit's ONE documented exception to "logical CSS everywhere" —
+  Floating UI handles RTL internally via its platform layer. See
+  `src/styles/components/popover.css` §positioning for the rationale.
+
+  Parameters:
+    htmlId       (string, optional)  — auto-generated; used to chain
+                                       aria-controls + the content's id so
+                                       the consumer's trigger can post
+                                       aria-controls="{{ popoverHtmlId }}".
+    placement    (string, optional)  — bottom (default) | top | start | end.
+                                       'start' / 'end' are logical aliases
+                                       converted to Floating UI's physical
+                                       'left' / 'right' per document direction.
+    offset       (int,    optional)  — gap from trigger in px (default 8).
+    open         (bool,   optional)  — false (default). SSR-open popovers.
+    className    (string, optional)  — extra utility classes on the wrapper.
+    contentClassName (string, optional) — extra classes on the content panel.
+
+  Blocks (one required each):
+    trigger — the element that toggles the popover. The Twig stamps
+              `data-popover-target="trigger"`, `aria-haspopup="dialog"`,
+              `aria-expanded` (initial value), `aria-controls` automatically
+              IF the block doesn't override them. The consumer block content
+              is the trigger's own innards (label, icon, etc.). For richer
+              semantic control (e.g. DropdownMenu wants `aria-haspopup="menu"`),
+              the consumer overrides via attributes in the block.
+    content — the floating panel's body. Consumer-provided HTML. The Twig
+              wraps it in a `<div data-popover-target="content">` with
+              positioning + animation styles applied.
+-#}
+
+{%- set htmlId            = htmlId            | default('theme-popover-' ~ random()) -%}
+{%- set placement         = placement         | default('bottom') -%}
+{%- set offset            = offset            | default(8) -%}
+{%- set open              = open              | default(false) -%}
+{%- set className         = className         | default('') -%}
+{%- set contentClassName  = contentClassName  | default('') -%}
+
+{%- set _classes = ['theme-popover'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _contentClasses = ['theme-popover__content'] -%}
+{%- if contentClassName -%}{%- set _contentClasses = _contentClasses | merge([contentClassName]) -%}{%- endif -%}
+
+{%- set popoverHtmlId = htmlId -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="popover"
+  data-action="click->popover#toggle keydown.esc@window->popover#close"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="{{ offset }}"
+  data-popover-open-value="{{ open ? 'true' : 'false' }}"
+>
+  {%- block trigger -%}{%- endblock -%}
+  <div
+    id="{{ popoverHtmlId }}"
+    class="{{ _contentClasses | join(' ') }}"
+    data-popover-target="content"
+    data-state="{{ open ? 'open' : 'closed' }}"
+    data-placement="{{ placement }}"
+    {{ open ? '' : 'hidden' }}
+  >
+    {%- block content -%}{%- endblock -%}
+  </div>
+</div>

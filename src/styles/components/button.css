@@ -1,0 +1,260 @@
+/*
+ * Button — the kit's interactive surface.
+ *
+ * 5 variants × 3 sizes × {hover, focus, active, disabled, loading} × icons
+ * leading/trailing × full-width × link-styled-as-button (<a> branch).
+ *
+ * Doctrine:
+ *   1. Native <button> / <a> — no Stimulus controller. Enter/Space activate
+ *      via the browser; the focus ring comes from the kit's base/reset.css
+ *      :where(:focus-visible) plus a stronger inset reaffirmation below.
+ *   2. Width-stable loading: the loading spinner REPLACES the leading icon
+ *      slot (Twig handles which slot — the CSS only styles the slot).
+ *      `aria-busy="true"` + `disabled` block all pointer events.
+ *   3. Touch hardening: every size gets min-block-size / min-inline-size
+ *      ≥ 44 px under coarse pointer (the sm 32-px desktop size ramps up
+ *      to 44 on touch — WCAG 2.5.5).
+ *   4. Press feedback follows the [14-motion-baseline] §10 pattern:
+ *        :active scale(0.97) at --motion-duration-instant,
+ *        release scale(1) at --motion-duration-fast / decelerate.
+ *      Matches Toggle exactly for cohesion.
+ *
+ * The CSS uses attribute selectors (data-variant / data-size) so consumers
+ * who render the markup themselves (without the Twig partial) still get
+ * the same visual envelope as long as they emit the same attribute shape.
+ */
+
+.theme-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  block-size: var(--density-button-height, 40px);
+  padding-block: 0;
+  padding-inline: var(--density-button-padding-x, var(--spacing-4));
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font: var(--typography-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-decelerate),
+    box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+/* ----- sizes (block-size + padding-inline + font-size) -------------- */
+
+.theme-button[data-size="sm"] {
+  block-size: 32px;
+  padding-inline: var(--spacing-3);
+  font-size: var(--font-size-xs);
+  gap: var(--spacing-1_5);
+}
+
+.theme-button[data-size="md"] {
+  block-size: 40px;
+  padding-inline: var(--spacing-4);
+  font-size: var(--font-size-sm);
+}
+
+.theme-button[data-size="lg"] {
+  block-size: 48px;
+  padding-inline: var(--spacing-5);
+  font-size: var(--font-size-base);
+}
+
+/* ----- full-width modifier ----------------------------------------- */
+
+.theme-button--full-width {
+  inline-size: 100%;
+}
+
+/* ----- focus ring (outer, like Toggle / InputGroup) ---------------- */
+
+.theme-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
+}
+
+/* ----- active press (scale-down — matches Toggle pattern) ---------- */
+
+.theme-button:active:not(:disabled, [aria-disabled="true"]) {
+  transform: scale(0.97);
+  transition-duration: var(--motion-duration-instant);
+}
+
+/* ----- variant: primary (filled brand) ----------------------------- */
+
+.theme-button[data-variant="primary"] {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-color: var(--color-primary);
+}
+
+.theme-button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.theme-button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-primary-active);
+  border-color: var(--color-primary-active);
+}
+
+/* ----- variant: secondary (outlined neutral) ----------------------- */
+
+.theme-button[data-variant="secondary"] {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+
+.theme-button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-bg-sunken);
+  border-color: var(--color-border-strong);
+}
+
+.theme-button[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-active-overlay);
+}
+
+/* ----- variant: ghost (transparent, no border) --------------------- */
+
+.theme-button[data-variant="ghost"] {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: transparent;
+}
+
+.theme-button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-bg-sunken);
+}
+
+.theme-button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-active-overlay);
+}
+
+/* ----- variant: destructive (filled danger) ------------------------ */
+
+.theme-button[data-variant="destructive"] {
+  background-color: var(--color-danger);
+  color: var(--color-danger-foreground);
+  border-color: var(--color-danger);
+}
+
+.theme-button[data-variant="destructive"]:hover:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--color-danger-hover);
+  border-color: var(--color-danger-hover);
+}
+
+.theme-button[data-variant="destructive"]:active:not(:disabled, [aria-disabled="true"]) {
+  /* No -active token for danger in the kit; fall back to the hover ramp.
+     If a brand preset needs a deeper press, declare --color-danger-active
+     and override here. */
+  background-color: var(--color-danger-hover);
+}
+
+/* ----- variant: link (text-only, underline on hover) --------------- */
+
+.theme-button[data-variant="link"] {
+  /* The link variant breaks the fixed-height envelope — it's prose
+     decoration, not a chip. Padding-inline collapses; the visual is
+     just a text-color + underline-on-hover. */
+  block-size: auto;
+  padding: 0;
+  background-color: transparent;
+  color: var(--color-text-link);
+  border-color: transparent;
+  border-radius: var(--radius-xs);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition:
+    color var(--motion-duration-fast) var(--motion-easing-standard),
+    text-decoration-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-button[data-variant="link"]:hover:not(:disabled, [aria-disabled="true"]) {
+  color: var(--color-text-link-hover);
+  text-decoration-color: currentColor;
+}
+
+.theme-button[data-variant="link"]:active:not(:disabled, [aria-disabled="true"]) {
+  /* Link variant skips the scale-down press feedback — feels wrong on a
+     prose element; the underline-on-hover is the affordance. */
+  transform: none;
+}
+
+/* ----- disabled (HTML <button>) ------------------------------------ */
+
+.theme-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+  /* Inherits its variant's bg/text — opacity carries the dim. The disabled
+     attr blocks pointer + keyboard at the browser level. */
+}
+
+/* ----- disabled link branch (aria-disabled on <a>) ----------------- */
+
+.theme-button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+  pointer-events: none;
+  /* aria-disabled doesn't block navigation by itself — pointer-events: none
+     + tabindex management at the consumer level handles the kbd path.
+     The kit doesn't auto-stamp tabindex="-1" because some flows want the
+     anchor reachable (e.g. read-only state in a tour overlay). Caller's
+     call. */
+}
+
+/* ----- loading state ----------------------------------------------- */
+
+.theme-button[aria-busy="true"] {
+  cursor: progress;
+  /* `disabled` is also set by the Twig template when loading=true, so the
+     opacity + no-pointer rules above kick in. We don't dim further. */
+}
+
+/* ----- icon slots --------------------------------------------------- */
+
+.theme-button__icon,
+.theme-button__spinner {
+  flex-shrink: 0;
+}
+
+.theme-button__label {
+  /* Inherits font-family / size / weight from .theme-button. */
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ----- touch target hardening (WCAG 2.5.5) ------------------------- */
+
+@media (pointer: coarse) {
+  .theme-button[data-size="sm"],
+  .theme-button[data-size="md"],
+  .theme-button[data-size="lg"] {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+
+  /* Link variant is prose decoration, not a tap target — exempt. The
+     surrounding context owns the tap area when it matters. */
+  .theme-button[data-variant="link"] {
+    min-block-size: auto;
+    min-inline-size: auto;
+  }
+}

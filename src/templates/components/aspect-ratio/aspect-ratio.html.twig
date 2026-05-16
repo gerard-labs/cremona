@@ -1,0 +1,55 @@
+{#-
+  AspectRatio — box wrapper that maintains a defined aspect ratio for its
+  inner content (typically an image, video, iframe, or canvas).
+
+  Pure CSS via the modern `aspect-ratio` property (Baseline 2022). Zero
+  Stimulus, zero polyfill — every browser the kit supports has it.
+
+  The wrapper applies `inline-size: 100%` (fills its parent's inline-axis)
+  and `aspect-ratio: var(--theme-aspect-ratio)` so the block-size derives
+  from the inline-size. Inner `<img>` / `<video>` / `<iframe>` are sized
+  to fill the box with `object-fit: cover` by default.
+
+  Two usage patterns:
+
+  1. {% embed %} block — the canonical Twig way:
+
+       {% embed '@theme/components/aspect-ratio/aspect-ratio.html.twig'
+                with { ratio: '16/9' } %}
+         {% block content %}
+           <img src="/cover.jpg" alt="…">
+         {% endblock %}
+       {% endembed %}
+
+  2. Raw HTML — the CSS contract works on `<div class="theme-aspect-ratio"
+     style="--theme-aspect-ratio: 16/9">`:
+
+       <div class="theme-aspect-ratio" style="--theme-aspect-ratio: 16/9">
+         <img src="/cover.jpg" alt="…">
+       </div>
+
+  Parameters:
+    ratio        (string, optional) — CSS aspect-ratio value (e.g. '16/9',
+                                      '4/3', '1/1', '3/2', '1.91/1' for OG,
+                                      '9/16' portrait, '21/9' cinemascope).
+                                      Default: '16/9'.
+    fit          (string, optional) — object-fit on the inner element:
+                                      cover (default) | contain | fill | none | scale-down
+    className    (string, optional)
+
+  Block `content` (required when embedding):
+    The inner element (img, video, iframe, picture, or any block) that
+    inherits the aspect-ratio's block-size.
+-#}
+
+{%- set ratio     = ratio     | default('16/9') -%}
+{%- set fit       = fit       | default('cover') -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-aspect-ratio'] -%}
+{%- if fit != 'cover' -%}{%- set _classes = _classes | merge(['theme-aspect-ratio--fit-' ~ fit]) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div class="{{ _classes | join(' ') }}" style="--theme-aspect-ratio: {{ ratio }};">
+  {%- block content -%}{%- endblock -%}
+</div>

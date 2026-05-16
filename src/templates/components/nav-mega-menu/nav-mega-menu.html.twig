@@ -1,0 +1,84 @@
+{#-
+  Nav-MegaMenu — multi-column dropdown panel for Nav-Header items (Ring 3 S3.2).
+
+  Composes NavigationMenu Ring 2 trigger + popover-positioned multi-column
+  panel. Optional featured aside on the inline-end (Atlassian-style).
+
+  Per Nav-Header.md §1 doctrine : <nav aria-label> + aria-current=page on
+  active link + microcopy via t('theme.nav.mega-menu.…').
+
+  Parameters:
+    htmlId        (string, optional)
+    triggerLabel  (string, required)  — the parent nav item label
+    width         (string, optional)  — 'contained' (default) | 'full'
+    columns       (array, required)   — [{heading, items: [{href, label, icon?}]}]
+    featured      (object, optional)  — {heading, href, body, cta}
+-#}
+
+{%- set htmlId       = htmlId       | default('theme-nav-mega-menu-' ~ random()) -%}
+{%- set width        = width        | default('contained') -%}
+{%- set columns      = columns      | default([]) -%}
+{%- set featured     = featured     | default(null) -%}
+
+{%- set _classes = ['theme-nav-mega-menu'] -%}
+{%- if width == 'full' -%}{%- set _classes = _classes | merge(['theme-nav-mega-menu--full']) -%}{%- endif -%}
+
+<div class="{{ _classes | join(' ') }}" id="{{ htmlId }}"
+     data-controller="navigation-menu popover"
+     data-navigation-menu-open-value="false"
+     data-popover-placement-value="bottom-start">
+  {% include '@theme/components/button/button.html.twig' with {
+    label: triggerLabel,
+    variant: 'ghost',
+    iconTrailing: 'chevron-down',
+    className: 'theme-nav-mega-menu__trigger',
+    attrs: {
+      'data-navigation-menu-target': 'trigger',
+      'data-action': 'click->navigation-menu#toggle',
+      'aria-haspopup': 'true',
+      'aria-expanded': 'false',
+      'aria-controls': htmlId ~ '-panel',
+    },
+  } only %}
+
+  <div class="theme-nav-mega-menu__panel"
+       id="{{ htmlId }}-panel"
+       data-navigation-menu-target="panel"
+       data-popover-target="content"
+       data-state="closed"
+       role="menu"
+       aria-label="{{ ('theme.nav.mega-menu.aria.label')|trans({'{trigger}': triggerLabel}) }}"
+       hidden>
+    <div class="theme-nav-mega-menu__columns">
+      {%- for column in columns -%}
+        <section class="theme-nav-mega-menu__column">
+          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: column.heading, className: 'theme-nav-mega-menu__column-heading' } only %}
+          <ul class="theme-nav-mega-menu__column-items" role="none">
+            {%- for item in column.items -%}
+              <li role="none">
+                <a href="{{ item.href }}" role="menuitem" class="theme-nav-mega-menu__item">
+                  {%- if item.icon -%}{% include '@theme/components/icon/icon.html.twig' with { name: item.icon } %}{%- endif -%}
+                  <span>{{ item.label }}</span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </section>
+      {%- endfor -%}
+    </div>
+
+    {%- if featured -%}
+      <aside class="theme-nav-mega-menu__featured">
+        {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: featured.heading, className: 'theme-nav-mega-menu__featured-heading' } only %}
+        <p class="theme-nav-mega-menu__featured-body">{{ featured.body }}</p>
+        {% include '@theme/components/button/button.html.twig' with {
+          label: featured.cta,
+          variant: 'primary',
+          href: featured.href,
+          className: 'theme-nav-mega-menu__featured-cta',
+          attrs: { role: 'menuitem' },
+        } only %}
+      </aside>
+    {%- endif -%}
+  </div>
+</div>

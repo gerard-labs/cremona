@@ -1,0 +1,78 @@
+{#-
+  AvatarGroup — visual stack of N Avatars with overflow indicator.
+
+  Pure-CSS primitive — 0 controller. Avatars overlap via flex + negative
+  inline-start margin. The first `max` avatars render visibly ; remaining
+  are summarized in a single trailing `+N` indicator that visually matches
+  an avatar's circle (size + radius) and uses the bg-sunken token to read
+  as a "rest" rather than a real person.
+
+  The indicator's accessible label MUST be a pre-resolved Intl.PluralRules
+  string (consumer calls `t('theme.avatar-group.aria.more', { count })`).
+  The kit ships those keys (one + other) but does NOT call `t()` itself —
+  same doctrine as Sonner.message ([Sonner.md §2]) : the kit does not
+  resolve consumer-facing content at render time, the consumer pre-resolves.
+
+  Parameters:
+    avatars     (array,  required) [{ src?, alt?, initials?, name?, hue?, status?, statusLabel? }, ...]
+                                     each entry is forwarded verbatim to
+                                     the Avatar primitive (no size override
+                                     — the Group's `size` flows down).
+    max         (int,    optional) default 4. Maximum visible avatars. If
+                                     avatars.length > max, render `max-1`
+                                     visible + 1 indicator showing the
+                                     remaining count (Stripe / Slack pattern).
+    size        (string, optional) xs (24) | sm (32) | md (default 40) | lg (56) | xl (80).
+                                     Same scale as Avatar primitive.
+    moreLabel   (string, optional) pre-resolved indicator label (e.g. "+3"
+                                     or "+12"). Defaults to a numeric "+N"
+                                     string. Consumer overrides for
+                                     i18n-resolved variants.
+    moreAria    (string, optional) pre-resolved aria-label for the
+                                     indicator (e.g. "3 autres membres").
+                                     Defaults to the same as moreLabel
+                                     (text content).
+    groupAria   (string, optional) accessible name on the group wrapper
+                                     (e.g. "Membres : Marie, Alex, Théo
+                                     et 3 autres"). Recommended for SR
+                                     comprehension — falls back to a
+                                     generic "Group of avatars" if absent.
+    className   (string, optional)
+-#}
+
+{%- set avatars   = avatars   | default([]) -%}
+{%- set max       = max       | default(4) -%}
+{%- set size      = size      | default('md') -%}
+{%- set moreLabel = moreLabel | default(null) -%}
+{%- set moreAria  = moreAria  | default(null) -%}
+{%- set groupAria = groupAria | default(null) -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-avatar-group'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _total       = avatars | length -%}
+{%- set _hasOverflow = _total > max -%}
+{%- set _visibleCount = _hasOverflow ? max - 1 : _total -%}
+{%- set _remaining   = _total - _visibleCount -%}
+
+{%- set _effectiveMoreLabel = moreLabel ?? ('+' ~ _remaining) -%}
+{%- set _effectiveMoreAria  = moreAria  ?? _effectiveMoreLabel -%}
+
+<span
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  {%- if groupAria %} role="group" aria-label="{{ groupAria }}"{% endif -%}
+>
+  {%- for avatar in avatars | slice(0, _visibleCount) -%}
+    {% include '@theme/components/avatar/avatar.html.twig' with avatar | merge({ size: size }) %}
+  {%- endfor -%}
+  {%- if _hasOverflow -%}
+    {% include '@theme/components/avatar/avatar.html.twig' with {
+      initials: _effectiveMoreLabel,
+      size: size,
+      className: 'theme-avatar-group__more',
+      attrs: { role: 'img', 'aria-label': _effectiveMoreAria },
+    } only %}
+  {%- endif -%}
+</span>

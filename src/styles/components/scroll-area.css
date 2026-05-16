@@ -1,0 +1,113 @@
+/*
+ * ScrollArea — Custom-styled scrollable container.
+ *
+ * Pure CSS. 0 Stimulus controller. The browser owns scroll mechanics
+ * (momentum, snap, focus-scroll, edge-bounce); we only style the scrollbar
+ * surface via `::-webkit-scrollbar` (Chromium/WebKit/Safari) and the
+ * Firefox-native `scrollbar-width` + `scrollbar-color` properties.
+ *
+ * The `data-orientation` attribute controls which axes can scroll:
+ *   both        — overflow on both axes (default)
+ *   vertical    — overflow-block only; inline-axis hidden
+ *   horizontal  — overflow-inline only; block-axis hidden
+ *
+ * The `data-size` attribute controls the visible scrollbar width:
+ *   sm — 6 px (minimal, density-compact tables)
+ *   md — 10 px (default)
+ *   lg — 14 px (touchscreen-friendly)
+ *
+ * RTL: the browser places the vertical scrollbar on the inline-start side
+ * automatically when `dir="rtl"` — no kit-side flip needed. The horizontal
+ * scrollbar respects logical flow naturally.
+ *
+ * Reduced-motion: not applicable at the ScrollArea layer (the browser's
+ * scroll animation is OS-level; the user's reduced-motion preference is
+ * handled by the OS). The kit doesn't add custom scroll animations.
+ */
+
+.theme-scroll-area {
+  position: relative;
+  inline-size: 100%;
+  /* Default — overflow on both axes. */
+  overflow-block: auto;
+  overflow-inline: auto;
+  /* Firefox-native scrollbar tokens. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+/* Orientation variants — clamp the non-active axis. */
+.theme-scroll-area[data-orientation="vertical"] {
+  overflow-inline: hidden;
+  overflow-block: auto;
+}
+
+.theme-scroll-area[data-orientation="horizontal"] {
+  overflow-inline: auto;
+  overflow-block: hidden;
+}
+
+/* --- Scrollbar size variants -------------------------------------- */
+
+.theme-scroll-area[data-size="sm"] {
+  scrollbar-width: thin; /* Firefox: ~6 px */
+}
+
+.theme-scroll-area[data-size="md"] {
+  /* Default. Firefox `scrollbar-width: thin` ≈ 10 px on most platforms. */
+  scrollbar-width: thin;
+}
+
+.theme-scroll-area[data-size="lg"] {
+  /* Firefox 'auto' ≈ 14-17 px (platform default). */
+  scrollbar-width: auto;
+}
+
+/* --- Chromium / WebKit / Safari scrollbar styling ----------------- */
+
+.theme-scroll-area::-webkit-scrollbar {
+  inline-size: 10px;
+  block-size: 10px;
+}
+
+.theme-scroll-area[data-size="sm"]::-webkit-scrollbar {
+  inline-size: 6px;
+  block-size: 6px;
+}
+
+.theme-scroll-area[data-size="lg"]::-webkit-scrollbar {
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+.theme-scroll-area::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.theme-scroll-area::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-default);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-scroll-area::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border-strong);
+}
+
+.theme-scroll-area::-webkit-scrollbar-thumb:active {
+  background-color: var(--color-text-tertiary);
+}
+
+.theme-scroll-area::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+/* --- Reduced motion ----------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-scroll-area::-webkit-scrollbar-thumb {
+    transition: none;
+  }
+}

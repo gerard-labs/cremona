@@ -1,0 +1,48 @@
+{#-
+  Nav-BottomMobile — canonical iOS / Material bottom tab bar (Ring 3 S3.2).
+
+  Mobile-only (< 768 px). 3-5 tab items per platform guidelines. Each tab
+  : icon + (optional) label + (optional) Badge unread.
+
+  Parameters:
+    htmlId      (string, optional)
+    ariaLabel   (string, optional)
+    items       (array, required)   — [{href, label, icon, current?, badge?}]
+    showLabels  (bool, optional)    — default true ; false = icon-only
+-#}
+
+{%- set htmlId     = htmlId     | default('theme-nav-bottom-mobile-' ~ random()) -%}
+{%- set ariaLabel  = ariaLabel  | default('theme.nav.bottom-mobile.aria.label'|trans) -%}
+{%- set showLabels = showLabels | default(true) -%}
+
+{%- set _classes = ['theme-nav-bottom-mobile'] -%}
+{%- if not showLabels -%}{%- set _classes = _classes | merge(['theme-nav-bottom-mobile--icon-only']) -%}{%- endif -%}
+
+<nav class="{{ _classes | join(' ') }}" id="{{ htmlId }}" aria-label="{{ ariaLabel }}">
+  <ul class="theme-nav-bottom-mobile__list">
+    {%- for item in items -%}
+      <li class="theme-nav-bottom-mobile__item">
+        <a href="{{ item.href }}"
+           class="theme-nav-bottom-mobile__link"
+           {% if item.current %}aria-current="page"{% endif %}
+           {% if not showLabels %}aria-label="{{ item.label }}"{% endif %}>
+          <span class="theme-nav-bottom-mobile__icon-wrap">
+            {% include '@theme/components/icon/icon.html.twig' with { name: item.icon } %}
+            {%- if item.badge -%}
+              {% include '@theme/components/badge/badge.html.twig' with {
+                variant: 'danger',
+                size: 'sm',
+                count: item.badge,
+                className: 'theme-nav-bottom-mobile__badge',
+                attrs: { 'aria-label': 'theme.nav.bottom-mobile.badge.aria'|trans({'{count}': item.badge}) },
+              } only %}
+            {%- endif -%}
+          </span>
+          {%- if showLabels -%}
+            <span class="theme-nav-bottom-mobile__label">{{ item.label }}</span>
+          {%- endif -%}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

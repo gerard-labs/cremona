@@ -1,0 +1,37 @@
+{#-
+  DescriptionList — semantic <dl><dt><dd> list of term/definition pairs.
+
+  Pure-semantic primitive — 0 controller, 0 JS. Two layouts:
+   - stacked (default) : <dt> above <dd>, vertical pairs, gap between pairs.
+   - side-by-side      : <dt> | <dd> on a single grid row, terms aligned in
+                          the inline-start column.
+
+  Parameters:
+    items     (array,  required) [{ term: string, definition: string }, ...].
+                                  Each entry's `term` and `definition` are
+                                  pre-resolved strings (consumer calls |trans).
+    layout    (string, optional) stacked (default) | side-by-side
+    className (string, optional) extra utility classes on the wrapper
+
+  Rich-content `<dd>` (e.g. multi-line bio, link, badge inline) — the
+  consumer can pass HTML-as-string in `definition` and it will be rendered
+  via `|raw`. Sanitization is the consumer's responsibility (per kit
+  doctrine — see [01-overview.md §I-3] : the kit does not own content).
+-#}
+
+{%- set items     = items     | default([]) -%}
+{%- set layout    = layout    | default('stacked') -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-description-list'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<dl
+  class="{{ _classes | join(' ') }}"
+  data-layout="{{ layout }}"
+>
+  {%- for item in items -%}
+    <dt class="theme-description-list__term">{{ item.term }}</dt>
+    <dd class="theme-description-list__definition">{{ item.definition | raw }}</dd>
+  {%- endfor -%}
+</dl>

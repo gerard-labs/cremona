@@ -1,0 +1,63 @@
+/*
+ * Form-PhoneInput — international phone input (intl-tel-input lazy ~25 kB).
+ *
+ * Marker class — composition only. Field Ring 1 carries Label + help/error.
+ * intl-tel-input enhances the input on first focus ; this CSS overrides its
+ * default chrome (flag picker, dropdown) to match the kit's token vocabulary.
+ */
+
+.theme-form-phone-input__input {
+  /* intl-tel-input wraps this input ; the wrap takes over styling. */
+  inline-size: 100%;
+}
+
+/* Override intl-tel-input's default chrome (CSS classes prefixed with .iti). */
+.theme-form-phone-input .iti {
+  inline-size: 100%;
+}
+
+.theme-form-phone-input .iti__country-list {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+  max-block-size: 16rem;
+  font: var(--typography-body);
+  color: var(--color-text-primary);
+}
+
+.theme-form-phone-input .iti__country {
+  padding: var(--spacing-2) var(--spacing-3);
+  min-block-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-form-phone-input .iti__country.iti__highlight,
+.theme-form-phone-input .iti__country:hover {
+  background: var(--color-hover-overlay);
+}
+
+.theme-form-phone-input .iti__selected-flag {
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-1);
+  min-inline-size: 2.5rem;
+  min-block-size: 2.5rem;
+}
+
+.theme-form-phone-input .iti__selected-flag:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: calc(-1 * var(--ring-offset-width));
+  border-radius: var(--radius-sm);
+}
+
+.theme-form-phone-input .iti__dial-code {
+  color: var(--color-text-secondary);
+}
+
+.theme-field--invalid .iti__tel-input {
+  border-color: var(--color-danger);
+}

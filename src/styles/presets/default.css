@@ -1,0 +1,24 @@
+/*
+ * Default preset — "Samurai indigo".
+ *
+ * The Samurai palette IS the default (already baked into tokens/color.css).
+ * This file is intentionally near-empty: it documents the override surface
+ * for consumer brand presets.
+ *
+ * Consumers who want their own brand swap a single CSS file, e.g.:
+ *
+ *   @import "@gerard/theme/dist/theme.css";
+ *   @import "./my-brand-orange.css";
+ *
+ * where my-brand-orange.css redeclares variables like:
+ *
+ *   :root {
+ *     --color-primary: oklch(0.65 0.18 50);
+ *     --color-primary-hover: oklch(0.6 0.18 50);
+ *     --radius-md: 6px;
+ *     --font-sans: "Manrope", system-ui;
+ *   }
+ *   [data-theme="dark"] {
+ *     --color-primary: oklch(0.74 0.16 50);
+ *   }
+ */

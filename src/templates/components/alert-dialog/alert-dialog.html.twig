@@ -1,0 +1,116 @@
+{#-
+  AlertDialog — destructive-confirm wrapper around Dialog.
+
+  Per Ring 2 S2.2 doctrine [pending lock-in ADR]: AlertDialog is NOT a
+  standalone compound — it's a wrapper that bakes Dialog's 3 destructive
+  policies + injects a leading status icon:
+
+    1. `closeOnEscape: false` — Esc does NOT dismiss.
+    2. `closeOnBackdropClick: false` — backdrop click does NOT dismiss.
+    3. `closeButton: false` — no close-X in header.
+    4. Leading status icon in header (alert-triangle / alert-circle /
+       info per `tone`).
+
+  → The user MUST commit via an explicit Cancel or Confirm button. This
+    matches WCAG SC 2.1.2 (no keyboard trap) because the footer's
+    Cancel button is always keyboard-reachable via Tab.
+
+  AlertDialog reuses the `dialog` Stimulus controller — no new controller.
+  Events dispatched are `dialog:open` / `dialog:close` (consumer can wire
+  these the same way as for plain Dialog).
+
+  Per 12-microcopy-tone §Confirmations:
+    - Title NAMES the resource ("Supprimer 'Arcelor' ?")
+    - Body NAMES the consequence ("142 tâches perdues")
+    - Confirm button NAMES the action ("Supprimer définitivement"),
+      never generic "OK".
+    - Cancel button comes FIRST in DOM order — flex-row writing
+      direction handles LTR/RTL positioning naturally.
+
+  Parameters:
+    htmlId          (string, optional)  — auto-generated. Used to chain
+                                          aria-labelledby + title's id.
+    tone            (string, optional)  — danger (default) | warning | info.
+                                          Drives the leading icon + the
+                                          icon-wrap soft-color background.
+    size            (string, optional)  — sm (default — confirms are short) |
+                                          md | lg.
+    open            (bool,   optional)  — false (default). SSR-open dialogs.
+    className       (string, optional)  — extra classes on the outer wrap.
+    dialogClassName (string, optional)  — extra classes on the `<dialog>`.
+
+  Blocks:
+    trigger (optional) — the element that opens the AlertDialog. Typically
+                         a destructive Button. Consumer stamps
+                         `data-action="click->dialog#open"`.
+    title (required)   — the question / resource name. Wrapped in <h2>.
+    body (required)    — the consequence statement. Optionally includes
+                         a "type to confirm" Input.
+    footer (required)  — button cluster. Standard pattern:
+                         [Cancel secondary][Confirm <tone-aware>].
+                         Consumer wires `data-action="click->dialog#close"`
+                         on both (the Confirm typically runs its action
+                         then closes, hence both close).
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-alert-dialog-' ~ random()) -%}
+{%- set tone            = tone            | default('danger') -%}
+{%- set size            = size            | default('sm') -%}
+{%- set open            = open            | default(false) -%}
+{%- set className       = className       | default('') -%}
+{%- set dialogClassName = dialogClassName | default('') -%}
+
+{%- set _wrapClasses = ['theme-dialog-wrap', 'theme-alert-dialog-wrap'] -%}
+{%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _dialogClasses = ['theme-dialog', 'theme-alert-dialog'] -%}
+{%- if dialogClassName -%}{%- set _dialogClasses = _dialogClasses | merge([dialogClassName]) -%}{%- endif -%}
+
+{%- set _titleId = htmlId ~ '-title' -%}
+
+{%- set _iconName = {
+  'danger':  'alert-triangle',
+  'warning': 'alert-circle',
+  'info':    'info'
+}[tone] | default('alert-triangle') -%}
+
+{%- set alertDialogHtmlId = htmlId -%}
+{%- set alertDialogTitleId = _titleId -%}
+
+<div
+  class="{{ _wrapClasses | join(' ') }}"
+  data-controller="dialog"
+  data-dialog-open-value="{{ open ? 'true' : 'false' }}"
+  data-dialog-close-on-escape-value="false"
+  data-dialog-close-on-backdrop-click-value="false"
+>
+  {%- if block('trigger') is defined and block('trigger') is not empty -%}
+    {%- block trigger -%}{%- endblock -%}
+  {%- endif -%}
+
+  <dialog
+    id="{{ htmlId }}"
+    class="{{ _dialogClasses | join(' ') }}"
+    data-dialog-target="dialog"
+    data-size="{{ size }}"
+    data-tone="{{ tone }}"
+    aria-labelledby="{{ _titleId }}"
+  >
+    <header class="theme-dialog__header theme-alert-dialog__header">
+      <span class="theme-alert-dialog__icon-wrap" aria-hidden="true">
+        {% include '@theme/components/icon/icon.html.twig' with { name: _iconName, size: 'md', decorative: true } %}
+      </span>
+      <h2 id="{{ _titleId }}" class="theme-dialog__title theme-alert-dialog__title">
+        {%- block title -%}{%- endblock -%}
+      </h2>
+    </header>
+
+    <div class="theme-dialog__body theme-alert-dialog__body">
+      {%- block body -%}{%- endblock -%}
+    </div>
+
+    <footer class="theme-dialog__footer theme-alert-dialog__footer">
+      {%- block footer -%}{%- endblock -%}
+    </footer>
+  </dialog>
+</div>

@@ -1,0 +1,16 @@
+/*
+ * Error-401 — "Authentication required" page (Ring 3 S3.1c).
+ *
+ * Composes _error-shell (layout) + Empty primitive (illustration / title /
+ * body / actions). Icon substitut `user` per OQ-57b (no curated-set amend
+ * ADR-0016 — S2.8 Sidebar precedent). Marker class only — Empty + shell
+ * carry the visuals.
+ *
+ * See `_error-shell.css` for the centered viewport-min-height layout +
+ * the shared family doctrine.
+ */
+
+.theme-error-401 {
+  /* Marker class for consumer-side targeting (extra utility classes, brand
+     overrides). The shell + Empty composition does the heavy lifting. */
+}

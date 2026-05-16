@@ -1,0 +1,114 @@
+/*
+ * Popover — floating panel anchored to a trigger.
+ *
+ * The pendant JS-positioned de Tooltip (Ring 1 CSS-only 4 placements). Adds
+ * viewport-aware collision detection (flip + shift) via Floating UI v1.7 —
+ * see OQ-19 doctrine [ADR-0009].
+ *
+ * Visibility is JS-controlled: the `popover` Stimulus controller flips
+ * `data-state="open|closed"` on the content sibling. The CSS handles the
+ * fade + scale via opacity + transform with motion tokens.
+ *
+ * Positioning is **physical** (px-based `left`/`top` set inline by Floating
+ * UI's `computePosition`). This is the kit's ONE documented exception to
+ * "logical CSS everywhere" — Floating UI already handles RTL internally via
+ * its platform layer, so the computed x/y are correct in either direction.
+ * Don't try to override with `inset-inline-*` — it would double-flip in RTL.
+ *
+ * The transform-origin per placement (so the scale grows from the trigger
+ * direction) is also controller-set via `--theme-popover-origin` CSS custom
+ * property, computed from Floating UI's resolved placement (after flip).
+ *
+ * Animations (per 14-motion-baseline §1 Popover):
+ *   open  — opacity 0→1 + scale 0.96→1; duration-base (180 ms) emphasized
+ *   close — opacity 1→0 + scale 1→0.96; duration-fast (120 ms) accelerate
+ *
+ * Reduced-motion: global override compresses duration to 0.01 ms — the
+ * popover snaps in/out without animation. transitionend still fires so
+ * the controller's hidden=true cleanup still runs.
+ *
+ * Esc dismiss is window-scoped: any Esc keydown anywhere closes an open
+ * popover (matches WAI-ARIA APG "Dialog / Popover" pattern).
+ * Click-outside dismiss is document-capture-phase so React-style
+ * stopPropagation inside the popover content doesn't break dismiss-on-doc.
+ */
+
+.theme-popover {
+  display: inline-block;
+  position: relative;
+}
+
+.theme-popover__content {
+  /* Pinned to viewport top-left; Floating UI inline-styles `left` / `top`
+     to the resolved coordinates. Physical positioning — see header comment. */
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--z-popover);
+
+  /* Surface — inherits Card's elevated envelope. */
+  inline-size: max-content;
+  min-inline-size: 200px;
+  max-inline-size: 360px;
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-3);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-popover);
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  line-height: var(--line-height-normal);
+
+  /* Default — closed state (hidden visually, kept in DOM for the close
+     transition; the controller sets `hidden=true` after transitionend
+     to remove it from the accessibility tree). */
+  opacity: 0;
+  transform: scale(0.96);
+  transform-origin: var(--theme-popover-origin, 50% 0%);
+  pointer-events: none;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-accelerate),
+    transform var(--motion-duration-fast) var(--motion-easing-accelerate);
+}
+
+.theme-popover__content[data-state="open"] {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  transition-duration: var(--motion-duration-base);
+  transition-timing-function: var(--motion-easing-emphasized);
+}
+
+/* The native `hidden` attribute is set by the controller after the close
+   transition completes — removes the popover from the accessibility tree
+   while keeping it in the DOM for the next open (so consumers' Stimulus
+   targets / data-* state survive). */
+.theme-popover__content[hidden] {
+  display: none;
+}
+
+/* Inline-flex header pattern when the consumer composes a title + dismiss
+   button at the top of the content. Optional — most popovers are plain. */
+.theme-popover__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-block-end: var(--spacing-2);
+}
+
+.theme-popover__title {
+  font: var(--typography-h3);
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+/* ----- dark mode --------------------------------------------------- */
+
+[data-theme="dark"] .theme-popover__content {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-default);
+  /* Shadow opacities are lifted in tokens/shadow.css [data-theme="dark"] —
+     no per-component override needed. */
+}

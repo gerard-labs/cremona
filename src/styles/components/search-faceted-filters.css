@@ -1,0 +1,98 @@
+/*
+ * Search-FacetedFilters — facet filter panel (Ring 3 S3.3b-2).
+ *
+ * Composes Checkbox Ring 1 (multi-select facets), optional Slider Ring 1
+ * (range facets), optional Popover Ring 2 (mobile filter chips).
+ * Controller : faceted-filters (16th Ring 3, thin) — aggregates input
+ * changes into a single state object + dispatches faceted-filters:change.
+ *
+ * Bundle budget : ~0.25 kB gzip (per ADR-0031 Path X corrected baseline
+ * for thin pattern + slight overhead for facet group layout).
+ */
+
+.theme-search-faceted-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  padding: var(--spacing-4);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  inline-size: 100%;
+}
+
+.theme-search-faceted-filters__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  padding-block-end: var(--spacing-3);
+  border-block-end: 1px solid var(--color-border-subtle);
+}
+
+.theme-search-faceted-filters__title {
+  font: var(--typography-h3);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.theme-search-faceted-filters__clear {
+  /* Consumer-provided button (typically Button Ring 1 variant=ghost size=sm) */
+}
+
+.theme-search-faceted-filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.theme-search-faceted-filters__group-title {
+  font: var(--typography-overline);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.theme-search-faceted-filters__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1_5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.theme-search-faceted-filters__option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.theme-search-faceted-filters__option-label {
+  font: var(--typography-body);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.theme-search-faceted-filters__option-count {
+  margin-inline-start: auto;
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.theme-search-faceted-filters__range {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.theme-search-faceted-filters__range-values {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font: var(--typography-caption);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}

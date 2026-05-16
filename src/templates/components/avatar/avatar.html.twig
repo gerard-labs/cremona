@@ -1,0 +1,64 @@
+{#-
+  Avatar — image + initials fallback, 5 sizes, optional status dot,
+  deterministic hue (1-6) via the KPI palette.
+
+  Parameters:
+    src         (string, optional) image URL; if absent OR errors at runtime,
+                                   the kit swaps to the initials/icon fallback.
+    alt         (string, optional) accessible name for the <img>. Empty if absent.
+    initials    (string, optional) 1-2 char initials to render when no src
+                                   (or as the fallback for the Stimulus controller).
+    name        (string, optional) full name used by the Stimulus controller to
+                                   compute initials at error-time when `initials`
+                                   is absent.
+    size        (string, optional) xs (24) | sm (32) | md (default 40) | lg (56) | xl (80)
+    status      (string, optional) online | away | busy | offline — renders the
+                                   colour-coded status dot at the avatar's
+                                   inline-end / block-end corner.
+    statusLabel (string, optional) accessible name for the status dot. Falls
+                                   back to the raw `status` code if not given.
+    hue         (int,    optional) 1..6 → background pulled from `--color-kpi-N`.
+                                   Defaults to `--color-bg-elevated` (neutral).
+    className   (string, optional)
+-#}
+
+{%- set src         = src         | default(null) -%}
+{%- set alt         = alt         | default('') -%}
+{%- set initials    = initials    | default('') -%}
+{%- set name        = name        | default('') -%}
+{%- set size        = size        | default('md') -%}
+{%- set status      = status      | default(null) -%}
+{%- set statusLabel = statusLabel | default(null) -%}
+{%- set hue         = hue         | default(null) -%}
+{%- set className   = className   | default('') -%}
+{%- set attrs       = attrs       | default({}) -%}
+
+{%- set _classes = ['theme-avatar'] -%}
+{%- if status -%}{%- set _classes = _classes | merge(['theme-avatar--has-status']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _style = [] -%}
+{%- if hue -%}{%- set _style = _style | merge(['--theme-avatar-hue: var(--color-kpi-' ~ hue ~ ')']) -%}{%- endif -%}
+{%- set _styleAttr = _style | join('; ') -%}
+
+{%- set _showIconFallback = (not src) and (not initials) -%}
+{%- set _effectiveStatusLabel = statusLabel ?? status -%}
+
+<span
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  {%- if src %} data-controller="avatar-fallback" data-avatar-fallback-name-value="{{ name }}" data-avatar-fallback-initials-value="{{ initials }}"{% endif -%}
+  {%- if _styleAttr %} style="{{ _styleAttr }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {%- if src -%}
+    <img class="theme-avatar__img" data-avatar-fallback-target="img" data-action="error->avatar-fallback#onError" src="{{ src }}" alt="{{ alt }}">
+  {%- elseif _showIconFallback -%}
+    {% include '@theme/components/icon/icon.html.twig' with { name: 'user', decorative: true, size: size in ['xs', 'sm'] ? 'sm' : (size == 'xl' ? 'xl' : 'lg') } %}
+  {%- else -%}
+    <span class="theme-avatar__fallback" aria-hidden="true">{{ initials }}</span>
+  {%- endif -%}
+  {%- if status -%}
+    <span class="theme-avatar__status" data-status="{{ status }}" role="status" aria-label="{{ _effectiveStatusLabel }}"></span>
+  {%- endif -%}
+</span>

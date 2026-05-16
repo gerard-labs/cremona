@@ -1,0 +1,122 @@
+{#-
+  Form-Signature — inline signature pad (canvas + lazy signature_pad lib).
+
+  Per Forms family doctrine (Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) is the composition keystone — but Signature is canvas-based,
+      so the wrap is the theme-form-signature class directly (compose Card Ring 1 for surface).
+    - signature_pad library lazy-loaded on first pointer-down per ADR-0024 (8e cascade).
+    - Synthetic pointerdown replay AFTER lazy load ensures no lost first-stroke coordinates.
+    - Fallback `<details>` text input for SR users.
+
+  Parameters:
+    htmlId          (string,  optional) — auto-generated.
+    label           (string,  required) — visible label for the signature surface.
+    name            (string,  required) — form field name for base64 PNG hidden input.
+    width           (int,     optional) — default 400.
+    height          (int,     optional) — default 200.
+    penColor        (string,  optional) — default '#000000'.
+    backgroundColor (string,  optional) — default 'rgba(255,255,255,0)' (transparent).
+    minWidth        (float,   optional) — default 0.5.
+    maxWidth        (float,   optional) — default 2.5.
+    fallback        (bool,    optional) — default true (renders <details> text input).
+    fallbackName    (string,  optional) — fallback text input name (default = `${name}_typed`).
+    help            (string,  optional) — help text below the widget.
+    error           (string,  optional) — error message.
+    className       (string,  optional)
+
+  Events emitted on the wrapper :
+    signature-pad:mount
+    signature-pad:ready
+    signature-pad:change { isEmpty, dataUrl }
+    signature-pad:clear
+
+  Usage:
+
+    {% include '@theme/components/form-signature/form-signature.html.twig' with {
+      label: 'theme.form.signature.label.contract'|trans,
+      name: 'signature',
+      width: 400, height: 200,
+    } %}
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-form-signature-' ~ random()) -%}
+{%- set width           = width           | default(400) -%}
+{%- set height          = height          | default(200) -%}
+{%- set penColor        = penColor        | default('#000000') -%}
+{%- set backgroundColor = backgroundColor | default('rgba(255,255,255,0)') -%}
+{%- set minWidth        = minWidth        | default(0.5) -%}
+{%- set maxWidth        = maxWidth        | default(2.5) -%}
+{%- set fallback        = fallback        | default(true) -%}
+{%- set fallbackName    = fallbackName    | default(name ~ '_typed') -%}
+{%- set className       = className       | default('') -%}
+
+{%- set isInvalid = error is defined and error -%}
+{%- set _classes = ['theme-form-signature'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-form-signature--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="signature-pad"
+  data-signature-pad-pen-color-value="{{ penColor }}"
+  data-signature-pad-background-color-value="{{ backgroundColor }}"
+  data-signature-pad-min-width-value="{{ minWidth }}"
+  data-signature-pad-max-width-value="{{ maxWidth }}"
+>
+  <span class="theme-form-signature__label" id="{{ htmlId }}-label">{{ label }}</span>
+
+  {% embed '@theme/components/card/card.html.twig' with {
+    variant: 'elevated',
+    className: 'theme-form-signature__surface',
+    bodyClass: 'theme-form-signature__body',
+    footerClass: 'theme-form-signature__footer',
+  } %}
+    {% block body %}
+      <canvas
+        class="theme-form-signature__canvas"
+        data-signature-pad-target="canvas"
+        role="img"
+        aria-labelledby="{{ htmlId }}-label"
+        aria-label="{{ 'theme.form.signature.aria.label'|trans }}"
+        width="{{ width }}"
+        height="{{ height }}"
+      ></canvas>
+    {% endblock %}
+    {% block footer %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: 'theme.form.signature.actions.clear'|trans,
+        variant: 'secondary',
+        size: 'sm',
+        attrs: {
+          'data-signature-pad-target': 'clearBtn',
+          'data-action': 'click->signature-pad#clear',
+        },
+      } only %}
+    {% endblock %}
+  {% endembed %}
+
+  <input
+    type="hidden"
+    name="{{ name }}"
+    data-signature-pad-target="hiddenInput"
+  />
+
+  {%- if fallback -%}
+    <details class="theme-form-signature__fallback">
+      <summary>{{ 'theme.form.signature.fallback.summary'|trans }}</summary>
+      {% include '@theme/components/input/input.html.twig' with {
+        type: 'text',
+        name: fallbackName,
+        placeholder: 'theme.form.signature.placeholder.fallback'|trans,
+        autocomplete: 'name',
+      } only %}
+    </details>
+  {%- endif -%}
+
+  {%- if help -%}
+    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+  {%- endif -%}
+  {%- if isInvalid -%}
+    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+  {%- endif -%}
+</div>

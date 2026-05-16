@@ -1,0 +1,17 @@
+/*
+ * Error-Maintenance — "Maintenance in progress" page (Ring 3 S3.1c).
+ *
+ * Brand-feel composition per OQ-57 — custom inline SVG hero (gears motif).
+ * Marker class + hero size override (kit ships a default SVG; consumer
+ * override via {% block illustration %} of {% embed %}).
+ */
+
+.theme-error-maintenance {
+  /* Marker class — Empty + shell composition does the heavy lifting. */
+}
+
+.theme-error-maintenance__hero {
+  inline-size: 100%;
+  max-inline-size: 200px;
+  block-size: auto;
+}

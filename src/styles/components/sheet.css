@@ -1,0 +1,258 @@
+/*
+ * Sheet — responsive variant of Drawer.
+ *
+ * Per Ring 2 S2.2 OQ-26 doctrine (sealed S2.2 opening): the responsive
+ * pivot lives at 768 px (Tailwind `md` breakpoint, the canonical device
+ * boundary for tablet portrait). Above 768 px, Sheet behaves like Drawer
+ * with the consumer-configured `data-edge`. At and below 767.98 px, the
+ * mobile media query overrides all edges to bottom-sheet semantics —
+ * the side-drawer becomes a bottom-sheet automatically.
+ *
+ * Inheritance from Drawer: Sheet shares the modal envelope (background,
+ * shadow, border, motion). The .theme-sheet base class duplicates Drawer's
+ * surface envelope (NOT inherited via .theme-drawer class on the dialog
+ * — Sheet is its own visual identity). Per-edge pinning + corner radius +
+ * slide transform are duplicated with .theme-sheet selectors.
+ *
+ * The duplication is intentional: it keeps Sheet's CSS self-contained
+ * (a consumer can use Sheet without importing Drawer). The .theme-drawer
+ * base class is NOT applied on the <dialog> by the sheet template.
+ */
+
+.theme-sheet {
+  margin: 0;
+  padding-block: var(--spacing-5);
+  padding-inline: var(--spacing-6);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-dialog);
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform var(--motion-duration-base) var(--motion-easing-accelerate),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+.theme-sheet[open] {
+  transform: translate3d(0, 0, 0);
+  transition-duration: var(--motion-duration-slow);
+  transition-timing-function: var(--motion-easing-emphasized);
+}
+
+.theme-sheet::backdrop {
+  background-color: var(--color-bg-overlay);
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-base) var(--motion-easing-accelerate),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+.theme-sheet[open]::backdrop {
+  opacity: 1;
+  transition-timing-function: var(--motion-easing-standard);
+}
+
+@starting-style {
+  .theme-sheet[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* ----- Edge: end (desktop ≥ 768 px) ------------------------------- */
+
+.theme-sheet[data-edge="end"] {
+  inset-block: 0;
+  inset-inline: auto 0;
+  inline-size: min(420px, 100vw);
+  max-inline-size: 100vw;
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  border-start-start-radius: var(--radius-dialog);
+  border-end-start-radius: var(--radius-dialog);
+  border-inline-end: none;
+  transform: translate3d(calc(100% * var(--theme-drawer-flip)), 0, 0);
+}
+
+@starting-style {
+  .theme-sheet[open][data-edge="end"] {
+    transform: translate3d(calc(100% * var(--theme-drawer-flip)), 0, 0);
+  }
+}
+
+/* ----- Edge: start (desktop ≥ 768 px) ----------------------------- */
+
+.theme-sheet[data-edge="start"] {
+  inset-block: 0;
+  inset-inline: 0 auto;
+  inline-size: min(420px, 100vw);
+  max-inline-size: 100vw;
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  border-start-end-radius: var(--radius-dialog);
+  border-end-end-radius: var(--radius-dialog);
+  border-inline-start: none;
+  transform: translate3d(calc(-100% * var(--theme-drawer-flip)), 0, 0);
+}
+
+@starting-style {
+  .theme-sheet[open][data-edge="start"] {
+    transform: translate3d(calc(-100% * var(--theme-drawer-flip)), 0, 0);
+  }
+}
+
+/* ----- Edge: top (desktop ≥ 768 px) ------------------------------- */
+
+.theme-sheet[data-edge="top"] {
+  inset-block: 0 auto;
+  inset-inline: 0;
+  inline-size: 100vw;
+  max-inline-size: 100vw;
+  block-size: min(420px, 100dvh);
+  max-block-size: 100dvh;
+  border-end-start-radius: var(--radius-dialog);
+  border-end-end-radius: var(--radius-dialog);
+  border-block-start: none;
+  transform: translate3d(0, -100%, 0);
+}
+
+@starting-style {
+  .theme-sheet[open][data-edge="top"] {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* ----- Edge: bottom (desktop ≥ 768 px AND mobile fallback) -------- */
+
+.theme-sheet[data-edge="bottom"] {
+  inset-block: auto 0;
+  inset-inline: 0;
+  inline-size: 100vw;
+  max-inline-size: 100vw;
+  block-size: min(420px, 100dvh);
+  max-block-size: 100dvh;
+  border-start-start-radius: var(--radius-dialog);
+  border-start-end-radius: var(--radius-dialog);
+  border-block-end: none;
+  transform: translate3d(0, 100%, 0);
+}
+
+@starting-style {
+  .theme-sheet[open][data-edge="bottom"] {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* ----- Layout: header / body / footer ----------------------------- */
+
+.theme-sheet__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  margin-block-end: var(--spacing-4);
+  flex: 0 0 auto;
+}
+
+.theme-sheet__title {
+  font: var(--typography-h2);
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.theme-sheet__close {
+  flex: 0 0 auto;
+}
+
+.theme-sheet__body {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  flex: 1 1 auto;
+  overflow: auto;
+  min-block-size: 0;
+}
+
+.theme-sheet__body > * + * {
+  margin-block-start: var(--spacing-3);
+}
+
+.theme-sheet__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+  margin-block-start: var(--spacing-5);
+  flex: 0 0 auto;
+}
+
+/* ----- Drag handle (visual cue on bottom-sheet — mobile) --------- */
+
+.theme-sheet__handle {
+  align-self: center;
+  flex: 0 0 auto;
+  inline-size: 36px;
+  block-size: 4px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-border-strong);
+  margin-block-end: var(--spacing-3);
+  /* Hidden by default — only shown when Sheet is rendering as a bottom-sheet
+     (consumer's responsibility to add it inside the body, or via the
+     responsive override below to inject visual affordance). */
+  display: none;
+}
+
+/* ----- Mobile override (< 768 px) — force bottom-sheet semantics -- */
+/*
+ * Per OQ-26 doctrine (sealed S2.2 opening): at and below 767.98 px,
+ * the sheet becomes a bottom-sheet REGARDLESS of the configured
+ * data-edge. The consumer's edge prop is preserved (still reported in
+ * the sheet:open event detail.edge), but the visual is responsive.
+ *
+ * The selectors below match all 4 edge values so the mobile override
+ * always wins via source-order in the cascade (same specificity, later
+ * declaration).
+ */
+@media (width <= 767.98px) {
+  .theme-sheet[data-edge="start"],
+  .theme-sheet[data-edge="end"],
+  .theme-sheet[data-edge="top"],
+  .theme-sheet[data-edge="bottom"] {
+    inset-block: auto 0;
+    inset-inline: 0;
+    inline-size: 100vw;
+    max-inline-size: 100vw;
+    block-size: auto;
+    max-block-size: 85dvh;
+    border-radius: 0;
+    border-start-start-radius: var(--radius-dialog);
+    border-start-end-radius: var(--radius-dialog);
+    border-block-end: none;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  @starting-style {
+    .theme-sheet[open][data-edge="start"],
+    .theme-sheet[open][data-edge="end"],
+    .theme-sheet[open][data-edge="top"],
+    .theme-sheet[open][data-edge="bottom"] {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  /* Show the drag handle on mobile bottom-sheets for affordance. */
+  .theme-sheet__handle {
+    display: block;
+  }
+}
+
+/* ----- dark mode -------------------------------------------------- */
+
+[data-theme="dark"] .theme-sheet {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-default);
+}

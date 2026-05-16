@@ -1,0 +1,88 @@
+{#-
+  Error-Offline — "No connection" page (Ring 3 S3.1c, brand-feel).
+
+  Composes _error-shell (HERO variant) + Empty (lg, h1) + custom inline hero
+  SVG via {% block illustration %} (consumer-overridable per OQ-57 brand
+  doctrine) + Button × 1.
+
+  Microcopy verbatim from [12-microcopy-tone.md §"Messages d'erreur"
+  "Réseau down"] :
+    - title FR "Pas de connexion." / EN "No connection."
+    - body  FR "On réessaiera quand tu seras revenu en ligne."
+            EN "We'll retry when you're back online."
+
+  See `docs/specs/ring3/Error-Offline.md` for the spec.
+-#}
+
+{%- set title          = title          | default('theme.error.offline.title'|trans) -%}
+{%- set body           = body           | default('theme.error.offline.body'|trans) -%}
+{%- set primaryLabel   = primaryLabel   | default('theme.error.offline.primary-cta'|trans) -%}
+{%- set primaryHref    = primaryHref    | default('javascript:location.reload();') -%}
+{%- set secondaryLabel = secondaryLabel | default(null) -%}
+{%- set secondaryHref  = secondaryHref  | default(null) -%}
+{%- set htmlId         = htmlId         | default('theme-error-offline') -%}
+{%- set className      = className      | default('') -%}
+
+{%- set _classes = ['theme-error-offline'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{% embed '@theme/components/_error-shell/_error-shell.html.twig' with {
+  variant: 'hero',
+  htmlId: htmlId,
+  className: _classes | join(' '),
+} %}
+  {% block content %}
+    {% embed '@theme/components/empty/empty.html.twig' with {
+      size: 'lg',
+      titleLevel: 'h1',
+      title: title,
+      body: body,
+      htmlId: htmlId ~ '-empty',
+    } %}
+      {% block illustration %}
+        {# Hero illustration : wifi-off motif on a sunken surface. Consumer-
+           overridable — wrap this pattern with their own {% block
+           illustration %} via {% embed %}. #}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160" aria-hidden="true" class="theme-error-offline__hero">
+          <defs>
+            <linearGradient id="error-offline-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--color-bg-sunken)"/>
+              <stop offset="1" stop-color="var(--color-border-subtle)"/>
+            </linearGradient>
+          </defs>
+          <rect x="20" y="30" rx="14" ry="14" width="160" height="100" fill="url(#error-offline-grad)" stroke="var(--color-border-default)" stroke-width="2"/>
+          {# wifi-off arcs + diagonal slash #}
+          <g transform="translate(100 95)" stroke="var(--color-text-tertiary)" stroke-width="3" stroke-linecap="round" fill="none">
+            {# Outer arc #}
+            <path d="M -30 -10 Q 0 -36 30 -10" opacity="0.45"/>
+            {# Middle arc #}
+            <path d="M -20 -2 Q 0 -22 20 -2" opacity="0.65"/>
+            {# Inner arc #}
+            <path d="M -10 6 Q 0 -6 10 6" opacity="0.85"/>
+            {# Dot #}
+            <circle cx="0" cy="14" r="3" fill="var(--color-text-tertiary)"/>
+            {# Slash through wifi (offline) #}
+            <line x1="-32" y1="-18" x2="32" y2="22" stroke="var(--color-danger)" stroke-width="4"/>
+          </g>
+        </svg>
+      {% endblock %}
+
+      {% block actions %}
+        {% include '@theme/components/button/button.html.twig' with {
+          label: primaryLabel,
+          variant: 'primary',
+          size: 'md',
+          href: primaryHref,
+        } %}
+        {% if secondaryLabel and secondaryHref %}
+          {% include '@theme/components/button/button.html.twig' with {
+            label: secondaryLabel,
+            variant: 'ghost',
+            size: 'md',
+            href: secondaryHref,
+          } %}
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}

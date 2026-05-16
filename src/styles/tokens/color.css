@@ -1,0 +1,194 @@
+/*
+ * Color tokens — light theme (default) + dark theme override.
+ *
+ * Sampling: derived from theme/screens/* (Samurai dashboard, settings,
+ * team directory, command palette, danger zone, dark mode).
+ *
+ * Color space: oklch() everywhere — perceptually uniform, future-proof.
+ * Foreground pairings use #fff / #0a0a14 literals (true contrast extremes).
+ *
+ * Light/dark parity is enforced by tools/check-tokens.js. Every variable
+ * declared in :root MUST appear in [data-theme="dark"].
+ */
+
+:root {
+  /* --- Brand ----------------------------------------------------------- */
+  --color-primary: oklch(0.55 0.22 277);
+  --color-primary-hover: oklch(0.5 0.22 277);
+  --color-primary-active: oklch(0.45 0.22 277);
+  --color-primary-foreground: #fff;
+  --color-primary-soft: oklch(0.95 0.04 277);
+  --color-primary-soft-foreground: oklch(0.45 0.22 277);
+  --color-accent: oklch(0.6 0.18 280);
+  --color-accent-hover: oklch(0.55 0.18 280);
+  --color-accent-foreground: #fff;
+
+  /* Foreground variants of soft + accent (kept declared even when equal to
+     a foundation token, so brand presets can override per-status). */
+  --color-accent-soft: oklch(0.95 0.04 280);
+  --color-accent-soft-foreground: oklch(0.45 0.18 280);
+
+  /* --- Status: success (emerald) -------------------------------------- */
+  --color-success: oklch(0.62 0.16 158);
+  --color-success-foreground: #fff;
+  --color-success-soft: oklch(0.95 0.05 158);
+  --color-success-soft-foreground: oklch(0.42 0.13 158);
+  --color-success-border: oklch(0.85 0.08 158);
+
+  /* --- Status: warning (amber) ---------------------------------------- */
+  --color-warning: oklch(0.78 0.165 80);
+  --color-warning-foreground: oklch(0.2 0.04 80);
+  --color-warning-soft: oklch(0.96 0.06 80);
+  --color-warning-soft-foreground: oklch(0.42 0.12 80);
+  --color-warning-border: oklch(0.88 0.09 80);
+
+  /* --- Status: danger (rose/red) -------------------------------------- */
+  --color-danger: oklch(0.625 0.22 25);
+  --color-danger-hover: oklch(0.575 0.22 25);
+  --color-danger-foreground: #fff;
+  --color-danger-soft: oklch(0.94 0.045 25);
+  --color-danger-soft-foreground: oklch(0.42 0.18 25);
+  --color-danger-border: oklch(0.85 0.12 25);
+
+  /* --- Status: info (sky) --------------------------------------------- */
+  /* `--color-info-foreground` is dark in light mode (symmetric with warning)
+     so the solid info chip clears 4.5:1 against the bright sky background.
+     Doctrine sealed in ADR-0007. White-on-sky failed even the 3:1 UI floor. */
+  --color-info: oklch(0.68 0.135 235);
+  --color-info-foreground: oklch(0.2 0.04 235);
+  --color-info-soft: oklch(0.94 0.04 235);
+  --color-info-soft-foreground: oklch(0.42 0.12 235);
+  --color-info-border: oklch(0.85 0.07 235);
+
+  /* --- Neutral backgrounds (slate, cool hue 270) ----------------------- */
+  --color-bg-base: oklch(0.98 0.005 270);
+  --color-bg-elevated: #fff;
+  --color-bg-sunken: oklch(0.965 0.005 270);
+  --color-bg-overlay: oklch(0.205 0.02 270 / 0.5);
+  --color-surface-1: var(--color-bg-elevated);
+  --color-surface-2: oklch(0.99 0.003 270);
+  --color-surface-3: oklch(0.995 0.002 270);
+
+  /* --- Neutral text ---------------------------------------------------- */
+  --color-text-primary: oklch(0.205 0.02 270);
+  --color-text-secondary: oklch(0.42 0.018 270);
+  --color-text-tertiary: oklch(0.55 0.015 270);
+  --color-text-disabled: oklch(0.72 0.01 270);
+  --color-text-inverse: #fff;
+  --color-text-link: var(--color-primary);
+  --color-text-link-hover: var(--color-primary-hover);
+
+  /* --- Neutral borders ------------------------------------------------- */
+  --color-border-subtle: oklch(0.93 0.005 270);
+  --color-border-default: oklch(0.88 0.008 270);
+  --color-border-strong: oklch(0.72 0.012 270);
+  --color-border-focus: var(--color-primary);
+
+  /* --- Interactive overlays ------------------------------------------- */
+  --color-hover-overlay: oklch(0.205 0.02 270 / 0.04);
+  --color-active-overlay: oklch(0.205 0.02 270 / 0.08);
+  --color-selected-bg: oklch(0.95 0.04 277);
+  --color-selected-foreground: var(--color-primary-soft-foreground);
+
+  /* --- Focus ring ------------------------------------------------------ */
+  --ring-color: var(--color-primary);
+  --ring-offset-color: var(--color-bg-base);
+  --ring-width: 2px;
+  --ring-offset-width: 2px;
+
+  /* --- KPI accents (left-border colored stripe on dashboard cards) ---- */
+  --color-kpi-1: var(--color-primary);
+  --color-kpi-2: var(--color-warning);
+  --color-kpi-3: var(--color-success);
+  --color-kpi-4: var(--color-info);
+  --color-kpi-5: oklch(0.6 0.18 280);
+  --color-kpi-6: oklch(0.68 0.2 340);
+}
+
+[data-theme="dark"] {
+  /* --- Brand ----------------------------------------------------------- */
+  --color-primary: oklch(0.68 0.2 277);
+  --color-primary-hover: oklch(0.72 0.2 277);
+  --color-primary-active: oklch(0.76 0.2 277);
+  --color-primary-foreground: #0a0a14;
+  --color-primary-soft: oklch(0.3 0.08 277);
+  --color-primary-soft-foreground: oklch(0.85 0.12 277);
+  --color-accent: oklch(0.7 0.16 280);
+  --color-accent-hover: oklch(0.74 0.16 280);
+  --color-accent-foreground: #0a0a14;
+  --color-accent-soft: oklch(0.3 0.08 280);
+  --color-accent-soft-foreground: oklch(0.85 0.12 280);
+
+  /* --- Status: success ------------------------------------------------- */
+  --color-success: oklch(0.7 0.14 158);
+  --color-success-foreground: #0a0a14;
+  --color-success-soft: oklch(0.28 0.06 158);
+  --color-success-soft-foreground: oklch(0.85 0.12 158);
+  --color-success-border: oklch(0.4 0.08 158);
+
+  /* --- Status: warning ------------------------------------------------- */
+  --color-warning: oklch(0.82 0.15 80);
+  --color-warning-foreground: #0a0a14;
+  --color-warning-soft: oklch(0.3 0.06 80);
+  --color-warning-soft-foreground: oklch(0.85 0.12 80);
+  --color-warning-border: oklch(0.45 0.09 80);
+
+  /* --- Status: danger -------------------------------------------------- */
+  --color-danger: oklch(0.7 0.2 25);
+  --color-danger-hover: oklch(0.74 0.2 25);
+  --color-danger-foreground: #0a0a14;
+  --color-danger-soft: oklch(0.3 0.07 25);
+  --color-danger-soft-foreground: oklch(0.85 0.14 25);
+  --color-danger-border: oklch(0.45 0.12 25);
+
+  /* --- Status: info ---------------------------------------------------- */
+  --color-info: oklch(0.74 0.13 235);
+  --color-info-foreground: #0a0a14;
+  --color-info-soft: oklch(0.3 0.06 235);
+  --color-info-soft-foreground: oklch(0.85 0.1 235);
+  --color-info-border: oklch(0.45 0.08 235);
+
+  /* --- Neutral backgrounds -------------------------------------------- */
+  --color-bg-base: oklch(0.155 0.014 268);
+  --color-bg-elevated: oklch(0.2 0.015 268);
+  --color-bg-sunken: oklch(0.18 0.015 268);
+  --color-bg-overlay: oklch(0.05 0.01 268 / 0.7);
+  --color-surface-1: var(--color-bg-elevated);
+  --color-surface-2: oklch(0.225 0.015 268);
+  --color-surface-3: oklch(0.25 0.015 268);
+
+  /* --- Neutral text ---------------------------------------------------- */
+  --color-text-primary: oklch(0.955 0.005 270);
+  --color-text-secondary: oklch(0.72 0.012 270);
+  --color-text-tertiary: oklch(0.6 0.015 270);
+  --color-text-disabled: oklch(0.4 0.01 270);
+  --color-text-inverse: oklch(0.155 0.014 268);
+  --color-text-link: var(--color-primary);
+  --color-text-link-hover: var(--color-primary-hover);
+
+  /* --- Neutral borders ------------------------------------------------- */
+  --color-border-subtle: oklch(0.255 0.018 268);
+  --color-border-default: oklch(0.3 0.02 268);
+  --color-border-strong: oklch(0.4 0.022 268);
+  --color-border-focus: var(--color-primary);
+
+  /* --- Interactive overlays ------------------------------------------- */
+  --color-hover-overlay: oklch(0.955 0.005 270 / 0.06);
+  --color-active-overlay: oklch(0.955 0.005 270 / 0.12);
+  --color-selected-bg: oklch(0.3 0.08 277);
+  --color-selected-foreground: oklch(0.85 0.12 277);
+
+  /* --- Focus ring ------------------------------------------------------ */
+  --ring-color: var(--color-primary);
+  --ring-offset-color: var(--color-bg-base);
+  --ring-width: 2px;
+  --ring-offset-width: 2px;
+
+  /* --- KPI accents ----------------------------------------------------- */
+  --color-kpi-1: var(--color-primary);
+  --color-kpi-2: var(--color-warning);
+  --color-kpi-3: var(--color-success);
+  --color-kpi-4: var(--color-info);
+  --color-kpi-5: oklch(0.7 0.16 280);
+  --color-kpi-6: oklch(0.74 0.18 340);
+}

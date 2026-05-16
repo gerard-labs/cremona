@@ -1,0 +1,68 @@
+{#-
+  ThemeSwitcher — light / dark / system theme picker (Ring 3 S3.3b-1).
+
+  Composes ToggleGroup Ring 1 (single mode mutex) + Toggle Ring 1 inline.
+  The `theme-switcher` controller flips `data-theme` attribute on the
+  configurable target (documentElement default), persists the USER'S CHOICE
+  (light | dark | system) to localStorage, dispatches `theme-switcher:change`.
+
+  System mode resolves the effective theme via `prefers-color-scheme` +
+  listens for OS-level theme changes (the MediaQueryList fires on toggle —
+  e.g. macOS auto-dark at sunset).
+
+  Cross-controller compose: `data-controller="toggle-group theme-switcher"`.
+
+  Parameters:
+    htmlId       (string, optional)
+    currentMode  (string, optional, default 'system')   - light | dark | system
+    storageKey   (string, optional, default 'theme.mode')
+    target       (string, optional, default 'documentElement') - documentElement | body | self
+    size         (string, optional, default 'md')
+    variant      (string, optional, default 'default')
+    hideLabel    (bool,   optional, default false)
+-#}
+
+{%- set htmlId       = htmlId       | default('theme-theme-switcher-' ~ random()) -%}
+{%- set currentMode  = currentMode  | default('system') -%}
+{%- set storageKey   = storageKey   | default('theme.mode') -%}
+{%- set target       = target       | default('documentElement') -%}
+{%- set size         = size         | default('md') -%}
+{%- set variant      = variant      | default('default') -%}
+{%- set hideLabel    = hideLabel    | default(false) -%}
+
+{%- set options = [
+  { mode: 'light',  labelKey: 'theme.theme-switcher.label.light',  iconKey: 'eye' },
+  { mode: 'dark',   labelKey: 'theme.theme-switcher.label.dark',   iconKey: 'eye' },
+  { mode: 'system', labelKey: 'theme.theme-switcher.label.system', iconKey: 'option' },
+] -%}
+
+{%- set _tgOptions = [] -%}
+{%- for option in options -%}
+  {%- set _tgOptions = _tgOptions | merge([{
+    label: option.labelKey | trans,
+    ariaLabel: option.labelKey | trans,
+    pressed: option.mode == currentMode,
+    className: 'theme-theme-switcher__item',
+    attrs: { 'data-theme-mode': option.mode },
+  }]) -%}
+{%- endfor -%}
+
+{% include '@theme/components/toggle-group/toggle-group.html.twig' with {
+  label: 'theme.theme-switcher.label.group'|trans,
+  htmlId: htmlId,
+  options: _tgOptions,
+  mode: 'single',
+  orientation: 'horizontal',
+  size: size,
+  variant: variant,
+  hideLabel: hideLabel,
+  className: 'theme-theme-switcher__group',
+  wrapClass: 'theme-theme-switcher',
+  controllerExtras: 'theme-switcher',
+  actionExtras: 'toggle->theme-switcher#onToggle',
+  attrs: {
+    'data-theme-switcher-current-mode-value': currentMode,
+    'data-theme-switcher-storage-key-value': storageKey,
+    'data-theme-switcher-target-value': target,
+  },
+} only %}

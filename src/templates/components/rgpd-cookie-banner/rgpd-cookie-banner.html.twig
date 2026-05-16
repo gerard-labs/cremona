@@ -1,0 +1,110 @@
+{#-
+  RGPD-CookieBanner — RGPD cookie consent banner (Ring 3 S3.3b-2).
+
+  Composes Dialog Ring 2 (closeOnEscape=false + closeOnBackdropClick=false
+  per RGPD legal commit — user MUST commit to a button, can't dismiss
+  accidentally). 3 CTAs : Accept all / Reject all / Customize (consumer
+  wires Customize to open RGPD-PreferencesCenter dialog).
+
+  Controller : cookie-banner (17th Ring 3, thin) — defensive Both
+  document.cookie + localStorage persistence per OQ-NEW sealed at
+  S3.3b-2 opening. Server-readable cookie for SSR consent decisions +
+  fast client read via localStorage.
+
+  11th cross-controller compose instance : data-controller="dialog cookie-banner".
+
+  Parameters:
+    htmlId             (string, optional)
+    title              (string, optional, default 'Cookies & confidentialité')
+    legalSummary       (string, optional, default RGPD plain-language summary)
+    legalDetail        (string, optional, default link to /privacy + /cookies)
+    cookieName         (string, optional, default 'theme.consent')
+    maxAgeDays         (int,    optional, default 180)
+    secure             (bool,   optional, default true)
+    sameSite           (string, optional, default 'lax')
+    storageKey         (string, optional, default 'theme.consent')
+    autoShow           (bool,   optional, default true)
+    showCategoriesSummary (bool, optional, default false) — display category preview
+    acceptLabel        (string, optional)
+    rejectLabel        (string, optional)
+    customizeLabel     (string, optional)
+-#}
+
+{%- set htmlId             = htmlId             | default('theme-rgpd-cookie-banner-' ~ random()) -%}
+{%- set title              = title              | default('theme.rgpd-cookie-banner.title'|trans) -%}
+{%- set legalSummary       = legalSummary       | default('theme.rgpd-cookie-banner.legal-summary'|trans) -%}
+{%- set legalDetail        = legalDetail        | default('theme.rgpd-cookie-banner.legal-detail'|trans) -%}
+{%- set cookieName         = cookieName         | default('theme.consent') -%}
+{%- set maxAgeDays         = maxAgeDays         | default(180) -%}
+{%- set secure             = secure             ?? true -%}
+{%- set sameSite           = sameSite           | default('lax') -%}
+{%- set storageKey         = storageKey         | default('theme.consent') -%}
+{%- set autoShow           = autoShow           ?? true -%}
+{%- set showCategoriesSummary = showCategoriesSummary ?? false -%}
+{%- set acceptLabel        = acceptLabel        | default('theme.rgpd-cookie-banner.button.accept-all'|trans) -%}
+{%- set rejectLabel        = rejectLabel        | default('theme.rgpd-cookie-banner.button.reject-all'|trans) -%}
+{%- set customizeLabel     = customizeLabel     | default('theme.rgpd-cookie-banner.button.customize'|trans) -%}
+
+{% embed '@theme/components/dialog/dialog.html.twig' with {
+  wrapId: htmlId,
+  htmlId: htmlId ~ '-dialog',
+  size: 'md',
+  className: 'theme-rgpd-cookie-banner',
+  closeButton: false,
+  closeOnEscape: false,
+  closeOnBackdropClick: false,
+  open: false,
+  controllerExtras: 'cookie-banner',
+  attrs: {
+    'data-cookie-banner-cookie-name-value': cookieName,
+    'data-cookie-banner-max-age-days-value': maxAgeDays,
+    'data-cookie-banner-secure-value': secure ? 'true' : 'false',
+    'data-cookie-banner-same-site-value': sameSite,
+    'data-cookie-banner-storage-key-value': storageKey,
+    'data-cookie-banner-auto-show-value': autoShow ? 'true' : 'false',
+  },
+} %}
+  {% block title %}{{ title }}{% endblock %}
+
+  {% block body %}
+    <p class="theme-rgpd-cookie-banner__legal-summary">{{ legalSummary }}</p>
+    <p class="theme-rgpd-cookie-banner__legal-detail">{{ legalDetail|raw }}</p>
+
+    {% if showCategoriesSummary %}
+      <div class="theme-rgpd-cookie-banner__categories-summary">
+        <div class="theme-rgpd-cookie-banner__category">
+          <span class="theme-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.essential.name'|trans }}</span>
+          <span class="theme-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.essential.status'|trans }}</span>
+        </div>
+        <div class="theme-rgpd-cookie-banner__category">
+          <span class="theme-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.analytics.name'|trans }}</span>
+          <span class="theme-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.optional.status'|trans }}</span>
+        </div>
+        <div class="theme-rgpd-cookie-banner__category">
+          <span class="theme-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.marketing.name'|trans }}</span>
+          <span class="theme-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.optional.status'|trans }}</span>
+        </div>
+      </div>
+    {% endif %}
+  {% endblock %}
+
+  {% block footer %}
+    <div class="theme-rgpd-cookie-banner__actions">
+      {% include '@theme/components/button/button.html.twig' with {
+        label: rejectLabel,
+        variant: 'secondary',
+        attrs: { 'data-action': 'click->cookie-banner#reject' },
+      } only %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: customizeLabel,
+        variant: 'ghost',
+        attrs: { 'data-action': 'click->cookie-banner#customize' },
+      } only %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: acceptLabel,
+        variant: 'primary',
+        attrs: { 'data-action': 'click->cookie-banner#accept' },
+      } only %}
+    </div>
+  {% endblock %}
+{% endembed %}

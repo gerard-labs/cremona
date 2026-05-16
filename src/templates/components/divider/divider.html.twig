@@ -1,0 +1,63 @@
+{#-
+  Divider — visual separator with an optional center slot.
+
+  Distinct from Separator (which is purely decorative / sememitic — just a
+  line). Divider adds a center label / icon between two line segments —
+  the classic "──── ou ────" or "──── Articles récents ────" pattern.
+
+  When `label` AND `icon` are absent, Divider falls back to a plain line
+  identical to Separator (the two primitives overlap visually in that
+  case — choose Separator for pure decoration, Divider when you might
+  add a label later).
+
+  Zero Stimulus controller. Pure CSS layout via flexbox: line-grow start
+  + center content + line-grow end.
+
+  Parameters:
+    label       (string,  optional)  — visible center text (already |trans'd)
+    icon        (string,  optional)  — Lucide icon name (decorative)
+    orientation (string,  optional)  — horizontal (default) | vertical
+                                       (vertical with center content is unusual
+                                       but supported — useful for vertical "ou" dividers)
+    variant     (string,  optional)  — solid (default) | dashed | dotted
+    decorative  (bool,    optional)  — true (default) → aria-hidden + role=presentation
+                                       false → role=separator + aria-orientation
+    className   (string,  optional)
+-#}
+
+{%- set label       = label       | default(null) -%}
+{%- set icon        = icon        | default(null) -%}
+{%- set orientation = orientation | default('horizontal') -%}
+{%- set variant     = variant     | default('solid') -%}
+{%- set decorative  = decorative is defined ? decorative : true -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _hasCenter = label or icon -%}
+{%- set _classes = ['theme-divider'] -%}
+{%- if _hasCenter -%}{%- set _classes = _classes | merge(['theme-divider--with-content']) -%}{%- endif -%}
+{%- if variant == 'dashed' -%}{%- set _classes = _classes | merge(['theme-divider--dashed']) -%}{%- endif -%}
+{%- if variant == 'dotted' -%}{%- set _classes = _classes | merge(['theme-divider--dotted']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-orientation="{{ orientation }}"
+  {%- if decorative %} role="presentation" aria-hidden="true"
+  {%- else %} role="separator" aria-orientation="{{ orientation }}"{% endif -%}
+>
+  {%- if _hasCenter -%}
+    <span class="theme-divider__line" aria-hidden="true"></span>
+    <span class="theme-divider__content">
+      {%- if icon -%}
+        {% include '@theme/components/icon/icon.html.twig' with {
+          name: icon,
+          decorative: true,
+          size: 'sm',
+          className: 'theme-divider__icon',
+        } %}
+      {%- endif -%}
+      {%- if label -%}<span class="theme-divider__label">{{ label }}</span>{%- endif -%}
+    </span>
+    <span class="theme-divider__line" aria-hidden="true"></span>
+  {%- endif -%}
+</div>

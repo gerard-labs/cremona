@@ -1,0 +1,45 @@
+{#-
+  Icon — inline SVG renderer for the curated Lucide v0.469.0 subset.
+
+  Parameters:
+    name        (string, required) — icon basename without .svg; one of the 42 names listed
+                                     in src/assets/icons/README.md (S1.1 30-set + S4.1 12-set
+                                     extension per ADR-0038).
+    label       (string, optional) — accessible name. Required when decorative=false; if both
+                                     decorative=false AND label is empty, the icon falls back
+                                     to aria-hidden to avoid an empty aria-label.
+    size        (string, optional) — xs (12) | sm (16) | md (20, default) | lg (24) | xl (32)
+    decorative  (bool,   optional) — default false. true → aria-hidden + role=presentation.
+    className   (string, optional) — extra utility classes.
+
+  RTL: icons in the bidi whitelist (arrow-*, chevron-*-horizontal, corner-down-left,
+  send, log-out — 7 icons) auto-flip via the .theme-icon-bidi class. The other 35 icons
+  stay identical (semantic, non-directional). Whitelist extended S4.1 via ADR-0038
+  (curated set 30 → 42 + bidi whitelist 5 → 7).
+-#}
+
+{%- set name       = name       | default('') -%}
+{%- set label      = label      | default(null) -%}
+{%- set size       = size       | default('md') -%}
+{%- set decorative = decorative | default(false) -%}
+{%- set className  = className  | default('') -%}
+
+{#- _bidiIcons : icons that flip horizontally in RTL via .theme-icon-bidi class.
+    S1.1 sealed 5 icons (arrow-* / chevron-*-horizontal / corner-down-left).
+    S4.1 extends to 7 via ADR-0038 (send + log-out — both directional). -#}
+{%- set _bidiIcons = ['arrow-left', 'arrow-right', 'chevron-left', 'chevron-right', 'corner-down-left', 'send', 'log-out'] -%}
+{%- set _isBidi    = name in _bidiIcons -%}
+{%- set _effectivelyDecorative = decorative or (label is empty) -%}
+
+{%- set _classes = ['theme-icon'] -%}
+{%- if _isBidi -%}{%- set _classes = _classes | merge(['theme-icon-bidi']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<span
+  class="{{ _classes | join(' ') }}"
+  data-icon="{{ name }}"
+  data-size="{{ size }}"
+  {%- if _effectivelyDecorative %} aria-hidden="true" role="presentation"
+  {%- else %} role="img" aria-label="{{ label }}"
+  {%- endif -%}
+>{{ source('@theme/assets/icons/' ~ name ~ '.svg')|raw }}</span>

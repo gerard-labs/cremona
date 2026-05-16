@@ -1,0 +1,112 @@
+/*
+ * Card — surface container with optional header / body / footer slots.
+ *
+ * Three visual variants:
+ *   surface  (default) — `--color-bg-elevated` on `--color-bg-base`, subtle
+ *                        shadow `--shadow-card` (= shadow-1). The default
+ *                        — sits on a page bg without competing.
+ *   elevated           — same bg but lifted shadow `--shadow-popover`
+ *                        (= shadow-3). For modal-adjacent or peek-out cards.
+ *   subtle             — `--color-bg-base` + 1px `--color-border-subtle`,
+ *                        no shadow. Lowest emphasis — settings cards inside
+ *                        a tab where the tab itself already has the surface.
+ *
+ * Hoverable (opt-in modifier `--hoverable`):
+ *   on hover → shadow lifts to `--shadow-2`, border darkens to
+ *   `--color-border-strong`, cursor: pointer. The Card itself is NOT a
+ *   button — wrapping in <a>/<button> is the consumer's call.
+ *
+ * Header / body / footer separation:
+ *   - Header has padding-block-end via gap (border-block-end optional —
+ *     opt in by setting `--theme-card-divider: 1px` at the Card level).
+ *   - Footer has padding-block-start via gap.
+ *   - Body fills the middle with default padding.
+ */
+
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  /* Default block-axis padding ; header/body/footer reuse padding-inline
+     and supply their own padding-block via flex gap. Setting gap on the
+     parent lets us merge spacing semantics — header/footer borders can
+     opt-in via --theme-card-divider. */
+  padding: var(--spacing-5);
+  gap: var(--spacing-4);
+  transition:
+    box-shadow var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+/* ----- variants ---------------------------------------------------- */
+
+.theme-card--elevated {
+  box-shadow: var(--shadow-popover);
+}
+
+.theme-card--subtle {
+  background-color: var(--color-bg-base);
+  border-color: var(--color-border-subtle);
+  box-shadow: none;
+}
+
+/* ----- hoverable affordance (opt-in) ------------------------------- */
+
+.theme-card--hoverable {
+  cursor: pointer;
+}
+
+.theme-card--hoverable:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--color-border-strong);
+}
+
+.theme-card--hoverable.theme-card--subtle:hover {
+  background-color: var(--color-bg-elevated);
+}
+
+/* When the consumer wraps the Card in an <a> or <button>, focus on that
+   parent paints a ring around the Card via :focus-within. */
+.theme-card--hoverable:focus-within {
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: var(--ring-offset-width);
+}
+
+/* ----- slots: header / body / footer ------------------------------- */
+
+.theme-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.theme-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  /* `min-inline-size: 0` lets long content (long heading, long text) wrap
+     properly inside flex without forcing the Card to expand. */
+  min-inline-size: 0;
+}
+
+.theme-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+/* Optional divider between slots (opt-in via --theme-card-divider). */
+.theme-card[style*="--theme-card-divider"] .theme-card__header {
+  padding-block-end: var(--spacing-3);
+  border-block-end: var(--theme-card-divider, 0) solid var(--color-border-subtle);
+}
+
+.theme-card[style*="--theme-card-divider"] .theme-card__footer {
+  padding-block-start: var(--spacing-3);
+  border-block-start: var(--theme-card-divider, 0) solid var(--color-border-subtle);
+}

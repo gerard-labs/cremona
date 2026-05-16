@@ -1,0 +1,52 @@
+/*
+ * ToggleGroup — flex container that orchestrates N Toggles.
+ *
+ * Visually a "segmented control" — adjacent Toggles share borders, the gap
+ * between them collapses to 0, and outer corners are rounded while inner
+ * corners are flat. Behaviorally a roving-tabindex group (the controller
+ * owns this; the CSS only paints).
+ *
+ * Two orientations: horizontal (default) lays out on the inline-axis;
+ * vertical stacks on the block-axis. Logical CSS throughout.
+ */
+
+.theme-toggle-group-wrap {
+  display: inline-grid;
+  gap: var(--spacing-2);
+  /* The wrap stays display: inline-grid so the label can sit above the group
+     without forcing 100% width; consumer layouts can override with .w-full. */
+}
+
+.theme-toggle-group__label {
+  font: var(--typography-label);
+  color: var(--color-text-primary);
+}
+
+.theme-toggle-group {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-0_5);
+  background-color: var(--color-bg-elevated);
+  gap: var(--spacing-0_5);
+}
+
+.theme-toggle-group[data-orientation="vertical"] {
+  flex-direction: column;
+}
+
+/* Item — the inner Toggle inherits from `.theme-toggle` (no overrides) but
+   the group strips the per-item border + relaxes border-radius so adjacent
+   items don't double-stroke. */
+.theme-toggle-group__item {
+  border-radius: var(--radius-sm);
+  /* Slightly tighter inset so all items fit comfortably inside the group's
+     own border + padding. */
+}
+
+/* The pressed state visual is owned by Toggle's own CSS — no override here. */
+
+/* Focus ring on the inner items uses Toggle's own focus envelope (inset/box-shadow).
+   The group itself does NOT receive focus — focus always lands on a Toggle. */

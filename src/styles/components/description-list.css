@@ -1,0 +1,56 @@
+/*
+ * DescriptionList compound — semantic <dl><dt><dd> term/definition list.
+ *
+ * Two layouts via data-layout:
+ *  - stacked (default) : block flow ; <dt> above its <dd> ; gap between pairs.
+ *  - side-by-side      : CSS grid 2-cols ; <dt> in column 1 (inline-start),
+ *                         <dd> in column 2 ; rows shared.
+ *
+ * Pure composition of Ring 0 vocabulary :
+ *   --color-text-tertiary       label tone (terms are metadata, lower weight)
+ *   --color-text-primary        body tone (definitions are the content)
+ *   --typography-label          medium-weight, smaller — for terms
+ *   --typography-body           regular — for definitions
+ *   --spacing-{0_5, 2, 3, 4}    layout gap rhythm
+ *
+ * No controller. No new tokens.
+ */
+
+.theme-description-list {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-primary);
+}
+
+.theme-description-list__term {
+  font: var(--typography-label);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.theme-description-list__definition {
+  font: var(--typography-body);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* --- Stacked layout (default) ----------------------------------------- */
+.theme-description-list[data-layout="stacked"] {
+  display: block;
+}
+
+.theme-description-list[data-layout="stacked"] .theme-description-list__term {
+  margin-block: var(--spacing-3) var(--spacing-0_5);
+}
+
+.theme-description-list[data-layout="stacked"] .theme-description-list__term:first-child {
+  margin-block-start: 0;
+}
+
+/* --- Side-by-side layout ---------------------------------------------- */
+.theme-description-list[data-layout="side-by-side"] {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--spacing-2) var(--spacing-4);
+  align-items: baseline;
+}

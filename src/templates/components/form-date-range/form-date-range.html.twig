@@ -1,0 +1,121 @@
+{#-
+  Form-DateRange — date range pair (start + end) (sibling Form pattern).
+
+  Per the user-validated S3.3a-1 opening decision : compose 2 DatePicker Ring 2
+  pure (no Ring 2 amend per ADR-0015 immutability). The form-date-range controller
+  listens to date-picker:select events from both children + cross-field validates
+  (start ≤ end).
+
+  Per Forms family doctrine (Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) carries label + help + error display.
+    - Cross-controller compose : data-controller="form-date-range" on the wrap.
+
+  Parameters:
+    htmlId          (string,  optional) — auto-generated.
+    label           (string,  required) — visible Field label ("Période" / "Du … au …").
+    name            (string,  required) — base form field name (kit emits ${name}_start + ${name}_end hidden inputs).
+    startValue      (string,  optional) — ISO 8601 yyyy-mm-dd pre-selected start.
+    endValue        (string,  optional) — ISO 8601 yyyy-mm-dd pre-selected end.
+    min             (string,  optional) — ISO lower bound forwarded to both DatePickers.
+    max             (string,  optional) — ISO upper bound forwarded to both DatePickers.
+    help            (string,  optional) — help text below the widget.
+    error           (string,  optional) — error message (sets aria-invalid).
+    required        (bool,    optional) — default false (applied to both DatePickers).
+    locale          (string,  optional) — default 'fr'.
+    className       (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/form-date-range/form-date-range.html.twig' with {
+      label: 'theme.form.date-range.label.booking'|trans,
+      name: 'booking',
+      min: '2026-01-01',
+      max: '2026-12-31',
+      startValue: '2026-05-15',
+      endValue: '2026-05-22',
+    } %}
+
+  Events emitted on the wrap :
+    form-date-range:mount    { startDate?, endDate? }
+    form-date-range:select   { startDate, endDate }
+    form-date-range:invalid  { reason: 'start-after-end', startDate, endDate }
+    form-date-range:clear    { which }
+-#}
+
+{%- set htmlId     = htmlId     | default('theme-form-date-range-' ~ random()) -%}
+{%- set startValue = startValue | default('') -%}
+{%- set endValue   = endValue   | default('') -%}
+{%- set min        = min        | default('') -%}
+{%- set max        = max        | default('') -%}
+{%- set required   = required   | default(false) -%}
+{%- set locale     = locale     | default('fr') -%}
+{%- set className  = className  | default('') -%}
+
+{%- set isInvalid = error is defined and error -%}
+{%- set _classes = ['theme-field', 'theme-form-date-range'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _legendClasses = ['theme-label', 'theme-form-date-range__legend'] -%}
+
+<div class="{{ _classes | join(' ') }}">
+  <fieldset class="theme-form-date-range__fieldset" aria-labelledby="{{ htmlId }}-legend">
+    <legend id="{{ htmlId }}-legend" class="{{ _legendClasses | join(' ') }}">
+      {{ label }}
+      {%- if required %} <span aria-hidden="true">*</span><span class="sr-only">{{ 'theme.form.date-range.required'|trans }}</span>{% endif -%}
+    </legend>
+
+    <div
+      class="theme-form-date-range__wrap"
+      data-controller="form-date-range"
+      data-form-date-range-start-date-value="{{ startValue }}"
+      data-form-date-range-end-date-value="{{ endValue }}"
+    >
+      <div class="theme-form-date-range__field theme-form-date-range__field--start" data-form-date-range-target="startInput">
+        <label class="theme-form-date-range__label" for="{{ htmlId }}-start-input">{{ 'theme.form.date-range.label.start'|trans }}</label>
+        {% include '@theme/components/date-picker/date-picker.html.twig' with {
+          htmlId: htmlId ~ '-start',
+          name: name ~ '_start',
+          value: startValue,
+          min: min,
+          max: max,
+          locale: locale,
+          required: required,
+          dateStyle: 'medium',
+          placeholder: 'theme.form.date-range.placeholder.start'|trans,
+        } only %}
+      </div>
+
+      <span class="theme-form-date-range__separator" aria-hidden="true">→</span>
+
+      <div class="theme-form-date-range__field theme-form-date-range__field--end" data-form-date-range-target="endInput">
+        <label class="theme-form-date-range__label" for="{{ htmlId }}-end-input">{{ 'theme.form.date-range.label.end'|trans }}</label>
+        {% include '@theme/components/date-picker/date-picker.html.twig' with {
+          htmlId: htmlId ~ '-end',
+          name: name ~ '_end',
+          value: endValue,
+          min: startValue ?: min,
+          max: max,
+          locale: locale,
+          required: required,
+          dateStyle: 'medium',
+          placeholder: 'theme.form.date-range.placeholder.end'|trans,
+        } only %}
+      </div>
+
+      <p
+        class="theme-form-date-range__error"
+        data-form-date-range-target="errorMessage"
+        role="alert"
+        hidden
+      >{{ 'theme.form.date-range.error.start-after-end'|trans }}</p>
+    </div>
+  </fieldset>
+
+  {%- if help -%}
+    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+  {%- endif -%}
+  {%- if isInvalid -%}
+    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+  {%- endif -%}
+</div>

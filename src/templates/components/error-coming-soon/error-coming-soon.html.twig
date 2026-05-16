@@ -1,0 +1,85 @@
+{#-
+  Error-ComingSoon — "Feature coming soon" page (Ring 3 S3.1c, brand-feel).
+
+  Composes _error-shell (HERO variant) + Empty (lg, h1) + custom inline hero
+  SVG via {% block illustration %} (consumer-overridable per OQ-57 brand
+  doctrine) + Button × 1-2.
+
+  Marketing-feel page (vs error-feel). The primary CTA invites the user
+  to subscribe to a launch notification — consumer wires the actual
+  newsletter / mailing-list opt-in via `primaryHref`.
+
+  See `docs/specs/ring3/Error-ComingSoon.md` for the spec.
+-#}
+
+{%- set title          = title          | default('theme.error.coming-soon.title'|trans) -%}
+{%- set body           = body           | default('theme.error.coming-soon.body'|trans) -%}
+{%- set primaryLabel   = primaryLabel   | default('theme.error.coming-soon.primary-cta'|trans) -%}
+{%- set primaryHref    = primaryHref    | default('#subscribe') -%}
+{%- set secondaryLabel = secondaryLabel | default(null) -%}
+{%- set secondaryHref  = secondaryHref  | default(null) -%}
+{%- set htmlId         = htmlId         | default('theme-error-coming-soon') -%}
+{%- set className      = className      | default('') -%}
+
+{%- set _classes = ['theme-error-coming-soon'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{% embed '@theme/components/_error-shell/_error-shell.html.twig' with {
+  variant: 'hero',
+  htmlId: htmlId,
+  className: _classes | join(' '),
+} %}
+  {% block content %}
+    {% embed '@theme/components/empty/empty.html.twig' with {
+      size: 'lg',
+      titleLevel: 'h1',
+      title: title,
+      body: body,
+      htmlId: htmlId ~ '-empty',
+    } %}
+      {% block illustration %}
+        {# Hero illustration : sparkles motif on a primary-soft surface.
+           Marketing-feel (vs error-feel) — celebratory hint. Consumer-
+           overridable. #}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160" aria-hidden="true" class="theme-error-coming-soon__hero">
+          <defs>
+            <linearGradient id="error-coming-soon-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="var(--color-primary-soft)" stop-opacity="0.95"/>
+              <stop offset="1" stop-color="var(--color-accent-soft)" stop-opacity="0.85"/>
+            </linearGradient>
+          </defs>
+          <rect x="20" y="30" rx="14" ry="14" width="160" height="100" fill="url(#error-coming-soon-grad)" stroke="var(--color-border-default)" stroke-width="2"/>
+          {# Big star, center #}
+          <g transform="translate(100 80)" fill="var(--color-primary)" stroke="var(--color-primary-foreground)" stroke-width="1.5" stroke-linejoin="round">
+            <polygon points="0,-24 7,-7 24,-7 10,4 16,21 0,11 -16,21 -10,4 -24,-7 -7,-7"/>
+          </g>
+          {# Small star, top-right #}
+          <g transform="translate(150 55)" fill="var(--color-accent)" opacity="0.85">
+            <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3"/>
+          </g>
+          {# Small star, bottom-left #}
+          <g transform="translate(55 115)" fill="var(--color-accent)" opacity="0.7">
+            <polygon points="0,-7 2,-2 7,-2 3,1 4,6 0,3 -4,6 -3,1 -7,-2 -2,-2"/>
+          </g>
+        </svg>
+      {% endblock %}
+
+      {% block actions %}
+        {% include '@theme/components/button/button.html.twig' with {
+          label: primaryLabel,
+          variant: 'primary',
+          size: 'md',
+          href: primaryHref,
+        } %}
+        {% if secondaryLabel and secondaryHref %}
+          {% include '@theme/components/button/button.html.twig' with {
+            label: secondaryLabel,
+            variant: 'ghost',
+            size: 'md',
+            href: secondaryHref,
+          } %}
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}

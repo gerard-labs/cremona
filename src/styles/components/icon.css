@@ -1,0 +1,38 @@
+/*
+ * Icon primitive — inline SVG wrapper for the curated Lucide subset.
+ *
+ * The SVGs use stroke="currentColor", so coloring an icon is just
+ * setting `color` on a parent. Sizes map to a fixed px scale.
+ *
+ * RTL bidi flip: applied via `.theme-icon-bidi` class for direction-
+ * sensitive icons (arrows, chevrons, corner-down-left). See
+ * src/assets/icons/README.md §RTL flip whitelist.
+ */
+
+.theme-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: var(--theme-icon-size, 20px);
+  block-size: var(--theme-icon-size, 20px);
+  color: currentcolor;
+  vertical-align: middle;
+}
+
+.theme-icon[data-size="xs"] { --theme-icon-size: 12px; }
+.theme-icon[data-size="sm"] { --theme-icon-size: 16px; }
+.theme-icon[data-size="md"] { --theme-icon-size: 20px; }
+.theme-icon[data-size="lg"] { --theme-icon-size: 24px; }
+.theme-icon[data-size="xl"] { --theme-icon-size: 32px; }
+
+.theme-icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+}
+
+/* RTL flip — applied only to direction-sensitive icons (whitelist). */
+[dir="rtl"] .theme-icon-bidi > svg {
+  transform: scaleX(-1);
+}

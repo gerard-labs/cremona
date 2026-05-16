@@ -1,0 +1,57 @@
+/*
+ * Base typography — semantic element defaults.
+ * Components compose via Typography variants; these defaults make a raw
+ * HTML page already legible without any class.
+ */
+
+:where(h1) {
+  font: var(--typography-h1);
+  color: var(--color-text-primary);
+  margin-block: 0 var(--spacing-4);
+}
+
+:where(h2) {
+  font: var(--typography-h2);
+  color: var(--color-text-primary);
+  margin-block: var(--spacing-6) var(--spacing-3);
+}
+
+:where(h3) {
+  font: var(--typography-h3);
+  color: var(--color-text-primary);
+  margin-block: var(--spacing-5) var(--spacing-2);
+}
+
+:where(p) {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  margin-block: 0 var(--spacing-3);
+}
+
+:where(small) {
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+}
+
+:where(code, kbd, samp, pre) {
+  font: var(--typography-code);
+}
+
+:where(strong, b) {
+  font-weight: var(--font-weight-semibold);
+}
+
+:where(table) {
+  font: var(--typography-body);
+}
+
+:where(th) {
+  font-weight: var(--font-weight-semibold);
+  text-align: start;
+}
+
+/* Tabular numbers wherever digits compose data (KPIs, table cells). */
+.theme-tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: var(--font-feature-tabular);
+}

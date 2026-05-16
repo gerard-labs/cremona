@@ -1,0 +1,249 @@
+/*
+ * Table — Pure-CSS HTML <table> structural primitive.
+ *
+ * Foundation for DataTable (S2.4b). No Stimulus controller. The CSS classes
+ * are public: DataTable composes them via its own Stimulus controller that
+ * generates rows reactively, but the visual envelope is owned here.
+ *
+ * Density via tokens (--density-row-height, --density-cell-padding-{y,x}).
+ * The size prop maps:
+ *   data-size="sm" → compact density override
+ *   data-size="md" → comfortable (default — inherits container density)
+ *   data-size="lg" → larger padding-block (audit-log scale)
+ *
+ * RTL behavior: <table dir="rtl"> flips column order natively (browser).
+ * Logical CSS (text-align: start/end, padding-inline-*) handles cell-level
+ * direction. Numeric columns explicitly text-align: end so they stay aligned
+ * with the column's logical-end edge in both directions.
+ *
+ * Sort indicators: CSS-only via mask-image. The chevron-up/down SVGs are
+ * inlined as data URIs; currentColor flows through via mask-image +
+ * background-color. No JS, no SVG <use>, no extra HTTP round-trip.
+ */
+
+.theme-table {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+}
+
+/* Caption — visible (above the table) or sr-only. */
+.theme-table__caption {
+  caption-side: top;
+  padding-block: var(--spacing-2);
+  text-align: start;
+  font: var(--typography-label);
+  color: var(--color-text-secondary);
+}
+
+.theme-table__caption.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Header --------------------------------------------------------- */
+
+.theme-table__thead > tr > th {
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-secondary);
+  font: var(--typography-label);
+  font-weight: var(--font-weight-semibold);
+  text-align: start;
+  padding-block: var(--density-cell-padding-y);
+  padding-inline: var(--density-cell-padding-x);
+  border-block-end: 1px solid var(--color-border-default);
+  white-space: nowrap;
+}
+
+/* --- Body ----------------------------------------------------------- */
+
+.theme-table__tbody > tr > th,
+.theme-table__tbody > tr > td {
+  padding-block: var(--density-cell-padding-y);
+  padding-inline: var(--density-cell-padding-x);
+  border-block-end: 1px solid var(--color-border-subtle);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.theme-table__tbody > tr > th {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+/* Last row — no bottom border for clean edge. */
+.theme-table__tbody > tr:last-child > th,
+.theme-table__tbody > tr:last-child > td {
+  border-block-end: 0;
+}
+
+/* Row hover — pointer hint without committing to interactive semantics.
+   Consumer attaches click handlers if rows are clickable; the hover state
+   is the visual signal. */
+.theme-table__tbody > tr:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+/* Row selected — bulk-select state via DataTable header checkbox. */
+.theme-table__tbody > tr[data-selected="true"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}
+
+.theme-table__tbody > tr[data-selected="true"]:hover {
+  background-color: var(--color-selected-bg);
+}
+
+/* --- Footer --------------------------------------------------------- */
+
+.theme-table__tfoot > tr > th,
+.theme-table__tfoot > tr > td {
+  padding-block: var(--density-cell-padding-y);
+  padding-inline: var(--density-cell-padding-x);
+  background-color: var(--color-bg-sunken);
+  border-block-start: 1px solid var(--color-border-default);
+  font: var(--typography-label);
+  color: var(--color-text-secondary);
+}
+
+/* --- Cell alignment + numeric variant ------------------------------- */
+
+[data-align="start"] { text-align: start; }
+[data-align="center"] { text-align: center; }
+[data-align="end"] { text-align: end; }
+
+.theme-table th[data-numeric="true"],
+.theme-table td[data-numeric="true"] {
+  text-align: end;
+  font-feature-settings: var(--font-feature-tabular);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* --- Size variants -------------------------------------------------- */
+
+.theme-table[data-size="sm"] > thead > tr > th,
+.theme-table[data-size="sm"] > tbody > tr > th,
+.theme-table[data-size="sm"] > tbody > tr > td,
+.theme-table[data-size="sm"] > tfoot > tr > th,
+.theme-table[data-size="sm"] > tfoot > tr > td {
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-3);
+  font-size: var(--font-size-xs);
+}
+
+.theme-table[data-size="lg"] > thead > tr > th,
+.theme-table[data-size="lg"] > tbody > tr > th,
+.theme-table[data-size="lg"] > tbody > tr > td,
+.theme-table[data-size="lg"] > tfoot > tr > th,
+.theme-table[data-size="lg"] > tfoot > tr > td {
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-5);
+}
+
+/* --- Variant: striped (zebra rows) ---------------------------------- */
+
+.theme-table[data-variant="striped"] > tbody > tr:nth-child(2n) {
+  background-color: var(--color-bg-sunken);
+}
+
+.theme-table[data-variant="striped"] > tbody > tr:nth-child(2n):hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-table[data-variant="striped"] > tbody > tr[data-selected="true"]:nth-child(2n) {
+  background-color: var(--color-selected-bg);
+}
+
+/* --- Sortable column header --------------------------------------- */
+
+.theme-table th[data-sortable="true"] {
+  padding: 0; /* button takes over padding for proper hit-area */
+}
+
+.theme-table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1_5);
+  inline-size: 100%;
+  padding-block: var(--density-cell-padding-y);
+  padding-inline: var(--density-cell-padding-x);
+  background-color: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-table__sort:hover {
+  color: var(--color-text-primary);
+}
+
+.theme-table__sort:focus-visible {
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: calc(var(--ring-offset-width) * -1);
+}
+
+/* Sort indicator — CSS-only chevron via mask-image. The icon defaults to
+   the "unsorted" double-chevron (chevrons-up-down), and switches to
+   chevron-up / chevron-down per aria-sort value. currentColor flows via
+   background-color + mask-image. */
+.theme-table__sort-icon {
+  display: inline-block;
+  inline-size: 14px;
+  block-size: 14px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  opacity: 0.5;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-standard);
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 14px;
+}
+
+/* Active sort direction → single chevron pointing up (ascending) or
+   down (descending). aria-sort is the source of truth (set on <th>). */
+.theme-table th[aria-sort="ascending"] .theme-table__sort-icon {
+  opacity: 1;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>');
+}
+
+.theme-table th[aria-sort="descending"] .theme-table__sort-icon {
+  opacity: 1;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
+}
+
+.theme-table th[aria-sort="ascending"],
+.theme-table th[aria-sort="descending"] {
+  color: var(--color-text-primary);
+}
+
+/* Touch target hardening — sortable header button must reach 44 px. */
+@media (pointer: coarse) {
+  .theme-table__sort {
+    min-block-size: 44px;
+  }
+}
+
+/* Reduced motion — disable the sort-indicator transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .theme-table__sort,
+  .theme-table__sort-icon {
+    transition: none;
+  }
+}

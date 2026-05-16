@@ -1,0 +1,163 @@
+/*
+ * _auth-shell — centered viewport-min-height layout shell for Auth patterns.
+ *
+ * Composed by Auth-{Login,Register,ForgotPassword,ResetPassword,…} via
+ * {% embed %} with `content` block (see `_auth-shell.html.twig` header).
+ *
+ * Layout (default variant):
+ *
+ *   ┌─────────────────────────────────────────────┐
+ *   │  <main class="theme-auth-shell">            │
+ *   │  ┌───────────────────────────────────────┐  │
+ *   │  │  <section class="…__panel">           │  │
+ *   │  │  ┌─────────────────────────────────┐  │  │
+ *   │  │  │  brand (optional)               │  │  │
+ *   │  │  ├─────────────────────────────────┤  │  │
+ *   │  │  │  card                           │  │  │
+ *   │  │  │   title + subtitle              │  │  │
+ *   │  │  │   form fields                   │  │  │
+ *   │  │  │   primary CTA                   │  │  │
+ *   │  │  │   footer link block (optional)  │  │  │
+ *   │  │  └─────────────────────────────────┘  │  │
+ *   │  └───────────────────────────────────────┘  │
+ *   └─────────────────────────────────────────────┘
+ *       block-axis centered, 100vh / 100dvh height
+ *
+ * Split variant (≥ 1024 px): the panel sits beside an illustration <aside>
+ * that fills the remaining viewport-half.
+ *
+ * Reduced-motion: nothing animates at shell level. Inner controls (Button,
+ * Input) keep their own 120 ms transitions per their primitive's CSS.
+ */
+
+.theme-auth-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 100vh;
+  /* 100dvh handles mobile viewport quirks (Safari URL-bar shrink). */
+  min-block-size: 100dvh;
+  background-color: var(--color-bg-base);
+  box-sizing: border-box;
+  /* Honor safe-area insets for iOS notch + bottom bar. */
+  padding-block: max(var(--spacing-6), env(safe-area-inset-top)) max(var(--spacing-6), env(safe-area-inset-bottom));
+  padding-inline: max(var(--spacing-4), env(safe-area-inset-left)) max(var(--spacing-4), env(safe-area-inset-right));
+}
+
+/* ----- split variant ------------------------------------------------- */
+
+.theme-auth-shell--split {
+  /* Mobile-first: same single-column centered layout (illustration hidden
+     via .theme-auth-shell__illustration `display: none` default). */
+  flex-direction: column;
+}
+
+@media (width >= 64rem) {
+  /* From 1024 px, the split variant shows the illustration aside beside
+     the panel (50 % / 50 % flex). Below 1024 px, the panel-only layout
+     stays — illustration deliberately hidden to preserve form prominence
+     on mobile. */
+  .theme-auth-shell--split {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 0;
+  }
+
+  .theme-auth-shell--split .theme-auth-shell__illustration {
+    display: flex;
+    flex: 1 1 50%;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 0;
+    padding: var(--spacing-12);
+    background-color: var(--color-primary-soft);
+    color: var(--color-primary-soft-foreground);
+  }
+
+  .theme-auth-shell--split .theme-auth-shell__panel {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-12);
+  }
+}
+
+.theme-auth-shell__illustration {
+  /* Default-variant: never shown. Split-variant + < 1024 px: also hidden. */
+  display: none;
+}
+
+/* ----- panel + card -------------------------------------------------- */
+
+.theme-auth-shell__panel {
+  inline-size: 100%;
+  max-inline-size: 26rem; /* ~416 px — the standard auth-card width */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.theme-auth-shell__brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* The kit doesn't ship a default brand asset; consumers fill the slot
+     with their logo / wordmark. */
+}
+
+.theme-auth-shell__card {
+  /* Compose Card's surface visuals; override its padding so Auth's
+     vertical rhythm (header + body + footer with .theme-card-divider)
+     reads as a single editable block. */
+  padding: var(--spacing-6);
+  inline-size: 100%;
+}
+
+@media (width >= 30rem) {
+  .theme-auth-shell__card {
+    padding: var(--spacing-8);
+  }
+}
+
+.theme-auth-shell__card-header {
+  /* Compose Card's __header padding model; Auth-shell adds extra block-end
+     gap so the title block breathes before the form fields. */
+  padding: 0;
+  margin-block-end: var(--spacing-5);
+}
+
+.theme-auth-shell__title {
+  font: var(--typography-h1);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.theme-auth-shell__subtitle {
+  font: var(--typography-body-lg);
+  color: var(--color-text-secondary);
+  margin-block: var(--spacing-1_5) 0;
+}
+
+.theme-auth-shell__card-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  /* Form fields stack vertically; the consumer's <form> typically has the
+     same direction + gap, so this also works when the consumer wraps the
+     fields inside a <form> direct child of the body. */
+}
+
+.theme-auth-shell__card-footer {
+  padding: 0;
+  margin-block-start: var(--spacing-5);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font: var(--typography-body);
+  /* Override Card's __footer flex-row default — Auth footer is centered
+     text (often a link or 2). */
+  display: block;
+}

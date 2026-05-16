@@ -1,0 +1,69 @@
+{#-
+  DensitySwitcher — comfortable / cozy / compact density picker (Ring 3 S3.3b-1).
+
+  Composes ToggleGroup Ring 1 (single mode mutex) + Toggle Ring 1 inline.
+  The `density-switcher` controller flips `data-density` attribute on the
+  configurable target element (documentElement / body / self), persists to
+  localStorage, dispatches `density-switcher:change`.
+
+  We render the ToggleGroup structure inline (rather than `{% include %}`)
+  because each inner Toggle needs an extra `data-density="<key>"` attribute
+  that the Toggle twig doesn't surface natively. Same CSS classes ;
+  identical visual + a11y contract.
+
+  Cross-controller compose: `data-controller="toggle-group density-switcher"`.
+
+  Parameters:
+    htmlId          (string, optional)
+    currentDensity  (string, optional, default 'comfortable')   - comfortable | cozy | compact
+    storageKey      (string, optional, default 'theme.density')
+    target          (string, optional, default 'documentElement') - documentElement | body | self
+    size            (string, optional, default 'md')
+    variant         (string, optional, default 'default')
+    hideLabel       (bool,   optional, default false)
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-density-switcher-' ~ random()) -%}
+{%- set currentDensity  = currentDensity  | default('comfortable') -%}
+{%- set storageKey      = storageKey      | default('theme.density') -%}
+{%- set target          = target          | default('documentElement') -%}
+{%- set size            = size            | default('md') -%}
+{%- set variant         = variant         | default('default') -%}
+{%- set hideLabel       = hideLabel       | default(false) -%}
+
+{%- set options = [
+  { density: 'comfortable', labelKey: 'theme.density-switcher.label.comfortable', iconKey: 'menu' },
+  { density: 'cozy',        labelKey: 'theme.density-switcher.label.cozy',        iconKey: 'menu' },
+  { density: 'compact',     labelKey: 'theme.density-switcher.label.compact',     iconKey: 'menu' },
+] -%}
+
+{%- set _tgOptions = [] -%}
+{%- for option in options -%}
+  {%- set _tgOptions = _tgOptions | merge([{
+    label: option.labelKey | trans,
+    ariaLabel: option.labelKey | trans,
+    pressed: option.density == currentDensity,
+    className: 'theme-density-switcher__item',
+    attrs: { 'data-density': option.density },
+  }]) -%}
+{%- endfor -%}
+
+{% include '@theme/components/toggle-group/toggle-group.html.twig' with {
+  label: 'theme.density-switcher.label.group'|trans,
+  htmlId: htmlId,
+  options: _tgOptions,
+  mode: 'single',
+  orientation: 'horizontal',
+  size: size,
+  variant: variant,
+  hideLabel: hideLabel,
+  className: 'theme-density-switcher__group',
+  wrapClass: 'theme-density-switcher',
+  controllerExtras: 'density-switcher',
+  actionExtras: 'toggle->density-switcher#onToggle',
+  attrs: {
+    'data-density-switcher-current-density-value': currentDensity,
+    'data-density-switcher-storage-key-value': storageKey,
+    'data-density-switcher-target-value': target,
+  },
+} only %}

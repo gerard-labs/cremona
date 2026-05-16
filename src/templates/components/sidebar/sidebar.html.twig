@@ -1,0 +1,144 @@
+{#-
+  Sidebar — vertical application navigation with collapsible icon-only mode.
+
+  Per OQ-44 (sealed S2.8 opening) : event-only persistence — the controller
+  dispatches `sidebar:collapse-change` ; consumer owns persistence.
+
+  Per OQ-26 (sealed S2.2) : mobile mode is consumer-owned composition —
+  wrap the same nav inside a Sheet (data-controller="sheet" data-edge="start").
+
+  Composes the `sidebar` Stimulus controller (collapse toggle + DOM sync +
+  dispatch). Items are [Item](../item/item.html.twig) primitives (Ring 1).
+  Nested sections opt-in via [Collapsible](../collapsible/collapsible.html.twig)
+  (Ring 1) — consumer renders a Collapsible inside `.theme-sidebar__nav`.
+
+  Parameters:
+    htmlId         (string,  optional) — auto-generated.
+    label          (string,  optional) — aria-label on the <aside>
+                                          (default 'Navigation principale').
+    navLabel       (string,  optional) — aria-label on the inner <nav>
+                                          (default 'Sections').
+    brand          (string,  optional) — brand text rendered in the header.
+                                          Empty / null = no header brand.
+    brandHref      (string,  optional) — when set, the brand becomes an
+                                          <a href> ; otherwise a <span>.
+    sections       (array,   required) — list of section descriptors :
+                                          { title?, items: [...] }.
+                                          Items follow the Item primitive
+                                          shape (label, href, iconLeading,
+                                          ariaCurrent, …).
+    collapsed      (bool,    optional) — initial collapsed state (default false).
+    showCollapseToggle (bool, optional) — render the collapse toggle button
+                                          in the header (default true ;
+                                          false for mobile-sheet contexts).
+    toggleAriaLabel (string, optional) — aria-label on the collapse toggle.
+    footerContent  (string,  optional) — raw HTML rendered in the footer
+                                          (e.g. user-menu trigger).
+    mobileSheet    (bool,    optional) — when true, stamps `data-mobile-sheet`
+                                          on the <aside> to opt-in to the
+                                          always-visible behavior inside a
+                                          consumer's Sheet (per OQ-26).
+                                          Defaults to false.
+    className      (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/sidebar/sidebar.html.twig' with {
+      label: 'Navigation principale'|trans,
+      brand: 'Samurai',
+      brandHref: '/',
+      toggleAriaLabel: 'Replier la barre latérale'|trans,
+      sections: [
+        {
+          items: [
+            { label: 'Tableau de bord'|trans, href: '/dashboard', iconLeading: 'home', ariaCurrent: 'page' },
+            { label: 'Projets'|trans,         href: '/projects',  iconLeading: 'folder' },
+          ],
+        },
+        {
+          title: 'Administration'|trans,
+          items: [
+            { label: 'Équipe'|trans,    href: '/team',     iconLeading: 'users' },
+            { label: 'Paramètres'|trans, href: '/settings', iconLeading: 'settings' },
+          ],
+        },
+      ],
+    } %}
+
+  Events (dispatched on the <aside>):
+    sidebar:collapse-change — detail.{ collapsed: boolean }
+-#}
+
+{%- set htmlId             = htmlId             | default('theme-sidebar-' ~ random()) -%}
+{%- set label              = label              | default('Navigation principale') -%}
+{%- set navLabel           = navLabel           | default('Sections') -%}
+{%- set brand              = brand              | default(null) -%}
+{%- set brandHref          = brandHref          | default(null) -%}
+{%- set sections           = sections           | default([]) -%}
+{%- set collapsed          = collapsed          | default(false) -%}
+{%- set showCollapseToggle = showCollapseToggle is defined ? showCollapseToggle : true -%}
+{%- set toggleAriaLabel    = toggleAriaLabel    | default('Replier la barre latérale') -%}
+{%- set footerContent      = footerContent      | default(null) -%}
+{%- set mobileSheet        = mobileSheet        | default(false) -%}
+{%- set className          = className          | default('') -%}
+
+{%- set _classes = ['theme-sidebar'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<aside
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="sidebar"
+  data-sidebar-collapsed-value="{{ collapsed ? 'true' : 'false' }}"
+  data-collapsed="{{ collapsed ? 'true' : 'false' }}"
+  {%- if mobileSheet %} data-mobile-sheet="true"{% endif -%}
+  aria-label="{{ label }}"
+>
+  {%- if brand or showCollapseToggle -%}
+    <div class="theme-sidebar__header">
+      {%- if brand -%}
+        {%- if brandHref -%}
+          <a href="{{ brandHref }}" class="theme-sidebar__brand">
+            <span class="theme-sidebar__brand-label">{{ brand }}</span>
+          </a>
+        {%- else -%}
+          <span class="theme-sidebar__brand">
+            <span class="theme-sidebar__brand-label">{{ brand }}</span>
+          </span>
+        {%- endif -%}
+      {%- endif -%}
+      {%- if showCollapseToggle -%}
+        <button
+          type="button"
+          class="theme-sidebar__collapse-toggle"
+          data-sidebar-target="collapseToggle"
+          data-action="click->sidebar#toggleCollapse"
+          aria-controls="{{ htmlId }}"
+          aria-expanded="{{ collapsed ? 'false' : 'true' }}"
+          aria-label="{{ toggleAriaLabel }}"
+        >
+          <span class="theme-sidebar__collapse-icon" aria-hidden="true"></span>
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <nav class="theme-sidebar__nav" aria-label="{{ navLabel }}">
+    {%- for section in sections -%}
+      {%- if section.title is defined and section.title -%}
+        <h3 class="theme-sidebar__section-title">{{ section.title }}</h3>
+      {%- endif -%}
+      <ul class="theme-sidebar__section">
+        {%- for item in section.items | default([]) -%}
+          <li>
+            {% include '@theme/components/item/item.html.twig' with item | merge({ as: 'a' }) %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endfor -%}
+  </nav>
+
+  {%- if footerContent -%}
+    <div class="theme-sidebar__footer">{{ footerContent | raw }}</div>
+  {%- endif -%}
+</aside>

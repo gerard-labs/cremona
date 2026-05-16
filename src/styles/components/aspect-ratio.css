@@ -1,0 +1,72 @@
+/*
+ * AspectRatio — pure-CSS box that locks an inline-size : block-size ratio.
+ *
+ * Modern `aspect-ratio` property (Baseline 2022). Zero polyfill, zero JS.
+ *
+ * The ratio is consumed from `--theme-aspect-ratio` (set by the Twig
+ * partial via inline style, or by the consumer directly). Falls back to
+ * 16/9 if absent (the most common photographic ratio).
+ *
+ * The wrapper hides overflow so inner content gets clipped to the box.
+ * Inner img / video / iframe / picture are auto-sized to fill the box
+ * with object-fit: cover by default; consumers can override per-instance
+ * via the modifier classes (--fit-contain, --fit-fill, etc.) or by
+ * targeting their own inner element.
+ */
+
+.theme-aspect-ratio {
+  inline-size: 100%;
+  aspect-ratio: var(--theme-aspect-ratio, 16 / 9);
+  overflow: hidden;
+  border-radius: 0;
+  position: relative;
+}
+
+/* Inner elements that have intrinsic dimensions (img, video, iframe,
+   picture, canvas, svg) auto-fill the box. */
+.theme-aspect-ratio > img,
+.theme-aspect-ratio > video,
+.theme-aspect-ratio > iframe,
+.theme-aspect-ratio > picture,
+.theme-aspect-ratio > picture > img,
+.theme-aspect-ratio > canvas,
+.theme-aspect-ratio > svg {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Generic block child (e.g. a div with a background-image) — make it
+   fill the box too. */
+.theme-aspect-ratio > div,
+.theme-aspect-ratio > section,
+.theme-aspect-ratio > article {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* object-fit modifiers. */
+.theme-aspect-ratio--fit-contain > img,
+.theme-aspect-ratio--fit-contain > video,
+.theme-aspect-ratio--fit-contain > picture > img {
+  object-fit: contain;
+}
+
+.theme-aspect-ratio--fit-fill > img,
+.theme-aspect-ratio--fit-fill > video,
+.theme-aspect-ratio--fit-fill > picture > img {
+  object-fit: fill;
+}
+
+.theme-aspect-ratio--fit-none > img,
+.theme-aspect-ratio--fit-none > video,
+.theme-aspect-ratio--fit-none > picture > img {
+  object-fit: none;
+}
+
+.theme-aspect-ratio--fit-scale-down > img,
+.theme-aspect-ratio--fit-scale-down > video,
+.theme-aspect-ratio--fit-scale-down > picture > img {
+  object-fit: scale-down;
+}

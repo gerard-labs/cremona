@@ -1,0 +1,59 @@
+{#-
+  Typography — wraps `--typography-*` shorthand tokens with optional
+  color / weight / align / tabular-numerals overrides.
+
+  Parameters:
+    variant       (string, required) display | h1 | h2 | h3 | body-lg | body | label | caption | overline | code
+    content       (string, required) the rendered text — already translated via |trans by the caller
+    as            (string, optional) override the HTML element (e.g. 'span' to style a span like an h1)
+    className     (string, optional) extra utility classes to append
+    htmlId        (string, optional) id attribute
+    color         (string, optional) primary | secondary | tertiary | disabled
+    weight        (string, optional) regular | medium | semibold | bold
+    align         (string, optional) start | center | end (logical)
+    tabularNums   (bool,   optional) apply the .theme-tabular-nums utility
+    attrs         (map,    optional) passthrough of extra data-* / aria-* / wiring
+                                     attributes onto the element (ADR-0059)
+
+  Defaults: variant=body, element from _variantToTag map, no overrides.
+-#}
+
+{%- set variant     = variant     | default('body') -%}
+{%- set content     = content     | default('') -%}
+{%- set as          = as          | default(null) -%}
+{%- set className   = className   | default('') -%}
+{%- set htmlId      = htmlId      | default(null) -%}
+{%- set color       = color       | default(null) -%}
+{%- set weight      = weight      | default(null) -%}
+{%- set align       = align       | default(null) -%}
+{%- set tabularNums = tabularNums | default(false) -%}
+{%- set attrs       = attrs       | default({}) -%}
+
+{%- set _variantToTag = {
+  'display':  'h1',
+  'h1':       'h1',
+  'h2':       'h2',
+  'h3':       'h3',
+  'body-lg':  'p',
+  'body':     'p',
+  'label':    'span',
+  'caption':  'small',
+  'overline': 'small',
+  'code':     'code',
+} -%}
+
+{%- set _tag = as ?? _variantToTag[variant] ?? 'span' -%}
+
+{%- set _classes = ['theme-typography'] -%}
+{%- if tabularNums -%}{%- set _classes = _classes | merge(['theme-tabular-nums']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<{{ _tag }}
+  class="{{ _classes | join(' ') }}"
+  data-variant="{{ variant }}"
+  {%- if color %} data-color="{{ color }}"{% endif -%}
+  {%- if weight %} data-weight="{{ weight }}"{% endif -%}
+  {%- if align %} data-align="{{ align }}"{% endif -%}
+  {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>{{ content }}</{{ _tag }}>

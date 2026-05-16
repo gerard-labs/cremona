@@ -1,0 +1,125 @@
+/*
+ * Toggle — <button aria-pressed> "press and stay" surface.
+ *
+ * Two variants:
+ *   default — subtle: transparent bg, hover bg-sunken; pressed = bg-selected
+ *             + text-selected-foreground. The "off" look is invisible until
+ *             hover, which matches toolbar use-cases (light cognitive load).
+ *   accent  — filled when pressed: pressed = primary bg + primary-foreground.
+ *             For high-emphasis toggles (filter chip, segmented control item).
+ *
+ * Motion (press-active pattern, see 14-motion-baseline §10):
+ *   - bg / border transitions on hover/focus/press: --motion-duration-fast
+ *   - :active pressback: scale(0.97) at --motion-duration-instant (snappy
+ *     tactile feedback), release scale(1) at --motion-duration-fast/decelerate.
+ *   - aria-pressed flip itself is not animated — the bg crossfades the new
+ *     state in 120 ms.
+ */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1_5);
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-3);
+  min-block-size: var(--theme-toggle-height, 36px);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-decelerate);
+}
+
+.theme-toggle[data-size="sm"] {
+  --theme-toggle-height: 28px;
+
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-2);
+  font-size: var(--font-size-xs);
+}
+
+.theme-toggle[data-size="lg"] {
+  --theme-toggle-height: 44px;
+
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-4);
+  font-size: var(--font-size-base);
+}
+
+/* Hover (off state) — subtle bg ramp. */
+.theme-toggle:hover:not(:disabled, [aria-pressed="true"]) {
+  background-color: var(--color-bg-sunken);
+}
+
+/* Focus — same outer ring envelope as Input / Checkbox. */
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
+}
+
+/* Active press — instant 3 % scale-down for tactile feedback. */
+.theme-toggle:active:not(:disabled) {
+  transform: scale(0.97);
+  transition-duration: var(--motion-duration-instant);
+}
+
+/* ----- variant: default (subtle pressed) ----- */
+
+.theme-toggle[data-variant="default"][aria-pressed="true"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+  border-color: transparent;
+}
+
+.theme-toggle[data-variant="default"][aria-pressed="true"]:hover:not(:disabled) {
+  background-color: var(--color-primary-soft);
+}
+
+/* ----- variant: accent (filled pressed) ----- */
+
+.theme-toggle[data-variant="accent"][aria-pressed="true"] {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-color: var(--color-primary);
+}
+
+.theme-toggle[data-variant="accent"][aria-pressed="true"]:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* Disabled — muted, no pointer. */
+.theme-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+/* Icon inside the toggle — neutral inheritance from currentColor. */
+.theme-toggle__icon {
+  flex-shrink: 0;
+}
+
+.theme-toggle__label {
+  /* No extra style — inherits font / color from .theme-toggle. */
+}
+
+/* ----- touch target hardening ----- */
+
+@media (pointer: coarse) {
+  .theme-toggle,
+  .theme-toggle[data-size="sm"] {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+}

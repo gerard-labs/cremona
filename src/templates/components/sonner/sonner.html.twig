@@ -1,0 +1,62 @@
+{#-
+  Sonner — toast viewport markup (Ring 2 S2.5).
+
+  This template renders the viewport `<aside>` that the SonnerController
+  manages at runtime. In normal Stimulus boot (`boot()` from
+  `@gerard/theme`), the `ensureSonnerViewport()` helper auto-injects this
+  markup into `document.body` once — consumers do not need to include
+  this template manually.
+
+  Use this include ONLY if:
+    - Consumer prefers SSR-rendered viewport (e.g. for layout stability
+      on long FCP — empty viewport injected by JS would flash).
+    - Consumer is in `register()` (manual) mode without calling `boot()`,
+      and prefers Twig over a manual `ensureSonnerViewport()` JS call.
+
+  Usage:
+    {% include '@theme/components/sonner/sonner.html.twig' %}
+
+  Place near the closing `</body>` tag so the viewport sits at the end of
+  the DOM (top-layer with `position: fixed` + `z-index: var(--z-toast)`
+  doesn't strictly need this, but body-end placement keeps the
+  source-order intuitive for SR users navigating with virtual cursor —
+  notifications land at the document tail like footnotes).
+
+  The viewport is **content-empty** — toasts are rendered inside it by
+  the SonnerController at runtime (`window.themeToast.show({...})` or
+  `document.dispatchEvent(new CustomEvent('theme:toast:show', {...}))`).
+
+  Per [12-microcopy-tone.md §Toasts] the variant/duration defaults are
+  baked into the controller (success 4s, success+undo 10s, info ∞,
+  warning 6s, danger ∞). Consumers override per-call via the JS API.
+
+  Microcopy keys used by the controller:
+    - theme.sonner.aria.viewport    — landmark aria-label
+    - theme.sonner.aria.dismiss     — dismiss-x aria-label (per toast)
+    - theme.sonner.queue-more.{one,other} — "+N autres" plural indicator
+    - theme.sonner.default-label.{success,info,warning,danger} — fallback
+      when consumer omits `message`
+    - theme.sonner.default-undo-label — fallback when consumer's
+      `undoLabel` is absent
+
+  Doctrine (per Sonner spec §3, §7):
+    - role: native <aside> with aria-label (landmark per 13-a11y §13).
+    - Per-toast role auto-derives from variant — set by the controller
+      (success/info/warning → <output> with implicit role="status" +
+      aria-live="polite" ; danger → <div role="alert"> assertive).
+    - Pointer events: viewport is `pointer-events: none` so the empty
+      gap region between toasts passes clicks through to page content
+      below ; each rendered toast re-enables pointer events.
+-#}
+<aside class="theme-sonner__viewport"
+       aria-label="{{ 'theme.sonner.aria.viewport'|trans }}"
+       data-controller="sonner"
+       data-action="pointerenter->sonner#pauseAll pointerleave->sonner#resumeAll keydown.esc@window->sonner#dismissAll">
+  {# Queue indicator — initially hidden. SonnerController toggles
+     `hidden` + textContent ("+N autres") as the queue grows. #}
+  <button type="button"
+          class="theme-sonner__queue-indicator"
+          data-action="click->sonner#expandQueue"
+          data-sonner-target="indicator"
+          hidden></button>
+</aside>

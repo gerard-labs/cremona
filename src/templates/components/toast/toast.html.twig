@@ -1,0 +1,28 @@
+{#-
+  Toast — re-export of the Sonner viewport (Ring 2 S2.5).
+
+  Toast and Sonner share the same viewport DOM (only the spec entry is
+  separate — Toast.md is the consumer-facing API documentation, Sonner.md
+  is the engine specification). Per [Toast.md §"Why a separate manifest
+  entry from Sonner"]: this two-entry structure keeps discoverability
+  for consumers (who search for "toast" by mental model) while letting
+  the engine evolve under a stable consumer surface.
+
+  Usage — pick the include path that matches your mental model:
+
+    {% include '@theme/components/toast/toast.html.twig' %}
+    {# or equivalently: #}
+    {% include '@theme/components/sonner/sonner.html.twig' %}
+
+  Both render the same viewport markup. The SonnerController handles
+  runtime lifecycle either way.
+
+  When boot() is called from the kit's index.js, the viewport is
+  auto-injected by `ensureSonnerViewport()` — most consumers do NOT need
+  this include unless they prefer SSR-rendered viewport (e.g. for
+  layout stability on long FCP).
+
+  See [Sonner.md §3 Anatomy](../sonner/sonner.html.twig) for the full
+  markup contract (data-controller, data-action, queue indicator child).
+-#}
+{% include '@theme/components/sonner/sonner.html.twig' %}

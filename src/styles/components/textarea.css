@@ -1,0 +1,105 @@
+/*
+ * Textarea — native HTML5 multi-line field, styled with kit tokens.
+ *
+ * Shares the visual envelope with Input (border, focus ring, invalid
+ * border, disabled bg) — see input.css for the parallel rules. Differences:
+ *   • Block-size is content-driven (rows or autosize), not a fixed height.
+ *   • `resize: vertical` lets the user grow the box manually; horizontal
+ *     resize is disabled (would break form layouts).
+ *   • Padding-block is comfortable (paragraph-like reading), not 1-line
+ *     dense like Input.
+ *
+ * Touch-target: a textarea's block-size is necessarily ≥ 44 px once it
+ * holds at least 2 rows × the body line-height (≥ 48 px at md), so we
+ * don't need an explicit `min-block-size` media query like Input.
+ */
+
+.theme-textarea {
+  /* Layout */
+  display: block;
+  inline-size: 100%;
+  padding-inline: var(--spacing-3);
+  padding-block: var(--spacing-2);
+  margin: 0;
+  resize: vertical;
+  /* overflow: <x> <y> — block axis (vertical) auto-scrolls when content
+     past maxRows in the autosize variant; inline axis stays hidden so
+     content wraps instead of triggering a horizontal scrollbar. */
+  overflow: hidden auto;
+
+  /* Border + shape */
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-input);
+  background-color: var(--color-bg-elevated);
+
+  /* Typography — body, comfortable line-height for paragraph reading. */
+  font: var(--typography-body);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+
+  /* Motion — same transitions as Input. */
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-fast) var(--motion-easing-standard),
+    background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-textarea::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 1;
+}
+
+.theme-textarea:hover:not(:disabled, [readonly], [aria-invalid="true"]) {
+  border-color: var(--color-border-strong);
+}
+
+.theme-textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
+}
+
+.theme-textarea[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.theme-textarea[aria-invalid="true"]:focus-visible {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 var(--ring-width) var(--color-danger);
+}
+
+.theme-textarea:disabled,
+.theme-textarea[readonly] {
+  cursor: not-allowed;
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-disabled);
+  resize: none;
+}
+
+.theme-textarea:disabled {
+  opacity: 1;
+}
+
+.theme-textarea[readonly] {
+  color: var(--color-text-primary);
+  cursor: default;
+}
+
+/* Sizes — only affect padding + font (height is content-driven). */
+.theme-textarea[data-size="sm"] {
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-1);
+  font-size: var(--font-size-sm);
+}
+
+.theme-textarea[data-size="lg"] {
+  padding-inline: var(--spacing-4);
+  padding-block: var(--spacing-3);
+  font-size: var(--font-size-base);
+}
+
+/* When the autosize controller is attached, disable the user-resize handle —
+   the JS owns the height. Users can still scroll inside if content > maxRows. */
+.theme-textarea[data-controller~="textarea-autosize"] {
+  resize: none;
+}

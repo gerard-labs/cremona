@@ -1,0 +1,117 @@
+{#-
+  Auth-SSO — enterprise SSO entry pattern (Ring 3 S3.1b).
+
+  Composes _auth-shell + Field × 1 (email organisation) + Button × 1 +
+  optional Alert (globalError) + optional footer link (password fallback).
+
+  Pure server-rendered form (OQ-55). 0 Stimulus controller. The consumer's
+  back-end inspects the submitted email domain to determine which IDP
+  (Okta / Auth0 / Azure AD / Google Workspace / …) to redirect to.
+
+  Mirror Auth-Login structure — single-field variant for the SSO flow.
+
+  See `docs/specs/ring3/Auth-SSO.md` for the full spec.
+-#}
+
+{%- set title                 = title                 | default('theme.auth.sso.title'|trans) -%}
+{%- set subtitle              = subtitle              | default('theme.auth.sso.subtitle'|trans) -%}
+{%- set formAction            = formAction            | default('#') -%}
+{%- set csrfToken             = csrfToken             | default(null) -%}
+{%- set csrfFieldName         = csrfFieldName         | default('_token') -%}
+{%- set emailLabel            = emailLabel            | default('theme.auth.sso.email'|trans) -%}
+{%- set emailPlaceholder      = emailPlaceholder      | default('theme.auth.sso.email-placeholder'|trans) -%}
+{%- set emailValue            = emailValue            | default(null) -%}
+{%- set emailError            = emailError            | default(null) -%}
+{%- set submitLabel           = submitLabel           | default('theme.auth.sso.submit'|trans) -%}
+{%- set loading               = loading               | default(false) -%}
+{%- set globalError           = globalError           | default(null) -%}
+{%- set passwordLoginQuestion = passwordLoginQuestion | default('theme.auth.sso.password-login-question'|trans) -%}
+{%- set passwordLoginHref     = passwordLoginHref     | default(null) -%}
+{%- set passwordLoginLabel    = passwordLoginLabel    | default('theme.auth.sso.password-login-cta'|trans) -%}
+{%- set htmlId                = htmlId                | default('theme-auth-sso') -%}
+{%- set className             = className             | default('') -%}
+
+{%- set _formClasses = ['theme-auth-sso'] -%}
+{%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _state = 'default' -%}
+{%- if loading -%}{%- set _state = 'loading' -%}
+{%- elseif globalError or emailError -%}{%- set _state = 'error' -%}
+{%- endif -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: title,
+  subtitle: subtitle,
+  htmlId: htmlId,
+  variant: 'default',
+} %}
+  {% block content %}
+    <form
+      class="{{ _formClasses | join(' ') }}"
+      action="{{ formAction }}"
+      method="post"
+      novalidate
+      data-state="{{ _state }}"
+      {%- if loading %} data-loading="true"{% endif -%}
+    >
+      {% if globalError %}
+        {% include '@theme/components/alert/alert.html.twig' with {
+          variant: 'danger',
+          tone: 'soft',
+          body: globalError,
+          hideIcon: false,
+          htmlId: htmlId ~ '-global-error',
+        } %}
+      {% endif %}
+
+      {% if csrfToken %}
+        <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
+      {% endif %}
+
+      {% embed '@theme/components/field/field.html.twig' with {
+        label: emailLabel,
+        htmlId: htmlId ~ '-email',
+        required: true,
+        error: emailError,
+      } %}
+        {% block control %}
+          {% include '@theme/components/input/input.html.twig' with {
+            htmlId: fieldHtmlId,
+            describedBy: fieldDescribedBy,
+            invalid: fieldInvalid,
+            required: fieldRequired,
+            disabled: fieldDisabled,
+            type: 'email',
+            name: 'email',
+            value: emailValue,
+            placeholder: emailPlaceholder,
+            autocomplete: 'email',
+            inputmode: 'email',
+            spellcheck: 'false',
+          } %}
+        {% endblock %}
+      {% endembed %}
+
+      {% include '@theme/components/button/button.html.twig' with {
+        label: submitLabel,
+        variant: 'primary',
+        size: 'md',
+        type: 'submit',
+        loading: loading,
+        fullWidth: true,
+      } %}
+    </form>
+  {% endblock %}
+
+  {% if passwordLoginHref %}
+    {% block footer %}
+      <span class="theme-auth-sso__footer-question">{{ passwordLoginQuestion }}</span>
+      {% include '@theme/components/button/button.html.twig' with {
+        label: passwordLoginLabel,
+        variant: 'link',
+        size: 'md',
+        href: passwordLoginHref,
+      } %}
+    {% endblock %}
+  {% endif %}
+{% endembed %}

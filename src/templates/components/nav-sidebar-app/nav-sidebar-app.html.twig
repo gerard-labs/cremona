@@ -1,0 +1,62 @@
+{#-
+  Nav-SidebarApp — app-level vertical nav (Notion / Linear / Vercel pattern).
+
+  Composes Sidebar Ring 2 + 3-zone layout : workspace switcher header
+  + primary nav sections + user menu footer.
+
+  Parameters:
+    htmlId       (string, optional)
+    ariaLabel    (string, optional)  — default 'Navigation principale'
+    workspace    (object, required)  — {name, avatarUrl, href}
+    sections     (array,  required)  — [{heading, items: [{href, label, icon, current}]}]
+    user         (object, required)  — {name, role, avatarUrl}
+    collapsed    (bool,   optional)  — default false
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-nav-sidebar-app-' ~ random()) -%}
+{%- set ariaLabel = ariaLabel | default('theme.nav.sidebar-app.aria.label'|trans) -%}
+{%- set collapsed = collapsed | default(false) -%}
+
+{%- set _classes = ['theme-nav-sidebar-app'] -%}
+{%- if collapsed -%}{%- set _classes = _classes | merge(['theme-nav-sidebar-app--collapsed']) -%}{%- endif -%}
+
+<aside class="{{ _classes | join(' ') }}" id="{{ htmlId }}" aria-label="{{ ariaLabel }}"{% if collapsed %} data-collapsed="true"{% endif %}>
+  <header class="theme-nav-sidebar-app__workspace">
+    <a href="{{ workspace.href }}" class="theme-nav-sidebar-app__workspace-link" aria-haspopup="true" aria-expanded="false">
+      {% include '@theme/components/avatar/avatar.html.twig' with { src: workspace.avatarUrl, alt: '', size: 'md' } only %}
+      <span class="theme-nav-sidebar-app__workspace-name">{{ workspace.name }}</span>
+      {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down' } %}
+    </a>
+  </header>
+
+  <nav class="theme-nav-sidebar-app__sections" aria-label="{{ ariaLabel }}">
+    {%- for section in sections -%}
+      <section class="theme-nav-sidebar-app__section">
+        {%- if section.heading -%}
+          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: section.heading, className: 'theme-nav-sidebar-app__section-heading' } only %}
+        {%- endif -%}
+        <ul class="theme-nav-sidebar-app__section-items">
+          {%- for item in section.items -%}
+            <li>
+              <a href="{{ item.href }}" class="theme-nav-sidebar-app__item"{% if item.current %} aria-current="page"{% endif %}>
+                {%- if item.icon -%}{% include '@theme/components/icon/icon.html.twig' with { name: item.icon } %}{%- endif -%}
+                <span class="theme-nav-sidebar-app__item-label">{{ item.label }}</span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endfor -%}
+  </nav>
+
+  <footer class="theme-nav-sidebar-app__user">
+    <button type="button" class="theme-nav-sidebar-app__user-trigger" aria-haspopup="true" aria-expanded="false" aria-label="{{ 'theme.nav.sidebar-app.user.menu'|trans }}">
+      {% include '@theme/components/avatar/avatar.html.twig' with { src: user.avatarUrl, alt: '', size: 'md' } only %}
+      <div class="theme-nav-sidebar-app__user-meta">
+        <strong class="theme-nav-sidebar-app__user-name">{{ user.name }}</strong>
+        <span class="theme-nav-sidebar-app__user-role">{{ user.role }}</span>
+      </div>
+      {% include '@theme/components/icon/icon.html.twig' with { name: 'more-horizontal' } %}
+    </button>
+  </footer>
+</aside>

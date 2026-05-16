@@ -1,0 +1,24 @@
+/*
+ * ThemeSwitcher — light / dark / system theme picker (Ring 3 S3.3b-1).
+ *
+ * Composes ToggleGroup Ring 1. Marker class adds inline label spacing for
+ * the wrap. The `data-theme` attribute is flipped by the `theme-switcher`
+ * controller on documentElement (or other configurable target). System mode
+ * resolves via prefers-color-scheme + listens for OS-level theme changes.
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
+ */
+
+.theme-theme-switcher {
+  display: inline-grid;
+  gap: var(--spacing-1_5);
+  align-items: center;
+}
+
+.theme-theme-switcher__group {
+  /* Inherits ToggleGroup envelope. Marker reserved for per-instance overrides. */
+}
+
+.theme-theme-switcher__item {
+  white-space: nowrap;
+}

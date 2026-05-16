@@ -1,0 +1,106 @@
+/*
+ * Avatar primitive — image with initials/icon fallback + status dot.
+ *
+ * The component is intentionally cell-based: a fixed-size container that
+ * clips its <img> child to a circle, or otherwise centers initials /
+ * the user-icon fallback. The status dot is absolutely positioned at the
+ * inline-end / block-end (logical, RTL-aware).
+ *
+ * Hue parameter (1..6) pulls a background from the KPI palette so a list
+ * of initial-only avatars stays visually varied without exploding the
+ * token set. Defaults to bg-elevated (neutral) when `hue` is absent.
+ */
+
+.theme-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--theme-avatar-size, 40px);
+  block-size: var(--theme-avatar-size, 40px);
+  border-radius: var(--radius-pill);
+  background: var(--theme-avatar-hue, var(--color-bg-elevated));
+  color: var(--color-text-primary);
+  font: var(--typography-label);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.theme-avatar[data-size="xs"] {
+  --theme-avatar-size: 24px;
+
+  font-size: var(--font-size-2xs);
+}
+
+.theme-avatar[data-size="sm"] {
+  --theme-avatar-size: 32px;
+
+  font-size: var(--font-size-xs);
+}
+
+.theme-avatar[data-size="md"] {
+  --theme-avatar-size: 40px;
+
+  font-size: var(--font-size-sm);
+}
+
+.theme-avatar[data-size="lg"] {
+  --theme-avatar-size: 56px;
+
+  font-size: var(--font-size-lg);
+}
+
+.theme-avatar[data-size="xl"] {
+  --theme-avatar-size: 80px;
+
+  font-size: var(--font-size-2xl);
+}
+
+.theme-avatar__img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.theme-avatar__fallback {
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+/* Status dot — bottom-end (logical) — overflow is hidden on .theme-avatar
+   so the dot is clipped to the circle's edge by design.
+   To keep it outside the clip, we use a 0-bound inset + a content-box border
+   that visually carves out the avatar's edge. */
+.theme-avatar--has-status {
+  overflow: visible;
+}
+
+.theme-avatar__status {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  inline-size: 30%;
+  block-size: 30%;
+  min-inline-size: 8px;
+  min-block-size: 8px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-bg-base);
+  box-sizing: content-box;
+  transform: translate(15%, 15%);
+  /* `inline-start` translate flips automatically in RTL via the keyword
+     transform, but transform percentages aren't direction-aware. The
+     dot sits on the inline-end edge in both LTR (right) and RTL (left)
+     correctly because inset-inline-end maps to right/left. */
+}
+
+[dir="rtl"] .theme-avatar__status {
+  transform: translate(-15%, 15%);
+}
+
+.theme-avatar__status[data-status="online"]  { background: var(--color-success); }
+.theme-avatar__status[data-status="away"]    { background: var(--color-warning); }
+.theme-avatar__status[data-status="busy"]    { background: var(--color-danger); }
+.theme-avatar__status[data-status="offline"] { background: var(--color-text-tertiary); }

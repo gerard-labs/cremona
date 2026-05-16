@@ -1,0 +1,118 @@
+/*
+ * NotificationCenter — slide-over notifications panel (Ring 3 S3.2).
+ *
+ * Composes Sheet Ring 2 (responsive side-drawer desktop / bottom-sheet mobile).
+ *
+ * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-notification-center {
+  inline-size: min(85vw, 400px);
+  block-size: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.theme-notification-center__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4);
+  border-block-end: 1px solid var(--color-border-subtle);
+}
+
+.theme-notification-center__title {
+  flex-grow: 1;
+}
+
+.theme-notification-center__close {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+.theme-notification-center__empty {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-6);
+}
+
+.theme-notification-center__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.theme-notification-center__item {
+  border-block-end: 1px solid var(--color-border-subtle);
+}
+
+.theme-notification-center__item[data-unread="true"] {
+  background-color: var(--color-selected-bg);
+}
+
+.theme-notification-center__item-link {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-notification-center__item-link:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-notification-center__item-link:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: -2px;
+}
+
+.theme-notification-center__item-body {
+  flex-grow: 1;
+  display: grid;
+  gap: var(--spacing-1);
+  min-inline-size: 0;
+}
+
+.theme-notification-center__item-title {
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.theme-notification-center__item[data-unread="false"] .theme-notification-center__item-title {
+  font-weight: var(--font-weight-regular);
+}
+
+.theme-notification-center__item-text {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.theme-notification-center__item-time {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.theme-notification-center__unread-dot {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary);
+  margin-block-start: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.theme-notification-center__footer {
+  padding: var(--spacing-3);
+  border-block-start: 1px solid var(--color-border-subtle);
+  display: flex;
+  justify-content: flex-end;
+}

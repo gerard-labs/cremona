@@ -1,0 +1,129 @@
+{#-
+  Form-AddressAutocomplete — debounced async address autocomplete (sibling Form pattern).
+
+  Per Forms family doctrine (Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) is the composition keystone.
+    - Consumer-driven address API — consumer provides `endpoint` URL OR listens
+      to `address-autocomplete:fetch` event (cancellable) and dispatches
+      `address-autocomplete:suggestions` event with detail.{ suggestions }.
+
+  Cross-controller compose with Popover Ring 2 — `data-controller="popover address-autocomplete"`
+  on the wrapper (mirror DatePicker S2.7 + Command S2.9 verbatim).
+
+  Parameters:
+    htmlId          (string,  optional) — auto-generated.
+    label           (string,  required) — visible Field label.
+    name            (string,  required) — form field name.
+    help            (string,  optional) — help text below the widget.
+    error           (string,  optional) — error message.
+    required        (bool,    optional) — default false.
+    placeholder     (string,  optional) — 'Adresse, ville, code postal…'
+    endpoint        (string,  optional) — URL to fetch suggestions from (GET ?q=<query>).
+                                          Consumer can omit + listen to `address-autocomplete:fetch`
+                                          event for full custom adapter (Google Places SDK / Mapbox / etc.).
+    minQueryLength  (int,     optional) — default 3.
+    debounceMs      (int,     optional) — default 250.
+    placement       (string,  optional) — Popover placement (default 'bottom-start').
+    className       (string,  optional)
+
+  Events emitted on the wrapper :
+    address-autocomplete:mount             { minQueryLength, debounceMs }
+    address-autocomplete:fetch             { query } — cancellable
+    address-autocomplete:suggestions       { suggestions } — consumer dispatches inbound
+    address-autocomplete:suggestions-shown { count }
+    address-autocomplete:select            { label, address, placeId }
+    address-autocomplete:clear
+
+  Usage:
+
+    {% include '@theme/components/form-address-autocomplete/form-address-autocomplete.html.twig' with {
+      label: 'theme.form.address-autocomplete.label.shipping'|trans,
+      name: 'shipping_address',
+      endpoint: '/api/addresses',
+      placeholder: 'theme.form.address-autocomplete.placeholder'|trans,
+    } %}
+-#}
+
+{%- set htmlId         = htmlId         | default('theme-form-address-' ~ random()) -%}
+{%- set required       = required       | default(false) -%}
+{%- set placeholder    = placeholder    | default('') -%}
+{%- set endpoint       = endpoint       | default('') -%}
+{%- set minQueryLength = minQueryLength | default(3) -%}
+{%- set debounceMs     = debounceMs     | default(250) -%}
+{%- set placement      = placement      | default('bottom-start') -%}
+{%- set className      = className      | default('') -%}
+
+{%- set isInvalid = error is defined and error -%}
+{%- set _classes = ['theme-field', 'theme-form-address-autocomplete'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _wrapClasses = ['theme-popover', 'theme-form-address-autocomplete__wrap'] -%}
+
+{%- set describedByIds = [] -%}
+{%- if help -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-help']) -%}{%- endif -%}
+{%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
+
+<div class="{{ _classes | join(' ') }}">
+  {% include '@theme/components/label/label.html.twig' with {
+    content: label,
+    htmlFor: htmlId ~ '-input',
+    required: required,
+    requiredAriaText: 'theme.form.address-autocomplete.required'|trans,
+  } only %}
+
+  <div
+    class="{{ _wrapClasses | join(' ') }}"
+    data-controller="popover address-autocomplete"
+    data-popover-placement-value="{{ placement }}"
+    data-popover-offset-value="4"
+    data-address-autocomplete-min-query-length-value="{{ minQueryLength }}"
+    data-address-autocomplete-debounce-ms-value="{{ debounceMs }}"
+    data-address-autocomplete-consumer-endpoint-value="{{ endpoint }}"
+  >
+    {% include '@theme/components/input/input.html.twig' with {
+      type: 'text',
+      htmlId: htmlId ~ '-input',
+      name: htmlId ~ '-display',
+      autocomplete: 'off',
+      required: required,
+      invalid: isInvalid,
+      describedBy: describedByIds | length ? describedByIds | join(' ') : null,
+      placeholder: placeholder,
+      className: 'theme-form-address-autocomplete__input',
+      attrs: {
+        role: 'combobox',
+        'aria-autocomplete': 'list',
+        'aria-haspopup': 'listbox',
+        'aria-controls': htmlId ~ '-suggestions',
+        'data-popover-target': 'trigger',
+        'data-address-autocomplete-target': 'input',
+      },
+    } only %}
+    <input
+      type="hidden"
+      name="{{ name }}"
+      data-address-autocomplete-target="hiddenInput"
+    />
+
+    <div
+      class="theme-popover__content theme-form-address-autocomplete__panel"
+      data-popover-target="content"
+      role="listbox"
+      id="{{ htmlId }}-suggestions"
+    >
+      <ul
+        class="theme-form-address-autocomplete__suggestions"
+        data-address-autocomplete-target="suggestionsList"
+        hidden
+      ></ul>
+    </div>
+  </div>
+
+  {%- if help -%}
+    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+  {%- endif -%}
+  {%- if isInvalid -%}
+    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+  {%- endif -%}
+</div>

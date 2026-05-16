@@ -1,0 +1,147 @@
+{#-
+  Tabs — accessible tab interface with WAI-ARIA APG "Tabs" semantics.
+
+  Per the mini-OQ Tabs resolution sealed at S2.8 opening :
+    - Activation default `automatic` (Arrow keys focus + select immediately)
+    - Opt-in `manual` for heavy-content tabs (Arrow keys focus only ; Enter / Space activates).
+
+  Composes the `tabs` Stimulus controller (roving tabindex + Arrow nav +
+  aria-selected stamping + dispatches `tabs:change`).
+
+  Variants:
+    - `variant: 'underline'` (default) — bottom-border indicator on active tab.
+    - `variant: 'pill'` — active tab gets background fill (segmented look).
+
+  Orientations:
+    - `orientation: 'horizontal'` (default)
+    - `orientation: 'vertical'` (list stacks block, indicator on inline-end)
+
+  Per WAI-ARIA APG "Tabs" :
+    - `role="tablist"` on the wrap of triggers (with aria-label).
+    - `role="tab"` + `aria-selected` + `aria-controls` on each trigger.
+    - `role="tabpanel"` + `aria-labelledby` on each panel.
+    - Roving tabindex via the controller (active 0, inactive -1).
+
+  Parameters:
+    htmlId       (string,  optional) — auto-generated.
+    items        (array,   required) — list of { id, label, disabled?, iconLeading?,
+                                        content } maps. `content` is the panel
+                                        HTML body (consumer-owned, supports raw via
+                                        `| raw` filter at the call site).
+    value        (string,  optional) — initial active tab id ; defaults to the
+                                        first non-disabled item.
+    variant      (string,  optional) — underline (default) | pill.
+    orientation  (string,  optional) — horizontal (default) | vertical.
+    activation   (string,  optional) — automatic (default) | manual.
+    size         (string,  optional) — sm | md (default) | lg.
+    label        (string,  optional) — aria-label for the tablist
+                                        (default 'Onglets').
+    className    (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/tabs/tabs.html.twig' with {
+      label: 'Sections du compte'|trans,
+      items: [
+        { id: 'profil', label: 'Profil'|trans, content: '<p>...</p>' },
+        { id: 'pref', label: 'Préférences'|trans, content: '<p>...</p>' },
+      ],
+    } %}
+
+  Events (dispatched on the wrap):
+    tabs:change — detail.{ value, previousValue }
+-#}
+
+{%- set htmlId       = htmlId       | default('theme-tabs-' ~ random()) -%}
+{%- set items        = items        | default([]) -%}
+{%- set value        = value        | default(null) -%}
+{%- set variant      = variant      | default('underline') -%}
+{%- set orientation  = orientation  | default('horizontal') -%}
+{%- set activation   = activation   | default('automatic') -%}
+{%- set size         = size         | default('md') -%}
+{%- set label        = label        | default('Onglets') -%}
+{%- set className    = className    | default('') -%}
+
+{# Default value to first non-disabled item if not provided. #}
+{%- if value is null -%}
+  {%- for item in items -%}
+    {%- if value is null and not (item.disabled | default(false)) -%}
+      {%- set value = item.id -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- set _classes = ['theme-tabs'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="tabs"
+  data-tabs-value-value="{{ value }}"
+  data-tabs-orientation-value="{{ orientation }}"
+  data-tabs-activation-value="{{ activation }}"
+  data-variant="{{ variant }}"
+  data-orientation="{{ orientation }}"
+  data-size="{{ size }}"
+>
+  <div
+    role="tablist"
+    class="theme-tabs__list"
+    data-tabs-target="list"
+    aria-label="{{ label }}"
+    {%- if orientation == 'vertical' %} aria-orientation="vertical"{% endif -%}
+  >
+    {%- for item in items -%}
+      {%- set itemId  = item.id -%}
+      {%- set itemDis = item.disabled | default(false) -%}
+      {%- set trigId  = htmlId ~ '-trig-' ~ itemId -%}
+      {%- set panelId = htmlId ~ '-panel-' ~ itemId -%}
+      {%- set isActive = (itemId == value) -%}
+      <button
+        id="{{ trigId }}"
+        type="button"
+        role="tab"
+        class="theme-tabs__trigger"
+        data-tabs-target="trigger"
+        data-tab-id="{{ itemId }}"
+        data-action="click->tabs#activate keydown->tabs#onKeydown"
+        aria-controls="{{ panelId }}"
+        aria-selected="{{ isActive ? 'true' : 'false' }}"
+        tabindex="{{ isActive ? '0' : '-1' }}"
+        data-state="{{ isActive ? 'active' : 'inactive' }}"
+        {%- if itemDis %} disabled aria-disabled="true"{% endif -%}
+      >
+        {%- if item.iconLeading is defined and item.iconLeading -%}
+          {% include '@theme/components/icon/icon.html.twig' with {
+            name: item.iconLeading,
+            decorative: true,
+            size: 'sm',
+            className: 'theme-tabs__trigger-icon',
+          } %}
+        {%- endif -%}
+        <span class="theme-tabs__trigger-label">{{ item.label }}</span>
+      </button>
+    {%- endfor -%}
+  </div>
+
+  {%- for item in items -%}
+    {%- set itemId  = item.id -%}
+    {%- set trigId  = htmlId ~ '-trig-' ~ itemId -%}
+    {%- set panelId = htmlId ~ '-panel-' ~ itemId -%}
+    {%- set isActive = (itemId == value) -%}
+    <div
+      id="{{ panelId }}"
+      role="tabpanel"
+      class="theme-tabs__panel"
+      data-tabs-target="panel"
+      data-tab-id="{{ itemId }}"
+      aria-labelledby="{{ trigId }}"
+      tabindex="0"
+      data-state="{{ isActive ? 'active' : 'inactive' }}"
+      {%- if not isActive %} hidden{% endif -%}
+    >
+      {{ item.content | default('') | raw }}
+    </div>
+  {%- endfor -%}
+</div>

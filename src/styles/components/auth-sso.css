@@ -1,0 +1,20 @@
+/*
+ * Auth-SSO — enterprise SSO entry pattern (Ring 3 S3.1b).
+ *
+ * Composes _auth-shell (layout) + Field + Input + Button + optional Alert.
+ * Same flex column gap pattern as Auth-Login — the form sits inside the
+ * Card body which already owns the inset. Footer-question margin pattern
+ * mirrors auth-login.css precedent verbatim.
+ *
+ * See `docs/specs/ring3/Auth-SSO.md` for the full spec.
+ */
+
+.theme-auth-sso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.theme-auth-sso__footer-question {
+  margin-inline-end: var(--spacing-1);
+}

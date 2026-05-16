@@ -1,0 +1,76 @@
+/*
+ * Menubar — Horizontal app-style nav bar of N DropdownMenu submenus.
+ *
+ * Pure layout shell + trigger styling. The submenus themselves render via
+ * each child DropdownMenu (their own CSS handles role="menu" content).
+ *
+ * Per OQ-30 (sealed S2.3a): per-submenu DropdownMenus + thin orchestrator.
+ *
+ * The `.theme-menubar__trigger` class is the standard Menubar trigger
+ * visual: compact ghost-style button with active-when-expanded state via
+ * `[aria-expanded="true"]` selector. Brand presets can re-skin via the
+ * `--color-selected-bg` / `--color-selected-foreground` tokens.
+ *
+ * Logical CSS throughout — gap flows horizontally; menubar can be wrapped
+ * inline-block for RTL flow without direction-specific rules.
+ */
+
+.theme-menubar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-1);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.theme-menubar__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  block-size: 32px;
+  padding-block: 0;
+  padding-inline: var(--spacing-3);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font: var(--typography-body);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-menubar__trigger:hover:not(:disabled) {
+  background-color: var(--color-bg-sunken);
+}
+
+.theme-menubar__trigger:focus-visible {
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: var(--ring-offset-width);
+}
+
+/* When a submenu is open, the trigger gets aria-expanded="true" from the
+   co-mounted Popover controller — paint a selected-state visual. */
+.theme-menubar__trigger[aria-expanded="true"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}
+
+.theme-menubar__trigger:disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Touch target hardening — menubar triggers must hit the 44 px floor under
+   coarse pointer (matches Button doctrine). */
+@media (pointer: coarse) {
+  .theme-menubar__trigger {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+}

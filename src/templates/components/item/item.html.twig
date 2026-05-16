@@ -1,0 +1,112 @@
+{#-
+  Item — a selectable list row. The unit of DropdownMenu, DataTable rows,
+  NavMenu items, ContextMenu items, Combobox results.
+
+  Three element variants:
+    - `as: 'div'` (default) — non-interactive cell. The orchestrating
+      parent (DropdownMenu, DataTable, ListBox) handles keyboard nav
+      via its own controller; Item just renders the visual.
+    - `as: 'a'` — renders <a href="…">. The item is a standalone link.
+    - `as: 'button'` — renders <button type="button">. The item is a
+      standalone clickable action.
+
+  Slots:
+    leading      — icon / avatar / checkbox / radio (`iconLeading` prop renders
+                   a Lucide icon; for richer slots, write the wrapper raw)
+    label        — primary text
+    description  — optional muted caption below the label (sm font)
+    trailing     — icon (chevron-right for "leads-to-detail") OR kbd shortcut
+                   (`kbdShortcut` prop renders a Kbd primitive)
+
+  Zero Stimulus controller at Item level. Interactive Items (as='button'
+  or as='a') get native click + Enter/Space activation. Selection logic
+  (the `selected` state) is set by the orchestrating parent.
+
+  Parameters:
+    label         (string, required)
+    description   (string, optional)        — caption below the label
+    iconLeading   (string, optional)        — Lucide icon name
+    iconTrailing  (string, optional)        — Lucide icon name (e.g. 'chevron-right')
+    kbdShortcut   (array,  optional)        — keys array passed to Kbd (mutually exclusive
+                                              with iconTrailing — both can't render at once)
+    selected      (bool,   optional)        — visual selected state (primary-soft bg)
+    disabled      (bool,   optional)
+    as            (string, optional)        — div (default) | a | button
+    href          (string, optional)        — required when as=a
+    type          (string, optional)        — when as=button: button (default) | submit | reset
+    onClick       (string, optional)        — when as=div (rare; usually orchestrating parent
+                                              handles clicks via delegation)
+    ariaLabel     (string, optional)        — required when icon-only (no `label`)
+    ariaCurrent   (string, optional)        — 'page' | 'true' | 'step' (nav-menu active item)
+    className     (string, optional)
+    attrs         (map,    optional)  — passthrough of extra data-* / aria-* / wiring
+                                        attributes onto the root element (ADR-0059)
+
+  Blocks:
+    content (optional) — when Item is {% embed %}-ed and this block is
+                         overridden, its content replaces the standard
+                         leading / label / trailing slots (ADR-0060).
+-#}
+
+{%- set label        = label        | default(null) -%}
+{%- set description  = description  | default(null) -%}
+{%- set iconLeading  = iconLeading  | default(null) -%}
+{%- set iconTrailing = iconTrailing | default(null) -%}
+{%- set kbdShortcut  = kbdShortcut  | default(null) -%}
+{%- set selected     = selected     | default(false) -%}
+{%- set disabled     = disabled     | default(false) -%}
+{%- set as           = as           | default('div') -%}
+{%- set href         = href         | default(null) -%}
+{%- set type         = type         | default('button') -%}
+{%- set ariaLabel    = ariaLabel    | default(null) -%}
+{%- set ariaCurrent  = ariaCurrent  | default(null) -%}
+{%- set className    = className    | default('') -%}
+{%- set attrs        = attrs        | default({}) -%}
+{%- set htmlId       = htmlId       | default(null) -%}
+
+{%- set _classes = ['theme-item'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<{{ as }}
+  class="{{ _classes | join(' ') }}"
+  {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+  {%- if selected %} data-selected="true"{% endif -%}
+  {%- if disabled %} data-state="disabled"{% endif -%}
+  {%- if as == 'a' %} href="{{ href }}"{% endif -%}
+  {%- if as == 'button' %} type="{{ type }}"{% if disabled %} disabled{% endif %}{% endif -%}
+  {%- if as != 'button' and disabled %} aria-disabled="true"{% endif -%}
+  {%- if ariaCurrent %} aria-current="{{ ariaCurrent }}"{% endif -%}
+  {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {%- if block('content') is defined and block('content') is not empty -%}
+    {%- block content -%}{%- endblock -%}
+  {%- else -%}
+  {%- if iconLeading -%}
+    {% include '@theme/components/icon/icon.html.twig' with {
+      name: iconLeading,
+      decorative: true,
+      size: 'sm',
+      className: 'theme-item__icon theme-item__icon--leading',
+    } %}
+  {%- endif -%}
+  {%- if label or description -%}
+    <div class="theme-item__text">
+      {%- if label -%}<span class="theme-item__label">{{ label }}</span>{%- endif -%}
+      {%- if description -%}<span class="theme-item__description">{{ description }}</span>{%- endif -%}
+    </div>
+  {%- endif -%}
+  {%- if kbdShortcut -%}
+    <span class="theme-item__trailing">
+      {% include '@theme/components/kbd/kbd.html.twig' with { keys: kbdShortcut, size: 'sm' } %}
+    </span>
+  {%- elseif iconTrailing -%}
+    {% include '@theme/components/icon/icon.html.twig' with {
+      name: iconTrailing,
+      decorative: true,
+      size: 'sm',
+      className: 'theme-item__icon theme-item__icon--trailing',
+    } %}
+  {%- endif -%}
+  {%- endif -%}
+</{{ as }}>

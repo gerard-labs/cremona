@@ -1,0 +1,99 @@
+{#-
+  InputOTP — N-digit one-time-code input (4-8 digits, default 6).
+
+  Renders a `<fieldset>` with a visible `<legend>` and N independent
+  `<input type="text" inputmode="numeric" maxlength="1">` cells. The
+  `input-otp` Stimulus controller wires :
+   - auto-tab to the next cell on input
+   - backspace-on-empty moves focus to the previous cell + clears it
+   - paste auto-distribute (OQ-41 sealed S2.7) — pasting N digits from the
+     clipboard fills the first N cells
+   - aggregated `value` (concatenated digits) mirrored on an optional
+     hidden input for form integration
+   - `input-otp:change` (every change) + `input-otp:complete` (when all
+     cells filled) custom events
+
+  ARIA semantics : `<fieldset>` + `<legend>` is the canonical group wrap
+  per [13-a11y §10 Forms]. Each cell carries an Intl-interpolated
+  `aria-label` ("Chiffre 3 sur 6") computed via the consumer's i18n on
+  initial render. `inputmode="numeric"` triggers the numeric keyboard on
+  iOS / Android ; `autocomplete="one-time-code"` enables iOS SMS-OTP
+  auto-fill (the first cell's autocomplete attribute is sufficient — the
+  browser distributes the auto-filled code across the cluster).
+
+  Parameters:
+    htmlId      (string, optional)  auto-generated 'theme-input-otp-<rand>'
+    name        (string, optional)  hidden-input form field name
+    length      (int,    optional)  number of digits (4-8 ; default 6)
+    value       (string, optional)  pre-fill (4-8 digits ; padded with empty
+                                     cells if shorter)
+    label       (string, optional)  fieldset legend text — REQUIRED for a11y.
+                                     Defaults to 'theme.input-otp.aria.fieldset-label'|trans
+    describedBy (string, optional)  Field wires this for help/error ids
+    required    (bool,   optional)
+    disabled    (bool,   optional)
+    autocomplete (string, optional) HTML autocomplete attr ;
+                                     default 'one-time-code' — iOS / Android
+                                     SMS OTP auto-fill
+    className   (string, optional)
+-#}
+
+{%- set htmlId       = htmlId       | default('theme-input-otp-' ~ random()) -%}
+{%- set name         = name         | default(null) -%}
+{%- set length       = length       | default(6) -%}
+{%- set value        = value        | default('') -%}
+{%- set label        = label        | default('theme.input-otp.aria.fieldset-label'|trans({'{count}': length})) -%}
+{%- set describedBy  = describedBy  | default(null) -%}
+{%- set required     = required     | default(false) -%}
+{%- set disabled     = disabled     | default(false) -%}
+{%- set autocomplete = autocomplete | default('one-time-code') -%}
+{%- set className    = className    | default('') -%}
+
+{%- set _classes = ['theme-input-otp'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _legendId = htmlId ~ '-legend' -%}
+
+<fieldset
+  class="{{ _classes | join(' ') }}"
+  id="{{ htmlId }}"
+  data-controller="input-otp"
+  data-input-otp-length-value="{{ length }}"
+  {%- if value %} data-input-otp-value-value="{{ value }}"{% endif -%}
+  {%- if disabled %} disabled{% endif -%}
+>
+  <legend
+    class="theme-input-otp__legend"
+    id="{{ _legendId }}"
+  >{{ label }}</legend>
+  <div class="theme-input-otp__cells">
+    {%- for i in 0..(length - 1) -%}
+      {%- set cellValue = (value|length > i) ? value[i] : '' -%}
+      {% include '@theme/components/input/input.html.twig' with {
+        type: 'text',
+        value: (cellValue != '' ? cellValue : null),
+        required: required,
+        describedBy: describedBy,
+        autocomplete: (i == 0 ? autocomplete : 'off'),
+        maxlength: 1,
+        pattern: '[0-9]*',
+        inputmode: 'numeric',
+        className: 'theme-input-otp__cell',
+        attrs: {
+          'data-input-otp-target': 'input',
+          'data-input-otp-index': i,
+          'data-action': 'input->input-otp#onInput keydown->input-otp#onKeydown paste->input-otp#onPaste focus->input-otp#onFocus',
+          'aria-label': 'theme.input-otp.aria.digit'|trans({ '{position}': i + 1, '{total}': length }),
+        },
+      } only %}
+    {%- endfor -%}
+  </div>
+  {%- if name %}
+  <input
+    type="hidden"
+    name="{{ name }}"
+    data-input-otp-target="hiddenInput"
+    {%- if value %} value="{{ value }}"{% endif -%}
+  >
+  {%- endif %}
+</fieldset>

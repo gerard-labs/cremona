@@ -1,0 +1,135 @@
+/*
+ * Chart — ApexCharts-wrapped data visualization (Ring 2 S2.9).
+ *
+ * Per [ADR-0012] : ApexCharts v4.x lazy-loaded via dynamic import mirror
+ * [ADR-0011] verbatim. The chart paints inside `.theme-chart__container` ;
+ * a sr-only <table> data-table fallback lives at `.theme-chart__sr-only`.
+ *
+ * The `data-state` attribute drives the visual lifecycle :
+ *   "loading"  → skeleton gradient (the container is still empty, ApexCharts
+ *                 chunk fetch in flight).
+ *   "rendered" → SVG painted, skeleton hidden.
+ *
+ * Tokens are picked up by ApexCharts via getComputedStyle() in the controller
+ * (the controller maps `--color-kpi-{1..6}` → palette, `--color-text-secondary`
+ * → foreColor, `--color-border-subtle` → grid border). Theming is single-
+ * source-of-truth via the kit's CSS custom props.
+ */
+
+.theme-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  margin: 0;
+  inline-size: 100%;
+  position: relative;
+}
+
+.theme-chart__container {
+  inline-size: 100%;
+  min-block-size: 240px;
+  position: relative;
+  /* The container is `aria-hidden="true"` ; ApexCharts paints the SVG inside.
+     We don't impose padding/background — ApexCharts handles its own layout. */
+}
+
+.theme-chart[data-state="loading"] .theme-chart__container {
+  /* Skeleton gradient — visible while the ApexCharts chunk fetches.
+     Per [14-motion §7 Skeleton] : 1500 ms shimmer loop, reduced-motion
+     → flat. */
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-elevated) 0%,
+    var(--color-bg-sunken) 50%,
+    var(--color-bg-elevated) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-md);
+  animation: theme-chart-shimmer 1500ms linear infinite;
+}
+
+[data-theme="dark"] .theme-chart[data-state="loading"] .theme-chart__container {
+  /* Dark mode : the gradient lightness inverts ; rely on dark tokens. */
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-elevated) 0%,
+    var(--color-bg-sunken) 50%,
+    var(--color-bg-elevated) 100%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes theme-chart-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-chart[data-state="loading"] .theme-chart__container {
+    animation: none;
+    background: var(--color-bg-sunken);
+  }
+}
+
+.theme-chart__caption {
+  font: var(--typography-caption);
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding-block-start: var(--spacing-1);
+  /* Visible caption ; the figure's aria-label carries the same text for AT. */
+}
+
+/* sr-only — visually hidden, AT-readable. The data-table fallback uses this
+   utility so SR users hear the data (canonical) regardless of SVG paint.
+   Pattern matches src/styles/base/typography.css `.sr-only` if present ;
+   re-declared here to avoid cross-file coupling. */
+.theme-chart__sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ApexCharts container internal styling overrides — kept minimal. The
+   library handles its own layout ; the kit only adjusts the tooltip + legend
+   typography to match the kit's typography tokens (via getComputedStyle on
+   the wrap). */
+
+.theme-chart .apexcharts-tooltip {
+  font: var(--typography-caption);
+  background: var(--color-bg-elevated) !important;
+  border: 1px solid var(--color-border-default) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: var(--shadow-popover) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.theme-chart .apexcharts-tooltip-title {
+  background: var(--color-bg-sunken) !important;
+  border-block-end-color: var(--color-border-subtle) !important;
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-chart .apexcharts-legend-text {
+  font: var(--typography-caption);
+  color: var(--color-text-secondary) !important;
+}
+
+.theme-chart .apexcharts-xaxis-label,
+.theme-chart .apexcharts-yaxis-label {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sparkline-specific : compact container, no caption padding. */
+.theme-chart[data-chart-variant-value="sparkline"] {
+  gap: 0;
+}
+
+.theme-chart[data-chart-variant-value="sparkline"] .theme-chart__container {
+  min-block-size: 60px;
+}

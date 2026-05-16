@@ -1,0 +1,46 @@
+/*
+ * Kbd primitive — keyboard chord visual. Outer .theme-kbd-group wraps
+ * inner .theme-kbd cells separated by .theme-kbd-sep dividers.
+ *
+ * Sizes: sm (default, ~14px font) and md (~16px). The double bottom-
+ * border gives the keys a tactile "depth" without animation.
+ */
+
+.theme-kbd-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  vertical-align: middle;
+}
+
+.theme-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 1.75em;
+  padding-inline: var(--spacing-1_5);
+  padding-block: 1px;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+  border-block-end-width: 2px;
+  border-radius: var(--radius-xs);
+  font: var(--typography-code);
+  font-size: 0.875em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.theme-kbd[data-size="md"] {
+  font-size: 1em;
+  min-inline-size: 2em;
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-0_5);
+}
+
+.theme-kbd-sep {
+  color: var(--color-text-tertiary);
+  font: var(--typography-caption);
+  font-size: 0.75em;
+  user-select: none;
+}

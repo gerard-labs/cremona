@@ -1,0 +1,124 @@
+{#-
+  Form-TagInput — chip-style tag input (Tagify lazy ~12 kB).
+
+  Per Forms family doctrine (Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) is the composition keystone.
+    - Tagify library lazy-loaded on mount per ADR-0023 (7e cascade) — chip
+      affordance must render immediately (first-focus deferral would jank).
+    - Plurals via Intl.PluralRules per 15-i18n-and-rtl §Plurals.
+
+  Parameters:
+    htmlId         (string,  optional) — auto-generated.
+    label          (string,  required) — visible Field label.
+    name           (string,  required) — form field name.
+    help           (string,  optional) — help text below the widget.
+    error          (string,  optional) — error message.
+    required       (bool,    optional) — default false.
+    placeholder    (string,  optional) — 'Tape pour ajouter…'
+    whitelist      (array,   optional) — autocomplete suggestions (default []).
+    maxTags        (int,     optional) — 0 = unlimited (default 0).
+    duplicates     (bool,    optional) — default false.
+    delimiters     (string,  optional) — regex source (default ',|\\n').
+    initialTags    (array,   optional) — pre-filled tags (default []).
+    className      (string,  optional)
+
+  Events emitted on the wrapper :
+    tag-input:mount   { maxTags }
+    tag-input:ready   { tagCount }
+    tag-input:add     { tag, tagCount }
+    tag-input:remove  { tag, tagCount }
+    tag-input:change  { tags, tagCount }
+
+  Usage:
+
+    {% include '@theme/components/form-tag-input/form-tag-input.html.twig' with {
+      label: 'theme.form.tag-input.label.projects'|trans,
+      name: 'tags',
+      whitelist: ['frontend', 'backend', 'design'],
+      placeholder: 'theme.form.tag-input.placeholder'|trans,
+    } %}
+-#}
+
+{%- set htmlId      = htmlId      | default('theme-form-tag-input-' ~ random()) -%}
+{%- set required    = required    | default(false) -%}
+{%- set placeholder = placeholder | default('') -%}
+{%- set whitelist   = whitelist   | default([]) -%}
+{%- set maxTags     = maxTags     | default(0) -%}
+{%- set duplicates  = duplicates  | default(false) -%}
+{%- set delimiters  = delimiters  | default(',|\\n') -%}
+{%- set initialTags = initialTags | default([]) -%}
+{%- set className   = className   | default('') -%}
+
+{%- set isInvalid = error is defined and error -%}
+{%- set _classes = ['theme-field', 'theme-form-tag-input'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set describedByIds = [htmlId ~ '-counter'] -%}
+{%- if help -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-help']) -%}{%- endif -%}
+{%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="tag-input"
+  data-tag-input-whitelist-value="{{ whitelist | json_encode | e('html_attr') }}"
+  data-tag-input-max-tags-value="{{ maxTags }}"
+  data-tag-input-duplicates-value="{{ duplicates ? 'true' : 'false' }}"
+  data-tag-input-delimiters-value="{{ delimiters }}"
+>
+  {% include '@theme/components/label/label.html.twig' with {
+    content: label,
+    htmlFor: htmlId ~ '-input',
+    required: required,
+    requiredAriaText: 'theme.form.tag-input.required'|trans,
+  } only %}
+
+  {% include '@theme/components/input/input.html.twig' with {
+    type: 'text',
+    htmlId: htmlId ~ '-input',
+    name: htmlId ~ '-display',
+    value: initialTags | join(','),
+    placeholder: placeholder,
+    required: required,
+    invalid: isInvalid,
+    describedBy: describedByIds | join(' '),
+    autocomplete: 'off',
+    className: 'theme-form-tag-input__input',
+    attrs: {
+      role: 'textbox',
+      'aria-multiline': 'false',
+      'aria-label': 'theme.form.tag-input.aria.label'|trans,
+      'data-tag-input-target': 'input',
+    },
+  } only %}
+
+  <input
+    type="hidden"
+    name="{{ name }}"
+    data-tag-input-target="hiddenInput"
+    value="{{ initialTags | json_encode | e('html_attr') }}"
+  />
+
+  <p
+    class="theme-field__help theme-form-tag-input__counter"
+    id="{{ htmlId }}-counter"
+    data-tag-input-target="counter"
+    aria-live="polite"
+  >
+    {%- set initialCount = initialTags | length -%}
+    {%- if initialCount == 0 -%}
+      {{ 'theme.form.tag-input.count.zero'|trans }}
+    {%- elseif initialCount == 1 -%}
+      {{ 'theme.form.tag-input.count.one'|trans }}
+    {%- else -%}
+      {{ 'theme.form.tag-input.count.other'|trans({ '{count}': initialCount }) }}
+    {%- endif -%}
+  </p>
+
+  {%- if help -%}
+    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+  {%- endif -%}
+  {%- if isInvalid -%}
+    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+  {%- endif -%}
+</div>

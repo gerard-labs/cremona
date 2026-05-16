@@ -1,0 +1,99 @@
+{#-
+  ToggleGroup — N Toggles in a `role="group"` container with arrow-key roving
+  focus + optional mutex (single) / independent (multi) selection.
+
+  Stimulus controller `toggle-group`:
+    - Listens for the `toggle` custom event bubbling from inner Toggles.
+    - In `mode: single` (radio-like): forces aria-pressed="false" on every
+      other Toggle so only one stays pressed.
+    - In `mode: multi`  (checkbox-like): no-op on `toggle` — every Toggle
+      keeps its own state.
+    - Owns a roving tabindex: only ONE Toggle has tabindex=0; arrow nav
+      moves the active one and refocuses.
+
+  Keyboard:
+    Tab in            → focus the active Toggle (the pressed one in single
+                         mode, or the first one in multi mode).
+    Arrow Left/Right  → previous / next (horizontal orientation).
+    Arrow Up/Down     → previous / next (vertical orientation).
+    Home / End        → first / last.
+    Enter / Space     → toggle the focused Toggle (native button behavior).
+
+  Parameters:
+    label            (string, required)  — accessible name for the group
+                                            (rendered as a visible <span> by default
+                                             or sr-only if hideLabel=true)
+    htmlId           (string, optional)  — used as the labelledby anchor id
+    options          (array,  required)  — N items:
+                                            { label?, iconLeading?, pressed?, ariaLabel?, value?, disabled? }
+    mode             (string, optional)  — 'single' (default, mutex) | 'multi'
+    orientation      (string, optional)  — 'horizontal' (default) | 'vertical'
+    size             (string, optional)  — sm | md (default) | lg — passed to every Toggle
+    variant          (string, optional)  — 'default' (subtle) | 'accent' (filled when pressed)
+    name             (string, optional)  — shared form name for the inner Toggles
+    disabled         (bool,   optional)  — disables the whole group
+    hideLabel        (bool,   optional)  — sr-only the visible label
+    className        (string, optional)
+-#}
+
+{%- set label       = label       | default('') -%}
+{%- set htmlId      = htmlId      | default(null) -%}
+{%- set options     = options     | default([]) -%}
+{%- set mode        = mode        | default('single') -%}
+{%- set orientation = orientation | default('horizontal') -%}
+{%- set size        = size        | default('md') -%}
+{%- set variant     = variant     | default('default') -%}
+{%- set name        = name        | default(null) -%}
+{%- set disabled    = disabled    | default(false) -%}
+{%- set hideLabel   = hideLabel   | default(false) -%}
+{%- set className   = className   | default('') -%}
+{%- set attrs            = attrs            | default({}) -%}
+{%- set controllerExtras = controllerExtras | default('') -%}
+{%- set actionExtras     = actionExtras     | default('') -%}
+{%- set wrapClass        = wrapClass        | default('') -%}
+
+{%- if htmlId is null -%}
+  {%- set htmlId = ('toggle-group-' ~ (label | lower | replace({' ': '-', "'": '-'}))[:32]) -%}
+{%- endif -%}
+
+{%- set _labelId = htmlId ~ '-label' -%}
+
+{%- set _classes = ['theme-toggle-group'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div class="theme-toggle-group-wrap{% if wrapClass %} {{ wrapClass }}{% endif %}" data-orientation="{{ orientation }}">
+  <span
+    id="{{ _labelId }}"
+    class="theme-toggle-group__label{% if hideLabel %} theme-sr-only{% endif %}"
+  >{{ label }}</span>
+
+  <div
+    class="{{ _classes | join(' ') }}"
+    role="group"
+    aria-labelledby="{{ _labelId }}"
+    data-controller="toggle-group{% if controllerExtras %} {{ controllerExtras }}{% endif %}"
+    data-action="keydown->toggle-group#keydown toggle->toggle-group#onToggle{% if actionExtras %} {{ actionExtras }}{% endif %}"
+    data-toggle-group-mode-value="{{ mode }}"
+    data-toggle-group-orientation-value="{{ orientation }}"
+    data-orientation="{{ orientation }}"
+    data-size="{{ size }}"
+    data-variant="{{ variant }}"
+    {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+  >
+    {%- for option in options -%}
+      {% include '@theme/components/toggle/toggle.html.twig' with {
+        label: option.label | default(null),
+        iconLeading: option.iconLeading | default(null),
+        pressed: option.pressed | default(false),
+        ariaLabel: option.ariaLabel | default(null),
+        size: size,
+        variant: variant,
+        disabled: disabled or (option.disabled | default(false)),
+        name: name,
+        value: option.value | default(null),
+        className: ('theme-toggle-group__item ' ~ (option.className | default(''))) | trim,
+        attrs: option.attrs | default({}),
+      } %}
+    {%- endfor -%}
+  </div>
+</div>

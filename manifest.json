@@ -1,0 +1,1224 @@
+{
+  "_comment": "Machine-readable status of every theme component — the single source of truth for the ring lock-in protocol. Status enum: planned | draft | done | locked-in | deprecated. A component cannot enter 'draft' unless every component of all lower rings is 'locked-in'. The CI script tools/check-manifest.js enforces this.",
+  "themeVersion": "0.2.6",
+  "currentRing": 3,
+  "rings": {
+    "0": {
+      "name": "Foundations",
+      "status": "locked-in",
+      "lockedInAt": "2026-05-13",
+      "adr": "0006"
+    },
+    "1": {
+      "name": "Primitives",
+      "status": "locked-in",
+      "lockedInAt": "2026-05-13",
+      "adr": "0008"
+    },
+    "2": {
+      "name": "Compounds",
+      "status": "locked-in",
+      "lockedInAt": "2026-05-14",
+      "adr": "0015"
+    },
+    "3": {
+      "name": "Patterns",
+      "status": "locked-in",
+      "lockedInAt": "2026-05-15",
+      "adr": "0033"
+    }
+  },
+  "items": {
+    "ring0": {
+      "build:package.json": {
+        "status": "done"
+      },
+      "build:vite.config": {
+        "status": "done"
+      },
+      "build:histoire.config": {
+        "status": "done"
+      },
+      "build:ci": {
+        "status": "done"
+      },
+      "tokens:color": {
+        "status": "done"
+      },
+      "tokens:spacing": {
+        "status": "done"
+      },
+      "tokens:radius": {
+        "status": "done"
+      },
+      "tokens:font": {
+        "status": "done"
+      },
+      "tokens:shadow": {
+        "status": "done"
+      },
+      "tokens:motion": {
+        "status": "done"
+      },
+      "tokens:density": {
+        "status": "done"
+      },
+      "tokens:z-index": {
+        "status": "done"
+      },
+      "styles:base-reset": {
+        "status": "done"
+      },
+      "styles:theme-entry": {
+        "status": "done"
+      },
+      "js:stimulus-boot": {
+        "status": "done"
+      },
+      "i18n:registry": {
+        "status": "done"
+      },
+      "story:palette-demo": {
+        "status": "done"
+      }
+    },
+    "ring1": {
+      "Accordion": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion",
+          "Collapsible"
+        ]
+      },
+      "Alert": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion",
+          "Icon"
+        ]
+      },
+      "AspectRatio": {
+        "status": "done",
+        "dependsOn": []
+      },
+      "Avatar": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius"
+        ]
+      },
+      "Badge": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius"
+        ]
+      },
+      "Breadcrumb": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:font",
+          "Icon"
+        ]
+      },
+      "Button": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius",
+          "tokens:motion"
+        ]
+      },
+      "ButtonGroup": {
+        "status": "done",
+        "dependsOn": [
+          "Button"
+        ]
+      },
+      "Card": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius",
+          "tokens:shadow"
+        ]
+      },
+      "Checkbox": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Collapsible": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion",
+          "Icon"
+        ]
+      },
+      "Divider": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color"
+        ]
+      },
+      "Empty": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:font",
+          "Icon"
+        ]
+      },
+      "Field": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Label"
+        ]
+      },
+      "Icon": {
+        "status": "done",
+        "dependsOn": []
+      },
+      "Input": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius"
+        ]
+      },
+      "InputGroup": {
+        "status": "done",
+        "dependsOn": [
+          "Input"
+        ]
+      },
+      "Item": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color"
+        ]
+      },
+      "Kbd": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius"
+        ]
+      },
+      "Label": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color"
+        ]
+      },
+      "NativeSelect": {
+        "status": "done",
+        "dependsOn": [
+          "Input"
+        ]
+      },
+      "Progress": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "RadioGroup": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Separator": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color"
+        ]
+      },
+      "Skeleton": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Slider": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Spinner": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Switch": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Textarea": {
+        "status": "done",
+        "dependsOn": [
+          "Input"
+        ]
+      },
+      "Toggle": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "ToggleGroup": {
+        "status": "done",
+        "dependsOn": [
+          "Toggle"
+        ]
+      },
+      "Tooltip": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius",
+          "tokens:motion"
+        ]
+      },
+      "Typography": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:font",
+          "tokens:color"
+        ]
+      }
+    },
+    "ring2": {
+      "AlertDialog": {
+        "status": "done",
+        "dependsOn": [
+          "Dialog",
+          "Button"
+        ]
+      },
+      "AvatarGroup": {
+        "status": "done",
+        "dependsOn": [
+          "Avatar"
+        ]
+      },
+      "Calendar": {
+        "status": "done",
+        "dependsOn": [
+          "Button",
+          "tokens:color"
+        ]
+      },
+      "Carousel": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Chart": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color"
+        ]
+      },
+      "Combobox": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Popover",
+          "Item",
+          "Select"
+        ]
+      },
+      "Command": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Dialog",
+          "Kbd"
+        ]
+      },
+      "ContextMenu": {
+        "status": "done",
+        "dependsOn": [
+          "Popover",
+          "Item",
+          "DropdownMenu"
+        ]
+      },
+      "DataTable": {
+        "status": "done",
+        "dependsOn": [
+          "Table",
+          "Checkbox",
+          "Pagination",
+          "DropdownMenu",
+          "AlertDialog",
+          "Empty"
+        ]
+      },
+      "DatePicker": {
+        "status": "done",
+        "dependsOn": [
+          "Calendar",
+          "Input",
+          "Popover"
+        ]
+      },
+      "DescriptionList": {
+        "status": "done",
+        "dependsOn": [
+          "Typography"
+        ]
+      },
+      "Dialog": {
+        "status": "done",
+        "dependsOn": [
+          "Button",
+          "tokens:motion"
+        ]
+      },
+      "Drawer": {
+        "status": "done",
+        "dependsOn": [
+          "Dialog",
+          "tokens:motion"
+        ]
+      },
+      "DropdownMenu": {
+        "status": "done",
+        "dependsOn": [
+          "Popover",
+          "Item"
+        ]
+      },
+      "FileUpload": {
+        "status": "done",
+        "dependsOn": [
+          "Button",
+          "Progress"
+        ]
+      },
+      "HoverCard": {
+        "status": "done",
+        "dependsOn": [
+          "Popover",
+          "Card"
+        ]
+      },
+      "InputOTP": {
+        "status": "done",
+        "dependsOn": [
+          "Input"
+        ]
+      },
+      "Menubar": {
+        "status": "done",
+        "dependsOn": [
+          "DropdownMenu"
+        ]
+      },
+      "NavigationMenu": {
+        "status": "done",
+        "dependsOn": [
+          "DropdownMenu",
+          "Item",
+          "Menubar"
+        ]
+      },
+      "NumberInput": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Button"
+        ]
+      },
+      "Pagination": {
+        "status": "done",
+        "dependsOn": [
+          "Button",
+          "NativeSelect"
+        ]
+      },
+      "Popover": {
+        "status": "done",
+        "dependsOn": [
+          "Card",
+          "tokens:motion"
+        ]
+      },
+      "Resizable": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "ScrollArea": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:radius"
+        ]
+      },
+      "Select": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Popover",
+          "Item"
+        ]
+      },
+      "Sheet": {
+        "status": "done",
+        "dependsOn": [
+          "Drawer"
+        ]
+      },
+      "Sidebar": {
+        "status": "done",
+        "dependsOn": [
+          "Item",
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Sonner": {
+        "status": "done",
+        "dependsOn": [
+          "Alert",
+          "Card",
+          "tokens:motion",
+          "tokens:color"
+        ]
+      },
+      "Status": {
+        "status": "done",
+        "dependsOn": [
+          "Badge",
+          "tokens:motion",
+          "tokens:color"
+        ]
+      },
+      "Stepper": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Table": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:density",
+          "tokens:font"
+        ]
+      },
+      "Tabs": {
+        "status": "done",
+        "dependsOn": [
+          "tokens:color",
+          "tokens:motion"
+        ]
+      },
+      "Tag": {
+        "status": "done",
+        "dependsOn": [
+          "Badge",
+          "Icon"
+        ]
+      },
+      "Toast": {
+        "status": "done",
+        "dependsOn": [
+          "Sonner"
+        ]
+      }
+    },
+    "ring3": {
+      "pattern:Auth-Login": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Button",
+          "Field",
+          "Card",
+          "Checkbox",
+          "Alert"
+        ]
+      },
+      "pattern:Auth-Register": {
+        "status": "done",
+        "dependsOn": [
+          "pattern:Auth-Login",
+          "Empty"
+        ]
+      },
+      "pattern:Auth-ForgotPassword": {
+        "status": "done",
+        "dependsOn": [
+          "pattern:Auth-Login",
+          "Empty"
+        ]
+      },
+      "pattern:Auth-ResetPassword": {
+        "status": "done",
+        "dependsOn": [
+          "pattern:Auth-Login",
+          "Empty"
+        ]
+      },
+      "pattern:Auth-EmailVerification": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Auth-OTP": {
+        "status": "done",
+        "dependsOn": [
+          "InputOTP",
+          "Button",
+          "Alert"
+        ]
+      },
+      "pattern:Auth-MagicLink": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Auth-SSO": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Button",
+          "Field",
+          "Card",
+          "Alert"
+        ]
+      },
+      "pattern:Auth-SocialButtons": {
+        "status": "done",
+        "dependsOn": [
+          "Button"
+        ]
+      },
+      "pattern:Auth-PasswordStrength": {
+        "status": "done",
+        "dependsOn": [
+          "Progress",
+          "Field",
+          "Input",
+          "Label"
+        ]
+      },
+      "pattern:Auth-SessionTimeoutModal": {
+        "status": "done",
+        "dependsOn": [
+          "Dialog",
+          "Button"
+        ]
+      },
+      "pattern:Auth-AccountLocked": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-404": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-403": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-401": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-500": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-503": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-Maintenance": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Button"
+        ]
+      },
+      "pattern:Error-Offline": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Button"
+        ]
+      },
+      "pattern:Error-RateLimited": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-BrowserUnsupported": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Icon",
+          "Button"
+        ]
+      },
+      "pattern:Error-ComingSoon": {
+        "status": "done",
+        "dependsOn": [
+          "Empty",
+          "Button"
+        ]
+      },
+      "pattern:Onboarding-WelcomeScreens": {
+        "status": "done",
+        "dependsOn": [
+          "Card",
+          "Stepper",
+          "Button",
+          "Icon"
+        ]
+      },
+      "pattern:Onboarding-ProductTour": {
+        "status": "done",
+        "dependsOn": [
+          "Button",
+          "Popover"
+        ]
+      },
+      "pattern:Onboarding-Checklist": {
+        "status": "done",
+        "dependsOn": [
+          "Card",
+          "Checkbox",
+          "Progress"
+        ]
+      },
+      "pattern:Nav-Header": {
+        "status": "done",
+        "dependsOn": [
+          "NavigationMenu",
+          "Button",
+          "Icon"
+        ]
+      },
+      "pattern:Nav-MegaMenu": {
+        "status": "done",
+        "dependsOn": [
+          "NavigationMenu",
+          "Item",
+          "Icon",
+          "Typography"
+        ]
+      },
+      "pattern:Nav-SidebarApp": {
+        "status": "done",
+        "dependsOn": [
+          "Sidebar",
+          "Item",
+          "Avatar",
+          "Icon"
+        ]
+      },
+      "pattern:Nav-MobileDrawer": {
+        "status": "done",
+        "dependsOn": [
+          "Drawer",
+          "Item",
+          "Icon",
+          "Avatar"
+        ]
+      },
+      "pattern:Nav-BottomMobile": {
+        "status": "done",
+        "dependsOn": [
+          "Item",
+          "Icon",
+          "Badge"
+        ]
+      },
+      "pattern:Footer-Mega": {
+        "status": "done",
+        "dependsOn": [
+          "Item",
+          "Typography"
+        ]
+      },
+      "pattern:BackToTop": {
+        "status": "done",
+        "dependsOn": [
+          "Button",
+          "Icon"
+        ]
+      },
+      "pattern:Chatbot": {
+        "status": "done",
+        "dependsOn": [
+          "Drawer",
+          "Input",
+          "Item"
+        ]
+      },
+      "pattern:Search-CommandPalette": {
+        "status": "done",
+        "dependsOn": [
+          "Command",
+          "Button",
+          "Icon",
+          "Kbd"
+        ]
+      },
+      "pattern:Search-Results": {
+        "status": "done",
+        "dependsOn": [
+          "Item",
+          "Empty",
+          "Icon"
+        ]
+      },
+      "pattern:Search-FacetedFilters": {
+        "status": "done",
+        "dependsOn": [
+          "Checkbox",
+          "Slider",
+          "Button"
+        ]
+      },
+      "pattern:NotificationCenter": {
+        "status": "done",
+        "dependsOn": [
+          "Sheet",
+          "Item",
+          "Badge",
+          "Avatar",
+          "Empty"
+        ]
+      },
+      "pattern:ActivityFeed": {
+        "status": "done",
+        "dependsOn": [
+          "Avatar",
+          "Card",
+          "Typography",
+          "Empty"
+        ]
+      },
+      "pattern:Form-WithSteps": {
+        "status": "done",
+        "dependsOn": [
+          "Stepper",
+          "Field",
+          "Button",
+          "Card"
+        ]
+      },
+      "pattern:Form-FileUpload": {
+        "status": "done",
+        "dependsOn": [
+          "FileUpload",
+          "Field"
+        ]
+      },
+      "pattern:Form-AddressAutocomplete": {
+        "status": "done",
+        "dependsOn": [
+          "Popover",
+          "Input",
+          "Field"
+        ]
+      },
+      "pattern:Form-PhoneInput": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Field"
+        ]
+      },
+      "pattern:Form-TagInput": {
+        "status": "done",
+        "dependsOn": [
+          "Input",
+          "Field"
+        ]
+      },
+      "pattern:Form-Signature": {
+        "status": "done",
+        "dependsOn": [
+          "Card",
+          "Button"
+        ]
+      },
+      "pattern:Form-ColorPicker": {
+        "status": "done",
+        "dependsOn": [
+          "Popover",
+          "Field",
+          "Input",
+          "Button"
+        ]
+      },
+      "pattern:Form-DateRange": {
+        "status": "done",
+        "dependsOn": [
+          "DatePicker",
+          "Field"
+        ]
+      },
+      "pattern:RGPD-CookieBanner": {
+        "status": "done",
+        "dependsOn": [
+          "Dialog",
+          "Button"
+        ]
+      },
+      "pattern:RGPD-PreferencesCenter": {
+        "status": "done",
+        "dependsOn": [
+          "Dialog",
+          "Switch",
+          "Button"
+        ]
+      },
+      "pattern:RGPD-DataExport": {
+        "status": "done",
+        "dependsOn": [
+          "Card",
+          "Button",
+          "Icon"
+        ]
+      },
+      "pattern:KeyboardShortcutsOverlay": {
+        "status": "done",
+        "dependsOn": [
+          "Dialog",
+          "Kbd",
+          "Typography",
+          "Button"
+        ]
+      },
+      "pattern:DangerZone": {
+        "status": "done",
+        "dependsOn": [
+          "Card",
+          "Button",
+          "Input",
+          "Label"
+        ]
+      },
+      "pattern:ThemeSwitcher": {
+        "status": "done",
+        "dependsOn": [
+          "ToggleGroup",
+          "Toggle"
+        ]
+      },
+      "pattern:DensitySwitcher": {
+        "status": "done",
+        "dependsOn": [
+          "ToggleGroup",
+          "Toggle"
+        ]
+      },
+      "pattern:LangSwitcher": {
+        "status": "done",
+        "dependsOn": [
+          "DropdownMenu",
+          "Button",
+          "Icon",
+          "Item"
+        ]
+      },
+      "pattern:RolesMatrix": {
+        "status": "done",
+        "dependsOn": [
+          "Table",
+          "Combobox",
+          "Badge",
+          "Card",
+          "Typography",
+          "Button"
+        ]
+      }
+    }
+  },
+  "thirdPartyLibs": {
+    "table:Tabulator": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "table:Grid.js": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "select:TomSelect": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "datepicker:Flatpickr": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "colorpicker:Pickr": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "colorpicker:Coloris": {
+      "decision": "chosen",
+      "ring": 3,
+      "note": "Form-ColorPicker — lazy-load on first popover:open per ADR-0025 (9e cascade after ADR-0011/0012/0013/0018/0020/0022/0023/0024). @melloware/coloris ^0.x — theme-aware via CSS vars, HSV/HSL/RGB/HEX modes, alpha opt-in, preset palette."
+    },
+    "fileupload:FilePond": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "richtext:TipTap": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "markdown:EasyMDE": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "code:CodeMirror6": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "drag:SortableJS": {
+      "decision": "chosen",
+      "ring": 4,
+      "note": "PM-Board / PM-Backlog — lazy-load on mount per ADR-0045 (10e lazy adapter cascade after ADR-0011/0012/0013/0018/0020/0022/0023/0024/0025). sortablejs ^1.15.0 — vanilla JS no deps, touch + mouse + pointer events normalized, cross-list drag (kanban via group config), drag handle opt-in (.theme-sortable-handle), animation honors prefers-reduced-motion. Keyboard reorder accommodation (Space + Arrow keys + Escape) wired sync per kit doctrine."
+    },
+    "tags:Tagify": {
+      "decision": "chosen",
+      "ring": 3,
+      "note": "Form-TagInput — lazy-load on mount per ADR-0023 (7e cascade). @yaireo/tagify ^4.x — chip render + paste-multi + backspace-pop + optional whitelist autocomplete + RTL-safe. Plurals via Intl.PluralRules per 15-i18n-and-rtl §Plurals."
+    },
+    "phone:intl-tel-input": {
+      "decision": "chosen",
+      "ring": 3,
+      "note": "Form-PhoneInput — lazy-load on first focus per ADR-0022 (6e cascade ; mirror ADR-0018 first-keystroke variant verbatim). intl-tel-input ^25.x — country picker + flags + 245-country metadata + format-as-you-type per libphonenumber + RTL-safe flag rendering. Largest lazy chunk of S3.3a-2 (~25 kB)."
+    },
+    "mask:IMask": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "slider:noUiSlider": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "signature:signature_pad": {
+      "decision": "chosen",
+      "ring": 3,
+      "note": "Form-Signature — lazy-load on first pointerdown per ADR-0024 (8e cascade ; 2nd use of lazy-on-first-interaction variant after zxcvbn). signature_pad ^5.x — smooth Bezier curves out of the box, pointer events normalized (mouse/touch/stylus), base64 PNG export."
+    },
+    "fuzzy:FuseJS": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "highlight:Markjs": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "image:Cropperjs": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "lightbox:PhotoSwipe": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "video:Plyr": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "audio:Howler": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "pdf:PDFjs": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "calendar:FullCalendar": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "gantt:frappe-gantt": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "charts:ApexCharts": {
+      "decision": "candidate-default",
+      "ring": 2
+    },
+    "charts:ECharts": {
+      "decision": "candidate-power",
+      "ring": 2
+    },
+    "heatmap:Cal-Heatmap": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "maps:Leaflet": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "diagram:Mermaid": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "counter:CountUpjs": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "tour:driverjs": {
+      "decision": "chosen",
+      "ring": 3,
+      "note": "Onboarding-ProductTour — lazy-load per ADR-0020 (5th adapter cascade after ADR-0011/0012/0013/0018). driver.js ^1.3.1."
+    },
+    "smoothscroll:Lenis": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "scroll:AOS": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "anim:GSAP": {
+      "decision": "candidate-power",
+      "ring": 3
+    },
+    "anim:MotionOne": {
+      "decision": "candidate-default",
+      "ring": 3
+    },
+    "anim:Lottie": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "anim:confetti": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "anim:Typed": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "anim:AutoAnimate": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "validation:JustValidate": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "validation:Pristine": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "validation:zxcvbn": {
+      "decision": "chosen",
+      "ring": 3,
+      "note": "Auth-PasswordStrength — lazy-load per ADR-0018 (mirror ADR-0011/0012/0013). @zxcvbn-ts/core ^3.0.4 + @zxcvbn-ts/language-en ^3.0.2."
+    },
+    "clipboard:clipboardjs": {
+      "decision": "candidate",
+      "ring": 2
+    },
+    "mentions:Tribute": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "highlightcode:Prism": {
+      "decision": "candidate-default",
+      "ring": 3
+    },
+    "highlightcode:highlightjs": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "markdown-parse:marked": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "diff:diff2html": {
+      "decision": "candidate",
+      "ring": 3
+    },
+    "gridlayout:Gridstack": {
+      "decision": "candidate",
+      "ring": 4
+    },
+    "search-on-keys:ninja-keys": {
+      "decision": "rejected",
+      "ring": 2,
+      "note": "custom Command palette built on Stimulus is preferred for theme cohesion"
+    },
+    "i18n:dayjs": {
+      "decision": "candidate-default",
+      "ring": 0,
+      "note": "with locale plugins"
+    }
+  }
+}

@@ -1,0 +1,137 @@
+/*
+ * Tooltip — hover/focus-triggered descriptive popup.
+ *
+ * Visibility is CSS-only (no JS to flip a display flag); the controller
+ * just handles Esc dismiss + reset on focusout. The 400 ms show delay
+ * (anti-flash on accidental hover) is `transition-delay: 400ms` ON THE
+ * HOVER/FOCUS rule only — the default rule has `transition-delay: 0`
+ * so hide is snappy (no delay-out).
+ *
+ * 4 placements via `data-placement` on the tooltip span:
+ *   top    (default) — above the trigger, anchored center
+ *   bottom           — below the trigger
+ *   start            — to the inline-start of the trigger (visually left in LTR)
+ *   end              — to the inline-end of the trigger (visually right in LTR)
+ *
+ * The caller ensures the viewport edge doesn't clip the tooltip — the
+ * kit's CSS-only approach (OQ-14) doesn't do JS edge-detection. For
+ * collision detection + portaling, see Ring 2 Popover Compound.
+ *
+ * The aria-describedby contract: the trigger inside the wrap carries
+ * `aria-describedby="<tooltip-id>"`. SR users hear the tooltip text on
+ * focus regardless of the visible state (the description is part of the
+ * accessible tree; the visual delay-in is just for sighted users).
+ *
+ * Esc dismiss (controller): when Esc fires inside the wrap, the controller
+ * stamps `data-state="dismissed"` on the wrapper. The CSS rule below
+ * suppresses the tooltip while dismissed. The state is cleared on
+ * focusout from the wrap, so the next focus session re-arms the tooltip.
+ */
+
+.theme-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.theme-tooltip {
+  /* Hidden by default. Position: absolute relative to the wrap. */
+  position: absolute;
+  z-index: var(--z-tooltip);
+  inline-size: max-content;
+  max-inline-size: 280px;
+  padding-block: var(--spacing-1_5);
+  padding-inline: var(--spacing-2);
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-elevated);
+  border-radius: var(--radius-sm);
+  font: var(--typography-caption);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition:
+    opacity var(--motion-duration-base) var(--motion-easing-emphasized),
+    transform var(--motion-duration-base) var(--motion-easing-emphasized),
+    visibility 0s linear var(--motion-duration-base);
+  transition-delay: 0ms;
+}
+
+/* Show on hover or focus-within (caller's trigger is inside the wrap) —
+   transition-delay: 400 ms makes the show feel intentional (anti-flash
+   on accidental mouseover; matches 14-motion-baseline §1 Tooltip pattern). */
+.theme-tooltip-wrap:hover .theme-tooltip,
+.theme-tooltip-wrap:focus-within .theme-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition-delay: 400ms;
+  transition-property: opacity, transform;
+}
+
+/* Esc dismiss — controller stamps data-state="dismissed" on the wrap. */
+.theme-tooltip-wrap[data-state="dismissed"] .theme-tooltip,
+.theme-tooltip-wrap[data-state="dismissed"]:hover .theme-tooltip,
+.theme-tooltip-wrap[data-state="dismissed"]:focus-within .theme-tooltip {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.95) !important;
+  transition-delay: 0ms !important;
+}
+
+/* ----- placements -------------------------------------------------- */
+
+.theme-tooltip[data-placement="top"] {
+  inset-block-end: calc(100% + var(--spacing-2));
+  inset-inline-start: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+
+.theme-tooltip-wrap:hover .theme-tooltip[data-placement="top"],
+.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="top"] {
+  transform: translateX(-50%) scale(1);
+}
+
+.theme-tooltip[data-placement="bottom"] {
+  inset-block-start: calc(100% + var(--spacing-2));
+  inset-inline-start: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+
+.theme-tooltip-wrap:hover .theme-tooltip[data-placement="bottom"],
+.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="bottom"] {
+  transform: translateX(-50%) scale(1);
+}
+
+.theme-tooltip[data-placement="start"] {
+  inset-inline-end: calc(100% + var(--spacing-2));
+  inset-block-start: 50%;
+  transform: translateY(-50%) scale(0.95);
+}
+
+.theme-tooltip-wrap:hover .theme-tooltip[data-placement="start"],
+.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="start"] {
+  transform: translateY(-50%) scale(1);
+}
+
+.theme-tooltip[data-placement="end"] {
+  inset-inline-start: calc(100% + var(--spacing-2));
+  inset-block-start: 50%;
+  transform: translateY(-50%) scale(0.95);
+}
+
+.theme-tooltip-wrap:hover .theme-tooltip[data-placement="end"],
+.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="end"] {
+  transform: translateY(-50%) scale(1);
+}
+
+/* ----- dark mode --------------------------------------------------- */
+
+[data-theme="dark"] .theme-tooltip {
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+}

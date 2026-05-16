@@ -1,0 +1,51 @@
+/*
+ * KeyboardShortcutsOverlay — full-screen shortcuts modal (Ring 3 S3.3b-1).
+ *
+ * Pure composition : Dialog Ring 2 + Kbd Ring 1. Marker class adds grid
+ * layout for sections + per-row description/chord alignment. NO controller.
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
+ */
+
+.theme-keyboard-shortcuts-overlay__sections {
+  display: grid;
+  gap: var(--spacing-5);
+}
+
+.theme-keyboard-shortcuts-overlay__section {
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+.theme-keyboard-shortcuts-overlay__section-title {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.theme-keyboard-shortcuts-overlay__list {
+  display: grid;
+  gap: var(--spacing-1_5);
+  margin: 0;
+}
+
+.theme-keyboard-shortcuts-overlay__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding-block: var(--spacing-1);
+}
+
+.theme-keyboard-shortcuts-overlay__description {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.theme-keyboard-shortcuts-overlay__chord {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.theme-keyboard-shortcuts-overlay__footer-hint {
+  margin: 0;
+}

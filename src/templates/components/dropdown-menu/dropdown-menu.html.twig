@@ -1,0 +1,77 @@
+{#-
+  DropdownMenu — Popover-positioned menu of Items.
+
+  Composes `Popover` (open/close + Floating UI positioning + Esc/click-
+  outside dismiss) and the `dropdown-menu` controller (role="menu" +
+  role="menuitem" + roving tabindex + Arrow nav + Enter/Space activation
+  + close-on-item-click) on the SAME wrap element.
+
+  WAI-ARIA APG "Menu Button" pattern, fully covered:
+    - Trigger: button with `aria-haspopup="menu"` + `aria-expanded` + `aria-controls="<htmlId>"`
+    - Menu container: `role="menu"` + `aria-labelledby="<trigger-id>"` (consumer-stamped)
+    - Items: `role="menuitem"` + roving tabindex (controller-stamped)
+    - Keyboard: Arrow Up/Down (cyclic), Home/End, Enter/Space activate, Esc closes
+
+  Per S1.4b descriptor-binding gotcha: the `data-action` is on the wrap.
+  Stimulus action descriptors fire on bubble — clicks on inner items
+  bubble to the wrap where dropdown-menu's `onItemClick` handler runs
+  AFTER the consumer's data-action on the item itself.
+
+  Parameters:
+    htmlId         (string, optional)  — auto-generated. Stamped on the
+                                         menu content element for
+                                         aria-controls chaining.
+    placement      (string, optional)  — bottom (default) | top | start | end
+    offset         (int,    optional)  — gap from trigger in px (default 8)
+    className      (string, optional)  — extra classes on the wrapper.
+    closeOnItemClick (bool, optional) — default true; false omits the close-on-item-click action descriptor (ADR-0060).
+
+  Blocks:
+    trigger (required) — the menu button. Consumer stamps `aria-haspopup="menu"`,
+                         `aria-expanded` (false), `aria-controls="{{ popoverHtmlId }}"`,
+                         and `data-popover-target="trigger"`. The variable
+                         `popoverHtmlId` is exposed inside the block.
+    items   (required) — the N Item.html.twig embeds (with `as: 'div'`) and
+                         optional `<hr class="theme-dropdown-menu__separator">`
+                         dividers + `<div class="theme-dropdown-menu__group-label">`
+                         labels. The controller stamps role="menuitem" + tabindex
+                         on each `.theme-item` automatically.
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-dropdown-menu-' ~ random()) -%}
+{%- set placement = placement | default('bottom') -%}
+{%- set offset    = offset    | default(8) -%}
+{%- set className = className | default('') -%}
+{%- set closeOnItemClick = closeOnItemClick | default(true) -%}
+{%- set attrs            = attrs            | default({}) -%}
+{%- set controllerExtras = controllerExtras | default('') -%}
+{%- set contentClass     = contentClass     | default('') -%}
+
+{%- set _classes = ['theme-popover', 'theme-dropdown-menu'] -%}
+{%- if className %}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set popoverHtmlId = htmlId -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="popover dropdown-menu{% if controllerExtras %} {{ controllerExtras }}{% endif %}"
+  data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown{% if closeOnItemClick %} click->dropdown-menu#onItemClick{% endif %}"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="{{ offset }}"
+  data-popover-open-value="false"
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {%- block trigger -%}{%- endblock -%}
+
+  <div
+    id="{{ htmlId }}"
+    class="theme-popover__content theme-dropdown-menu__content{% if contentClass %} {{ contentClass }}{% endif %}"
+    data-popover-target="content"
+    data-state="closed"
+    data-placement="{{ placement }}"
+    role="menu"
+    hidden
+  >
+    {%- block items -%}{%- endblock -%}
+  </div>
+</div>

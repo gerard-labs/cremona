@@ -1,0 +1,96 @@
+{#-
+  RadioGroup — N native <input type="radio"> sharing the same `name=`, wrapped
+  in a <fieldset><legend>. Arrow Up/Down + Left/Right navigation between radios
+  is 100 % browser-managed; Tab cycles in/out as a single stop.
+
+  Zero Stimulus controller — the native HTML radio group is keyboard-complete.
+
+  Composition with Field: deferred to a future Ring 2 `RadioField` primitive.
+  In Ring 1, the standalone <fieldset><legend> usage is the canonical path —
+  putting RadioGroup inside Field would create a double-labelling tension
+  (Field's <label for> vs <legend>) that's cleaner to solve via a dedicated
+  compound (RadioField composes Label + RadioGroup with proper aria-labelledby).
+
+  Parameters:
+    name           (string, required)  — shared `name` on all inputs
+    legend         (string, required)  — visible <legend> text, already |trans'd
+    options        (array,  required)  — N items: { value, label, checked, disabled, description }
+    size           (string, optional)  — sm (default — body 14 px) | md (body 16 px)
+    orientation    (string, optional)  — vertical (default) | horizontal
+    required       (bool,   optional)  — adds * to legend; HTML `required` on every radio
+    disabled       (bool,   optional)  — disables every radio
+    invalid          (bool,   optional)  — sets aria-invalid="true" on every radio + danger border
+    describedBy      (string, optional)  — space-separated ids for aria-describedby on EACH radio
+    hideLegend       (bool,   optional)  — visually hide the legend (sr-only); keep accessible name
+    requiredAriaText (string, optional)  — already-translated SR-only marker; defaults to FR "obligatoire"
+    className        (string, optional)
+-#}
+
+{%- set name             = name             | default('') -%}
+{%- set legend           = legend           | default('') -%}
+{%- set options          = options          | default([]) -%}
+{%- set size             = size             | default('sm') -%}
+{%- set orientation      = orientation      | default('vertical') -%}
+{%- set required         = required         | default(false) -%}
+{%- set disabled         = disabled         | default(false) -%}
+{%- set invalid          = invalid          | default(false) -%}
+{%- set describedBy      = describedBy      | default(null) -%}
+{%- set hideLegend       = hideLegend       | default(false) -%}
+{%- set requiredAriaText = requiredAriaText | default('obligatoire') -%}
+{%- set className        = className        | default('') -%}
+
+{%- set _classes = ['theme-radiogroup'] -%}
+{%- if invalid  -%}{%- set _classes = _classes | merge(['theme-radiogroup--invalid']) -%}{%- endif -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['theme-radiogroup--disabled']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<fieldset
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  data-orientation="{{ orientation }}"
+  {%- if disabled %} disabled{% endif -%}
+>
+  <legend class="theme-radiogroup__legend{% if hideLegend %} theme-sr-only{% endif %}">
+    {{ legend }}
+    {%- if required and not hideLegend -%}
+      <span class="theme-radiogroup__required" aria-hidden="true">*</span>
+      <span class="theme-sr-only">{{ requiredAriaText }}</span>
+    {%- endif -%}
+  </legend>
+
+  <div class="theme-radiogroup__items" role="presentation">
+    {%- for option in options -%}
+      {%- set _optChecked  = option.checked | default(false) -%}
+      {%- set _optDisabled = option.disabled | default(false) -%}
+      {%- set _optDesc     = option.description | default(null) -%}
+      {%- set _optId       = option.htmlId | default(name ~ '-' ~ loop.index) -%}
+      <label
+        class="theme-radio-row"
+        data-size="{{ size }}"
+        {%- if _optDisabled or disabled %} data-state="disabled"{% endif -%}
+      >
+        <span class="theme-radio" data-size="{{ size }}">
+          <input
+            type="radio"
+            class="theme-radio__input"
+            id="{{ _optId }}"
+            name="{{ name }}"
+            value="{{ option.value }}"
+            {%- if _optChecked %} checked{% endif -%}
+            {%- if required %} required aria-required="true"{% endif -%}
+            {%- if _optDisabled or disabled %} disabled{% endif -%}
+            {%- if invalid %} aria-invalid="true"{% endif -%}
+            {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+          >
+          <span class="theme-radio__box" aria-hidden="true"></span>
+        </span>
+        <span class="theme-radio-row__text">
+          <span class="theme-radio-row__label">{{ option.label }}</span>
+          {%- if _optDesc -%}
+            <span class="theme-radio-row__description">{{ _optDesc }}</span>
+          {%- endif -%}
+        </span>
+      </label>
+    {%- endfor -%}
+  </div>
+</fieldset>

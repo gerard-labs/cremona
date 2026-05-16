@@ -1,0 +1,231 @@
+/*
+ * Command — ⌘K Command palette (Ring 2 S2.9 heavyweight).
+ *
+ * Per OQ-47 (sealed S2.9) :
+ *  - Vanilla custom (no ninja-keys per manifest reject).
+ *  - Cross-controller compose via data-controller="dialog combobox command"
+ *    on the SAME wrap (mirror DatePicker S2.7 pattern verbatim).
+ *
+ * Anatomy :
+ *   <div class="theme-command" data-controller="dialog combobox command">
+ *     <dialog class="theme-command__dialog">    \3c !-- native <dialog> -->
+ *       <h2 class="theme-command__sr-only">...</h2>
+ *       <div class="theme-command__input-wrap">
+ *         <span class="theme-command__search-icon">
+ *         <input class="theme-command__input theme-input">
+ *         <kbd class="theme-command__esc-hint theme-kbd">Esc</kbd>
+ *       </div>
+ *       <ul class="theme-command__listbox" role="listbox">
+ *         <li class="theme-command__group-header" role="presentation">
+ *         <li class="theme-command__option" role="option">
+ *       </ul>
+ *       <div class="theme-command__empty">
+ *       <footer class="theme-command__footer">
+ *
+ * Most styling is inherited from Dialog + Combobox composed CSS. This file
+ * adds only the Command-specific surface (search icon, group headers, Kbd
+ * footer hints).
+ */
+
+.theme-command {
+  /* The wrap is just a marker — the actual surface is the native <dialog>. */
+}
+
+.theme-command__dialog {
+  /* The dialog inherits theme-dialog.css base styles. We tighten layout :
+     fixed width, top-anchored, larger padding for the input area. */
+  inline-size: min(640px, calc(100% - var(--spacing-8)));
+  max-inline-size: 640px;
+  padding: 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-elevated);
+  box-shadow: var(--shadow-dialog);
+  border: 1px solid var(--color-border-default);
+  /* Native <dialog> with `showModal()` is auto-centered ; we top-anchor by
+     overriding the top inset. */
+  margin-block: 10vh auto;
+}
+
+.theme-command__sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Input row : search icon (inline-start) + input + Esc hint (inline-end). */
+.theme-command__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-inline: var(--spacing-4);
+  padding-block: var(--spacing-3);
+  border-block-end: 1px solid var(--color-border-subtle);
+}
+
+.theme-command__search-icon {
+  flex-shrink: 0;
+  inline-size: 20px;
+  block-size: 20px;
+  background-color: var(--color-text-tertiary);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 20px;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>');
+}
+
+.theme-command__input {
+  flex-grow: 1;
+  inline-size: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+  padding: 0;
+  font: var(--typography-body-lg);
+  color: var(--color-text-primary);
+}
+
+.theme-command__input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.theme-command__esc-hint {
+  flex-shrink: 0;
+  /* Decorative — the user can press Esc anywhere. */
+}
+
+/* Listbox : ul with options + group headers. Scrollable. */
+.theme-command__listbox {
+  list-style: none;
+  margin: 0;
+  padding-block: var(--spacing-2);
+  padding-inline: 0;
+  max-block-size: 50vh;
+  overflow-y: auto;
+}
+
+.theme-command__group-header {
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-4);
+  font: var(--typography-overline);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.theme-command__option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-4);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-command__option:hover,
+.theme-command__option[data-active="true"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}
+
+.theme-command__option[aria-selected="true"] {
+  /* Selected past-tense (after Enter or click) — typically the dialog closes
+     immediately, but if it doesn't (consumer-extended), the selection shows. */
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-soft-foreground);
+}
+
+.theme-command__option-icon {
+  flex-shrink: 0;
+  inline-size: 18px;
+  block-size: 18px;
+  color: var(--color-text-tertiary);
+}
+
+.theme-command__option .theme-item__label {
+  flex-grow: 1;
+}
+
+.theme-command__option-kbd {
+  flex-shrink: 0;
+  /* Kbd primitive auto-styles ; just align to inline-end. */
+  margin-inline-start: auto;
+}
+
+/* Empty state — visible when filter produces 0 results. */
+.theme-command__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-block: var(--spacing-8);
+  padding-inline: var(--spacing-4);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.theme-command__empty-title {
+  font: var(--typography-h3);
+  color: var(--color-text-primary);
+}
+
+.theme-command__empty-query,
+.theme-command__empty-body {
+  font: var(--typography-body);
+}
+
+.theme-command__empty-query strong {
+  color: var(--color-text-primary);
+}
+
+/* Footer : Kbd hint cluster (Navigate / Execute / Dismiss). */
+.theme-command__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-4);
+  border-block-start: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-sunken);
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+}
+
+.theme-command__footer-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.theme-command__footer-label {
+  /* Sits next to the Kbd primitive(s). */
+}
+
+/* Reduced motion : disable transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .theme-command__option {
+    transition: none;
+  }
+}
+
+/* Mobile : the dialog fills the viewport width-1, top-anchored. */
+@media (width <= 640px) {
+  .theme-command__dialog {
+    inline-size: calc(100% - var(--spacing-4));
+    margin-block-start: var(--spacing-4);
+  }
+
+  .theme-command__listbox {
+    max-block-size: 70vh;
+  }
+}

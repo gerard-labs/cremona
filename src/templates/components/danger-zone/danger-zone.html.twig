@@ -1,0 +1,114 @@
+{#-
+  DangerZone — destructive-action affordance (Ring 3 S3.3b-1).
+
+  Card variant=elevated + destructive Button. 2 confirmation variants
+  per OQ-NEW S3.3b-1 user resolution :
+
+    variant='inline' — typed-confirmation text input. Consumer-provided
+      `expectedConfirmation` string ; user must type it (exact match by
+      default) before the destructive Button enables. NEW `danger-zone`
+      controller (~55 lines) handles the input/button match logic +
+      dispatches `danger-zone:match-change` event.
+
+    variant='modal' — pure composition NO controller. Consumer wires
+      `data-action="click->dialog#open"` on the destructive Button to an
+      AlertDialog Ring 2 they ship separately. The AlertDialog handles
+      confirmation policy (closeOnEscape=false + closeOnBackdropClick=false
+      per cohérence-microcopy §"Confirmations").
+
+  Single manifest entry `pattern:DangerZone`. Spec §4 documents both
+  variants ; .story.vue covers both sections.
+
+  Parameters:
+    htmlId                 (string, optional)
+    title                  (string, required)              # e.g. "Zone dangereuse"
+    description            (string, required)              # what will be deleted, irreversibility note
+    variant                (string, optional, default 'inline')   # inline | modal
+    buttonLabel            (string, required)              # e.g. "Supprimer le compte définitivement"
+    buttonAriaLabel        (string, optional)
+    expectedConfirmation   (string, optional)              # required if variant='inline'
+    inputPlaceholder       (string, optional)              # if variant='inline'
+    inputHelp              (string, optional)              # if variant='inline'
+    matchMode              (string, optional, default 'exact')   # exact | case-insensitive
+    modalDialogId          (string, optional)              # if variant='modal' — the dialog's htmlId
+-#}
+
+{%- set htmlId               = htmlId               | default('theme-danger-zone-' ~ random()) -%}
+{%- set variant              = variant              | default('inline') -%}
+{%- set buttonAriaLabel      = buttonAriaLabel      | default(null) -%}
+{%- set expectedConfirmation = expectedConfirmation | default(null) -%}
+{%- set inputPlaceholder     = inputPlaceholder     | default('theme.danger-zone.input.placeholder'|trans) -%}
+{%- set inputHelp            = inputHelp            | default(null) -%}
+{%- set matchMode            = matchMode            | default('exact') -%}
+{%- set modalDialogId        = modalDialogId        | default(null) -%}
+
+{%- set _dzVariant = variant -%}
+
+{%- set _cardAttrs = { 'data-danger-zone-variant': _dzVariant } -%}
+{%- if _dzVariant == 'inline' -%}
+  {%- set _cardAttrs = _cardAttrs | merge({
+    'data-controller': 'danger-zone',
+    'data-danger-zone-expected-value': expectedConfirmation,
+    'data-danger-zone-match-mode-value': matchMode,
+    'data-danger-zone-state': 'idle',
+  }) -%}
+{%- endif -%}
+
+{%- set _ctaAttrs = {} -%}
+{%- if _dzVariant == 'inline' -%}
+  {%- set _ctaAttrs = { 'data-danger-zone-target': 'button', 'aria-disabled': 'true' } -%}
+{%- elseif modalDialogId -%}
+  {%- set _ctaAttrs = { 'data-action': 'click->dialog#open', 'aria-controls': modalDialogId } -%}
+{%- endif -%}
+
+{% embed '@theme/components/card/card.html.twig' with {
+  variant: 'elevated',
+  htmlId: htmlId,
+  className: 'theme-danger-zone',
+  headerClass: 'theme-danger-zone__header',
+  bodyClass: 'theme-danger-zone__body',
+  footerClass: 'theme-danger-zone__footer',
+  attrs: _cardAttrs,
+} %}
+  {% block header %}
+    {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: title, className: 'theme-danger-zone__title' } only %}
+  {% endblock %}
+
+  {% block body %}
+    {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'body', color: 'secondary', content: description } only %}
+
+    {%- if _dzVariant == 'inline' -%}
+      {%- if expectedConfirmation is empty -%}
+        {# safety guardrail : inline variant requires an expectedConfirmation #}
+        {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'danger', content: 'theme.danger-zone.error.missing-expected'|trans, className: 'theme-danger-zone__error' } only %}
+      {%- else -%}
+        <div class="theme-danger-zone__confirmation">
+          {% include '@theme/components/label/label.html.twig' with { htmlFor: htmlId ~ '-input', content: 'theme.danger-zone.input.label'|trans({ expected: expectedConfirmation }) } only %}
+          {% include '@theme/components/input/input.html.twig' with {
+            type: 'text',
+            htmlId: htmlId ~ '-input',
+            placeholder: inputPlaceholder,
+            autocomplete: 'off',
+            spellcheck: 'false',
+            describedBy: htmlId ~ '-help',
+            className: 'theme-danger-zone__input',
+            attrs: { 'data-danger-zone-target': 'input' },
+          } only %}
+          {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'tertiary', content: inputHelp | default('theme.danger-zone.input.help'|trans({ expected: expectedConfirmation })), htmlId: htmlId ~ '-help', className: 'theme-danger-zone__help' } only %}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  {% endblock %}
+
+  {% block footer %}
+    {% include '@theme/components/button/button.html.twig' with {
+      label: buttonLabel,
+      variant: 'destructive',
+      size: 'md',
+      disabled: _dzVariant == 'inline',
+      ariaLabel: buttonAriaLabel,
+      className: 'theme-danger-zone__cta',
+      attrs: _ctaAttrs,
+    } only %}
+  {% endblock %}
+{% endembed %}

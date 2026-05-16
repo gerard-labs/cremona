@@ -1,0 +1,120 @@
+{#-
+  Search-FacetedFilters — facet filter panel (Ring 3 S3.3b-2).
+
+  Composes Checkbox Ring 1 (multi-select facets) + optional Slider Ring 1
+  (range facets). Controller `faceted-filters` (16th Ring 3, thin) aggregates
+  input changes into a single state object and dispatches
+  `faceted-filters:change` with the full state.
+
+  The consumer provides the facet groups via the `groups` array. Each group :
+    - { key: 'categories', label: 'Catégories', kind: 'checkbox',
+        options: [{ value: 'electronics', label: 'Electronics', count: 42, checked: false }] }
+    - { key: 'priceRange', label: 'Prix', kind: 'range',
+        min: 0, max: 1000, valueMin: 10, valueMax: 200, step: 10 }
+
+  Layout : sidebar by default. Mobile pattern (filter chips opening popovers)
+  is consumer composition — wrap each group in a Popover Ring 2 trigger
+  externally.
+
+  Parameters:
+    htmlId          (string, optional)
+    title           (string, optional, default 'Filtres')
+    groups          (array,  required)  — see above shape
+    showClear       (bool, optional, default true) — render Clear button
+    clearLabel      (string, optional, default 'Effacer les filtres')
+-#}
+
+{%- set htmlId      = htmlId      | default('theme-faceted-filters-' ~ random()) -%}
+{%- set title       = title       | default('theme.search-faceted-filters.title'|trans) -%}
+{%- set groups      = groups      | default([]) -%}
+{%- set showClear   = showClear   ?? true -%}
+{%- set clearLabel  = clearLabel  | default('theme.search-faceted-filters.clear'|trans) -%}
+
+<aside class="theme-search-faceted-filters"
+       id="{{ htmlId }}"
+       data-controller="faceted-filters"
+       data-faceted-filters-mode-value="multi"
+       aria-labelledby="{{ htmlId }}-title">
+
+  <header class="theme-search-faceted-filters__header">
+    <h2 id="{{ htmlId }}-title" class="theme-search-faceted-filters__title">{{ title }}</h2>
+    {% if showClear %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: clearLabel,
+        variant: 'ghost',
+        size: 'sm',
+        className: 'theme-search-faceted-filters__clear',
+        attrs: { 'data-action': 'click->faceted-filters#clear' },
+      } only %}
+    {% endif %}
+  </header>
+
+  {% for group in groups %}
+    <fieldset class="theme-search-faceted-filters__group" data-group-key="{{ group.key }}">
+      <legend class="theme-search-faceted-filters__group-title">{{ group.label }}</legend>
+
+      {% if group.kind == 'checkbox' %}
+        <ul class="theme-search-faceted-filters__options" role="list">
+          {% for option in group.options %}
+            {% set optionId = htmlId ~ '-' ~ group.key ~ '-' ~ option.value %}
+            <li class="theme-search-faceted-filters__option">
+              {% include '@theme/components/checkbox/checkbox.html.twig' with {
+                htmlId: optionId,
+                name: group.key,
+                value: option.value,
+                checked: option.checked | default(false),
+                label: option.label,
+              } only %}
+              {% if option.count is defined and option.count is not null %}
+                <span class="theme-search-faceted-filters__option-count" aria-hidden="true">
+                  {{ option.count }}
+                </span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+
+      {% elseif group.kind == 'range' %}
+        <div class="theme-search-faceted-filters__range">
+          {% include '@theme/components/slider/slider.html.twig' with {
+            htmlId: htmlId ~ '-' ~ group.key,
+            name: group.key,
+            min: group.min,
+            max: group.max,
+            step: group.step | default(1),
+            value: group.value | default(group.valueMin | default(group.min)),
+            ariaLabel: group.label,
+          } only %}
+          <div class="theme-search-faceted-filters__range-values">
+            <span>{{ group.formatValueMin | default(group.valueMin | default(group.min)) }}</span>
+            <span>{{ group.formatValueMax | default(group.valueMax | default(group.max)) }}</span>
+          </div>
+        </div>
+
+      {% elseif group.kind == 'radio' %}
+        <ul class="theme-search-faceted-filters__options" role="list">
+          {% for option in group.options %}
+            {% set optionId = htmlId ~ '-' ~ group.key ~ '-' ~ option.value %}
+            <li class="theme-search-faceted-filters__option">
+              <input type="radio"
+                     id="{{ optionId }}"
+                     name="{{ group.key }}"
+                     value="{{ option.value }}"
+                     class="theme-radio"
+                     {{ option.checked | default(false) ? 'checked' }} />
+              <label for="{{ optionId }}" class="theme-search-faceted-filters__option-label">
+                {{ option.label }}
+              </label>
+              {% if option.count is defined and option.count is not null %}
+                <span class="theme-search-faceted-filters__option-count" aria-hidden="true">
+                  {{ option.count }}
+                </span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </fieldset>
+  {% endfor %}
+
+</aside>

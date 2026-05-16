@@ -1,0 +1,36 @@
+{
+    "name": "gerard/theme",
+    "type": "symfony-bundle",
+    "description": "Universal tokenized UI kit (Tailwind v4 + Stimulus + Twig) — Symfony bridge minimal (Twig @theme namespace).",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.4",
+        "twig/twig": "^3.0",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-kernel": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gerard\\Theme\\Bridge\\Symfony\\": "Bridge/Symfony/src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.0.1-dev"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gerard\\Theme\\Bridge\\Symfony\\Tests\\": "Bridge/Symfony/tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}

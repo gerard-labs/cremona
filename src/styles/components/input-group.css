@@ -1,0 +1,163 @@
+/*
+ * InputGroup — flexbox row that stitches a prefix and/or suffix onto
+ * an Input, with collapsed borders between the segments and a single
+ * focus-within ring covering the whole group.
+ *
+ * Anatomy:
+ *   .theme-input-group
+ *     ├── .theme-input-group__prefix   (optional)
+ *     ├── .theme-input                  (the actual input — kept intact)
+ *     └── .theme-input-group__suffix   (optional)
+ *
+ * The group itself has no border. Each segment carries one half:
+ *   prefix: border-block, border-inline-start, no border-inline-end
+ *   input : full border (kit default), border-radius zeroed adjacent to a slot
+ *   suffix: border-block, border-inline-end, no border-inline-start
+ *
+ * Focus delegation is JS-driven (input-group_controller.js) — clicking a
+ * non-button affix focuses the inner input. The focus ring is owned by
+ * the group via :focus-within, NOT by the input — the input's individual
+ * :focus-visible ring is suppressed inside the group.
+ *
+ * RTL: every spacing / border is logical, so the layout flips naturally
+ * (prefix stays on the inline-start side regardless of direction).
+ */
+
+.theme-input-group {
+  display: flex;
+  align-items: stretch;
+  inline-size: 100%;
+  border-radius: var(--radius-input);
+}
+
+.theme-input-group__prefix,
+.theme-input-group__suffix {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding-inline: var(--spacing-3);
+  background-color: var(--color-bg-sunken);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-tertiary);
+  font: var(--typography-body);
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-input-group__prefix {
+  border-inline-end: 0;
+  border-start-start-radius: var(--radius-input);
+  border-end-start-radius: var(--radius-input);
+}
+
+.theme-input-group__suffix {
+  border-inline-start: 0;
+  border-start-end-radius: var(--radius-input);
+  border-end-end-radius: var(--radius-input);
+}
+
+/* Inner .theme-input — let the input flex-grow, collapse its corners and
+   inline borders adjacent to a slot. */
+.theme-input-group .theme-input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.theme-input-group:has(.theme-input-group__prefix) .theme-input {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-inline-start: 0;
+}
+
+.theme-input-group:has(.theme-input-group__suffix) .theme-input {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-inline-end: 0;
+}
+
+/* Focus management — the group owns the ring via :focus-within. The
+   input's individual :focus-visible ring (defined in input.css) is
+   suppressed when nested. */
+.theme-input-group .theme-input:focus-visible {
+  box-shadow: none;
+  /* Keep the border-color rule from input.css; the group rule below sets
+     the same color on prefix/suffix so the segments all match. */
+}
+
+.theme-input-group:focus-within {
+  box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
+}
+
+.theme-input-group:focus-within .theme-input,
+.theme-input-group:focus-within .theme-input-group__prefix,
+.theme-input-group:focus-within .theme-input-group__suffix {
+  border-color: var(--color-border-focus);
+}
+
+/* Invalid state — wrapper carries the modifier, segments propagate the
+   border color. The inner input still carries aria-invalid="true". */
+.theme-input-group--invalid .theme-input,
+.theme-input-group--invalid .theme-input-group__prefix,
+.theme-input-group--invalid .theme-input-group__suffix {
+  border-color: var(--color-danger);
+}
+
+.theme-input-group--invalid:focus-within {
+  box-shadow: 0 0 0 var(--ring-width) var(--color-danger);
+}
+
+/* Disabled state — group + segments dimmed; inner input still needs
+   `disabled` HTML attr from the consumer (the kit doesn't auto-disable
+   the input from the wrapper). */
+.theme-input-group--disabled .theme-input-group__prefix,
+.theme-input-group--disabled .theme-input-group__suffix {
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-disabled);
+}
+
+/* Size variants — sm/lg adjust prefix/suffix padding + the segments
+   inherit the Input's height naturally via align-items: stretch. */
+.theme-input-group[data-size="sm"] .theme-input-group__prefix,
+.theme-input-group[data-size="sm"] .theme-input-group__suffix {
+  padding-inline: var(--spacing-2);
+  font-size: var(--font-size-sm);
+}
+
+.theme-input-group[data-size="lg"] .theme-input-group__prefix,
+.theme-input-group[data-size="lg"] .theme-input-group__suffix {
+  padding-inline: var(--spacing-4);
+  font-size: var(--font-size-base);
+}
+
+/* When the affix is a button, give it pointer cursor and a hover ramp. */
+.theme-input-group__prefix button,
+.theme-input-group__suffix button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Inherit colors so the button doesn't override the affix styling unless
+     explicitly themed elsewhere. */
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: var(--spacing-1);
+  margin: 0;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-input-group__prefix button:hover,
+.theme-input-group__suffix button:hover {
+  background-color: var(--color-hover-overlay);
+  color: var(--color-text-primary);
+}
+
+.theme-input-group__prefix button:focus-visible,
+.theme-input-group__suffix button:focus-visible {
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: var(--ring-offset-width);
+}

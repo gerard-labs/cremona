@@ -1,0 +1,76 @@
+{#-
+  ScrollArea — Custom-styled scrollable container.
+
+  Pure CSS. 0 Stimulus controller. The browser owns scroll behavior — we
+  only style the scrollbar. Preserves native momentum scroll on iOS / Android
+  (the kit's custom scrollbar styling via `::-webkit-scrollbar` +
+  `scrollbar-width: thin` + `scrollbar-color` is compatible with
+  `-webkit-overflow-scrolling: touch`).
+
+  Direction-aware: the browser flips scrollbar position natively in RTL via
+  `<html dir="rtl">` — no kit code needed. Logical CSS (`overflow-inline`,
+  `overflow-block`) provides the axis abstraction.
+
+  Per OQ-34 doctrine "natif d'abord" sealed S2.4 opening — no library
+  adapter (OverlayScrollbars / SimpleBar deferred to a future amend ADR if
+  cross-browser scrollbar styling drift surfaces).
+
+  Composes (no explicit deps): used as a wrap around any tall/wide content.
+  DataTable (S2.4b) will compose ScrollArea around its `<table>` when the
+  consumer's data exceeds the viewport's inline-size.
+
+  Parameters:
+    htmlId          (string,  optional) — auto-generated.
+    orientation     (string,  optional) — both (default) | vertical | horizontal.
+                                          Controls which axes can scroll.
+    size            (string,  optional) — sm (thin scrollbar 6 px) | md (default,
+                                          10 px) | lg (14 px). The visible
+                                          scrollbar width.
+    maxBlockSize    (string,  optional) — CSS value clamping the block-axis
+                                          (e.g. '320px', '60vh'). Required for
+                                          vertical scrolling to engage when
+                                          content overflows.
+    maxInlineSize   (string,  optional) — CSS value clamping the inline-axis.
+                                          Required for horizontal scrolling.
+    className       (string,  optional) — extra classes on the wrap.
+
+  Blocks:
+    body (required) — the scrollable content.
+
+  Usage:
+
+    {% embed '@theme/components/scroll-area/scroll-area.html.twig' with {
+      orientation: 'vertical',
+      maxBlockSize: '320px',
+      size: 'md',
+    } %}
+      {% block body %}
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. …</p>
+        … plenty of vertically-overflowing content …
+      {% endblock %}
+    {% endembed %}
+-#}
+
+{%- set htmlId        = htmlId        | default('theme-scroll-area-' ~ random()) -%}
+{%- set orientation   = orientation   | default('both') -%}
+{%- set size          = size          | default('md') -%}
+{%- set maxBlockSize  = maxBlockSize  | default(null) -%}
+{%- set maxInlineSize = maxInlineSize | default(null) -%}
+{%- set className     = className     | default('') -%}
+
+{%- set _classes = ['theme-scroll-area'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _style = '' -%}
+{%- if maxBlockSize -%}{%- set _style = _style ~ 'max-block-size:' ~ maxBlockSize ~ ';' -%}{%- endif -%}
+{%- if maxInlineSize -%}{%- set _style = _style ~ 'max-inline-size:' ~ maxInlineSize ~ ';' -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-orientation="{{ orientation }}"
+  data-size="{{ size }}"
+  {%- if _style %} style="{{ _style }}"{% endif -%}
+>
+  {%- block body -%}{%- endblock -%}
+</div>

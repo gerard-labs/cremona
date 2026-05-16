@@ -1,0 +1,86 @@
+{#-
+  Breadcrumb — navigation trail (you-are-here).
+
+  Renders a `<nav>` landmark containing an ordered list of items. Each item
+  is a link except the last one, which marks the current page via
+  `aria-current="page"` and renders as plain text (non-link).
+
+  Separators between items are inline Icons (chevron-right by default).
+  Chevron is in the kit's bidi-flip whitelist, so RTL flips it visually
+  without direction-specific CSS.
+
+  Overflow ellipsis (collapse middle items into a "…" menu) is explicitly
+  deferred to Ring 2. For Ring 1, the consumer caps the depth or wraps the
+  Breadcrumb in a horizontally-scrollable container.
+
+  Parameters:
+    items        (array,  required)  — list of items, each:
+                                         { label: 'Home',
+                                           href:  '/',           # optional — last item omits href
+                                           icon:  'home' }       # optional Lucide icon for the leading position
+    ariaLabel    (string, optional)  — `aria-label` on the <nav>. Defaults
+                                       to 'theme.breadcrumb.aria.nav' i18n key
+                                       (resolved by caller-side `|trans`).
+                                       Required when there are multiple navs
+                                       on the page (disambiguation).
+    separator    (string, optional)  — Lucide icon name for separators.
+                                       Default 'chevron-right' (auto-flips RTL).
+    className    (string, optional)  — extra utility classes on the <nav>.
+
+  No Stimulus controller — Breadcrumb is presentational. Native <a> handles
+  Tab + Enter activation.
+-#}
+
+{%- set items     = items     | default([]) -%}
+{%- set ariaLabel = ariaLabel | default(null) -%}
+{%- set separator = separator | default('chevron-right') -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-breadcrumb'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- if items|length > 0 -%}
+<nav
+  class="{{ _classes | join(' ') }}"
+  {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif %}
+>
+  <ol class="theme-breadcrumb__list">
+    {%- for item in items -%}
+      {%- set isLast = loop.last -%}
+      <li class="theme-breadcrumb__item">
+        {%- if isLast -%}
+          <span class="theme-breadcrumb__current" aria-current="page">
+            {%- if item.icon -%}
+              {% include '@theme/components/icon/icon.html.twig' with {
+                name: item.icon,
+                decorative: true,
+                size: 'sm',
+                className: 'theme-breadcrumb__icon',
+              } %}
+            {%- endif -%}
+            <span>{{ item.label }}</span>
+          </span>
+        {%- else -%}
+          <a class="theme-breadcrumb__link" href="{{ item.href }}">
+            {%- if item.icon -%}
+              {% include '@theme/components/icon/icon.html.twig' with {
+                name: item.icon,
+                decorative: true,
+                size: 'sm',
+                className: 'theme-breadcrumb__icon',
+              } %}
+            {%- endif -%}
+            <span>{{ item.label }}</span>
+          </a>
+          {% include '@theme/components/icon/icon.html.twig' with {
+            name: separator,
+            decorative: true,
+            size: 'sm',
+            className: 'theme-breadcrumb__separator',
+          } %}
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ol>
+</nav>
+{%- endif -%}

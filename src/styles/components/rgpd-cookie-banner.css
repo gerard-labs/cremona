@@ -1,0 +1,85 @@
+/*
+ * RGPD-CookieBanner — RGPD cookie consent banner (Ring 3 S3.3b-2).
+ *
+ * Composes Dialog Ring 2 (closeOnEscape=false + closeOnBackdropClick=false
+ * per RGPD legal commit) + Button Ring 1 (3 CTAs : Accept / Reject /
+ * Customize). Controller : cookie-banner (17th Ring 3) — defensive Both
+ * document.cookie + localStorage persistence per OQ-NEW sealed.
+ *
+ * 11th cross-controller compose instance : data-controller="dialog cookie-banner"
+ *
+ * Bundle budget : ~0.25 kB gzip (per ADR-0031 Path X corrected baseline +
+ * Dialog size override for full-modal styling on mobile).
+ */
+
+.theme-rgpd-cookie-banner {
+  /* Inherits Dialog Ring 2 wrap styling. */
+}
+
+.theme-rgpd-cookie-banner__legal-summary {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  margin-block-end: var(--spacing-3);
+}
+
+.theme-rgpd-cookie-banner__legal-detail {
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+  margin-block-end: var(--spacing-3);
+}
+
+.theme-rgpd-cookie-banner__legal-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.theme-rgpd-cookie-banner__legal-link:hover {
+  text-decoration: none;
+}
+
+.theme-rgpd-cookie-banner__categories-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-1_5);
+  padding: var(--spacing-3);
+  background: var(--color-bg-sunken);
+  border-radius: var(--radius-sm);
+  margin-block-end: var(--spacing-3);
+}
+
+.theme-rgpd-cookie-banner__category {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  font: var(--typography-caption);
+}
+
+.theme-rgpd-cookie-banner__category-name {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.theme-rgpd-cookie-banner__category-status {
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.theme-rgpd-cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+}
+
+/* Mobile : stack CTAs full-width */
+@media (width <= 640px) {
+  .theme-rgpd-cookie-banner__actions {
+    flex-direction: column;
+  }
+
+  .theme-rgpd-cookie-banner__actions .theme-button {
+    inline-size: 100%;
+  }
+}

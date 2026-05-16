@@ -1,0 +1,15 @@
+/*
+ * Error-RateLimited — "Too many requests" page (Ring 3 S3.1c).
+ *
+ * Same composition doctrine. Icon substitut `alert-triangle` per OQ-57b
+ * (visual: warning, too fast). Marker class only.
+ *
+ * The `{minutes}` placeholder in the body is consumer-interpolated via
+ * `t()` params. Live countdown (Intl.RelativeTimeFormat → rate-limit-
+ * countdown controller ~30 lines) is deferred per S3.1 trade-off log —
+ * see [STATE.md §"Trade-offs documented in S3.1"](../STATE.md).
+ */
+
+.theme-error-rate-limited {
+  /* Marker class — Empty + shell composition does the heavy lifting. */
+}

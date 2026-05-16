@@ -1,0 +1,10 @@
+/*
+ * Error-500 — "Server error" page (Ring 3 S3.1c).
+ *
+ * Same composition doctrine. Icon `alert-circle` (in curated 30-set, direct
+ * match). Marker class only.
+ */
+
+.theme-error-500 {
+  /* Marker class — Empty + shell composition does the heavy lifting. */
+}

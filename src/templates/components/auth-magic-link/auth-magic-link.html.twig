@@ -1,0 +1,67 @@
+{#-
+  Auth-MagicLink — terminal passwordless-login confirmation (Ring 3 S3.1b).
+
+  Structural twin of Auth-EmailVerification — same shell + Empty + Resend
+  composition, different microcopy + flow (passwordless login vs sign-up).
+
+  Composes `_auth-shell` (title null) + Empty (lg, h1, icon=check
+  substitut — see Auth-EmailVerification §1 Doctrine for the curated-set
+  rationale) + Button × 1-2.
+
+  Pure server-rendered terminal page (OQ-55). 0 Stimulus controller.
+  Typical entry point : passwordless login flow (user enters email at
+  /login → consumer's auth back-end emails a one-time sign-in link →
+  redirects user here).
+
+  Microcopy : body explicitly states the `{expirationMinutes}`
+  constraint ("Lien valable {expirationMinutes} minutes."). Consumer
+  interpolates the value via t() params — default 15 min, consumer
+  chooses per their security policy.
+
+  See `docs/specs/ring3/Auth-MagicLink.md` for the full spec.
+-#}
+
+{%- set title             = title             | default('theme.auth.magic-link.title'|trans) -%}
+{%- set body              = body              | default('theme.auth.magic-link.body'|trans({'{expirationMinutes}': 15})) -%}
+{%- set resendLabel       = resendLabel       | default('theme.auth.magic-link.resend-cta'|trans) -%}
+{%- set resendHref        = resendHref        | default('#') -%}
+{%- set backToLoginLabel  = backToLoginLabel  | default('theme.auth.magic-link.back-to-login-cta'|trans) -%}
+{%- set backToLoginHref   = backToLoginHref   | default(null) -%}
+{%- set htmlId            = htmlId            | default('theme-auth-magic-link') -%}
+{%- set className         = className         | default('') -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: null,
+  htmlId: htmlId,
+  variant: 'default',
+  className: ('theme-auth-magic-link ' ~ className)|trim,
+} %}
+  {% block content %}
+    {% embed '@theme/components/empty/empty.html.twig' with {
+      title: title,
+      body: body,
+      icon: 'check',
+      size: 'lg',
+      titleLevel: 'h1',
+      htmlId: htmlId ~ '-empty',
+    } %}
+      {% block actions %}
+        {% include '@theme/components/button/button.html.twig' with {
+          label: resendLabel,
+          variant: 'secondary',
+          size: 'md',
+          href: resendHref,
+        } %}
+        {% if backToLoginHref %}
+          {% include '@theme/components/button/button.html.twig' with {
+            label: backToLoginLabel,
+            variant: 'ghost',
+            size: 'md',
+            href: backToLoginHref,
+            iconLeading: 'arrow-left',
+          } %}
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+{% endembed %}

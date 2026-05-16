@@ -1,0 +1,165 @@
+/*
+ * Select — Single-select listbox via Popover-positioned dropdown, styled
+ * to look like an Input.
+ *
+ * Composes:
+ *   - .theme-popover surface (radius, shadow, motion-driven open/close)
+ *   - .theme-select__trigger styled to match Input visually (border,
+ *     radius-input, density-input-height, focus ring)
+ *   - .theme-select__listbox extends popover content (slimmer padding,
+ *     min-inline-size matched to a comfortable single-select)
+ *   - .theme-item rows for options (inherited from Item.css)
+ *
+ * The trigger is a `<button>` (not an Input). This is intentional:
+ *   - Buttons can have aria-haspopup="listbox" + aria-expanded + aria-
+ *     activedescendant, which together implement the WAI-ARIA APG
+ *     "Listbox (Collapsible)" pattern.
+ *   - The visual mimics Input so consumers + users perceive the field
+ *     as part of a form. The hidden input carries the value for form-data
+ *     submission (form integration symmetry with NativeSelect).
+ *
+ * Per OQ-28 doctrine (sealed S2.3a opening): vanilla implementation,
+ * no Tom Select adapter. For 200+ options or async-loading, the consumer
+ * adopts Combobox (S2.3b) — same controller foundation + filterable input.
+ *
+ * Logical CSS throughout — chevron sits at `inline-end`, check icon
+ * (selected state indicator) at `inline-end` of the option row.
+ */
+
+/* ----- trigger (looks like Input) ----------------------------------- */
+
+.theme-select__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  inline-size: 100%;
+  block-size: var(--density-input-height);
+  padding-block: 0;
+  padding-inline: var(--spacing-3) var(--spacing-2);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-input);
+  font: var(--typography-body);
+  font-size: var(--font-size-sm);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-select__trigger[data-size="sm"] {
+  block-size: 32px;
+  font-size: var(--font-size-sm);
+}
+
+.theme-select__trigger[data-size="lg"] {
+  block-size: 48px;
+  font-size: var(--font-size-base);
+}
+
+.theme-select__trigger:hover:not(:disabled, [aria-invalid="true"]) {
+  border-color: var(--color-border-strong);
+}
+
+.theme-select__trigger:focus-visible {
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: var(--ring-offset-width);
+  border-color: var(--color-border-focus);
+}
+
+.theme-select__trigger[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.theme-select__trigger[aria-invalid="true"]:focus-visible {
+  outline-color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.theme-select__trigger:disabled {
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.theme-select__trigger[aria-expanded="true"] {
+  border-color: var(--color-border-focus);
+}
+
+.theme-select__label {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theme-select__label[data-placeholder="true"] {
+  color: var(--color-text-tertiary);
+}
+
+.theme-select__chevron {
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+  transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-select__trigger[aria-expanded="true"] .theme-select__chevron {
+  transform: rotate(180deg);
+}
+
+/* Touch target hardening for trigger (matches Input doctrine). */
+@media (pointer: coarse) {
+  .theme-select__trigger {
+    min-block-size: 44px;
+  }
+}
+
+/* ----- listbox (popover content) ------------------------------------ */
+
+.theme-select__listbox {
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-1);
+  min-inline-size: 200px;
+  /* Cap height for long lists; scroll inside. Cohérent with native
+     <select>'s behavior at viewport overflow. */
+  max-block-size: 280px;
+  overflow-y: auto;
+}
+
+.theme-select__option {
+  inline-size: 100%;
+  cursor: pointer;
+}
+
+/* aria-activedescendant pattern: the controller stamps data-active="true"
+   on the currently-active option (NOT focused — focus stays on trigger).
+   The CSS paints the active state visually. */
+.theme-select__option[data-active="true"]:not([aria-disabled="true"]) {
+  background-color: var(--color-bg-sunken);
+}
+
+/* Selected state — primary-soft bg + check icon trailing (Twig stamps
+   the icon when aria-selected="true"). */
+.theme-select__option[aria-selected="true"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}
+
+.theme-select__option[aria-selected="true"][data-active="true"] {
+  background-color: var(--color-primary-soft);
+}
+
+.theme-select__option[aria-disabled="true"],
+.theme-select__option[data-state="disabled"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* The check icon (only rendered when aria-selected) — picks up the
+   selected-foreground color via .theme-item__icon currentColor inheritance. */
+.theme-select__option-check {
+  color: var(--color-selected-foreground);
+}

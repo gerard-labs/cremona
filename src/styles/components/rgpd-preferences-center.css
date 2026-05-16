@@ -1,0 +1,80 @@
+/*
+ * RGPD-PreferencesCenter — RGPD granular consent preferences (Ring 3 S3.3b-2).
+ *
+ * Composes Dialog Ring 2 size=lg + Switch Ring 1 per category. Controller
+ * preferences-center (18th Ring 3) — multi-category state tracking +
+ * dirty detection + explicit Save button per OQ-NEW sealed (RGPD legal
+ * intentional commit, NOT instant-save). 12th cross-controller compose
+ * instance.
+ *
+ * Bundle budget : ~0.30 kB gzip (per ADR-0031 Path X corrected baseline +
+ * category list layout + Switch grid spacing + dirty-state visual hooks).
+ */
+
+.theme-rgpd-preferences-center {
+  /* Inherits Dialog Ring 2 wrap. */
+}
+
+.theme-rgpd-preferences-center__categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.theme-rgpd-preferences-center__category {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  background: var(--color-bg-sunken);
+  border-radius: var(--radius-md);
+}
+
+.theme-rgpd-preferences-center__category--required {
+  /* Visual distinction for the always-on Essential category. */
+  border: 1px solid var(--color-border-subtle);
+}
+
+.theme-rgpd-preferences-center__category-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1_5);
+  min-inline-size: 0; /* allow text-wrap */
+}
+
+.theme-rgpd-preferences-center__category-name {
+  font: var(--typography-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.theme-rgpd-preferences-center__category-description {
+  font: var(--typography-caption);
+  color: var(--color-text-secondary);
+  max-inline-size: 60ch;
+}
+
+.theme-rgpd-preferences-center__category-status {
+  font: var(--typography-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+  margin-block-start: var(--spacing-1);
+}
+
+.theme-rgpd-preferences-center__category-control {
+  align-self: start;
+}
+
+.theme-rgpd-preferences-center__footer-info {
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+  margin-block-start: var(--spacing-3);
+}
+
+/* Dirty-state visual hook on the Save button — consumer's Button picks
+   up data-preferences-center-dirty="true|false" to enable/style. */
+.theme-rgpd-preferences-center [data-preferences-center-dirty="false"] {
+  /* Consumer-overridable — default Save button stays clickable even when
+     not dirty (user can re-save same state). */
+}

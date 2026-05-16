@@ -1,0 +1,92 @@
+{#-
+  Switch — native <input type="checkbox" role="switch"> with a thumb-on-rails
+  visual envelope. Animated thumb slide + bg color (180 ms base / standard
+  easing per 14-motion-baseline.md §Switch).
+
+  Doctrine (OQ-8): native checkbox with `role="switch"` rather than the
+  button-pattern `<button role=switch aria-pressed>`. Reasons:
+    - 100 % keyboard-complete (Space toggles natively)
+    - autofill works
+    - form-data inclusion in POST is automatic
+    - aria-checked is browser-managed (no manual stamping)
+  See STATE.md S1.3 §"Resolved at session opening" / OQ-8 for the full record.
+
+  Two rendering modes (mirrors Checkbox):
+    1. `label` set        → <label class="theme-switch-row"> wraps input + track
+                            + thumb + label text (standalone usage).
+    2. `label` not set    → <span class="theme-switch-wrap"> bare layout
+                            (Field / DataTable composition).
+
+  Parameters (enumerated):
+    name             (string, optional)  — form field name
+    htmlId           (string, optional)  — id; required when paired with external Label.for
+    value            (string, optional)  — value when checked (defaults to "on")
+    checked          (bool,   optional)
+    label            (string, optional)  — inline label text; if set → row mode
+    description      (string, optional)  — short caption below the label (row mode only)
+    size             (string, optional)  — sm (default — 32×18 track) | md (44×24 track)
+    required         (bool,   optional)  — sets HTML `required` + aria-required="true"
+    disabled         (bool,   optional)
+    invalid          (bool,   optional)  — aria-invalid="true" + danger border
+    describedBy      (string, optional)  — space-separated ids for aria-describedby
+    ariaLabel        (string, optional)  — accessible name when bare mode + no external label
+    className        (string, optional)
+-#}
+
+{%- set name          = name          | default(null) -%}
+{%- set htmlId        = htmlId        | default(null) -%}
+{%- set value         = value         | default(null) -%}
+{%- set checked       = checked       | default(false) -%}
+{%- set label         = label         | default(null) -%}
+{%- set description   = description   | default(null) -%}
+{%- set size          = size          | default('sm') -%}
+{%- set required      = required      | default(false) -%}
+{%- set disabled      = disabled      | default(false) -%}
+{%- set invalid       = invalid       | default(false) -%}
+{%- set describedBy   = describedBy   | default(null) -%}
+{%- set ariaLabel     = ariaLabel     | default(null) -%}
+{%- set className     = className     | default('') -%}
+
+{%- set _rootClasses = [label ? 'theme-switch-row' : 'theme-switch-wrap'] -%}
+{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['theme-switch-row--disabled']) -%}{%- endif -%}
+{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['theme-switch-row--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _rootClasses = _rootClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _tag = label ? 'label' : 'span' -%}
+
+<{{ _tag }}
+  class="{{ _rootClasses | join(' ') }}"
+  data-size="{{ size }}"
+  {%- if disabled %} data-state="disabled"{% endif -%}
+>
+  <span class="theme-switch" data-size="{{ size }}">
+    <input
+      type="checkbox"
+      role="switch"
+      class="theme-switch__input"
+      {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+      {%- if name %} name="{{ name }}"{% endif -%}
+      {%- if value is not null %} value="{{ value }}"{% endif -%}
+      {%- if checked %} checked{% endif -%}
+      {%- if required %} required aria-required="true"{% endif -%}
+      {%- if disabled %} disabled{% endif -%}
+      {%- if invalid %} aria-invalid="true"{% endif -%}
+      {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+      {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
+    >
+    <span class="theme-switch__track" aria-hidden="true">
+      <span class="theme-switch__thumb"></span>
+    </span>
+  </span>
+  {%- if label -%}
+    <span class="theme-switch-row__text">
+      <span class="theme-switch-row__label">{{ label }}</span>
+      {%- if required -%}
+        <span class="theme-switch-row__required" aria-hidden="true">*</span>
+      {%- endif -%}
+      {%- if description -%}
+        <span class="theme-switch-row__description">{{ description }}</span>
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+</{{ _tag }}>

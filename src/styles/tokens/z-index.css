@@ -1,0 +1,17 @@
+/*
+ * Z-index tokens — layer scale.
+ * Components MUST reference these names, never raw integers (stylelint
+ * enforces no raw z-index outside this file).
+ */
+
+:root {
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-dropdown: 200;
+  --z-popover: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
+  --z-toast: 600;
+  --z-tooltip: 700;
+}

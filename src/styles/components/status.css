@@ -1,0 +1,131 @@
+/*
+ * Status compound — labelled live indicator with optional pulse.
+ *
+ * Pure CSS, 0 controller. Soft-tone pill (composes Badge soft variant
+ * vocabulary) + leading colored dot. The dot's solid color matches the
+ * variant's `--color-{variant}` token for high-contrast readability over
+ * the soft pill background.
+ *
+ * Optional pulse animation (data-pulse="true") :
+ *   - 1500 ms infinite loop → ~0.67 Hz, well under the 3 Hz epilepsy
+ *     floor (per [13-a11y §15]).
+ *   - Animates the dot scale (1 → 1.0 → 1) AND a pseudo-element ring
+ *     fading outward — gives the "ping" effect of Vercel / Linear's
+ *     "live" indicator.
+ *   - prefers-reduced-motion : animation: none ; dot stays solid.
+ *
+ * No new tokens — pure composition of Ring 0 :
+ *   --color-{variant}                    dot solid color
+ *   --color-{variant}-soft                pill background
+ *   --color-{variant}-soft-foreground     pill text
+ *   --typography-caption                  pill text
+ *   --motion-duration-* (NOT used)        animation duration is local
+ *                                          (1500 ms — < 3 Hz, distinct
+ *                                          from any UI transition cadence)
+ */
+
+.theme-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1_5);
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-0_5);
+  border-radius: var(--radius-pill);
+  font: var(--typography-caption);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.theme-status[data-size="sm"] {
+  padding-inline: var(--spacing-1_5);
+  padding-block: 1px;
+  font-size: var(--font-size-2xs);
+  gap: var(--spacing-1);
+}
+
+/* --- Variant tones (compose Badge soft vocabulary) ---------------------- */
+.theme-status[data-variant="success"] {
+  background: var(--color-success-soft);
+  color: var(--color-success-soft-foreground);
+}
+
+.theme-status[data-variant="info"] {
+  background: var(--color-info-soft);
+  color: var(--color-info-soft-foreground);
+}
+
+.theme-status[data-variant="warning"] {
+  background: var(--color-warning-soft);
+  color: var(--color-warning-soft-foreground);
+}
+
+.theme-status[data-variant="danger"] {
+  background: var(--color-danger-soft);
+  color: var(--color-danger-soft-foreground);
+}
+
+/* --- Dot --------------------------------------------------------------- */
+.theme-status__dot {
+  position: relative;
+  display: inline-block;
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.theme-status[data-size="sm"] .theme-status__dot {
+  inline-size: 6px;
+  block-size: 6px;
+}
+
+.theme-status[data-variant="success"] .theme-status__dot { background: var(--color-success); }
+.theme-status[data-variant="info"]    .theme-status__dot { background: var(--color-info); }
+.theme-status[data-variant="warning"] .theme-status__dot { background: var(--color-warning); }
+.theme-status[data-variant="danger"]  .theme-status__dot { background: var(--color-danger); }
+
+/* --- Pulse animation (opt-in) ----------------------------------------- */
+.theme-status[data-pulse="true"] .theme-status__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  animation: theme-status-pulse 1500ms ease-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* The pulse ring's colour is set explicitly per variant — `currentColor`
+   above is only the default fallback. */
+.theme-status[data-pulse="true"][data-variant="success"] .theme-status__dot::after { background: var(--color-success); }
+.theme-status[data-pulse="true"][data-variant="info"]    .theme-status__dot::after { background: var(--color-info); }
+.theme-status[data-pulse="true"][data-variant="warning"] .theme-status__dot::after { background: var(--color-warning); }
+.theme-status[data-pulse="true"][data-variant="danger"]  .theme-status__dot::after { background: var(--color-danger); }
+
+@keyframes theme-status-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  75% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-status[data-pulse="true"] .theme-status__dot::after {
+    animation: none;
+    opacity: 0;
+  }
+}

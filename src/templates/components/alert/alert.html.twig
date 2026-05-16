@@ -1,0 +1,136 @@
+{#-
+  Alert — inline status banner with optional dismiss + action.
+
+  Communicates status (info / warning / danger / success) to the user.
+  NOT a modal: Alert is a persistent inline surface, scoped to its parent
+  region. For blocking confirmations with focus-trap, see the Ring 2
+  `Dialog` (and `AlertDialog`) compound.
+
+  Tones:
+    - soft (default) — `*-soft` bg + `*-soft-foreground` text + 1px border.
+                       Lower visual weight, suitable for long-running banners
+                       and inline form-level errors.
+    - solid          — `*` bg + `*-foreground` text, no border. Higher
+                       emphasis — page-level critical announcements.
+
+  Variants → default icon + default role:
+    info     → info             icon  · role="status"
+    warning  → alert-triangle   icon  · role="status"
+    danger   → alert-circle     icon  · role="alert"   (assertive live region)
+    success  → check            icon  · role="status"
+
+  Doctrine (OQ-15):
+    Dismiss is a minimal Stimulus controller `alert-dismiss` (~12 lines).
+    `<dialog>` is rejected — Alert is inline status, NOT modal. Dialog
+    would force focus-trap + backdrop, inadequate for a banner.
+
+  Animation:
+    appear  — opacity 0 → 1 + translateY(-4px) → 0, 180 ms emphasized
+              (subtle, no bump). Fires on mount via CSS animation.
+    dismiss — opacity 1 → 0, 120 ms accelerate. Triggered by controller
+              stamping data-state="dismissing"; transitionend removes
+              the element from the DOM.
+
+  Parameters:
+    variant            (string, optional) — info (default) | warning | danger | success
+    tone               (string, optional) — soft (default) | solid
+    title              (string, optional) — bold heading line
+    body               (string, optional) — shorthand for a simple paragraph
+                                            body. Mutually exclusive with the
+                                            `body` block (block wins if defined).
+    icon               (string, optional) — Lucide icon override; defaults
+                                            to the variant icon (see map).
+    hideIcon           (bool,   optional) — false (default). true → no icon.
+    dismissible        (bool,   optional) — false (default). true → trailing
+                                            dismiss button + `alert-dismiss`
+                                            controller wired.
+    dismissAriaLabel   (string, optional) — accessible name for the dismiss
+                                            button. Required when dismissible.
+    dismissMessage     (string, optional) — i18n key passed to the controller
+                                            for the SR announcement on dismiss
+                                            (default: 'theme.alert.aria.dismissed').
+    htmlId             (string, optional) — auto-generated if absent.
+    roleOverride       (string, optional) — alert | status. Defaults to alert
+                                            for danger, status otherwise.
+    className          (string, optional) — extra utility classes on the root.
+
+  Blocks (both optional):
+    body   — rich body content (paragraphs, links inside). Takes precedence
+             over the `body` string parameter.
+    action — trailing inline action slot (typically a ghost-variant Button).
+-#}
+
+{%- set variant          = variant          | default('info') -%}
+{%- set tone             = tone             | default('soft') -%}
+{%- set title            = title            | default(null) -%}
+{%- set body             = body             | default(null) -%}
+{%- set icon             = icon             | default(null) -%}
+{%- set hideIcon         = hideIcon         | default(false) -%}
+{%- set dismissible      = dismissible      | default(false) -%}
+{%- set dismissAriaLabel = dismissAriaLabel | default(null) -%}
+{%- set dismissMessage   = dismissMessage   | default('theme.alert.aria.dismissed') -%}
+{%- set htmlId           = htmlId           | default('theme-alert-' ~ random()) -%}
+{%- set roleOverride     = roleOverride     | default(null) -%}
+{%- set className        = className        | default('') -%}
+
+{%- set _iconMap = {
+  'info':    'info',
+  'warning': 'alert-triangle',
+  'danger':  'alert-circle',
+  'success': 'check',
+} -%}
+{%- set _effectiveIcon = icon ?? _iconMap[variant] -%}
+{%- set _role = roleOverride ?? (variant == 'danger' ? 'alert' : 'status') -%}
+
+{%- set _classes = ['theme-alert'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  id="{{ htmlId }}"
+  role="{{ _role }}"
+  data-variant="{{ variant }}"
+  data-tone="{{ tone }}"
+  {%- if dismissible %}
+    data-controller="alert-dismiss"
+    data-alert-dismiss-message-value="{{ dismissMessage }}"
+  {%- endif %}
+>
+  {%- if not hideIcon -%}
+    {% include '@theme/components/icon/icon.html.twig' with {
+      name: _effectiveIcon,
+      decorative: true,
+      size: 'md',
+      className: 'theme-alert__icon',
+    } %}
+  {%- endif -%}
+
+  <div class="theme-alert__content">
+    {%- if title -%}
+      <p class="theme-alert__title">{{ title }}</p>
+    {%- endif -%}
+    {%- if block('body') is defined and block('body') is not empty -%}
+      <div class="theme-alert__body">{%- block body -%}{%- endblock -%}</div>
+    {%- elseif body -%}
+      <div class="theme-alert__body"><p>{{ body }}</p></div>
+    {%- endif -%}
+    {%- if block('action') is defined and block('action') is not empty -%}
+      <div class="theme-alert__actions">{%- block action -%}{%- endblock -%}</div>
+    {%- endif -%}
+  </div>
+
+  {%- if dismissible -%}
+    <button
+      type="button"
+      class="theme-alert__dismiss"
+      aria-label="{{ dismissAriaLabel }}"
+      data-action="click->alert-dismiss#dismiss"
+    >
+      {% include '@theme/components/icon/icon.html.twig' with {
+        name: 'x',
+        decorative: true,
+        size: 'sm',
+      } %}
+    </button>
+  {%- endif -%}
+</div>

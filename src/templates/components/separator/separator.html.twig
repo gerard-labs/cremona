@@ -1,0 +1,27 @@
+{#-
+  Separator — semantic or decorative divider, horizontal or vertical.
+
+  Parameters:
+    orientation (string, optional) horizontal (default) | vertical
+    variant     (string, optional) solid (default) | dashed | dotted
+    decorative  (bool,   optional) default true. true → aria-hidden + role=presentation;
+                                   false → role=separator + aria-orientation
+    className   (string, optional)
+-#}
+
+{%- set orientation = orientation | default('horizontal') -%}
+{%- set variant     = variant     | default('solid') -%}
+{%- set decorative  = decorative  | default(true) -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _classes = ['theme-separator'] -%}
+{%- if variant != 'solid' -%}{%- set _classes = _classes | merge(['theme-separator--' ~ variant]) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-orientation="{{ orientation }}"
+  {%- if decorative %} role="presentation" aria-hidden="true"
+  {%- else %} role="separator" aria-orientation="{{ orientation }}"
+  {%- endif -%}
+></div>

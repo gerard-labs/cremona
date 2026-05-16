@@ -1,0 +1,167 @@
+{#-
+  Pagination — Page navigation with first/prev/next/last + inline page-size.
+
+  Per OQ-35 (sealed S2.4 opening): page-size selector inline (Pagination IS
+  the natural surface), NOT a separate compound. Pattern Stripe / Linear /
+  Notion DataTable footer.
+
+  Composes:
+    - `pagination` Stimulus controller (manages page state, disabled buttons,
+      range label, dispatches `pagination:change`).
+    - Inline [NativeSelect](../native-select/) for the page-size picker
+      (small list → OS picker on mobile per S1.2 doctrine).
+    - 4 [Button]-styled native buttons (variant=ghost, size=sm) for
+      first/prev/next/last navigation.
+
+  Per WAI-ARIA APG "Pagination":
+    - role="navigation" + aria-label on the wrap.
+    - aria-live="polite" on the range label so SR announces page changes
+      without interrupting.
+    - Disabled buttons get both `disabled` attr AND `aria-disabled="true"`
+      for cross-AT coverage (some legacy AT miss the native attribute).
+
+  First / last buttons use a CSS-only double-chevron icon (mask-image),
+  cohérent avec Table's sort icon pattern (no Lucide curated set amend
+  required — `chevrons-left` / `chevrons-right` aren't in the curated 30).
+  Prev / next use the curated `chevron-left` / `chevron-right` Lucide icons
+  (already in the bidi-flip whitelist — both auto-flip in RTL).
+
+  Parameters:
+    htmlId       (string,  optional) — auto-generated.
+    page         (int,     optional) — initial page (1-based, default 1).
+    pageSize     (int,     optional) — initial rows per page (default 25).
+    totalItems   (int,     optional) — total row count across pages (default 0).
+    pageSizes    (array,   optional) — option array for page-size select
+                                       (default [10, 25, 50, 100]).
+    label        (string,  optional) — aria-label on the <nav> wrap
+                                       (default 'Pagination').
+    pageSizeLabel (string, optional) — visible label preceding the page-size
+                                       select (default 'Lignes par page').
+    pageSizeAriaLabel (string, optional) — aria-label on the page-size
+                                       <select> when no visible label is shown.
+    firstAriaLabel (string, optional) — aria-label on first button (default
+                                       'Première page').
+    prevAriaLabel  (string, optional)
+    nextAriaLabel  (string, optional)
+    lastAriaLabel  (string, optional)
+    className    (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/pagination/pagination.html.twig' with {
+      page: 3,
+      pageSize: 25,
+      totalItems: 142,
+      label: 'Pagination'|trans,
+      pageSizeLabel: 'Lignes par page'|trans,
+      firstAriaLabel: 'Première page'|trans,
+      prevAriaLabel: 'Page précédente'|trans,
+      nextAriaLabel: 'Page suivante'|trans,
+      lastAriaLabel: 'Dernière page'|trans,
+    } %}
+
+  Events (dispatched on the <nav> root):
+    pagination:change — detail.{page, pageSize, from, to, total, totalPages}
+-#}
+
+{%- set htmlId            = htmlId            | default('theme-pagination-' ~ random()) -%}
+{%- set page              = page              | default(1) -%}
+{%- set pageSize          = pageSize          | default(25) -%}
+{%- set totalItems        = totalItems        | default(0) -%}
+{%- set pageSizes         = pageSizes         | default([10, 25, 50, 100]) -%}
+{%- set label             = label             | default('Pagination') -%}
+{%- set pageSizeLabel     = pageSizeLabel     | default('Lignes par page') -%}
+{%- set pageSizeAriaLabel = pageSizeAriaLabel | default(null) -%}
+{%- set firstAriaLabel    = firstAriaLabel    | default('Première page') -%}
+{%- set prevAriaLabel     = prevAriaLabel     | default('Page précédente') -%}
+{%- set nextAriaLabel     = nextAriaLabel     | default('Page suivante') -%}
+{%- set lastAriaLabel     = lastAriaLabel     | default('Dernière page') -%}
+{%- set className         = className         | default('') -%}
+
+{%- set _classes = ['theme-pagination'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _pageSizeOptions = [] -%}
+{%- for size in pageSizes -%}
+  {%- set _pageSizeOptions = _pageSizeOptions | merge([{ value: size | string, label: size | string }]) -%}
+{%- endfor -%}
+
+<nav
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  role="navigation"
+  aria-label="{{ label }}"
+  data-controller="pagination"
+  data-action="change->pagination#changePageSize"
+  data-pagination-page-value="{{ page }}"
+  data-pagination-page-size-value="{{ pageSize }}"
+  data-pagination-total-items-value="{{ totalItems }}"
+>
+  <span
+    class="theme-pagination__range"
+    data-pagination-target="rangeLabel"
+    aria-live="polite"
+    aria-atomic="true"
+  ></span>
+
+  <span class="theme-pagination__page-size">
+    {%- if pageSizeLabel -%}
+      <label class="theme-pagination__page-size-label" for="{{ htmlId }}-size">
+        {{ pageSizeLabel }}
+      </label>
+    {%- endif -%}
+    {% include '@theme/components/native-select/native-select.html.twig' with {
+      htmlId: htmlId ~ '-size',
+      value: pageSize | string,
+      options: _pageSizeOptions,
+      size: 'sm',
+    } %}
+  </span>
+
+  <span class="theme-pagination__nav" role="group">
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      size: 'sm',
+      ariaLabel: firstAriaLabel,
+      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--first" aria-hidden="true"></span>',
+      className: 'theme-pagination__btn',
+      attrs: {
+        'data-pagination-target': 'firstButton',
+        'data-action': 'click->pagination#first',
+      },
+    } only %}
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      size: 'sm',
+      ariaLabel: prevAriaLabel,
+      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--prev" aria-hidden="true"></span>',
+      className: 'theme-pagination__btn',
+      attrs: {
+        'data-pagination-target': 'prevButton',
+        'data-action': 'click->pagination#prev',
+      },
+    } only %}
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      size: 'sm',
+      ariaLabel: nextAriaLabel,
+      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--next" aria-hidden="true"></span>',
+      className: 'theme-pagination__btn',
+      attrs: {
+        'data-pagination-target': 'nextButton',
+        'data-action': 'click->pagination#next',
+      },
+    } only %}
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      size: 'sm',
+      ariaLabel: lastAriaLabel,
+      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--last" aria-hidden="true"></span>',
+      className: 'theme-pagination__btn',
+      attrs: {
+        'data-pagination-target': 'lastButton',
+        'data-action': 'click->pagination#last',
+      },
+    } only %}
+  </span>
+</nav>

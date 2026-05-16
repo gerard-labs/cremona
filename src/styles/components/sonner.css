@@ -1,0 +1,291 @@
+/*
+ * Sonner — toast queue engine (Ring 2 S2.5).
+ *
+ * The viewport is a single fixed-position <aside> at bottom-end, injected
+ * once into <body> by SonnerController on first connect (idempotent).
+ * Multiple SonnerController instances reuse the same viewport.
+ *
+ * Per-toast visual envelope reuses Alert primitive's soft-tone vocabulary
+ * (--color-{success,info,warning,danger}-soft + soft-foreground + border).
+ * No new tokens introduced in S2.5.
+ *
+ * Doctrine:
+ *   - role="status" (native <output>) for polite variants (success/info/
+ *     warning) → implicit aria-live="polite" + aria-atomic="true".
+ *   - role="alert" (<div>) for danger → implicit aria-live="assertive".
+ *     Mirrors Alert.md §"Alert role auto-derives from variant" sealed in
+ *     ADR-0008.
+ *   - Enter: translateY(100%) + opacity 0 → translateY(0) + opacity 1
+ *     over --motion-duration-base emphasized (per 14-motion §4 Toast
+ *     appear).
+ *   - Exit: opacity 1 → 0 + translateY(0) → translateY(8px) over
+ *     --motion-duration-fast accelerate. Short translate (8px) signals
+ *     "settling out" without feeling thrown away.
+ *   - transitionend opacity filter for DOM cleanup (alert-dismiss S1.4b
+ *     pattern verbatim).
+ *   - Reduced-motion: skip translateY (opacity-only fade). Browser still
+ *     fires transitionend at 0.01 ms so the controller's removal step
+ *     still runs.
+ *
+ * Viewport position:
+ *   - fixed, inset-block-end + inset-inline-end, with safe-area inset
+ *     additions so toasts clear iOS home indicator / Android nav bar.
+ *   - inline-size capped at 420px on desktop, shrinks on narrow viewport.
+ *   - flex column-reverse so new toasts enter at the visual bottom (closest
+ *     to thumb-zone on mobile per 09-design-lenses §L14).
+ *
+ * Touch hardening: Undo + dismiss-x buttons inherit ≥44px tap zone from
+ * the Button primitive ghost variant.
+ */
+
+/* ===== Viewport ==================================================== */
+
+.theme-sonner__viewport {
+  position: fixed;
+  inset-block-end: calc(var(--spacing-4) + env(safe-area-inset-block-end, 0px));
+  inset-inline-end: calc(var(--spacing-4) + env(safe-area-inset-inline-end, 0px));
+  z-index: var(--z-toast);
+  /* Cap width on desktop; shrink to fit on narrow viewports with margin both sides. */
+  inline-size: min(420px, calc(100vw - 2 * var(--spacing-4)));
+  /* Stack toasts bottom-up: newest at the visual bottom near thumb-zone. */
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--spacing-2);
+  /* The viewport itself is invisible — only the toasts inside have visual surface. */
+  background: transparent;
+  /* Pointer events only on the toasts themselves, so clicks on the empty
+     gap region between toasts pass through to the page below. */
+  pointer-events: none;
+}
+
+.theme-sonner__viewport > * {
+  pointer-events: auto;
+}
+
+/* Mobile — slightly tighter margins. */
+@media (width <= 767.98px) {
+  .theme-sonner__viewport {
+    inset-block-end: calc(var(--spacing-3) + env(safe-area-inset-block-end, 0px));
+    inset-inline-end: calc(var(--spacing-3) + env(safe-area-inset-inline-end, 0px));
+    inline-size: calc(100vw - 2 * var(--spacing-3));
+  }
+}
+
+/* ===== Toast ======================================================= */
+
+.theme-sonner__toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-4);
+  border-radius: var(--radius-card);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-toast);
+  /* Initial state (entering) — opacity 0 + translated below viewport edge.
+     The data-state="visible" rule below drives the entry transition. */
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity var(--motion-duration-base) var(--motion-easing-emphasized),
+    transform var(--motion-duration-base) var(--motion-easing-emphasized);
+}
+
+.theme-sonner__toast[data-state="visible"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.theme-sonner__toast[data-state="exiting"] {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-accelerate),
+    transform var(--motion-duration-fast) var(--motion-easing-accelerate);
+  pointer-events: none;
+}
+
+/* ----- Per-variant tones (compose Alert vocabulary — 0 new tokens) ----- */
+
+.theme-sonner__toast[data-variant="success"] {
+  background-color: var(--color-success-soft);
+  color: var(--color-success-soft-foreground);
+  border-color: var(--color-success-border);
+}
+
+.theme-sonner__toast[data-variant="info"] {
+  background-color: var(--color-info-soft);
+  color: var(--color-info-soft-foreground);
+  border-color: var(--color-info-border);
+}
+
+.theme-sonner__toast[data-variant="warning"] {
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning-soft-foreground);
+  border-color: var(--color-warning-border);
+}
+
+.theme-sonner__toast[data-variant="danger"] {
+  background-color: var(--color-danger-soft);
+  color: var(--color-danger-soft-foreground);
+  border-color: var(--color-danger-border);
+}
+
+/* ----- Inner anatomy ----- */
+
+.theme-sonner__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 20px;
+  block-size: 20px;
+  /* Pull icon down so its visual centroid aligns with the title's cap-height. */
+  margin-block-start: 2px;
+}
+
+.theme-sonner__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+}
+
+.theme-sonner__body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  /* Allow long content to wrap inside flex. */
+  min-inline-size: 0;
+}
+
+.theme-sonner__title {
+  font: var(--typography-label);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  /* Title inherits the variant's color via cascade — no override. */
+}
+
+.theme-sonner__message {
+  font: var(--typography-body);
+  margin: 0;
+  /* Allow message to wrap to multiple lines (typical for "Cet email est déjà associé à un compte…"). */
+}
+
+/* ----- Buttons (Undo + dismiss-x) ----- */
+
+.theme-sonner__undo,
+.theme-sonner__dismiss {
+  flex-shrink: 0;
+  /* Inherit color from variant tone — buttons match the toast's foreground. */
+  color: currentColor;
+}
+
+/* Undo is a text button — lives between body and dismiss-x in DOM order
+   (visual: Undo before X in LTR, X before Undo in RTL — flex writing-direction). */
+.theme-sonner__undo {
+  /* Inherits Button ghost variant defaults; tone override via currentColor. */
+  margin-block-start: 2px;
+}
+
+/* Dismiss-x is icon-only, square 24px. Same shape as Alert dismiss. */
+.theme-sonner__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  margin-block-start: 2px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 18px;
+  line-height: 1;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-sonner__dismiss:hover {
+  opacity: 1;
+  /* Subtle darken — currentColor/10% works on both soft tones. */
+  background-color: color-mix(in oklch, currentColor 10%, transparent);
+}
+
+.theme-sonner__dismiss:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--ring-width) currentColor;
+  opacity: 1;
+}
+
+/* Touch hardening: 44px tap area under coarse pointer (matches Alert pattern). */
+@media (pointer: coarse) {
+  .theme-sonner__dismiss {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+  }
+}
+
+/* ===== Queue indicator ============================================= */
+
+.theme-sonner__queue-indicator {
+  /* Pill button at the visual top of the stack (DOM-first child of the
+     column-reverse flex container = visual top). */
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-3);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-1);
+  font: var(--typography-caption);
+  cursor: pointer;
+  /* Match toast entry choreography for visual continuity. */
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-sonner__queue-indicator:not([hidden]) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.theme-sonner__queue-indicator:hover {
+  background-color: var(--color-bg-base);
+}
+
+.theme-sonner__queue-indicator:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset-width);
+}
+
+/* ===== Dark mode =================================================== */
+
+[data-theme="dark"] .theme-sonner__queue-indicator {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-default);
+}
+
+/* ===== Reduced motion ============================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-sonner__toast,
+  .theme-sonner__queue-indicator {
+    /* Skip translateY — opacity-only fade. The global motion-duration
+       override (in tokens/motion.css) already compresses durations to
+       0.01 ms; this rule additionally drops the translateY animation
+       so reduced-motion users get an instant opacity swap with no
+       vestibular motion at all. */
+    transform: none !important;
+  }
+}

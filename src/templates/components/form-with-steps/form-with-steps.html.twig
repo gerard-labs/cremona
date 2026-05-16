@@ -1,0 +1,187 @@
+{#-
+  Form-WithSteps — multi-step form wizard (foundation pattern of the Forms family).
+
+  Per the Forms family doctrine sealed at S3.3a-1 opening (cf. Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) is the composition keystone for every input.
+    - Consumer-side validation only — native HTML5 + server re-validate.
+    - No Bridge/Symfony expansion v1 — consumer-owned <form> + csrfToken.
+    - 3-CTA footer pattern : Skip (ghost, inline-start) · Previous (outline, mid) · Next/Submit (primary, inline-end).
+    - Cross-step state owned by consumer (kit dispatches events, consumer persists).
+
+  Composes the `form-with-steps` Stimulus controller + cross-controller compose
+  with Stepper Ring 2 (`data-controller="stepper form-with-steps"` on the wrapper).
+
+  The kit's partial renders the step indicator + N <fieldset> step bodies +
+  3-CTA footer cluster, but the outer <form> tag is part of the consumer's
+  page template (per Forms family doctrine §11).
+
+  Parameters:
+    htmlId           (string,  optional) — auto-generated.
+    title            (string,  required) — visible heading at the top of the wizard.
+    steps            (array,   required) — list of step descriptors :
+                                           { label, description?, disabled? }.
+                                           The order in the array determines the
+                                           step index (1-based).
+    currentStep      (int,     optional) — 1-indexed active step (default 1).
+    allowSkip        (bool,    optional) — opt-in Skip CTA (default false — most form wizards
+                                           don't skip).
+    submitLabel      (string,  optional) — verbe d'action for the final Submit (default
+                                           'Confirmer'). Consumer-overridden per pattern
+                                           (e.g. 'Créer le compte' / 'Envoyer la facture').
+    nextLabel        (string,  optional) — Next CTA label (default 'Continuer' per 12-microcopy
+                                           §Boutons).
+    previousLabel    (string,  optional) — Previous CTA label (default 'Précédent').
+    skipLabel        (string,  optional) — Skip CTA label (default 'Plus tard').
+    ariaLiveAnnounce (bool,    optional) — live region for step transitions (default true).
+    stepperOrientation (string, optional) — 'horizontal' (default) | 'vertical'.
+    stepperSize      (string,  optional) — 'sm' | 'md' (default) | 'lg'.
+    className        (string,  optional)
+
+  Blocks (consumer fills):
+    step_1, step_2, … step_N — per-step form fields (Field × N typically).
+
+  Usage:
+
+    {% include '@theme/components/form-with-steps/form-with-steps.html.twig' with {
+      title: 'Création de compte'|trans,
+      steps: [
+        { label: 'Compte'|trans,        description: 'Email + mot de passe'|trans },
+        { label: 'Profil'|trans,        description: 'Nom + avatar'|trans },
+        { label: 'Confirmation'|trans },
+      ],
+      submitLabel: 'Créer le compte'|trans,
+    } %}
+
+  Events (dispatched on the <div.theme-form-with-steps>) :
+    form-with-steps:mount           — detail.{ stepCount, currentStep }
+    form-with-steps:step-change     — detail.{ currentStep, previousStep, totalSteps, direction }
+    form-with-steps:before-next     — detail.{ currentStep, nextStep, totalSteps } — cancellable
+    form-with-steps:before-previous — detail.{ currentStep, previousStep, totalSteps } — cancellable
+    form-with-steps:before-submit   — detail.{ currentStep, totalSteps } — cancellable
+    form-with-steps:skip            — detail.{ currentStep, totalSteps }
+-#}
+
+{%- set htmlId             = htmlId             | default('theme-form-with-steps-' ~ random()) -%}
+{%- set steps              = steps              | default([]) -%}
+{%- set currentStep        = currentStep        | default(1) -%}
+{%- set totalSteps         = steps | length -%}
+{%- set allowSkip          = allowSkip          | default(false) -%}
+{%- set submitLabel        = submitLabel        | default('theme.form.with-steps.actions.submit'|trans) -%}
+{%- set nextLabel          = nextLabel          | default('theme.form.with-steps.actions.next'|trans) -%}
+{%- set previousLabel      = previousLabel      | default('theme.form.with-steps.actions.previous'|trans) -%}
+{%- set skipLabel          = skipLabel          | default('theme.form.with-steps.actions.skip'|trans) -%}
+{%- set ariaLiveAnnounce   = ariaLiveAnnounce   | default(true) -%}
+{%- set stepperOrientation = stepperOrientation | default('horizontal') -%}
+{%- set stepperSize        = stepperSize        | default('md') -%}
+{%- set className          = className          | default('') -%}
+
+{%- set _classes = ['theme-form-with-steps'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="stepper form-with-steps"
+  data-stepper-current-step-value="{{ currentStep }}"
+  data-stepper-total-steps-value="{{ totalSteps }}"
+  data-form-with-steps-current-step-value="{{ currentStep }}"
+  data-form-with-steps-total-steps-value="{{ totalSteps }}"
+  data-form-with-steps-allow-skip-value="{{ allowSkip ? 'true' : 'false' }}"
+  aria-labelledby="{{ htmlId }}-title"
+>
+  {% include '@theme/components/typography/typography.html.twig' with { as: 'h2', variant: 'h2', content: title, htmlId: htmlId ~ '-title', className: 'theme-form-with-steps__title' } only %}
+
+  {# Stepper Ring 2 compose — visual step indicator. Cross-controller compose : Stepper observes
+     the same `currentStepValue` Stimulus value via shared data attribute. #}
+  {% include '@theme/components/stepper/stepper.html.twig' with {
+    htmlId: htmlId ~ '-stepper',
+    steps: steps,
+    currentStep: currentStep,
+    totalSteps: totalSteps,
+    orientation: stepperOrientation,
+    size: stepperSize,
+    label: 'theme.form.with-steps.aria.indicator'|trans({ '{currentStep}': currentStep, '{totalSteps}': totalSteps }),
+    className: 'theme-form-with-steps__indicator',
+    controllerless: true,
+  } only %}
+
+  {# N step bodies — only the current step is visible. The form-with-steps controller stamps the
+     `hidden` attribute on all but the current step on connect + on step transitions. #}
+  <div class="theme-form-with-steps__steps">
+    {%- for step in steps -%}
+      {%- set idx = loop.index -%}
+      <fieldset
+        class="theme-form-with-steps__step"
+        data-form-with-steps-target="step"
+        data-step-index="{{ idx }}"
+        {%- if idx != currentStep %} hidden{% endif -%}
+        aria-labelledby="{{ htmlId }}-legend-{{ idx }}"
+      >
+        <legend id="{{ htmlId }}-legend-{{ idx }}" class="sr-only">{{ 'theme.form.with-steps.aria.fieldset-label'|trans({ '{n}': idx, '{label}': step.label }) }}</legend>
+        {%- if idx == 1 -%}
+          {%- block step_1 -%}{%- endblock -%}
+        {%- elseif idx == 2 -%}
+          {%- block step_2 -%}{%- endblock -%}
+        {%- elseif idx == 3 -%}
+          {%- block step_3 -%}{%- endblock -%}
+        {%- elseif idx == 4 -%}
+          {%- block step_4 -%}{%- endblock -%}
+        {%- elseif idx == 5 -%}
+          {%- block step_5 -%}{%- endblock -%}
+        {%- endif -%}
+      </fieldset>
+    {%- endfor -%}
+  </div>
+
+  {%- if ariaLiveAnnounce -%}
+    {# Live region for step transition announcements ("Étape 2 sur 4"). Polite to avoid
+       interrupting screen reader narration of the new step's first input label. #}
+    <div
+      class="theme-form-with-steps__announcer sr-only"
+      data-form-with-steps-target="announcer"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      {{ 'theme.form.with-steps.aria.step-of'|trans({ '{currentStep}': currentStep, '{totalSteps}': totalSteps }) }}
+    </div>
+  {%- endif -%}
+
+  {# 3-CTA footer cluster per Forms family doctrine §8 (Skip ghost inline-start · Previous outline mid ·
+     Next/Submit primary inline-end). Skip is hidden unless allowSkip=true ; Previous hidden on step 1 ;
+     Submit (type="submit") replaces Next on last step. The form-with-steps controller stamps `hidden`
+     on the per-state CTAs at connect + on step transitions. #}
+  {%- set _skipAttrs = { 'data-form-with-steps-target': 'skipBtn', 'data-action': 'click->form-with-steps#skip' } -%}
+  {%- if not allowSkip -%}{%- set _skipAttrs = _skipAttrs | merge({ hidden: 'hidden' }) -%}{%- endif -%}
+  {%- set _prevAttrs = { 'data-form-with-steps-target': 'prevBtn', 'data-action': 'click->form-with-steps#previous' } -%}
+  {%- if currentStep == 1 -%}{%- set _prevAttrs = _prevAttrs | merge({ hidden: 'hidden' }) -%}{%- endif -%}
+  {%- set _nextAttrs = { 'data-form-with-steps-target': 'nextBtn', 'data-action': 'click->form-with-steps#next' } -%}
+  {%- if currentStep == totalSteps -%}{%- set _nextAttrs = _nextAttrs | merge({ hidden: 'hidden' }) -%}{%- endif -%}
+  {%- set _submitAttrs = { 'data-form-with-steps-target': 'submitBtn' } -%}
+  {%- if currentStep != totalSteps -%}{%- set _submitAttrs = _submitAttrs | merge({ hidden: 'hidden' }) -%}{%- endif -%}
+  <div class="theme-form-with-steps__footer">
+    {% include '@theme/components/button/button.html.twig' with {
+      label: skipLabel,
+      variant: 'ghost',
+      className: 'theme-form-with-steps__skip',
+      attrs: _skipAttrs,
+    } only %}
+    <div class="theme-form-with-steps__nav">
+      {% include '@theme/components/button/button.html.twig' with {
+        label: previousLabel,
+        variant: 'outline',
+        attrs: _prevAttrs,
+      } only %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: nextLabel,
+        variant: 'primary',
+        attrs: _nextAttrs,
+      } only %}
+      {% include '@theme/components/button/button.html.twig' with {
+        label: submitLabel,
+        variant: 'primary',
+        type: 'submit',
+        attrs: _submitAttrs,
+      } only %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+/*
+ * Error-503 — "Service unavailable" page (Ring 3 S3.1c).
+ *
+ * Same composition doctrine. Icon `alert-triangle` (in curated 30-set, direct
+ * match). Marker class only.
+ */
+
+.theme-error-503 {
+  /* Marker class — Empty + shell composition does the heavy lifting. */
+}

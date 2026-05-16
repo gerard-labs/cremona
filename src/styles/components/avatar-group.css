@@ -1,0 +1,63 @@
+/*
+ * AvatarGroup compound — visual stack of N Avatars + overflow indicator.
+ *
+ * Pure CSS — 0 controller. Layout via inline-flex with negative
+ * inline-start margin on every child after the first ; the visual stack
+ * grows on the inline-end edge, clipped by the parent box (or wraps if
+ * the consumer's container is too narrow).
+ *
+ * The overlap distance is 25 % of the avatar size (a fraction of the
+ * --theme-avatar-size custom prop owned by Avatar). At 40 px (md) that's
+ * 10 px — enough overlap to stack-read while keeping each avatar's edge
+ * visible. The trailing `+N` indicator uses the same layout, plus a
+ * bg-sunken background + tertiary text to read as "rest" (not a person).
+ *
+ * Each avatar gets a 2 px solid border in --color-bg-base so adjacent
+ * avatars visually separate even on dense palettes. Border is content-box
+ * so it carves out of the avatar's circle without changing the box.
+ *
+ * Logical CSS throughout — `inline-start` flips automatically in RTL ;
+ * the stack grows visually right in LTR, visually left in RTL.
+ *
+ * No new tokens.
+ */
+
+.theme-avatar-group {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  isolation: isolate;
+}
+
+.theme-avatar-group > .theme-avatar {
+  border: 2px solid var(--color-bg-base);
+  box-sizing: content-box;
+  /* `relative` establishes the stacking context for the overlap below. */
+  position: relative;
+}
+
+/* Negative inline-start margin = overlap. The first child stays flush ;
+   each subsequent child slides 25 % of its size on top of the previous.
+   Later siblings overlap earlier ones via CSS source order — visually
+   equivalent for the common case, no per-child z-index bookkeeping. */
+.theme-avatar-group > .theme-avatar + .theme-avatar {
+  margin-inline-start: calc(var(--theme-avatar-size) * -0.25);
+}
+
+/* --- Overflow indicator (+N) ----------------------------------------- */
+.theme-avatar-group__more {
+  background: var(--color-bg-sunken);
+  color: var(--color-text-tertiary);
+  border-color: var(--color-bg-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-avatar-group__more-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  letter-spacing: 0;
+  font-feature-settings: "tnum";
+}

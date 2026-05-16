@@ -1,0 +1,66 @@
+{#-
+  Nav-MobileDrawer — mobile slide-from-edge nav drawer (Ring 3 S3.2).
+
+  Composes Drawer Ring 2. Triggered by Nav-Header's hamburger button via
+  cross-controller compose (`data-controller="drawer"` on hamburger +
+  matching `data-drawer-target-value` pointing at THIS drawer's htmlId).
+
+  Parameters:
+    htmlId     (string, required)   — must match Nav-Header's mobileTriggerControls
+    edge       (string, optional)   — 'start' (default) | 'end'
+    ariaLabel  (string, optional)
+    sections   (array, required)
+    user       (object, optional)
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-nav-mobile-drawer-' ~ random()) -%}
+{%- set edge      = edge      | default('start') -%}
+{%- set ariaLabel = ariaLabel | default('theme.nav.mobile-drawer.aria.label'|trans) -%}
+{%- set user      = user      | default(null) -%}
+
+{%- set _classes = ['theme-drawer', 'theme-nav-mobile-drawer'] -%}
+
+<dialog class="{{ _classes | join(' ') }}"
+        id="{{ htmlId }}"
+        data-controller="drawer"
+        data-drawer-edge-value="{{ edge }}"
+        aria-label="{{ ariaLabel }}">
+  <header class="theme-nav-mobile-drawer__header">
+    {%- if user -%}
+      <div class="theme-nav-mobile-drawer__user">
+        {% include '@theme/components/avatar/avatar.html.twig' with { src: user.avatarUrl, alt: '', size: 'md' } only %}
+        <div class="theme-nav-mobile-drawer__user-meta">
+          <strong>{{ user.name }}</strong>
+          <span>{{ user.role }}</span>
+        </div>
+      </div>
+    {%- endif -%}
+    {% include '@theme/components/button/button.html.twig' with {
+      variant: 'ghost',
+      iconLeading: 'x',
+      ariaLabel: 'theme.nav.mobile-drawer.close'|trans,
+      className: 'theme-nav-mobile-drawer__close',
+      attrs: { 'data-action': 'click->drawer#close' },
+    } only %}
+  </header>
+
+  <nav class="theme-nav-mobile-drawer__sections" aria-label="{{ ariaLabel }}">
+    {%- for section in sections -%}
+      <section class="theme-nav-mobile-drawer__section">
+        {%- if section.heading -%}
+          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: section.heading, className: 'theme-nav-mobile-drawer__section-heading' } only %}
+        {%- endif -%}
+        <ul class="theme-nav-mobile-drawer__section-items">
+          {%- for item in section.items -%}
+            <li>
+              <a href="{{ item.href }}" class="theme-nav-mobile-drawer__item"{% if item.current %} aria-current="page"{% endif %}>
+                {%- if item.icon -%}{% include '@theme/components/icon/icon.html.twig' with { name: item.icon } %}{%- endif -%}
+                <span>{{ item.label }}</span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endfor -%}
+  </nav>
+</dialog>

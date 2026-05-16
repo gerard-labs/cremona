@@ -1,0 +1,65 @@
+/*
+ * Onboarding-Checklist — setup checklist with progress (Ring 3 S3.2).
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-onboarding-checklist {
+  max-inline-size: 32rem;
+}
+
+.theme-onboarding-checklist__header {
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+.theme-onboarding-checklist__progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.theme-onboarding-checklist--complete .theme-onboarding-checklist__progress-text {
+  color: var(--color-success);
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-onboarding-checklist__progress {
+  inline-size: 100%;
+}
+
+.theme-onboarding-checklist__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+.theme-onboarding-checklist__item {
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-3);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-onboarding-checklist__item:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.theme-onboarding-checklist__label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  cursor: default;
+}
+
+.theme-onboarding-checklist__item-label {
+  font: var(--typography-body);
+  color: var(--color-text-primary);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-onboarding-checklist__item[data-completed="true"] .theme-onboarding-checklist__item-label {
+  color: var(--color-text-tertiary);
+  text-decoration: line-through;
+}

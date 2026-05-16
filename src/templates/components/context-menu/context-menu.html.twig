@@ -1,0 +1,84 @@
+{#-
+  ContextMenu — DropdownMenu's twin, opened by right-click (`contextmenu`
+  event) at the pointer coordinates instead of click on a visible trigger.
+
+  Composes Popover (positioning + animation + dismiss) AND DropdownMenu
+  (role="menu" + role="menuitem" + roving tabindex + Arrow nav +
+  Enter/Space activation + close-on-item + tab-out dismiss). The
+  context-menu controller adds:
+
+    1. `contextmenu` event listener on the `area` element (default: the
+       wrap itself; `parent` / `window` / a CSS selector also accepted).
+       On fire, `event.preventDefault()` suppresses the native browser
+       context menu in that region — accept the trade-off, document it
+       (loss of native back/forward/inspect inside the area).
+    2. Phantom trigger — a 0×0 `<span>` positioned `position: fixed` at
+       (`event.clientX`, `event.clientY`) at the moment of contextmenu.
+       Floating UI computes the popover position relative to this phantom,
+       so all the existing flip / shift / autoUpdate logic from Popover
+       applies unchanged. ZERO modification to the locked-in Popover code.
+
+  Per WAI-ARIA APG "Menu (right-click)" doctrine: same keyboard / SR
+  semantics as DropdownMenu — `role="menu"` + `role="menuitem"` items,
+  Arrow Up/Down (cyclic) + Home/End + Enter/Space + Esc.
+
+  Parameters:
+    htmlId      (string, optional) — auto-generated. Stamped on content.
+    area        (string, optional) — 'self' (default) | 'parent' | 'window'
+                                     | a CSS selector.
+                                     Where right-clicks open the menu.
+    placement   (string, optional) — Floating UI placement (default
+                                     'bottom-start' — typical context-menu
+                                     idiom: open down-and-to-inline-start
+                                     of the click point).
+    offset      (int, optional)    — gap from the phantom trigger in px
+                                     (default 0 — touches the click point).
+    className   (string, optional) — extra classes on the wrap.
+
+  Blocks:
+    items (required) — N Item.html.twig embeds (with `as: 'div'`) and
+                       optional `<hr class="theme-dropdown-menu__separator">`
+                       dividers + `<div class="theme-dropdown-menu__group-label">`
+                       labels. The dropdown-menu controller stamps
+                       role="menuitem" + tabindex on each automatically.
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-context-menu-' ~ random()) -%}
+{%- set area      = area      | default('self') -%}
+{%- set placement = placement | default('bottom-start') -%}
+{%- set offset    = offset    | default(0) -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-popover', 'theme-dropdown-menu', 'theme-context-menu'] -%}
+{%- if className %}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set contextMenuHtmlId = htmlId -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="popover dropdown-menu context-menu"
+  data-action="contextmenu->context-menu#openAt keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="{{ offset }}"
+  data-popover-open-value="false"
+  data-context-menu-area-value="{{ area }}"
+>
+  <span
+    class="theme-context-menu__phantom"
+    data-popover-target="trigger"
+    data-context-menu-target="phantom"
+    aria-hidden="true"
+  ></span>
+
+  <div
+    id="{{ htmlId }}"
+    class="theme-popover__content theme-dropdown-menu__content theme-context-menu__content"
+    data-popover-target="content"
+    data-state="closed"
+    data-placement="{{ placement }}"
+    role="menu"
+    hidden
+  >
+    {%- block items -%}{%- endblock -%}
+  </div>
+</div>

@@ -1,0 +1,213 @@
+{#-
+  Auth-Register — registration pattern (Ring 3 S3.1).
+
+  Composes _auth-shell + Field + Input + Button + Checkbox + Alert (and
+  Empty for the success state). Pure server-rendered form (OQ-55) — no
+  Stimulus controller.
+
+  See `docs/specs/ring3/Auth-Register.md` for the full API + a11y + state
+  documentation.
+-#}
+
+{%- set title              = title              | default('theme.auth.register.title'|trans) -%}
+{%- set subtitle           = subtitle           | default('theme.auth.register.subtitle'|trans) -%}
+{%- set formAction         = formAction         | default('#') -%}
+{%- set csrfToken          = csrfToken          | default(null) -%}
+{%- set csrfFieldName      = csrfFieldName      | default('_token') -%}
+{%- set nameLabel          = nameLabel          | default('theme.auth.register.name'|trans) -%}
+{%- set namePlaceholder    = namePlaceholder    | default('theme.auth.register.name-placeholder'|trans) -%}
+{%- set nameValue          = nameValue          | default(null) -%}
+{%- set nameError          = nameError          | default(null) -%}
+{%- set emailLabel         = emailLabel         | default('theme.auth.register.email'|trans) -%}
+{%- set emailPlaceholder   = emailPlaceholder   | default('theme.auth.register.email-placeholder'|trans) -%}
+{%- set emailValue         = emailValue         | default(null) -%}
+{%- set emailError         = emailError         | default(null) -%}
+{%- set passwordLabel      = passwordLabel      | default('theme.auth.register.password'|trans) -%}
+{%- set passwordPlaceholder= passwordPlaceholder| default('theme.auth.register.password-placeholder'|trans) -%}
+{%- set passwordError      = passwordError      | default(null) -%}
+{%- set passwordHelp       = passwordHelp       | default('theme.auth.register.password-help'|trans) -%}
+{%- set termsLabel         = termsLabel         | default('theme.auth.register.terms'|trans) -%}
+{%- set termsError         = termsError         | default(null) -%}
+{%- set termsChecked       = termsChecked       | default(false) -%}
+{%- set submitLabel        = submitLabel        | default('theme.auth.register.submit'|trans) -%}
+{%- set loading            = loading            | default(false) -%}
+{%- set hasAccountQuestion = hasAccountQuestion | default('theme.auth.register.has-account'|trans) -%}
+{%- set loginHref          = loginHref          | default(null) -%}
+{%- set loginLabel         = loginLabel         | default('theme.auth.register.login'|trans) -%}
+{%- set globalError        = globalError        | default(null) -%}
+{%- set successState       = successState       | default(false) -%}
+{%- set successTitle       = successTitle       | default('theme.auth.register.success.title'|trans) -%}
+{%- set successBody        = successBody        | default('theme.auth.register.success.body'|trans) -%}
+{%- set successResendHref  = successResendHref  | default(null) -%}
+{%- set successResendLabel = successResendLabel | default('theme.auth.register.success.resend'|trans) -%}
+{%- set htmlId             = htmlId             | default('theme-auth-register') -%}
+{%- set className          = className          | default('') -%}
+
+{%- set _formClasses = ['theme-auth-register'] -%}
+{%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _state = 'default' -%}
+{%- if successState -%}{%- set _state = 'success' -%}
+{%- elseif loading -%}{%- set _state = 'loading' -%}
+{%- elseif globalError or nameError or emailError or passwordError or termsError -%}{%- set _state = 'error' -%}
+{%- endif -%}
+
+{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+  title: title,
+  subtitle: subtitle,
+  htmlId: htmlId,
+  variant: 'default',
+} %}
+  {% block content %}
+    {% if successState %}
+      {% embed '@theme/components/empty/empty.html.twig' with {
+        title: successTitle,
+        body: successBody,
+        icon: 'mail',
+        size: 'md',
+        titleLevel: 'h2',
+        htmlId: htmlId ~ '-success',
+      } %}
+        {% if successResendHref %}
+          {% block actions %}
+            {% include '@theme/components/button/button.html.twig' with {
+              label: successResendLabel,
+              variant: 'secondary',
+              size: 'md',
+              href: successResendHref,
+            } %}
+          {% endblock %}
+        {% endif %}
+      {% endembed %}
+    {% else %}
+      <form
+        class="{{ _formClasses | join(' ') }}"
+        action="{{ formAction }}"
+        method="post"
+        novalidate
+        data-state="{{ _state }}"
+        {%- if loading %} data-loading="true"{% endif -%}
+      >
+        {% if globalError %}
+          {% include '@theme/components/alert/alert.html.twig' with {
+            variant: 'danger',
+            tone: 'soft',
+            body: globalError,
+            htmlId: htmlId ~ '-global-error',
+          } %}
+        {% endif %}
+
+        {% if csrfToken %}
+          <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
+        {% endif %}
+
+        {% embed '@theme/components/field/field.html.twig' with {
+          label: nameLabel,
+          htmlId: htmlId ~ '-name',
+          required: true,
+          error: nameError,
+        } %}
+          {% block control %}
+            {% include '@theme/components/input/input.html.twig' with {
+              htmlId: fieldHtmlId,
+              describedBy: fieldDescribedBy,
+              invalid: fieldInvalid,
+              required: fieldRequired,
+              disabled: fieldDisabled,
+              type: 'text',
+              name: 'name',
+              value: nameValue,
+              placeholder: namePlaceholder,
+              autocomplete: 'name',
+            } %}
+          {% endblock %}
+        {% endembed %}
+
+        {% embed '@theme/components/field/field.html.twig' with {
+          label: emailLabel,
+          htmlId: htmlId ~ '-email',
+          required: true,
+          error: emailError,
+        } %}
+          {% block control %}
+            {% include '@theme/components/input/input.html.twig' with {
+              htmlId: fieldHtmlId,
+              describedBy: fieldDescribedBy,
+              invalid: fieldInvalid,
+              required: fieldRequired,
+              disabled: fieldDisabled,
+              type: 'email',
+              name: 'email',
+              value: emailValue,
+              placeholder: emailPlaceholder,
+              autocomplete: 'email',
+              inputmode: 'email',
+              spellcheck: 'false',
+            } %}
+          {% endblock %}
+        {% endembed %}
+
+        {% embed '@theme/components/field/field.html.twig' with {
+          label: passwordLabel,
+          htmlId: htmlId ~ '-password',
+          required: true,
+          help: passwordHelp,
+          error: passwordError,
+        } %}
+          {% block control %}
+            {% include '@theme/components/input/input.html.twig' with {
+              htmlId: fieldHtmlId,
+              describedBy: fieldDescribedBy,
+              invalid: fieldInvalid,
+              required: fieldRequired,
+              disabled: fieldDisabled,
+              type: 'password',
+              name: 'password',
+              placeholder: passwordPlaceholder,
+              autocomplete: 'new-password',
+              minlength: 8,
+            } %}
+          {% endblock %}
+        {% endembed %}
+
+        <div class="theme-auth-register__terms">
+          {% include '@theme/components/checkbox/checkbox.html.twig' with {
+            name: 'terms',
+            htmlId: htmlId ~ '-terms',
+            value: '1',
+            checked: termsChecked,
+            label: termsLabel,
+            required: true,
+            invalid: termsError ? true : false,
+            describedBy: termsError ? (htmlId ~ '-terms-error') : null,
+            size: 'sm',
+          } %}
+          {% if termsError %}
+            <p id="{{ htmlId }}-terms-error" class="theme-field__error" role="alert" aria-live="polite">{{ termsError }}</p>
+          {% endif %}
+        </div>
+
+        {% include '@theme/components/button/button.html.twig' with {
+          label: submitLabel,
+          variant: 'primary',
+          size: 'md',
+          type: 'submit',
+          loading: loading,
+          fullWidth: true,
+        } %}
+      </form>
+    {% endif %}
+  {% endblock %}
+
+  {% if loginHref %}
+    {% block footer %}
+      <span class="theme-auth-register__footer-question">{{ hasAccountQuestion }}</span>
+      {% include '@theme/components/button/button.html.twig' with {
+        label: loginLabel,
+        variant: 'link',
+        size: 'md',
+        href: loginHref,
+      } %}
+    {% endblock %}
+  {% endif %}
+{% endembed %}

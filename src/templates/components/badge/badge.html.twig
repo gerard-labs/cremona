@@ -1,0 +1,59 @@
+{#-
+  Badge — status / count chip.
+
+  Parameters:
+    variant     (string, optional) default (default) | primary | success | warning | danger | info
+    size        (string, optional) sm | md (default)
+    label       (string, optional) text content; required unless dot=true OR count is set
+    leadingIcon (string, optional) Lucide icon name from src/assets/icons/ — rendered before label
+    count       (int,    optional) replaces label with numeric formatting (>99 → "99+")
+    soft        (bool,   optional) default false. true → uses the *-soft pair (lower-contrast pill)
+    dot         (bool,   optional) default false. true → dot-only badge (no label/count/icon);
+                                   `label` is used as the aria-label
+    className   (string, optional)
+-#}
+
+{%- set variant     = variant     | default('default') -%}
+{%- set size        = size        | default('md') -%}
+{%- set label       = label       | default(null) -%}
+{%- set leadingIcon = leadingIcon | default(null) -%}
+{%- set count       = count       | default(null) -%}
+{%- set soft        = soft        | default(false) -%}
+{%- set dot         = dot         | default(false) -%}
+{%- set className   = className   | default('') -%}
+{%- set attrs       = attrs       | default({}) -%}
+
+{%- set _classes = ['theme-badge'] -%}
+{%- if dot -%}{%- set _classes = _classes | merge(['theme-badge--dot']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- if count is not null -%}
+  {%- set _displayLabel = count > 99 ? '99+' : count|string -%}
+{%- else -%}
+  {%- set _displayLabel = label -%}
+{%- endif -%}
+
+{%- if dot -%}
+<span
+  class="{{ _classes | join(' ') }}"
+  data-variant="{{ variant }}"
+  data-size="{{ size }}"
+  {%- if soft %} data-soft="true"{% endif %}
+  role="status"
+  aria-label="{{ label }}"
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+></span>
+{%- else -%}
+<span
+  class="{{ _classes | join(' ') }}"
+  data-variant="{{ variant }}"
+  data-size="{{ size }}"
+  {%- if soft %} data-soft="true"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {%- if leadingIcon -%}
+    {% include '@theme/components/icon/icon.html.twig' with { name: leadingIcon, decorative: true, size: 'xs' } %}
+  {%- endif -%}
+  <span>{{ _displayLabel }}</span>
+</span>
+{%- endif -%}

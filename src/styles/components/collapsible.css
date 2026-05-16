@@ -1,0 +1,129 @@
+/*
+ * Collapsible — show/hide disclosure region.
+ *
+ * Animation doctrine (OQ-16, 14-motion-baseline §6):
+ *   The content's `display: grid` with `grid-template-rows: 0fr → 1fr`
+ *   transition is the canonical CSS-only height animation. The inner child
+ *   carries `overflow: hidden` so content clips during the transition.
+ *
+ *   Why grid-rows instead of `height: 0 → auto`?
+ *     `height: auto` is NOT animatable (the browser doesn't know the target
+ *     height until layout). `grid-template-rows: 0fr → 1fr` IS animatable
+ *     because both endpoints are unitless fractions — the browser resolves
+ *     them at layout time and the transition runs smoothly.
+ *
+ *   Native `<details>` doesn't animate without JS interception (Chromium's
+ *   content-visibility hint makes the closed state instant-collapse).
+ *   Custom `<button aria-expanded>` + content gives us the CSS-only path.
+ */
+
+.theme-collapsible {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  /* Border isolates the trigger surface; consumer can override at parent
+     (Accordion will collapse adjacent borders for the segmented look). */
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-elevated);
+  overflow: hidden;
+}
+
+/* ----- trigger button --------------------------------------------- */
+
+.theme-collapsible__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-4);
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--color-text-primary);
+  font: var(--typography-label);
+  font-weight: var(--font-weight-semibold);
+  text-align: start;
+  cursor: pointer;
+  inline-size: 100%;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-collapsible__trigger:hover {
+  background-color: var(--color-bg-sunken);
+}
+
+.theme-collapsible__trigger:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 var(--ring-width) var(--color-border-focus);
+}
+
+.theme-collapsible__label {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* ----- chevron rotation on open ----------------------------------- */
+
+.theme-collapsible__chevron {
+  flex-shrink: 0;
+  transition: transform var(--motion-duration-base) var(--motion-easing-standard);
+  /* Chevron points down by default; rotates 180° to point up when open. */
+}
+
+.theme-collapsible__trigger[aria-expanded="true"] .theme-collapsible__chevron {
+  transform: rotate(180deg);
+}
+
+/* Logical CSS: chevron rotation is hue-agnostic — the same 180° works in
+   both LTR and RTL because chevron-down is in the bidi-flip whitelist
+   (icon component flips its base, the rotation here flips on top). */
+
+/* ----- content ---------------------------------------------------- */
+
+.theme-collapsible__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.theme-collapsible__content[data-state="open"] {
+  grid-template-rows: 1fr;
+}
+
+.theme-collapsible__content-inner {
+  /* `min-block-size: 0` allows the grid track to actually collapse to 0
+     instead of staying at content's intrinsic height. */
+  min-block-size: 0;
+  overflow: hidden;
+  padding-block: 0;
+  padding-inline: var(--spacing-4);
+}
+
+/* Padding becomes visible only when open — otherwise the closed state would
+   show a sliver of empty space at the top/bottom. */
+.theme-collapsible__content[data-state="open"] .theme-collapsible__content-inner {
+  padding-block: var(--spacing-3);
+  /* Border between trigger and content when open. */
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+/* Body content typography — paragraphs inside content inherit standard body
+   font + line-height; consumer can override with .theme-typography wrappers. */
+.theme-collapsible__content-inner > * + * {
+  margin-block-start: var(--spacing-2);
+}
+
+.theme-collapsible__content-inner p {
+  margin: 0;
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+}
+
+/* ----- touch hardening -------------------------------------------- */
+
+@media (pointer: coarse) {
+  .theme-collapsible__trigger {
+    min-block-size: 44px;
+  }
+}

@@ -1,0 +1,66 @@
+{#-
+  ActivityFeed — time-bucketed activity stream (Ring 3 S3.2).
+
+  Compose Avatar + Card-shape container + Day.js relative-time. Bucket
+  groups : today / yesterday / this-week / older (consumer pre-computes
+  bucket key per entry).
+
+  Parameters:
+    htmlId    (string, optional)
+    title     (string, required)
+    entries   (array, required)  — [{id, avatarUrl, actor, verb, target, body, timestamp, relativeTime, bucket}]
+                                    — relativeTime is consumer-computed via
+                                      formatRelative() from format-date.js
+                                      OR can be left for client-side render.
+    emptyState (bool, optional)  — default true ; show Empty primitive if entries=[]
+-#}
+
+{%- set htmlId     = htmlId     | default('theme-activity-feed-' ~ random()) -%}
+{%- set entries    = entries    | default([]) -%}
+{%- set emptyState = emptyState | default(true) -%}
+
+{%- set BUCKETS = ['today', 'yesterday', 'this-week', 'older'] -%}
+
+<section class="theme-activity-feed" id="{{ htmlId }}" aria-labelledby="{{ htmlId }}-title">
+  <header class="theme-activity-feed__header">
+    {% include '@theme/components/typography/typography.html.twig' with { as: 'h2', variant: 'h2', content: title, htmlId: htmlId ~ '-title', className: 'theme-activity-feed__title' } only %}
+  </header>
+
+  {%- if entries|length == 0 and emptyState -%}
+    <div class="theme-activity-feed__empty">
+      {% include '@theme/components/empty/empty.html.twig' with {
+        size: 'md',
+        icon: 'star',
+        title: 'theme.activity-feed.empty.title'|trans,
+        body: 'theme.activity-feed.empty.body'|trans,
+      } %}
+    </div>
+  {%- else -%}
+    <div class="theme-activity-feed__buckets">
+      {%- for bucketKey in BUCKETS -%}
+        {%- set bucketEntries = entries | filter(e => e.bucket == bucketKey) -%}
+        {%- if bucketEntries|length > 0 -%}
+          <section class="theme-activity-feed__bucket">
+            {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: ('theme.activity-feed.bucket.' ~ bucketKey)|trans, className: 'theme-activity-feed__bucket-heading' } only %}
+            <ul class="theme-activity-feed__entries">
+              {%- for entry in bucketEntries -%}
+                <li class="theme-activity-feed__entry">
+                  {% include '@theme/components/avatar/avatar.html.twig' with { src: entry.avatarUrl, alt: '', size: 'md' } only %}
+                  <div class="theme-activity-feed__entry-body">
+                    <p class="theme-activity-feed__entry-line">
+                      <strong>{{ entry.actor }}</strong> {{ entry.verb }} <a href="{{ entry.targetHref|default('#') }}">{{ entry.target }}</a>
+                    </p>
+                    {%- if entry.body -%}
+                      <p class="theme-activity-feed__entry-text">{{ entry.body }}</p>
+                    {%- endif -%}
+                    <time class="theme-activity-feed__entry-time" datetime="{{ entry.timestamp }}">{{ entry.relativeTime }}</time>
+                  </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </section>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>

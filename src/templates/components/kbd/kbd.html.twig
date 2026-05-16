@@ -1,0 +1,35 @@
+{#-
+  Kbd — keyboard chord visual. Renders one or more <kbd> elements wrapped
+  in an outer <kbd> chord (per MDN: nested <kbd> indicates a key part of
+  a longer combination).
+
+  Parameters:
+    keys      (array, required) list of key labels: ['Cmd', 'K'] or ['⌘', 'K']
+                                or a single string for one key.
+    separator (string, optional) visible separator between keys; default '+'.
+                                 Pass ' ' or '→' for sequence-style chords.
+    size      (string, optional) sm (default) | md
+    className (string, optional)
+-#}
+
+{%- set keys      = keys      | default([]) -%}
+{%- set separator = separator | default('+') -%}
+{%- set size      = size      | default('sm') -%}
+{%- set className = className | default('') -%}
+
+{# Normalize string-as-single-key into an array. #}
+{%- if keys is iterable -%}
+  {%- set _keys = keys -%}
+{%- else -%}
+  {%- set _keys = [keys] -%}
+{%- endif -%}
+
+{%- set _classes = ['theme-kbd-group'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<kbd class="{{ _classes | join(' ') }}" data-size="{{ size }}">
+{%- for k in _keys -%}
+<kbd class="theme-kbd" data-size="{{ size }}">{{ k }}</kbd>
+{%- if not loop.last -%}<span class="theme-kbd-sep" aria-hidden="true">{{ separator }}</span>{%- endif -%}
+{%- endfor -%}
+</kbd>

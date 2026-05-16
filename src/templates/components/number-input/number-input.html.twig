@@ -1,0 +1,104 @@
+{#-
+  NumberInput — touch-friendly +/- stepper around a native <input type="number">.
+
+  Composes Input visual envelope (same height/border/radius via reuse of
+  the .theme-input class on the inner input) + 2 unstyled `.theme-button`
+  ghost-style stepper buttons (decrement / increment). The buttons invoke
+  the input's native stepUp() / stepDown() so the browser respects min /
+  max / step (no JS reimplementation).
+
+  Per the OQ-mini NumberInput resolution sealed S2.6 :
+   - The <input type="number"> handles ALL keyboard semantics natively
+     (Arrow Up / Down on focus, type-to-edit, Tab).
+   - The +/- buttons are an explicit affordance for touch + mouse users
+     who don't reach for the keyboard.
+   - The controller mirrors disabled state on the buttons against the
+     input's min/max boundaries (button greys out at the edge).
+
+  Parameters:
+    name          (string, required)  form field name
+    htmlId        (string, optional)  input id ; required when paired with Field/Label
+    value         (number, optional)  initial value
+    min           (number, optional)  HTML min attr
+    max           (number, optional)  HTML max attr
+    step          (number, optional)  HTML step attr (default browser = 1)
+    placeholder   (string, optional)  placeholder text (consumer-resolved)
+    size          (string, optional)  sm | md (default — inherits density) | lg
+    required      (bool,   optional)
+    disabled      (bool,   optional)
+    readonly      (bool,   optional)
+    invalid       (bool,   optional)  Field forwards on validation error
+    describedBy   (string, optional)  Field wires help/error ids
+    decrementAria (string, optional)  accessible name for '−' button.
+                                       Defaults to 'theme.number-input.aria.decrement'|trans
+    incrementAria (string, optional)  accessible name for '+' button.
+                                       Defaults to 'theme.number-input.aria.increment'|trans
+    className     (string, optional)
+-#}
+
+{%- set name          = name          | default(null) -%}
+{%- set htmlId        = htmlId        | default(null) -%}
+{%- set value         = value         | default(null) -%}
+{%- set min           = min           | default(null) -%}
+{%- set max           = max           | default(null) -%}
+{%- set step          = step          | default(null) -%}
+{%- set placeholder   = placeholder   | default(null) -%}
+{%- set size          = size          | default('md') -%}
+{%- set required      = required      | default(false) -%}
+{%- set disabled      = disabled      | default(false) -%}
+{%- set readonly      = readonly      | default(false) -%}
+{%- set invalid       = invalid       | default(false) -%}
+{%- set describedBy   = describedBy   | default(null) -%}
+{%- set decrementAria = decrementAria | default('theme.number-input.aria.decrement'|trans) -%}
+{%- set incrementAria = incrementAria | default('theme.number-input.aria.increment'|trans) -%}
+{%- set className     = className     | default('') -%}
+
+{%- set _classes = ['theme-number-input'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="number-input"
+  data-size="{{ size }}"
+>
+  <button
+    type="button"
+    class="theme-number-input__btn theme-number-input__btn--decrement"
+    aria-label="{{ decrementAria }}"
+    data-number-input-target="decrement"
+    data-action="click->number-input#decrement"
+    {%- if disabled %} disabled{% endif %}
+  >
+    <span aria-hidden="true">−</span>
+  </button>
+  {%- set _inputAttrs = { 'data-number-input-target': 'input' } -%}
+  {%- if min is not null %}{%- set _inputAttrs = _inputAttrs | merge({ min: min }) -%}{%- endif -%}
+  {%- if max is not null %}{%- set _inputAttrs = _inputAttrs | merge({ max: max }) -%}{%- endif -%}
+  {%- if step is not null %}{%- set _inputAttrs = _inputAttrs | merge({ step: step }) -%}{%- endif -%}
+  {% include '@theme/components/input/input.html.twig' with {
+    type: 'number',
+    inputmode: 'numeric',
+    size: size,
+    name: name,
+    htmlId: htmlId,
+    value: value,
+    placeholder: placeholder,
+    required: required,
+    disabled: disabled,
+    readonly: readonly,
+    invalid: invalid,
+    describedBy: describedBy,
+    className: 'theme-number-input__input',
+    attrs: _inputAttrs,
+  } only %}
+  <button
+    type="button"
+    class="theme-number-input__btn theme-number-input__btn--increment"
+    aria-label="{{ incrementAria }}"
+    data-number-input-target="increment"
+    data-action="click->number-input#increment"
+    {%- if disabled %} disabled{% endif %}
+  >
+    <span aria-hidden="true">+</span>
+  </button>
+</div>

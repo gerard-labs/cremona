@@ -1,0 +1,117 @@
+{#-
+  RGPD-PreferencesCenter — RGPD granular consent preferences (Ring 3 S3.3b-2).
+
+  Composes Dialog Ring 2 size=lg + Switch Ring 1 per category. Controller
+  preferences-center (18th Ring 3, thin) tracks multi-category state +
+  dirty state + explicit Save button per OQ-NEW sealed (RGPD legal
+  intentional commit, NOT instant-save).
+
+  12th cross-controller compose instance : data-controller="dialog preferences-center".
+
+  Categories doctrine :
+    - essential : always-on (required=true, disabled=true) — strictly necessary cookies
+    - analytics : optional — traffic measurement
+    - marketing : optional — ad targeting
+    - functional : optional — UI preferences (theme, language, etc.)
+    - (custom keys consumer can add)
+
+  Parameters:
+    htmlId           (string, optional)
+    title            (string, optional, default 'Mes préférences cookies')
+    description      (string, optional, default RGPD explanation)
+    categories       (array, optional)  — [{ key, name, description, initialChecked, required }]
+                                         defaults to 4 standard categories
+    saveLabel        (string, optional)
+    cancelLabel      (string, optional)
+    footerInfo       (string, optional)  — fine-print at the bottom
+-#}
+
+{%- set htmlId      = htmlId      | default('theme-rgpd-preferences-center-' ~ random()) -%}
+{%- set title       = title       | default('theme.rgpd-preferences-center.title'|trans) -%}
+{%- set description = description | default('theme.rgpd-preferences-center.description'|trans) -%}
+{%- set saveLabel   = saveLabel   | default('theme.rgpd-preferences-center.button.save'|trans) -%}
+{%- set cancelLabel = cancelLabel | default('theme.rgpd-preferences-center.button.cancel'|trans) -%}
+{%- set footerInfo  = footerInfo  | default('theme.rgpd-preferences-center.footer-info'|trans) -%}
+
+{%- set categories = categories | default([
+  { key: 'essential', required: true,  initialChecked: true,
+    name: 'theme.rgpd-preferences-center.category.essential.name'|trans,
+    description: 'theme.rgpd-preferences-center.category.essential.description'|trans,
+    statusLabel: 'theme.rgpd-preferences-center.category.essential.status'|trans },
+  { key: 'analytics', required: false, initialChecked: false,
+    name: 'theme.rgpd-preferences-center.category.analytics.name'|trans,
+    description: 'theme.rgpd-preferences-center.category.analytics.description'|trans },
+  { key: 'marketing', required: false, initialChecked: false,
+    name: 'theme.rgpd-preferences-center.category.marketing.name'|trans,
+    description: 'theme.rgpd-preferences-center.category.marketing.description'|trans },
+  { key: 'functional', required: false, initialChecked: true,
+    name: 'theme.rgpd-preferences-center.category.functional.name'|trans,
+    description: 'theme.rgpd-preferences-center.category.functional.description'|trans },
+]) -%}
+
+{%- set _pcId = htmlId -%}
+
+{% embed '@theme/components/dialog/dialog.html.twig' with {
+  wrapId: htmlId,
+  htmlId: htmlId ~ '-dialog',
+  size: 'lg',
+  className: 'theme-rgpd-preferences-center',
+  closeButton: true,
+  closeAriaLabel: 'theme.dialog.aria.close'|trans,
+  closeOnEscape: true,
+  closeOnBackdropClick: true,
+  open: false,
+  controllerExtras: 'preferences-center',
+} %}
+  {% block title %}{{ title }}{% endblock %}
+
+  {% block body %}
+    <p class="theme-rgpd-preferences-center__intro">{{ description }}</p>
+
+    <div class="theme-rgpd-preferences-center__categories" role="list">
+      {% for category in categories %}
+        <div class="theme-rgpd-preferences-center__category{{ category.required ? ' theme-rgpd-preferences-center__category--required' }}"
+             role="listitem">
+          <div class="theme-rgpd-preferences-center__category-content">
+            <span class="theme-rgpd-preferences-center__category-name">{{ category.name }}</span>
+            <span class="theme-rgpd-preferences-center__category-description">{{ category.description }}</span>
+            {% if category.required %}
+              <span class="theme-rgpd-preferences-center__category-status">
+                {{ category.statusLabel | default('theme.rgpd-preferences-center.category.essential.status'|trans) }}
+              </span>
+            {% endif %}
+          </div>
+          <div class="theme-rgpd-preferences-center__category-control">
+            {# The controller reads each checkbox's `name` attr as the category key
+               + `disabled` attr as the required-marker. No additional data-* needed. #}
+            {% include '@theme/components/switch/switch.html.twig' with {
+              htmlId:      _pcId ~ '-' ~ category.key,
+              name:        category.key,
+              checked:     category.initialChecked,
+              disabled:    category.required,
+              ariaLabel:   category.name,
+            } only %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <p class="theme-rgpd-preferences-center__footer-info">{{ footerInfo }}</p>
+  {% endblock %}
+
+  {% block footer %}
+    {% include '@theme/components/button/button.html.twig' with {
+      label: cancelLabel,
+      variant: 'secondary',
+      attrs: { 'data-action': 'click->preferences-center#cancel click->dialog#close' },
+    } only %}
+    {% include '@theme/components/button/button.html.twig' with {
+      label: saveLabel,
+      variant: 'primary',
+      attrs: {
+        'data-preferences-center-target': 'saveButton',
+        'data-action': 'click->preferences-center#save click->dialog#close',
+      },
+    } only %}
+  {% endblock %}
+{% endembed %}

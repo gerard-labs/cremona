@@ -1,0 +1,177 @@
+{#-
+  Combobox — Search-as-you-type single-select listbox with an Input trigger
+  + aria-autocomplete="list" (WAI-ARIA APG "Combobox with listbox popup").
+
+  ComboboxController extends SelectController (per OQ-32 sealed S2.3b). The
+  shared mechanics — aria-activedescendant nav, hidden input form integration,
+  selection on Enter/click — come from Select. Combobox adds: an Input
+  trigger, on-input filter logic, an inline empty state, results-count
+  announcement via the shared #theme-announcer (per OQ-31), and tab-out
+  dismiss (mirror DropdownMenu OQ-27).
+
+  Composes:
+    - Popover (positioning + dismiss).
+    - combobox controller (filter + announce + select).
+    - Item visual envelope for each option (.theme-item).
+    - Input visual envelope for the trigger (.theme-input mirror).
+
+  Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter. For
+  async-loading / virtual-scroll / multi-select, a Phase 4 ADR can revisit.
+
+  Per OQ-31: empty state inline in listbox; shared #theme-announcer carries
+  results count via aria-live="polite".
+
+  Parameters:
+    name        (string,  required when used in a form) — hidden input name.
+    htmlId      (string,  optional)                     — auto-generated.
+    options     (array,   required)                     — [{value, label, disabled?}].
+    value       (string,  optional)                     — selected value (SSR pre-select).
+                                                          The input.value will display the
+                                                          matching option's label.
+    placeholder (string,  optional, recommended)        — text shown in the
+                                                          empty <input>. Per
+                                                          12-microcopy-tone §"Empty states":
+                                                          invitation-style
+                                                          ("Rechercher une langue…").
+    placement   (string,  optional)                     — Floating UI placement
+                                                          (default 'bottom-start').
+    size        (string,  optional)                     — sm | md (default —
+                                                          inherits --density-input-height)
+                                                          | lg.
+    disabled    (bool,    optional)                     — disables the input.
+    invalid     (bool,    optional)                     — error border (Field forwards).
+    describedBy (string,  optional)                     — Field wires this for
+                                                          help/error ids.
+    labelledBy  (string,  optional)                     — Field wires this for
+                                                          label id.
+    emptyMessage (string, optional)                     — message rendered when
+                                                          no result. Default
+                                                          uses theme.combobox.empty.default
+                                                          via the consumer's
+                                                          Twig translation
+                                                          (the kit ships an
+                                                          equivalent FR/EN key).
+                                                          Supports a "{query}"
+                                                          placeholder which
+                                                          will be replaced
+                                                          client-side by the
+                                                          controller.
+    className   (string,  optional).
+-#}
+
+{%- set htmlId       = htmlId       | default('theme-combobox-' ~ random()) -%}
+{%- set options      = options      | default([]) -%}
+{%- set value        = value        | default('') -%}
+{%- set placeholder  = placeholder  | default('') -%}
+{%- set placement    = placement    | default('bottom-start') -%}
+{%- set size         = size         | default('md') -%}
+{%- set disabled     = disabled     | default(false) -%}
+{%- set invalid      = invalid      | default(false) -%}
+{%- set name         = name         | default(null) -%}
+{%- set describedBy  = describedBy  | default(null) -%}
+{%- set labelledBy   = labelledBy   | default(null) -%}
+{%- set emptyMessage = emptyMessage | default('Aucun résultat pour « {query} »') -%}
+{%- set className    = className    | default('') -%}
+
+{%- set _classes = ['theme-popover', 'theme-combobox'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{# Resolve the initial input.value: matching option's label OR empty. #}
+{%- set _initialInputValue = '' -%}
+{%- for opt in options -%}
+  {%- if opt.value == value and value != '' -%}
+    {%- set _initialInputValue = opt.label -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{# Split the emptyMessage on the literal `{query}` placeholder so we can
+   render a <strong data-combobox-target="emptyQuery"> in the middle. The
+   controller writes the user's untrimmed query into that <strong> on
+   filter; the surrounding text stays consumer-localized. #}
+{%- set _emptyHead = emptyMessage | split('{query}') | first -%}
+{%- set _emptyTailParts = emptyMessage | split('{query}') -%}
+{%- set _emptyTail = _emptyTailParts | length > 1 ? _emptyTailParts | last : '' -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="popover combobox"
+  data-action="keydown.esc@window->popover#close keydown->combobox#keydown input->combobox#filter focus->combobox#openOnFocus click->combobox#onOptionClick"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="4"
+  data-popover-open-value="false"
+  data-combobox-value-value="{{ value }}"
+  data-combobox-placeholder-value="{{ placeholder }}"
+  data-combobox-query-value=""
+>
+  <div class="theme-combobox__wrap">
+    <input
+      type="text"
+      class="theme-combobox__input"
+      data-popover-target="trigger"
+      data-combobox-target="input"
+      data-size="{{ size }}"
+      role="combobox"
+      autocomplete="off"
+      spellcheck="false"
+      value="{{ _initialInputValue }}"
+      placeholder="{{ placeholder }}"
+      {%- if disabled %} disabled{% endif -%}
+      {%- if invalid %} aria-invalid="true"{% endif -%}
+      aria-autocomplete="list"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-controls="{{ htmlId }}-listbox"
+      {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
+      {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+    />
+    <span class="theme-combobox__chevron" aria-hidden="true">
+      {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down', size: 'sm', decorative: true } %}
+    </span>
+  </div>
+
+  {%- if name -%}
+    <input
+      type="hidden"
+      name="{{ name }}"
+      value="{{ value }}"
+      data-combobox-target="hiddenInput"
+    />
+  {%- endif -%}
+
+  <div
+    id="{{ htmlId }}-listbox"
+    class="theme-popover__content theme-combobox__listbox"
+    data-popover-target="content"
+    data-state="closed"
+    data-placement="{{ placement }}"
+    role="listbox"
+    {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
+    hidden
+  >
+    <div class="theme-combobox__options" data-combobox-target="optionsContainer">
+      {%- for opt in options -%}
+        {%- set _optDisabled = opt.disabled | default(false) -%}
+        {%- set _optSelected = opt.value == value and value != '' -%}
+        {% include '@theme/components/item/item.html.twig' with {
+          label: opt.label,
+          iconTrailing: _optSelected ? 'check' : null,
+          disabled: _optDisabled,
+          htmlId: htmlId ~ '-opt-' ~ loop.index,
+          className: 'theme-combobox__option',
+          attrs: {
+            'data-combobox-target': 'option',
+            'data-value': opt.value,
+            'data-hidden': 'false',
+            role: 'option',
+            'aria-selected': _optSelected ? 'true' : 'false',
+          },
+        } only %}
+      {%- endfor -%}
+    </div>
+    <div class="theme-combobox__empty" data-combobox-target="empty" hidden>
+      {{- _emptyHead -}}
+      <strong data-combobox-target="emptyQuery"></strong>
+      {{- _emptyTail -}}
+    </div>
+  </div>
+</div>

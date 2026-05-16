@@ -1,0 +1,73 @@
+{#-
+  ButtonGroup — container that sticks N Buttons together with collapsed
+  adjacent borders. Visual: a single "segmented" pill where each cell
+  is a real <button> (or <a>) with its own focus + click semantics.
+
+  Zero Stimulus controller. ButtonGroup is NOT a roving-tabindex pattern
+  (contrast with ToggleGroup) — each inner Button keeps its own Tab stop
+  because each fires a distinct action. The group is purely visual +
+  semantic (role="group" + aria-label).
+
+  Two usage patterns:
+
+  1. {% embed %} — the canonical Twig way, lets the consumer pass the
+     inner buttons via the `buttons` block:
+
+       {% embed '@theme/components/button-group/button-group.html.twig' with {
+         label: 'Actions du fichier'|trans, size: 'md',
+       } %}
+         {% block buttons %}
+           {% include '@theme/components/button/button.html.twig' with { label: 'Save'|trans } %}
+           {% include '@theme/components/button/button.html.twig' with { label: 'Cancel'|trans, variant: 'secondary' } %}
+         {% endblock %}
+       {% endembed %}
+
+  2. Raw HTML — the CSS contract works on any `<button class="theme-button">`
+     placed inside `<div class="theme-button-group" role="group">`:
+
+       <div class="theme-button-group" role="group" aria-label="...">
+         <button class="theme-button" data-variant="primary" ...>Save</button>
+         <button class="theme-button" data-variant="secondary" ...>Cancel</button>
+       </div>
+
+  Parameters:
+    label         (string, required) — aria-label for the group (every group MUST have an
+                                       accessible name; axe `aria-allowed-attr` + screen-reader UX).
+                                       Use `labelledById` instead if the label lives in another
+                                       element (a visible heading) that the group references.
+    labelledById  (string, optional) — id of an existing element that names the group;
+                                       overrides `label` when set.
+    orientation   (string, optional) — horizontal (default) | vertical
+    attached      (bool,   optional) — true (default) → collapsed adjacent borders, segmented look.
+                                       false → keep each Button standalone with a spacing gap.
+    size          (string, optional) — informational (not propagated automatically);
+                                       consumers pass `size` to each inner Button themselves.
+    className     (string, optional)
+
+  Block `buttons` (required when embedding):
+    N <button> or <a> elements with `class="theme-button"`. The CSS handles
+    border-radius collapsing + adjacent border removal — no extra attributes
+    are needed on the inner buttons themselves.
+-#}
+
+{%- set label        = label        | default(null) -%}
+{%- set labelledById = labelledById | default(null) -%}
+{%- set orientation  = orientation  | default('horizontal') -%}
+{%- set attached     = attached is defined ? attached : true -%}
+{%- set size         = size         | default(null) -%}
+{%- set className    = className    | default('') -%}
+
+{%- set _classes = ['theme-button-group'] -%}
+{%- if not attached -%}{%- set _classes = _classes | merge(['theme-button-group--detached']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  role="group"
+  data-orientation="{{ orientation }}"
+  {%- if size %} data-size="{{ size }}"{% endif -%}
+  {%- if labelledById %} aria-labelledby="{{ labelledById }}"
+  {%- elseif label %} aria-label="{{ label }}"{% endif -%}
+>
+  {%- block buttons -%}{%- endblock -%}
+</div>

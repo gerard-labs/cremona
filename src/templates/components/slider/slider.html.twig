@@ -1,0 +1,94 @@
+{#-
+  Slider — native <input type="range"> styled with kit tokens.
+
+  Doctrine (OQ-9, S1.3 session opening): single-thumb only. 100 % keyboard
+  native (Arrow Left/Right, Home, End, PageUp, PageDown), form-data complete,
+  Bluetooth keyboard friendly, touch drag native. Vendor-prefixed track + thumb
+  pseudos (::-webkit-slider-thumb, ::-moz-range-thumb) carry the visual style.
+  Zero Stimulus controller.
+
+  Dual-thumb / range mode / marks / tick labels → Ring 2 Compound (`RangeSlider`,
+  see manifest thirdPartyLibs.slider:noUiSlider candidate).
+
+  Two rendering modes:
+    1. `label` set        → <label class="theme-slider-row"> with header
+                            (label + optional value display via <output>).
+    2. `label` not set    → <span class="theme-slider-wrap"> bare layout
+                            (Field / DataTable composition).
+
+  Parameters (enumerated):
+    name             (string, optional)  — form field name
+    htmlId           (string, optional)  — id; required when paired with external Label
+    value            (string|number, optional)  — defaults to (min + max) / 2 (browser default)
+    min              (number, optional)  — defaults to 0
+    max              (number, optional)  — defaults to 100
+    step             (number, optional)  — defaults to 1
+    label            (string, optional)  — visible label; row mode if set
+    valueDisplay     (bool,   optional)  — show <output> in the row header with the current value
+    valueSuffix      (string, optional)  — unit appended to the value (e.g. " %", " px", " €")
+    size             (string, optional)  — sm (default — 4 px track, 14 px thumb) | md (6 / 18) | lg (8 / 22)
+    required         (bool,   optional)
+    disabled         (bool,   optional)
+    invalid          (bool,   optional)  — aria-invalid="true" + danger track tint
+    describedBy      (string, optional)  — space-separated ids for aria-describedby
+    ariaLabel        (string, optional)  — accessible name in bare mode
+    className        (string, optional)
+-#}
+
+{%- set name         = name         | default(null) -%}
+{%- set htmlId       = htmlId       | default(null) -%}
+{%- set value        = value        | default(null) -%}
+{%- set min          = min          | default(0) -%}
+{%- set max          = max          | default(100) -%}
+{%- set step         = step         | default(1) -%}
+{%- set label        = label        | default(null) -%}
+{%- set valueDisplay = valueDisplay | default(false) -%}
+{%- set valueSuffix  = valueSuffix  | default('') -%}
+{%- set size         = size         | default('sm') -%}
+{%- set required     = required     | default(false) -%}
+{%- set disabled     = disabled     | default(false) -%}
+{%- set invalid      = invalid      | default(false) -%}
+{%- set describedBy  = describedBy  | default(null) -%}
+{%- set ariaLabel    = ariaLabel    | default(null) -%}
+{%- set className    = className    | default('') -%}
+
+{%- set _rootClasses = [label ? 'theme-slider-row' : 'theme-slider-wrap'] -%}
+{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['theme-slider-row--disabled']) -%}{%- endif -%}
+{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['theme-slider-row--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _rootClasses = _rootClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _tag = label ? 'label' : 'span' -%}
+
+<{{ _tag }}
+  class="{{ _rootClasses | join(' ') }}"
+  data-size="{{ size }}"
+  {%- if disabled %} data-state="disabled"{% endif -%}
+>
+  {%- if label -%}
+    <span class="theme-slider-row__header">
+      <span class="theme-slider-row__label">{{ label }}</span>
+      {%- if required -%}
+        <span class="theme-slider-row__required" aria-hidden="true">*</span>
+      {%- endif -%}
+      {%- if valueDisplay -%}
+        <output class="theme-slider-row__value"{% if htmlId %} for="{{ htmlId }}"{% endif %}>{{ value is not null ? value : ((min + max) / 2) }}{{ valueSuffix }}</output>
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+  <input
+    type="range"
+    class="theme-slider"
+    data-size="{{ size }}"
+    min="{{ min }}"
+    max="{{ max }}"
+    step="{{ step }}"
+    {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+    {%- if name %} name="{{ name }}"{% endif -%}
+    {%- if value is not null %} value="{{ value }}"{% endif -%}
+    {%- if required %} required aria-required="true"{% endif -%}
+    {%- if disabled %} disabled{% endif -%}
+    {%- if invalid %} aria-invalid="true"{% endif -%}
+    {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+    {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
+  >
+</{{ _tag }}>

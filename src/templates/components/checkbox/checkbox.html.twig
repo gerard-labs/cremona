@@ -1,0 +1,110 @@
+{#-
+  Checkbox — native HTML5 <input type="checkbox"> styled with kit tokens.
+
+  Two rendering modes:
+    1. `label` set        → <label class="theme-checkbox-row"> wraps input + box
+                            + label text. Click anywhere on the row toggles the
+                            checkbox. The visible <label> owns the association
+                            (no `for` attr needed; the input is its descendant).
+    2. `label` not set    → <span class="theme-checkbox-wrap"> bare layout
+                            (input + visual box only). Use this when:
+                              - inside Field (Field renders its own <label> with
+                                for=fieldHtmlId pointing at the input id);
+                              - inside DataTable row-select cell (aria-label
+                                provided on the input directly);
+                              - any context where the accessible name is borne
+                                by a sibling label outside this component.
+
+  Indeterminate state:
+    The HTML `indeterminate` is a DOM property only — no attribute counterpart.
+    To express it from server-rendered Twig, set `indeterminate: true`; the
+    template stamps `data-controller="checkbox-indeterminate"` + `data-indeterminate="true"`
+    and the controller flips `el.indeterminate = true` at connect(). The native
+    checkbox then announces `aria-checked="mixed"` automatically (browser-managed).
+
+  Parameters (enumerated):
+    name             (string, optional)  — form field name (POST/GET data)
+    htmlId           (string, optional)  — id; required when paired with an external Label.for
+    value            (string, optional)  — checkbox value when checked (defaults to "on")
+    checked          (bool,   optional)
+    indeterminate    (bool,   optional)  — JS-only via mini-controller (see header)
+    label            (string, optional)  — inline label text; if set, renders mode (1) above
+    description      (string, optional)  — short caption below the label (only with `label`)
+    size             (string, optional)  — sm (default — matches form text 14px) | md (16px denser forms)
+    required         (bool,   optional)  — sets HTML `required` + `aria-required="true"`
+    disabled         (bool,   optional)
+    invalid          (bool,   optional)  — sets `aria-invalid="true"` (Field forwards on error)
+    describedBy      (string, optional)  — space-separated ids for aria-describedby (Field wires)
+    ariaLabel        (string, optional)  — accessible name when `label` is not set (bare mode)
+    className        (string, optional)
+    attrs            (map,    optional)  — passthrough of extra data-* / aria-* / wiring
+                                           attributes onto the inner <input> (ADR-0059)
+-#}
+
+{%- set name          = name          | default(null) -%}
+{%- set htmlId        = htmlId        | default(null) -%}
+{%- set value         = value         | default(null) -%}
+{%- set checked       = checked       | default(false) -%}
+{%- set indeterminate = indeterminate | default(false) -%}
+{%- set label         = label         | default(null) -%}
+{%- set description   = description   | default(null) -%}
+{%- set size          = size          | default('sm') -%}
+{%- set required      = required      | default(false) -%}
+{%- set disabled      = disabled      | default(false) -%}
+{%- set invalid       = invalid       | default(false) -%}
+{%- set describedBy   = describedBy   | default(null) -%}
+{%- set ariaLabel     = ariaLabel     | default(null) -%}
+{%- set className     = className     | default('') -%}
+{%- set attrs         = attrs         | default({}) -%}
+
+{%- set _rootClasses = [label ? 'theme-checkbox-row' : 'theme-checkbox-wrap'] -%}
+{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['theme-checkbox-row--disabled']) -%}{%- endif -%}
+{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['theme-checkbox-row--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _rootClasses = _rootClasses | merge([className]) -%}{%- endif -%}
+
+{%- set _tag = label ? 'label' : 'span' -%}
+
+<{{ _tag }}
+  class="{{ _rootClasses | join(' ') }}"
+  data-size="{{ size }}"
+  {%- if disabled %} data-state="disabled"{% endif -%}
+>
+  <span class="theme-checkbox" data-size="{{ size }}">
+    <input
+      type="checkbox"
+      class="theme-checkbox__input"
+      {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+      {%- if name %} name="{{ name }}"{% endif -%}
+      {%- if value is not null %} value="{{ value }}"{% endif -%}
+      {%- if checked %} checked{% endif -%}
+      {%- if required %} required aria-required="true"{% endif -%}
+      {%- if disabled %} disabled{% endif -%}
+      {%- if invalid %} aria-invalid="true"{% endif -%}
+      {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+      {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
+      {%- if indeterminate %} data-controller="checkbox-indeterminate" data-action="change->checkbox-indeterminate#clear" data-indeterminate="true"{% endif -%}
+      {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+    >
+    <span class="theme-checkbox__box" aria-hidden="true">
+      {#- Check mark — shown when :checked AND not [data-indeterminate]. -#}
+      <svg class="theme-checkbox__glyph theme-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
+        <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {#- Dash — shown when [data-indeterminate="true"] (mini-controller flips el.indeterminate). -#}
+      <svg class="theme-checkbox__glyph theme-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none">
+        <path d="M4 8L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </span>
+  </span>
+  {%- if label -%}
+    <span class="theme-checkbox-row__text">
+      <span class="theme-checkbox-row__label">{{ label }}</span>
+      {%- if required -%}
+        <span class="theme-checkbox-row__required" aria-hidden="true">*</span>
+      {%- endif -%}
+      {%- if description -%}
+        <span class="theme-checkbox-row__description">{{ description }}</span>
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+</{{ _tag }}>

@@ -1,0 +1,183 @@
+/*
+ * Item — a selectable list row.
+ *
+ * Anatomy:
+ *   .theme-item[ data-selected="true" | data-state="disabled" ]
+ *     ├── [.theme-item__icon--leading]   (optional Lucide icon)
+ *     ├── .theme-item__text
+ *     │     ├── .theme-item__label
+ *     │     └── [.theme-item__description]
+ *     └── [.theme-item__icon--trailing | .theme-item__trailing > Kbd]
+ *
+ * Three element forms:
+ *   <div>     non-interactive (orchestrated by parent — DropdownMenu / DataTable)
+ *   <a href>  standalone link Item
+ *   <button>  standalone action Item
+ *
+ * The CSS is identical across element forms — the hover / focus / selected
+ * rules apply via the same `.theme-item` class. Interactive variants get
+ * native `:focus-visible` + Enter / Space activation from the browser.
+ */
+
+.theme-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  inline-size: 100%;
+  min-block-size: 36px;
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-3);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: default;
+  user-select: none;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+/* Interactive variants get pointer cursor. */
+a.theme-item,
+button.theme-item {
+  cursor: pointer;
+  text-align: start;
+}
+
+/* Reset native button styling. */
+button.theme-item {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ----- hover (not disabled, not selected) ------------------------- */
+
+.theme-item:hover:not([data-state="disabled"], [data-selected="true"]) {
+  background-color: var(--color-bg-sunken);
+}
+
+/* For non-interactive <div> Items orchestrated by a parent, the hover
+   feedback only paints when the row is "active" (the orchestrating
+   parent sets data-active="true" on Arrow nav). Otherwise hover would
+   look interactive even when the row isn't clickable. */
+div.theme-item {
+  /* divs don't fire hover by themselves in nav contexts — orchestrator decides. */
+}
+
+/* ----- focus-visible (interactive variants only) ----------------- */
+
+.theme-item:focus-visible {
+  outline: var(--ring-width) solid var(--color-border-focus);
+  outline-offset: -2px;
+}
+
+/* ----- selected (set by the orchestrating parent) ---------------- */
+
+.theme-item[data-selected="true"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+}
+
+.theme-item[data-selected="true"]:hover:not([data-state="disabled"]) {
+  background-color: var(--color-primary-soft);
+}
+
+.theme-item[data-selected="true"] .theme-item__description {
+  color: var(--color-selected-foreground);
+  opacity: 0.8;
+}
+
+/* ----- disabled ---------------------------------------------------- */
+
+.theme-item[data-state="disabled"],
+.theme-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.theme-item[data-state="disabled"] .theme-item__label,
+.theme-item[data-state="disabled"] .theme-item__description {
+  color: var(--color-text-disabled);
+}
+
+/* ----- aria-current (nav-active state) --------------------------- */
+
+.theme-item[aria-current="page"],
+.theme-item[aria-current="true"],
+.theme-item[aria-current="step"] {
+  background-color: var(--color-selected-bg);
+  color: var(--color-selected-foreground);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ----- text slot --------------------------------------------------- */
+
+.theme-item__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  gap: 2px;
+}
+
+.theme-item__label {
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theme-item__description {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  line-height: var(--line-height-snug);
+  white-space: normal;
+}
+
+/* ----- icon slots --------------------------------------------------- */
+
+.theme-item__icon {
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+}
+
+.theme-item__icon--leading {
+  /* Leading icon picks up the secondary text color for hierarchy. */
+  color: var(--color-text-tertiary);
+}
+
+.theme-item__icon--trailing {
+  /* Trailing icon dimmer (e.g. chevron-right indicator). */
+  color: var(--color-text-tertiary);
+}
+
+/* When selected, all child icons inherit the selected-foreground color
+   so the contrast stays consistent. */
+.theme-item[data-selected="true"] .theme-item__icon,
+.theme-item[aria-current="page"] .theme-item__icon,
+.theme-item[aria-current="true"] .theme-item__icon,
+.theme-item[aria-current="step"] .theme-item__icon {
+  color: var(--color-selected-foreground);
+}
+
+/* ----- trailing slot (Kbd shortcut wrapper) ---------------------- */
+
+.theme-item__trailing {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+}
+
+/* ----- touch target hardening ------------------------------------ */
+
+@media (pointer: coarse) {
+  .theme-item {
+    min-block-size: 44px;
+  }
+}

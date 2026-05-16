@@ -1,0 +1,155 @@
+{#-
+  DatePicker — Input-anchored single-date picker with Calendar popover.
+
+  Workhorse of the S2.7 pickers family. Composes :
+   - Popover (Ring 2 S2.1) — JS-positioned dialog popover via Floating UI
+     (lazy-loaded per [ADR-0011]). The Input acts as the trigger ; the
+     Calendar instance is the content.
+   - Input (Ring 1 S1.2) — the trigger looks + feels like a standard
+     `<input type="text">` (read-only — typing is not supported in S2.7 ;
+     manual date typing is a future amend if real demand emerges).
+   - Calendar (Ring 2 S2.7) — the grid inside the popover. The DatePicker
+     controller listens for Calendar's `calendar:select` event +
+     synchronises Input.value (formatted via Intl.DateTimeFormat) +
+     the hidden form input.
+
+  Per OQ-40 doctrine (sealed S2.7) : vanilla minimal, no Flatpickr
+  adapter. Locale formatting via native Intl.DateTimeFormat. Day.js
+  deferred until relative-time UX surfaces in Ring 3+.
+
+  Per WAI-ARIA APG "Date Picker Dialog" : the input has role="combobox"
+  + aria-haspopup="dialog" + aria-expanded chain managed by the Popover
+  controller. The popover content has role="dialog" + aria-modal="false"
+  (non-modal — clicking outside dismisses, focus is not trapped).
+
+  Parameters:
+    htmlId       (string, optional)  auto-generated 'theme-date-picker-<rand>'
+    name         (string, optional)  hidden-input form field name
+    value        (string, optional)  ISO 8601 yyyy-mm-dd pre-selected date
+    min          (string, optional)  ISO 8601 lower bound
+    max          (string, optional)  ISO 8601 upper bound
+    displayMonth (string, optional)  YYYY-MM initially shown (default :
+                                      value's month, or current month)
+    weekStart    (int,    optional)  0=Sun | 1=Mon (default 1)
+    locale       (string, optional)  for Intl.DateTimeFormat (default 'fr')
+    dateStyle    (string, optional)  'long' (default — "12 mai 2026") | 'short' ("12/05/2026")
+                                      | 'medium' ("12 mai") | 'full' ("mardi 12 mai 2026")
+    placeholder  (string, optional)  Input placeholder text
+    size         (string, optional)  sm | md (default) | lg
+    required     (bool,   optional)
+    disabled     (bool,   optional)
+    describedBy  (string, optional)  Field forwards for help / error ids
+    placement    (string, optional)  Popover placement (default 'bottom-start')
+    inputAriaLabel (string, optional) Input accessible name (default
+                                      'theme.date-picker.aria.input'|trans)
+    calendarAriaLabel (string, optional) Calendar dialog accessible name
+    className    (string, optional)
+-#}
+
+{%- set htmlId            = htmlId            | default('theme-date-picker-' ~ random()) -%}
+{%- set name              = name              | default(null) -%}
+{%- set value             = value             | default(null) -%}
+{%- set min               = min               | default(null) -%}
+{%- set max               = max               | default(null) -%}
+{%- set displayMonth      = displayMonth      | default(null) -%}
+{%- set weekStart         = weekStart         | default(1) -%}
+{%- set locale            = locale            | default('fr') -%}
+{%- set dateStyle         = dateStyle         | default('long') -%}
+{%- set placeholder       = placeholder       | default('theme.date-picker.placeholder'|trans) -%}
+{%- set size              = size              | default('md') -%}
+{%- set required          = required          | default(false) -%}
+{%- set disabled          = disabled          | default(false) -%}
+{%- set describedBy       = describedBy       | default(null) -%}
+{%- set placement         = placement         | default('bottom-start') -%}
+{%- set inputAriaLabel    = inputAriaLabel    | default('theme.date-picker.aria.input'|trans) -%}
+{%- set calendarAriaLabel = calendarAriaLabel | default('theme.date-picker.aria.dialog'|trans) -%}
+{%- set className         = className         | default('') -%}
+
+{%- set _classes = ['theme-popover', 'theme-date-picker'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _contentId  = htmlId ~ '-popover' -%}
+{%- set _inputId    = htmlId ~ '-input' -%}
+{%- set _calendarId = htmlId ~ '-calendar' -%}
+{%- set _dialogLabelId = htmlId ~ '-dialog-label' -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  id="{{ htmlId }}"
+  data-controller="popover date-picker"
+  data-action="keydown.esc@window->popover#close calendar:select->date-picker#onCalendarSelect popover:open->date-picker#onPopoverOpen"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="6"
+  data-popover-open-value="false"
+  data-date-picker-locale-value="{{ locale }}"
+  data-date-picker-date-style-value="{{ dateStyle }}"
+  {%- if value is not null %} data-date-picker-value-value="{{ value }}"{% endif -%}
+  {%- if min is not null %} data-date-picker-min-value="{{ min }}"{% endif -%}
+  {%- if max is not null %} data-date-picker-max-value="{{ max }}"{% endif -%}
+>
+  <div class="theme-date-picker__trigger">
+    {% include '@theme/components/input/input.html.twig' with {
+      type: 'text',
+      htmlId: _inputId,
+      size: size,
+      readonly: true,
+      placeholder: placeholder,
+      required: required,
+      disabled: disabled,
+      describedBy: describedBy,
+      className: 'theme-date-picker__input',
+      attrs: {
+        'data-popover-target': 'trigger',
+        'data-date-picker-target': 'input',
+        'data-action': 'click->popover#toggle keydown->date-picker#onTriggerKeydown',
+        role: 'combobox',
+        'aria-haspopup': 'dialog',
+        'aria-expanded': 'false',
+        'aria-controls': _contentId,
+        'aria-label': inputAriaLabel,
+      },
+    } only %}
+    <svg
+      class="theme-date-picker__icon"
+      aria-hidden="true"
+      width="16" height="16" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round"
+    >
+      <rect width="18" height="18" x="3" y="4" rx="2"/>
+      <path d="M16 2v4M8 2v4M3 10h18"/>
+    </svg>
+  </div>
+
+  <div
+    id="{{ _contentId }}"
+    class="theme-popover__content theme-date-picker__panel"
+    data-popover-target="content"
+    data-state="closed"
+    data-placement="{{ placement }}"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="{{ _dialogLabelId }}"
+    hidden
+  >
+    <span id="{{ _dialogLabelId }}" class="sr-only">{{ calendarAriaLabel }}</span>
+    {% include '@theme/components/calendar/calendar.html.twig' with {
+      htmlId: _calendarId,
+      value: value,
+      min: min,
+      max: max,
+      displayMonth: displayMonth,
+      weekStart: weekStart,
+      locale: locale,
+    } %}
+  </div>
+
+  {%- if name %}
+  <input
+    type="hidden"
+    name="{{ name }}"
+    data-date-picker-target="hiddenInput"
+    {%- if value is not null %} value="{{ value }}"{% endif -%}
+  >
+  {%- endif %}
+</div>

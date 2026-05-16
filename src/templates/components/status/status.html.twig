@@ -1,0 +1,68 @@
+{#-
+  Status — labelled status indicator with optional pulse.
+
+  Compose Badge visual envelope (soft pill) + a leading colored dot. Used
+  for live monitoring contexts (uptime, presence, queue size). The variant
+  drives the live-region role per the OQ-mini Status resolution sealed
+  S2.6 — mirrors Alert.md §"role auto-derives from variant" doctrine
+  sealed in [ADR-0008]:
+
+    variant ∈ {success, info, warning} → <output> (implicit role="status",
+                                                    aria-live="polite",
+                                                    aria-atomic="true")
+    variant === 'danger'                → <div role="alert">  (assertive
+                                                                auto-bump)
+
+  Native `<output>` is preferred for polite variants — its implicit ARIA
+  semantics avoid the SR double-announce trap when both implicit + explicit
+  `aria-live` are present (per Sonner.md §3 "Why <output> and not <div
+  role='status'>").
+
+  Pulse animation (opt-in) is CSS-only :
+    - 1500 ms loop = ~0.67 Hz, well under the 3 Hz epilepsy floor
+      (per [13-a11y §15]).
+    - Animates the dot's scale + a pseudo-element ring outside.
+    - prefers-reduced-motion : skip animation, dot stays solid.
+
+  Parameters:
+    variant   (string, optional) success (default) | info | warning | danger
+    label     (string, required) the visible status text (consumer-resolved)
+    pulse     (bool,   optional) default false. true → animated dot for
+                                  live-monitoring contexts.
+    size      (string, optional) sm | md (default)
+    className (string, optional)
+-#}
+
+{%- set variant   = variant   | default('success') -%}
+{%- set label     = label     | default('') -%}
+{%- set pulse     = pulse     | default(false) -%}
+{%- set size      = size      | default('md') -%}
+{%- set className = className | default('') -%}
+
+{%- set _classes = ['theme-status'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _isDanger = variant == 'danger' -%}
+
+{%- if _isDanger -%}
+<div
+  class="{{ _classes | join(' ') }}"
+  data-variant="{{ variant }}"
+  data-size="{{ size }}"
+  {%- if pulse %} data-pulse="true"{% endif %}
+  role="alert"
+>
+  <span class="theme-status__dot" aria-hidden="true"></span>
+  <span class="theme-status__label">{{ label }}</span>
+</div>
+{%- else -%}
+<output
+  class="{{ _classes | join(' ') }}"
+  data-variant="{{ variant }}"
+  data-size="{{ size }}"
+  {%- if pulse %} data-pulse="true"{% endif %}
+>
+  <span class="theme-status__dot" aria-hidden="true"></span>
+  <span class="theme-status__label">{{ label }}</span>
+</output>
+{%- endif -%}

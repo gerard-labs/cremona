@@ -1,0 +1,33 @@
+/*
+ * Search-CommandPalette — global ⌘K command palette wrapper (Ring 3 S3.3b-2).
+ *
+ * Pure composition Command Ring 2 with search-themed defaults + optional
+ * consumer-provided launcher button (typically in the app header).
+ * NO controller — Command Ring 2 already ships its own (dialog+combobox+command).
+ *
+ * Bundle budget : ~0.20 kB gzip (per ADR-0031 Path X corrected baseline
+ * for thin pattern — marker class + launcher button styling only).
+ */
+
+.theme-search-command-palette {
+  /*
+   * Marker class on the Command Ring 2 wrap when used as a global search
+   * palette. Allows consumer to style the palette differently from a
+   * scoped command palette (e.g. an editor's local command palette).
+   */
+}
+
+.theme-search-command-palette__launcher {
+  /*
+   * Optional consumer-provided launcher button (typically in app header).
+   * Mostly inherits from Button Ring 1 variant=ghost or secondary ; this
+   * class adds minor layout (typically icon + label + Kbd hint).
+   */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.theme-search-command-palette__launcher-kbd {
+  margin-inline-start: var(--spacing-2);
+}

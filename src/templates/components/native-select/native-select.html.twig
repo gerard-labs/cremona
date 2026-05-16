@@ -1,0 +1,70 @@
+{#-
+  NativeSelect — native HTML <select> styled with kit tokens.
+
+  Anatomy: a wrapper <div> holds the <select> plus an absolute-positioned
+  chevron Icon. The Icon inherits `currentColor` from the wrapper, which is
+  set to `--color-text-tertiary`. RTL flip is automatic via logical CSS
+  (`inset-inline-end`). No Stimulus — keyboard / Space / arrows / type-ahead
+  / dropdown rendering are 100% native OS behavior.
+
+  Parameters:
+    name          (string, optional)
+    htmlId        (string, optional) — id for label/Field binding
+    value         (string, optional) — pre-selected option value
+    options       (array of maps, required)
+                  Each item:
+                    { value: '...', label: '...', disabled?: bool }
+                  OR for groups:
+                    { label: 'Group label', children: [ {value, label, disabled?}, ... ] }
+                  Mixing flat options + groups is allowed.
+    size          (string, optional) — sm | md (default) | lg
+    required      (bool,   optional)
+    disabled      (bool,   optional)
+    invalid       (bool,   optional)
+    describedBy   (string, optional)
+    autocomplete  (string, optional)
+    className     (string, optional)
+-#}
+
+{%- set name        = name        | default(null) -%}
+{%- set htmlId      = htmlId      | default(null) -%}
+{%- set value       = value       | default(null) -%}
+{%- set options     = options     | default([]) -%}
+{%- set size        = size        | default('md') -%}
+{%- set required    = required    | default(false) -%}
+{%- set disabled    = disabled    | default(false) -%}
+{%- set invalid     = invalid     | default(false) -%}
+{%- set describedBy = describedBy | default(null) -%}
+{%- set autocomplete= autocomplete| default(null) -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _wrapClasses = ['theme-native-select-wrap'] -%}
+{%- if disabled -%}{%- set _wrapClasses = _wrapClasses | merge(['theme-native-select-wrap--disabled']) -%}{%- endif -%}
+{%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
+
+<div class="{{ _wrapClasses | join(' ') }}" data-size="{{ size }}">
+  <select
+    class="theme-native-select"
+    data-size="{{ size }}"
+    {%- if name %} name="{{ name }}"{% endif -%}
+    {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
+    {%- if required %} required aria-required="true"{% endif -%}
+    {%- if disabled %} disabled{% endif -%}
+    {%- if invalid %} aria-invalid="true"{% endif -%}
+    {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+    {%- if autocomplete %} autocomplete="{{ autocomplete }}"{% endif -%}
+  >
+    {%- for opt in options -%}
+      {%- if opt.children is defined -%}
+        <optgroup label="{{ opt.label }}">
+          {%- for child in opt.children -%}
+            <option value="{{ child.value }}"{% if value is not null and child.value == value %} selected{% endif %}{% if child.disabled|default(false) %} disabled{% endif %}>{{ child.label }}</option>
+          {%- endfor -%}
+        </optgroup>
+      {%- else -%}
+        <option value="{{ opt.value }}"{% if value is not null and opt.value == value %} selected{% endif %}{% if opt.disabled|default(false) %} disabled{% endif %}>{{ opt.label }}</option>
+      {%- endif -%}
+    {%- endfor -%}
+  </select>
+  {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down', decorative: true, size: 'sm', className: 'theme-native-select__chevron' } %}
+</div>

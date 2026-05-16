@@ -1,0 +1,29 @@
+{#-
+  BackToTop — floating back-to-top button (Ring 3 S3.2).
+
+  Appears after scrolling past `threshold` (default 400 px). Click triggers
+  smooth scroll to top (instant if reduced-motion).
+
+  Parameters:
+    htmlId     (string, optional)
+    threshold  (int, optional)     — default 400 ; scroll-y threshold in px
+    ariaLabel  (string, optional)  — default 'Revenir en haut de la page'
+-#}
+
+{%- set htmlId    = htmlId    | default('theme-back-to-top-' ~ random()) -%}
+{%- set threshold = threshold | default(400) -%}
+{%- set ariaLabel = ariaLabel | default('theme.back-to-top.aria.label'|trans) -%}
+
+{% include '@theme/components/button/button.html.twig' with {
+  variant: 'primary',
+  iconLeading: 'arrow-up',
+  ariaLabel: ariaLabel,
+  htmlId: htmlId,
+  className: 'theme-back-to-top',
+  attrs: {
+    'data-controller': 'back-to-top',
+    'data-back-to-top-threshold-value': threshold,
+    'data-action': 'click->back-to-top#scrollToTop',
+    'data-visible': 'false',
+  },
+} only %}

@@ -1,0 +1,121 @@
+{#-
+  Chatbot — conversational UI panel (Ring 3 S3.3c — FINAL Ring 3 pattern, 54e).
+
+  Pure composition (per OQ-NEW Chatbot scope sealed pure composition NO lib —
+  preserves Path Z signal NO 10e cascade) :
+    - Drawer Ring 2 (edge=end default ; inline-end anchor for desktop /
+      bottom anchor on mobile via consumer responsive class)
+    - Input Ring 1 (text input for user message)
+    - Item Ring 1 (as='div' for message bubbles, with data-role variants)
+
+  Controller : chatbot (19th Ring 3, thin) — message append + auto-scroll
+  on new message + send action dispatch + typing indicator toggle. Pure
+  composition of Drawer/Input/Item ; consumer wires actual streaming /
+  markdown rendering server-side or via custom event handler on
+  chatbot:send.
+
+  13th cross-controller compose instance : data-controller="drawer chatbot".
+
+  Doctrine notes :
+  - No markdown rendering at kit level (consumer ships plain text or
+    pre-rendered HTML safely escaped). marked / similar lazy adapter
+    deferred to Ring 4+ trigger per ADR-0033 §"Trade-offs deferred to
+    Ring 4+" if real consumer demand surfaces.
+  - aria-live="polite" on message list (per 13-accessibility-baseline §9
+    screen-reader announcements for transient updates).
+  - Typing indicator is decorative ; the actual bot response is announced
+    via the new message landing in the aria-live region.
+
+  Parameters:
+    htmlId             (string, optional)
+    title              (string, optional) — drawer title
+    edge               (string, optional, default 'end') — drawer anchor
+    placeholder        (string, optional)
+    sendLabel          (string, optional) — send button aria label
+    closeAriaLabel     (string, optional)
+    greeting           (string, optional) — pre-seeded bot message displayed on open
+    open               (bool,   optional, default false)
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-chatbot-' ~ random()) -%}
+{%- set title           = title           | default('theme.chatbot.title'|trans) -%}
+{%- set edge            = edge            | default('end') -%}
+{%- set placeholder     = placeholder     | default('theme.chatbot.placeholder'|trans) -%}
+{%- set sendLabel       = sendLabel       | default('theme.chatbot.aria.send'|trans) -%}
+{%- set closeAriaLabel  = closeAriaLabel  | default('theme.chatbot.aria.close'|trans) -%}
+{%- set greeting        = greeting        | default('theme.chatbot.greeting'|trans) -%}
+{%- set open            = open            ?? false -%}
+
+{%- set _cbId = htmlId -%}
+
+{% embed '@theme/components/drawer/drawer.html.twig' with {
+  wrapId: _cbId,
+  htmlId: _cbId ~ '-dialog',
+  edge: edge,
+  open: open,
+  className: 'theme-chatbot',
+  drawerClassName: 'theme-chatbot__dialog',
+  headerClass: 'theme-chatbot__header',
+  bodyClass: 'theme-chatbot__body',
+  footerClass: 'theme-chatbot__footer',
+  controllerExtras: 'chatbot',
+  closeAriaLabel: closeAriaLabel,
+} %}
+  {% block title %}{{ title }}{% endblock %}
+
+  {% block body %}
+    <ol class="theme-chatbot__messages"
+        data-chatbot-target="messages"
+        aria-live="polite"
+        aria-atomic="false">
+      {%- if greeting -%}
+        <li class="theme-chatbot__message" data-role="bot">
+          {% include '@theme/components/item/item.html.twig' with {
+            as: 'div',
+            label: greeting,
+            attrs: { 'data-chatbot-target': 'messageTemplate' },
+          } only %}
+        </li>
+      {%- endif -%}
+    </ol>
+
+    <div class="theme-chatbot__typing"
+         data-chatbot-target="typing"
+         data-active="false"
+         aria-hidden="true">
+      <span class="theme-chatbot__typing-text">{{ 'theme.chatbot.typing'|trans }}</span>
+      <span class="theme-chatbot__typing-dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </div>
+  {% endblock %}
+
+  {% block footer %}
+    <form class="theme-chatbot__form"
+          data-action="submit->chatbot#send"
+          novalidate>
+      {% include '@theme/components/label/label.html.twig' with {
+        htmlFor: _cbId ~ '__input',
+        content: 'theme.chatbot.input.label'|trans,
+        className: 'sr-only',
+      } only %}
+      {% include '@theme/components/input/input.html.twig' with {
+        type: 'text',
+        htmlId: _cbId ~ '__input',
+        name: 'message',
+        placeholder: placeholder,
+        autocomplete: 'off',
+        required: true,
+        className: 'theme-chatbot__input',
+        attrs: { 'data-chatbot-target': 'input' },
+      } only %}
+      {% include '@theme/components/button/button.html.twig' with {
+        type: 'submit',
+        variant: 'primary',
+        iconLeading: 'arrow-right',
+        ariaLabel: sendLabel,
+        className: 'theme-chatbot__send',
+      } only %}
+    </form>
+  {% endblock %}
+{% endembed %}

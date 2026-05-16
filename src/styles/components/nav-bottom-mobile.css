@@ -1,0 +1,92 @@
+/*
+ * Nav-BottomMobile — iOS / Material bottom tab bar (Ring 3 S3.2).
+ *
+ * Mobile-only. Fixed at viewport bottom with safe-area-inset.
+ *
+ * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
+ */
+
+.theme-nav-bottom-mobile {
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--color-bg-elevated);
+  border-block-start: 1px solid var(--color-border-default);
+  padding-block-start: var(--spacing-1);
+}
+
+.theme-nav-bottom-mobile__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.theme-nav-bottom-mobile__item {
+  flex: 1;
+}
+
+.theme-nav-bottom-mobile__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-0_5);
+  min-block-size: 56px;
+  padding-block: var(--spacing-1);
+  padding-inline: var(--spacing-2);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-nav-bottom-mobile__link:hover,
+.theme-nav-bottom-mobile__link:focus-visible {
+  color: var(--color-text-primary);
+}
+
+.theme-nav-bottom-mobile__link:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: -2px;
+}
+
+.theme-nav-bottom-mobile__link[aria-current="page"] {
+  color: var(--color-primary);
+}
+
+.theme-nav-bottom-mobile__icon-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.theme-nav-bottom-mobile__badge {
+  position: absolute;
+  inset-block-start: -4px;
+  inset-inline-end: -8px;
+}
+
+.theme-nav-bottom-mobile__label {
+  font-size: var(--font-size-xs);
+}
+
+/* Icon-only compact mode. */
+.theme-nav-bottom-mobile--icon-only .theme-nav-bottom-mobile__link {
+  min-block-size: 48px;
+}
+
+/* iOS safe-area-inset bottom (notch + home indicator). */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .theme-nav-bottom-mobile {
+    padding-block-end: env(safe-area-inset-bottom);
+  }
+}
+
+/* Hide above tablet breakpoint — Nav-Header takes over. */
+@media (width >= 768px) {
+  .theme-nav-bottom-mobile {
+    display: none;
+  }
+}

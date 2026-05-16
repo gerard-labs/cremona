@@ -1,0 +1,167 @@
+/*
+ * Dialog — modal native `<dialog>` element.
+ *
+ * Per OQ-20 doctrine [ADR-0009-tier — to be sealed in ring2 lock-in ADR]:
+ * native `<dialog>` over `<div role="dialog">`. Baseline 2022 (Chrome 37+,
+ * FF 98+, Safari 15.4+). Native benefits:
+ *   - Top-layer auto-positioning (no z-index war ; appears above any
+ *     stacking context including `position: fixed`).
+ *   - `::backdrop` pseudo-element for the page-blocking overlay.
+ *   - Native focus trap (Tab cycles within dialog only when showModal'd).
+ *   - Native Esc dismiss (fires `cancel` then `close` events).
+ *   - Implicit `role="dialog"` + `aria-modal="true"` when showModal'd.
+ *
+ * Open/close animations use the modern @starting-style + transition
+ * `allow-discrete` pattern (Baseline 2024 — Chrome 117+, FF 129+, Safari
+ * 17.4+). The `overlay` and `display` properties transition from `auto`/
+ * `block` to `none`, with discrete steps allowed via `allow-discrete`.
+ * This is the canonical pattern for animating elements that exit the
+ * top-layer; the older approach (manual data-state + transitionend +
+ * deferred close()) is now obsolete.
+ *
+ * Per 14-motion-baseline §2 Dialog:
+ *   - Backdrop opacity 0 → 1, --motion-duration-base (180 ms), standard
+ *   - Dialog scale(0.96)+opacity(0) → scale(1)+opacity(1),
+ *     --motion-duration-slow (260 ms), emphasized
+ *   - Close: reverse, --motion-duration-base accelerate
+ *
+ * Reduced-motion: global override compresses durations to 0.01 ms; the
+ * dialog snaps in/out. The `allow-discrete` step still happens (the
+ * element is removed from top-layer / DOM display chain), no UX regression.
+ *
+ * Footer button cluster (Cancel + Confirm pattern):
+ *   - `justify-content: flex-end` clusters them at inline-end.
+ *   - DOM order [Cancel, Confirm] renders [Cancel][Confirm] in LTR (Cancel
+ *     left of Confirm) and [Confirm][Cancel] in RTL (Cancel right of
+ *     Confirm) — natural flex-row + writing-direction handles this.
+ *     Matches [12-microcopy-tone.md §Confirmations].
+ *
+ * Size variants (`data-size="sm|md|lg"`):
+ *   - sm: 400px max-inline-size (short forms, simple confirmations)
+ *   - md: 480px (default)
+ *   - lg: 720px (richer content — settings, multi-field forms)
+ */
+
+.theme-dialog {
+  /* Centered in viewport via margin auto (native dialog quirk — works when
+     top-layer'd via showModal()). */
+  margin: auto;
+  padding-block: var(--spacing-5);
+  padding-inline: var(--spacing-6);
+  inline-size: 100%;
+  max-inline-size: 480px;
+  max-block-size: calc(100dvh - 2 * var(--spacing-4));
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-dialog);
+  box-shadow: var(--shadow-dialog);
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  overflow: auto;
+
+  /* Closed animation state (default — also post-close). */
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity var(--motion-duration-base) var(--motion-easing-accelerate),
+    transform var(--motion-duration-base) var(--motion-easing-accelerate),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+/* Open state — drives the entry animation via @starting-style below. */
+.theme-dialog[open] {
+  opacity: 1;
+  transform: scale(1);
+  transition-duration: var(--motion-duration-slow);
+  transition-timing-function: var(--motion-easing-emphasized);
+}
+
+/* Entry animation — the @starting-style pseudo applies the BEFORE-OPEN
+   values; the [open] rule above defines the AFTER-OPEN values; the
+   transition between them is the entry animation. */
+@starting-style {
+  .theme-dialog[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+/* Backdrop — page-blocking overlay rendered by the browser when
+   showModal() is called. */
+.theme-dialog::backdrop {
+  background-color: var(--color-bg-overlay);
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-base) var(--motion-easing-accelerate),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+.theme-dialog[open]::backdrop {
+  opacity: 1;
+  transition-timing-function: var(--motion-easing-standard);
+}
+
+@starting-style {
+  .theme-dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Size variants — override max-inline-size. The md default is unchanged. */
+.theme-dialog[data-size="sm"] {
+  max-inline-size: 400px;
+}
+
+.theme-dialog[data-size="lg"] {
+  max-inline-size: 720px;
+}
+
+/* ----- Layout: header / body / footer ------------------------------ */
+
+.theme-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  margin-block-end: var(--spacing-4);
+}
+
+.theme-dialog__title {
+  font: var(--typography-h2);
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* The close-X button slot (optional — top-right in LTR, top-left in RTL).
+   Consumers stamp `data-dialog-close-button` so the kit's click-to-close
+   wiring stays declarative. */
+.theme-dialog__close {
+  flex: 0 0 auto;
+}
+
+.theme-dialog__body {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+}
+
+.theme-dialog__body > * + * {
+  margin-block-start: var(--spacing-3);
+}
+
+.theme-dialog__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+  margin-block-start: var(--spacing-5);
+}
+
+/* ----- dark mode --------------------------------------------------- */
+
+[data-theme="dark"] .theme-dialog {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-default);
+}

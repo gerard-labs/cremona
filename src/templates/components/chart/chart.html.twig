@@ -1,0 +1,151 @@
+{#-
+  Chart — ApexCharts-wrapped data visualization (Ring 2 S2.9).
+
+  Per ADR-0012 :
+    - ApexCharts v4.x lazy-loaded behind a dynamic import (mirror ADR-0011).
+    - 5 variants : line / bar / donut / area / sparkline.
+    - Per-chart series + categories passed as JSON-serialized Stimulus value.
+    - The chart paints inside the `container` target ; a sr-only `<table>`
+      data-table fallback is rendered alongside so SR users hear the data
+      even before the SVG appears (and as the authoritative semantic
+      representation).
+
+  Per WAI-ARIA :
+    - <figure> with role="img" + aria-roledescription (FR "graphique" or
+      EN "chart"). The aria-label is the chart's accessible name (visible
+      in figcaption, repeated to AT).
+    - The container <div> is aria-hidden="true" — ApexCharts paints SVG
+      that carries no semantic value beyond the sr-only table.
+    - The figcaption is visible and serves as the visual title.
+
+  Parameters:
+    htmlId               (string,  optional) — auto-generated.
+    label                (string,  required) — chart accessible name +
+                                                visible figcaption text.
+    variant              (string,  optional) — 'line' (default) | 'bar' |
+                                                'donut' | 'area' | 'sparkline'.
+    series               (array,   required) — chart series data ; passed
+                                                through json_encode.
+    categories           (array,   optional) — x-axis categories OR donut
+                                                labels.
+    height               (int,     optional) — chart height in px (default 240).
+    locale               (string,  optional) — locale code (default 'fr').
+    roleDescription      (string,  optional) — aria-roledescription text ;
+                                                empty → kit default
+                                                ('graphique' FR / 'chart' EN).
+    showCaption          (bool,    optional) — render the figcaption visibly
+                                                (default true).
+    tableHeaders         (array,   optional) — sr-only data-table column
+                                                headers ; default
+                                                [categoriesLabel, series.name…].
+    categoriesLabel      (string,  optional) — sr-only header label for the
+                                                category column (default
+                                                'Catégorie').
+    className            (string,  optional)
+
+  Usage:
+
+    {% include '@theme/components/chart/chart.html.twig' with {
+      label: 'Ventes mensuelles'|trans,
+      variant: 'line',
+      categoriesLabel: 'Mois'|trans,
+      categories: ['Jan', 'Fév', 'Mar', 'Avr'],
+      series: [
+        { name: 'Ventes 2025'|trans, data: [120, 180, 240, 200] },
+        { name: 'Ventes 2026'|trans, data: [140, 210, 280, 260] },
+      ],
+    } %}
+
+  Events (dispatched on the wrap):
+    chart:mount           — fires synchronously on connect.
+    chart:render-complete — detail.{ variant } after ApexCharts.render() resolves.
+    chart:series-click    — detail.{ seriesIndex, dataPointIndex, value }.
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-chart-' ~ random()) -%}
+{%- set label           = label           | default('') -%}
+{%- set variant         = variant         | default('line') -%}
+{%- set series          = series          | default([]) -%}
+{%- set categories      = categories      | default([]) -%}
+{%- set height          = height          | default(240) -%}
+{%- set locale          = locale          | default('fr') -%}
+{%- set roleDescription = roleDescription | default('graphique') -%}
+{%- set showCaption     = showCaption is defined ? showCaption : true -%}
+{%- set categoriesLabel = categoriesLabel | default('Catégorie') -%}
+{%- set tableHeaders    = tableHeaders    | default([]) -%}
+{%- set className       = className       | default('') -%}
+
+{%- set _classes = ['theme-chart'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _isDonut = variant == 'donut' -%}
+
+<figure
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-controller="chart"
+  data-chart-variant-value="{{ variant }}"
+  data-chart-series-value="{{ series | json_encode }}"
+  data-chart-categories-value="{{ categories | json_encode }}"
+  data-chart-height-value="{{ height }}"
+  data-chart-locale-value="{{ locale }}"
+  data-chart-role-description-value="{{ roleDescription }}"
+  data-state="loading"
+  role="img"
+  aria-roledescription="{{ roleDescription }}"
+  aria-label="{{ label }}"
+>
+  <div
+    class="theme-chart__container"
+    data-chart-target="container"
+    style="min-block-size: {{ height }}px;"
+    aria-hidden="true"
+  ></div>
+
+  {%- if showCaption -%}
+    <figcaption class="theme-chart__caption">{{ label }}</figcaption>
+  {%- endif -%}
+
+  {#- sr-only data-table fallback : the authoritative semantic representation
+      of the data. Always rendered ; visible only to SR (per .theme-chart__
+      sr-only utility). Provides a permanent fallback if ApexCharts fails
+      to load (CSP block, network failure, JS disabled). -#}
+  <div class="theme-chart__sr-only">
+    <table>
+      <caption>{{ label }}</caption>
+      <thead>
+        <tr>
+          {%- if _isDonut -%}
+            <th scope="col">{{ categoriesLabel }}</th>
+            <th scope="col">{{ 'Valeur'|default('Valeur') }}</th>
+          {%- else -%}
+            <th scope="col">{{ categoriesLabel }}</th>
+            {%- for serie in series -%}
+              <th scope="col">{{ serie.name | default('Series ' ~ loop.index) }}</th>
+            {%- endfor -%}
+          {%- endif -%}
+        </tr>
+      </thead>
+      <tbody>
+        {%- if _isDonut -%}
+          {%- for value in series -%}
+            <tr>
+              <th scope="row">{{ categories[loop.index0] | default('') }}</th>
+              <td>{{ value }}</td>
+            </tr>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for category in categories -%}
+            <tr>
+              <th scope="row">{{ category }}</th>
+              {%- for serie in series -%}
+                {%- set point = serie.data[loop.parent.loop.index0] | default(null) -%}
+                <td>{%- if point is iterable and point.y is defined -%}{{ point.y }}{%- else -%}{{ point | default('') }}{%- endif -%}</td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        {%- endif -%}
+      </tbody>
+    </table>
+  </div>
+</figure>

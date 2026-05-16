@@ -1,0 +1,100 @@
+{#-
+  Empty — empty-state surface for "no data / first-time / no results / 404".
+
+  Composition primitive — illustration + title + body + actions + footer.
+  Zero Stimulus controller. Pure visual composition.
+
+  Sizes:
+    - sm  — in-card / row-inline empty. Compact spacing, 24 px icon.
+    - md  — section-level empty (default). 48 px icon, medium spacing.
+    - lg  — page-level / hero empty (404, onboarding). 120 px illustration,
+            generous spacing. Consumer typically provides a custom inline
+            SVG via the `illustration` block (OQ-18 doctrine).
+
+  Heading level:
+    Defaults to `h2` (section-level). Override via `titleLevel` to `h1`
+    (page-level Empty, e.g. 404) or `h3` (deeply-nested Empty inside a
+    page section).
+
+  Tone:
+    Per [12-microcopy-tone.md §"Empty states"] — Empty invites, never blames.
+    Title is a short factual phrase; body proposes a next action; CTA names
+    the action ("Crée ton premier projet", never "OK" / "Submit").
+
+  Parameters:
+    title         (string, required)   — heading text
+    body          (string, optional)   — shorthand simple paragraph
+    size          (string, optional)   — sm | md (default) | lg
+    icon          (string, optional)   — Lucide icon name (sm/md only — for
+                                         lg, the consumer typically provides
+                                         a custom illustration via the block)
+    titleLevel    (string, optional)   — h1 | h2 (default) | h3
+    htmlId        (string, optional)   — auto-generated; used for `aria-labelledby`
+    className     (string, optional)   — extra utility classes
+
+  Blocks (all optional):
+    illustration  — overrides the `icon` param. Custom inline SVG / image /
+                    any visual. For lg size, this is the typical path.
+    body          — rich body content (overrides the `body` string param)
+    actions       — primary + secondary CTAs (typically a vertical or
+                    horizontal flex of Buttons)
+    footer        — fine print or kbd hint (e.g. "ESC pour fermer")
+-#}
+
+{%- set title       = title       | default(null) -%}
+{%- set body        = body        | default(null) -%}
+{%- set size        = size        | default('md') -%}
+{%- set icon        = icon        | default(null) -%}
+{%- set titleLevel  = titleLevel  | default('h2') -%}
+{%- set htmlId      = htmlId      | default('theme-empty-' ~ random()) -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _titleId   = htmlId ~ '-title' -%}
+{%- set _allowedTitleLevels = ['h1', 'h2', 'h3'] -%}
+{%- set _titleTag  = titleLevel in _allowedTitleLevels ? titleLevel : 'h2' -%}
+
+{%- set _iconSize = size == 'sm' ? 'lg' : 'xl' -%}
+{# Empty's icon size maps:
+   - sm Empty → lg Icon (24 px)
+   - md Empty → xl Icon (32 px)
+   - lg Empty → consumer's custom SVG via {% block illustration %} #}
+
+{%- set _classes = ['theme-empty'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  role="region"
+  aria-labelledby="{{ _titleId }}"
+>
+  {%- if block('illustration') is defined and block('illustration') is not empty -%}
+    <div class="theme-empty__illustration" aria-hidden="true">
+      {%- block illustration -%}{%- endblock -%}
+    </div>
+  {%- elseif icon -%}
+    <div class="theme-empty__illustration" aria-hidden="true">
+      {% include '@theme/components/icon/icon.html.twig' with {
+        name: icon,
+        decorative: true,
+        size: _iconSize,
+        className: 'theme-empty__icon',
+      } %}
+    </div>
+  {%- endif -%}
+
+  <div class="theme-empty__content">
+    <{{ _titleTag }} id="{{ _titleId }}" class="theme-empty__title">{{ title }}</{{ _titleTag }}>
+    {%- if block('body') is defined and block('body') is not empty -%}
+      <div class="theme-empty__body">{%- block body -%}{%- endblock -%}</div>
+    {%- elseif body -%}
+      <div class="theme-empty__body"><p>{{ body }}</p></div>
+    {%- endif -%}
+    {%- if block('actions') is defined and block('actions') is not empty -%}
+      <div class="theme-empty__actions">{%- block actions -%}{%- endblock -%}</div>
+    {%- endif -%}
+    {%- if block('footer') is defined and block('footer') is not empty -%}
+      <div class="theme-empty__footer">{%- block footer -%}{%- endblock -%}</div>
+    {%- endif -%}
+  </div>
+</div>

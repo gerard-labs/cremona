@@ -1,0 +1,82 @@
+{#-
+  KeyboardShortcutsOverlay — full-screen shortcuts modal (Ring 3 S3.3b-1).
+
+  Pure composition : Dialog Ring 2 (size=lg) + Kbd Ring 1 grouped sections.
+  NO controller per OQ-NEW S3.3b-1 user resolution (consumer-wired trigger).
+
+  The consumer's app-level controller is expected to wire the `?` keypress
+  (or any keybind they choose) and call `dialog#open` on this pattern's
+  Dialog instance. The kit owns the modal mechanics + Kbd display ; the
+  consumer owns the keybind policy.
+
+  Example consumer wiring at app-level :
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '?' && !isInputFocused()) {
+        const dialog = document.querySelector('#keyboard-shortcuts');
+        const ctrl = Stimulus.getControllerForElementAndIdentifier(
+          dialog.closest('[data-controller~="dialog"]'),
+          'dialog'
+        );
+        ctrl?.open();
+      }
+    });
+
+  Parameters:
+    htmlId       (string, optional)
+    title        (string, optional, default 'theme.keyboard-shortcuts-overlay.title'|trans)
+    sections     (array,  required) — [{ title, shortcuts: [{ keys, separator?, description }] }]
+    closeAriaLabel (string, optional, default 'theme.dialog.aria.close'|trans)
+    size         (string, optional, default 'lg')
+-#}
+
+{%- set htmlId         = htmlId         | default('theme-keyboard-shortcuts-overlay') -%}
+{%- set title          = title          | default('theme.keyboard-shortcuts-overlay.title'|trans) -%}
+{%- set closeAriaLabel = closeAriaLabel | default('theme.dialog.aria.close'|trans) -%}
+{%- set size           = size           | default('lg') -%}
+
+{% embed '@theme/components/dialog/dialog.html.twig' with {
+  htmlId: htmlId,
+  size: size,
+  closeButton: true,
+  closeOnEscape: true,
+  closeOnBackdropClick: true,
+  closeAriaLabel: closeAriaLabel,
+  dialogClassName: 'theme-keyboard-shortcuts-overlay',
+} %}
+  {% block trigger %}
+    {# Intentionally empty : consumer wires `?` keypress at app-level. #}
+  {% endblock %}
+
+  {% block title %}{{ title }}{% endblock %}
+
+  {% block body %}
+    <div class="theme-keyboard-shortcuts-overlay__sections">
+      {%- for section in sections -%}
+        <section class="theme-keyboard-shortcuts-overlay__section"
+                 aria-labelledby="{{ htmlId }}-section-{{ loop.index }}-title">
+          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', color: 'tertiary', content: section.title, htmlId: htmlId ~ '-section-' ~ loop.index ~ '-title', className: 'theme-keyboard-shortcuts-overlay__section-title' } only %}
+          <dl class="theme-keyboard-shortcuts-overlay__list">
+            {%- for shortcut in section.shortcuts -%}
+              <div class="theme-keyboard-shortcuts-overlay__row">
+                <dt class="theme-keyboard-shortcuts-overlay__description">
+                  {% include '@theme/components/typography/typography.html.twig' with { as: 'span', variant: 'body', content: shortcut.description } only %}
+                </dt>
+                <dd class="theme-keyboard-shortcuts-overlay__chord">
+                  {% include '@theme/components/kbd/kbd.html.twig' with {
+                    keys: shortcut.keys,
+                    separator: shortcut.separator | default('+'),
+                    size: 'sm',
+                  } %}
+                </dd>
+              </div>
+            {%- endfor -%}
+          </dl>
+        </section>
+      {%- endfor -%}
+    </div>
+  {% endblock %}
+
+  {% block footer %}
+    {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'tertiary', content: 'theme.keyboard-shortcuts-overlay.footer.dismiss-hint'|trans, className: 'theme-keyboard-shortcuts-overlay__footer-hint' } only %}
+  {% endblock %}
+{% endembed %}

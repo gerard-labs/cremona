@@ -1,0 +1,81 @@
+{#-
+  Progress — task progress indicator with two modes:
+
+    - determinate   — native <progress value max> styled via vendor-prefixed
+                      pseudos (::-webkit-progress-{bar,value}, ::-moz-progress-bar).
+                      Carries an `aria-valuenow` automatically from `value`.
+                      The 100 % keyboard-complete + form-data-complete native
+                      doctrine (matches Slider).
+    - indeterminate — no `value` known. Animated diagonal stripe via CSS-only
+                      `linear-gradient` + `background-position` keyframes
+                      (OQ-17 doctrine — cohérent avec les progress bars OS).
+                      Reduced-motion → static striped gradient, no movement.
+
+  Zero Stimulus controller — the consumer mutates `value` programmatically
+  (e.g. via `progress.value = currentPercent` from a fetch callback).
+
+  Parameters:
+    value           (int,    optional)  — current progress 0..max ; absent or
+                                          null → indeterminate mode.
+    max             (int,    optional)  — default 100.
+    label           (string, optional)  — accessible name. Required when the
+                                          component isn't already described
+                                          by an external label (axe rule).
+    valueDisplay    (bool,   optional)  — show "<value><suffix>" in a header
+                                          (determinate only).
+    valueSuffix     (string, optional)  — display suffix (' %', ' MB', ' / 100')
+    variant         (string, optional)  — primary (default) | success | warning | danger
+    size            (string, optional)  — sm (4) | md (default 6) | lg (8)
+    className       (string, optional)
+-#}
+
+{%- set value        = value is defined ? value : null -%}
+{%- set max          = max          | default(100) -%}
+{%- set label        = label        | default(null) -%}
+{%- set valueDisplay = valueDisplay | default(false) -%}
+{%- set valueSuffix  = valueSuffix  | default('') -%}
+{%- set variant      = variant      | default('primary') -%}
+{%- set size         = size         | default('md') -%}
+{%- set className    = className    | default('') -%}
+{%- set attrs        = attrs        | default({}) -%}
+
+{%- set _isIndeterminate = value is null -%}
+{%- set _classes = ['theme-progress'] -%}
+{%- if _isIndeterminate -%}{%- set _classes = _classes | merge(['theme-progress--indeterminate']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set _wantsRow = label or (valueDisplay and not _isIndeterminate) -%}
+
+{%- if _wantsRow -%}
+<div class="theme-progress-row" data-size="{{ size }}" data-variant="{{ variant }}">
+  <div class="theme-progress-row__header">
+    {%- if label -%}<span class="theme-progress-row__label">{{ label }}</span>{%- endif -%}
+    {%- if valueDisplay and not _isIndeterminate -%}
+      <output class="theme-progress-row__value">{{ value }}{{ valueSuffix }}</output>
+    {%- endif -%}
+  </div>
+  {%- if _isIndeterminate -%}
+    <div class="{{ _classes | join(' ') }}" data-size="{{ size }}" data-variant="{{ variant }}" role="progressbar"
+      {%- if label %} aria-label="{{ label }}"{% endif -%}
+      {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+    ></div>
+  {%- else -%}
+    <progress class="{{ _classes | join(' ') }}" data-size="{{ size }}" data-variant="{{ variant }}" value="{{ value }}" max="{{ max }}"
+      {%- if label %} aria-label="{{ label }}"{% endif -%}
+      {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+    ></progress>
+  {%- endif -%}
+</div>
+{%- else -%}
+  {%- if _isIndeterminate -%}
+    <div class="{{ _classes | join(' ') }}" data-size="{{ size }}" data-variant="{{ variant }}" role="progressbar"
+      {%- if label %} aria-label="{{ label }}"{% endif -%}
+      {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+    ></div>
+  {%- else -%}
+    <progress class="{{ _classes | join(' ') }}" data-size="{{ size }}" data-variant="{{ variant }}" value="{{ value }}" max="{{ max }}"
+      {%- if label %} aria-label="{{ label }}"{% endif -%}
+      {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+    ></progress>
+  {%- endif -%}
+{%- endif -%}

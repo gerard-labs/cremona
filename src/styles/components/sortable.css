@@ -1,0 +1,81 @@
+/*
+ * Sortable — drag-reorder marker classes (Sortable.js v1.15.x lazy ~12 kB).
+ *
+ * Marker classes override Sortable.js's default chrome (ghost / chosen /
+ * drag clones) to use the kit's token vocabulary (light + dark + RTL).
+ * The drag-handle class (.theme-sortable-handle) styles the affordance
+ * button + provides the cursor feedback.
+ *
+ * Per ADR-0045 §"Marker class chrome override".
+ */
+
+/* Drag handle button — visible cursor affordance + larger touch target. */
+.theme-sortable-handle {
+  cursor: grab;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1);
+  min-inline-size: 1.75rem;
+  min-block-size: 1.75rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 0;
+  transition: background var(--motion-duration-fast) var(--motion-easing-standard),
+              color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-sortable-handle:hover,
+.theme-sortable-handle:focus-visible {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.theme-sortable-handle:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset-width);
+}
+
+.theme-sortable-handle:active {
+  cursor: grabbing;
+}
+
+/* Ghost element — visual placeholder in the source position during drag. */
+.theme-sortable-ghost {
+  opacity: 0.35;
+  background: var(--color-bg-elevated);
+  border: 1px dashed var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+/* Chosen item — highlighted just before drag starts (mouse-down state). */
+.theme-sortable-chosen {
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+/* Drag clone — the floating preview that follows the pointer. */
+.theme-sortable-drag {
+  opacity: 0.95;
+  box-shadow: var(--shadow-lg);
+  cursor: grabbing;
+}
+
+/* Keyboard-grabbed state — when a user has pressed Space to grab via keyboard. */
+[data-sortable-state="keyboard-grabbed"] [aria-grabbed="true"] {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset-width);
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+/* Respect prefers-reduced-motion — Sortable.js's `animation` config is set
+   to 0 ms in the controller when the OS preference is set ; this rule
+   removes any residual CSS transitions on ghost/chosen states. */
+@media (prefers-reduced-motion: reduce) {
+  .theme-sortable-handle {
+    transition: none;
+  }
+}

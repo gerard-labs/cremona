@@ -1,0 +1,66 @@
+/*
+ * Form-TagInput — chip-style tag input (Tagify lazy ~12 kB).
+ *
+ * Marker class — composition only. Field Ring 1 carries Label + help/error.
+ * Tagify enhances the input on mount ; this CSS overrides Tagify's default
+ * chrome to match the kit's token vocabulary (light + dark + RTL).
+ */
+
+.theme-form-tag-input__input {
+  /* Tagify wraps this input ; the wrap takes over styling. */
+  inline-size: 100%;
+}
+
+.theme-form-tag-input__counter {
+  font: var(--typography-caption);
+  color: var(--color-text-secondary);
+  margin-block-start: var(--spacing-1);
+}
+
+/* Override Tagify's default chrome (CSS classes prefixed with .tagify__). */
+.theme-form-tag-input .tagify {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  padding: var(--spacing-1);
+  min-block-size: 2.5rem;
+}
+
+.theme-form-tag-input .tagify:focus-within {
+  border-color: var(--color-primary);
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset-width);
+}
+
+.theme-form-tag-input .tagify__tag {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-radius: var(--radius-sm);
+  padding-inline: var(--spacing-2);
+  padding-block: var(--spacing-1);
+  margin-inline-end: var(--spacing-1);
+  margin-block-end: var(--spacing-1);
+  transition: background var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.theme-form-tag-input .tagify__tag__removeBtn {
+  /* Tagify's default X-button — override to use kit tokens + larger touch target. */
+  color: currentColor;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: var(--spacing-1);
+  min-inline-size: 1.5rem;
+  min-block-size: 1.5rem;
+}
+
+.theme-form-tag-input .tagify__tag__removeBtn:hover,
+.theme-form-tag-input .tagify__tag__removeBtn:focus-visible {
+  background: rgb(255 255 255 / 0.2);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+.theme-field--invalid .tagify {
+  border-color: var(--color-danger);
+}

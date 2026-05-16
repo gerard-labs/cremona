@@ -1,0 +1,15 @@
+/*
+ * Auth-MagicLink — terminal passwordless-login confirmation (Ring 3 S3.1b).
+ *
+ * Structural twin of Auth-EmailVerification. Tints the check icon with
+ * the primary brand colour (vs success for EmailVerification) to give
+ * subtle visual differentiation between the two terminal patterns —
+ * Magic-link is identity-flavoured (your account is signing in), while
+ * EmailVerification is success-flavoured (an action completed).
+ *
+ * See `docs/specs/ring3/Auth-MagicLink.md` for the full spec.
+ */
+
+.theme-auth-magic-link .theme-empty__illustration {
+  color: var(--color-primary);
+}

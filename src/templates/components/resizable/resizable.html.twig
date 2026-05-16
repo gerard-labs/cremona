@@ -1,0 +1,109 @@
+{#-
+  Resizable — 2-pane resizable container with drag handle.
+
+  Per OQ-36 (sealed S2.4 opening): event-only persistence — the controller
+  dispatches `resizable:change` ; the consumer chooses to persist via
+  localStorage / cookie / URL / no persistence. Cohérent kit doctrine
+  "no implicit side effects".
+
+  Architecture:
+    CSS Grid 2-pane layout with `grid-template-{columns,rows}` deriving
+    from `--theme-resizable-size` (set by the controller). The handle
+    is a focusable element with role="separator". Keyboard: Arrow keys
+    + Home / End. Pointer: drag with pointer capture.
+
+  Composes:
+    - `resizable` Stimulus controller (pointer drag + keyboard + dispatch).
+    - 0 primitive composition required at this layer ; consumer fills the
+      two panes via `{% block start %}` + `{% block end %}` with arbitrary
+      content (Card, ScrollArea, raw HTML, etc.).
+
+  grip-vertical icon: CSS-only via mask-image data URI (cohérent Table sort
+  + Pagination icons). The Lucide curated 30-icon set doesn't include
+  grip-vertical; the CSS-only path avoids amending the icon set mid-ring.
+
+  Parameters:
+    htmlId         (string,  optional) — auto-generated.
+    orientation    (string,  optional) — horizontal (default) | vertical.
+    size           (int,     optional) — initial size of start pane as
+                                         percentage of wrap's main-axis (default 50).
+    minSize        (int,     optional) — minimum size in percent (default 10).
+    maxSize        (int,     optional) — maximum size in percent (default 90).
+    step           (int,     optional) — keyboard increment in percent (default 5).
+    handleAriaLabel (string, optional) — aria-label on the handle
+                                         (default 'Redimensionner').
+    className      (string,  optional)
+
+  Blocks:
+    start (required) — content of the start pane.
+    end   (required) — content of the end pane.
+
+  Usage:
+
+    {% embed '@theme/components/resizable/resizable.html.twig' with {
+      orientation: 'horizontal',
+      size: 40,
+      minSize: 20,
+      maxSize: 70,
+      handleAriaLabel: 'Redimensionner les panneaux'|trans,
+    } %}
+      {% block start %}
+        <aside>Sidebar content</aside>
+      {% endblock %}
+      {% block end %}
+        <main>Main content area</main>
+      {% endblock %}
+    {% endembed %}
+
+  Events (dispatched on the wrap):
+    resizable:change — detail.{size, orientation}
+-#}
+
+{%- set htmlId          = htmlId          | default('theme-resizable-' ~ random()) -%}
+{%- set orientation     = orientation     | default('horizontal') -%}
+{%- set size            = size            | default(50) -%}
+{%- set minSize         = minSize         | default(10) -%}
+{%- set maxSize         = maxSize         | default(90) -%}
+{%- set step            = step            | default(5) -%}
+{%- set handleAriaLabel = handleAriaLabel | default('Redimensionner') -%}
+{%- set className       = className       | default('') -%}
+
+{%- set _classes = ['theme-resizable'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<div
+  id="{{ htmlId }}"
+  class="{{ _classes | join(' ') }}"
+  data-orientation="{{ orientation }}"
+  data-controller="resizable"
+  data-resizable-orientation-value="{{ orientation }}"
+  data-resizable-size-value="{{ size }}"
+  data-resizable-min-size-value="{{ minSize }}"
+  data-resizable-max-size-value="{{ maxSize }}"
+  data-resizable-step-value="{{ step }}"
+  style="--theme-resizable-size: {{ size }}%;"
+>
+  <div
+    id="{{ htmlId }}-start"
+    class="theme-resizable__pane theme-resizable__pane--start"
+    data-resizable-target="startPane"
+  >
+    {%- block start -%}{%- endblock -%}
+  </div>
+
+  <div
+    class="theme-resizable__handle"
+    data-resizable-target="handle"
+    role="separator"
+    aria-orientation="{{ orientation }}"
+    aria-controls="{{ htmlId }}-start"
+    aria-label="{{ handleAriaLabel }}"
+    tabindex="0"
+  >
+    <span class="theme-resizable__grip" aria-hidden="true"></span>
+  </div>
+
+  <div class="theme-resizable__pane theme-resizable__pane--end">
+    {%- block end -%}{%- endblock -%}
+  </div>
+</div>

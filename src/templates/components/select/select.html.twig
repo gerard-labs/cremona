@@ -1,0 +1,138 @@
+{#-
+  Select — Single-select listbox via Popover-positioned dropdown, styled
+  to look like an Input (border + radius + height match).
+
+  WAI-ARIA APG "Listbox (Collapsible)" pattern: trigger is a button with
+  aria-haspopup="listbox" + aria-expanded; popover content has role="listbox";
+  options have role="option". Focus STAYS on the trigger button — the
+  aria-activedescendant attribute on the button points to the currently-
+  active option (not roving tabindex). This pattern is mandatory for
+  Combobox (S2.3b) and the kit picks it for Select to keep the controller
+  reusable.
+
+  Composes:
+    - Popover (positioning + dismiss)
+    - select controller (listbox semantics, aria-activedescendant nav,
+      keyboard handling, hidden input form integration)
+    - Item visual envelope for each option (.theme-item)
+
+  Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter in
+  S2.3a. For 200+ options OR async-loading, the consumer migrates to a
+  future Combobox lib adapter (Phase 4 ADR if demand emerges).
+
+  Parameters:
+    name        (string, required when used in a form)  — hidden input name
+    htmlId      (string, optional)                      — auto-generated
+    options     (array,  required)                      — [{value, label, disabled?}]
+    value       (string, optional)                      — selected value (SSR pre-select)
+    placeholder (string, optional, recommended)         — text when no value
+                                                          (matches NativeSelect doctrine)
+    placement   (string, optional)                      — Floating UI placement
+                                                          (default 'bottom-start')
+    size        (string, optional)                      — sm | md (default — inherits
+                                                          --density-input-height) | lg
+    disabled    (bool, optional)                        — disables the trigger
+    invalid     (bool, optional)                        — error border (Field forwards)
+    describedBy (string, optional)                      — Field wires this for help/error ids
+    labelledBy  (string, optional)                      — Field wires this for label id
+    className   (string, optional)
+-#}
+
+{%- set htmlId      = htmlId      | default('theme-select-' ~ random()) -%}
+{%- set options     = options     | default([]) -%}
+{%- set value       = value       | default('') -%}
+{%- set placeholder = placeholder | default('') -%}
+{%- set placement   = placement   | default('bottom-start') -%}
+{%- set size        = size        | default('md') -%}
+{%- set disabled    = disabled    | default(false) -%}
+{%- set invalid     = invalid     | default(false) -%}
+{%- set name        = name        | default(null) -%}
+{%- set describedBy = describedBy | default(null) -%}
+{%- set labelledBy  = labelledBy  | default(null) -%}
+{%- set className   = className   | default('') -%}
+
+{%- set _classes = ['theme-popover', 'theme-select'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{# Resolve the displayed label: matching option's label OR placeholder. #}
+{%- set _selectedLabel = placeholder -%}
+{%- set _isPlaceholder = true -%}
+{%- for opt in options -%}
+  {%- if opt.value == value and value != '' -%}
+    {%- set _selectedLabel = opt.label -%}
+    {%- set _isPlaceholder = false -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="popover select"
+  data-action="click->popover#toggle keydown.esc@window->popover#close keydown->select#keydown click->select#onOptionClick"
+  data-popover-placement-value="{{ placement }}"
+  data-popover-offset-value="4"
+  data-popover-open-value="false"
+  data-select-value-value="{{ value }}"
+  data-select-placeholder-value="{{ placeholder }}"
+>
+  <button
+    type="button"
+    class="theme-select__trigger"
+    data-popover-target="trigger"
+    data-select-target="button"
+    data-size="{{ size }}"
+    {%- if disabled %} disabled{% endif -%}
+    {%- if invalid %} aria-invalid="true"{% endif -%}
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-controls="{{ htmlId }}-listbox"
+    {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
+    {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
+  >
+    <span
+      class="theme-select__label"
+      data-select-target="label"
+      data-placeholder="{{ _isPlaceholder ? 'true' : 'false' }}"
+    >{{ _selectedLabel }}</span>
+    <span class="theme-select__chevron" aria-hidden="true">
+      {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down', size: 'sm', decorative: true } %}
+    </span>
+  </button>
+
+  {%- if name -%}
+    <input
+      type="hidden"
+      name="{{ name }}"
+      value="{{ value }}"
+      data-select-target="hiddenInput"
+    />
+  {%- endif -%}
+
+  <div
+    id="{{ htmlId }}-listbox"
+    class="theme-popover__content theme-select__listbox"
+    data-popover-target="content"
+    data-state="closed"
+    data-placement="{{ placement }}"
+    role="listbox"
+    {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
+    hidden
+  >
+    {%- for opt in options -%}
+      {%- set _optDisabled = opt.disabled | default(false) -%}
+      {%- set _optSelected = opt.value == value and value != '' -%}
+      {% include '@theme/components/item/item.html.twig' with {
+        label: opt.label,
+        iconTrailing: _optSelected ? 'check' : null,
+        disabled: _optDisabled,
+        htmlId: htmlId ~ '-opt-' ~ loop.index,
+        className: 'theme-select__option',
+        attrs: {
+          'data-select-target': 'option',
+          'data-value': opt.value,
+          role: 'option',
+          'aria-selected': _optSelected ? 'true' : 'false',
+        },
+      } only %}
+    {%- endfor -%}
+  </div>
+</div>

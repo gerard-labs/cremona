@@ -1,0 +1,68 @@
+{#-
+  Toggle — <button type="button" aria-pressed> "press and stay" button.
+
+  A Toggle is the visual midpoint between Button (one-shot action) and
+  Checkbox (binary state): it pushes-and-stays. Common usage: text-format
+  toolbar (bold / italic / underline), view-mode switcher (grid / list),
+  filter chip toggle.
+
+  Stimulus controller `toggle` (~5 lines):
+    - `toggle()` action on `click` event → flips aria-pressed + dispatches
+      a custom `toggle` event so consumers can react (analytics, filter
+      apply, etc.) without polling aria-pressed.
+
+  Parameters (enumerated):
+    label            (string, optional)  — visible button text. If absent,
+                                            iconLeading + ariaLabel is required.
+    iconLeading      (string, optional)  — Lucide icon name (icon-only or icon+text)
+    pressed          (bool,   optional)  — initial aria-pressed (default false)
+    size             (string, optional)  — sm | md (default) | lg
+    variant          (string, optional)  — default (subtle) | accent (filled when pressed)
+    disabled         (bool,   optional)
+    ariaLabel        (string, optional)  — required when icon-only (no `label`)
+    name             (string, optional)  — form field name (rare — most toggles are UI-only)
+    value            (string, optional)
+    className        (string, optional)
+-#}
+
+{%- set label       = label       | default(null) -%}
+{%- set iconLeading = iconLeading | default(null) -%}
+{%- set pressed     = pressed     | default(false) -%}
+{%- set size        = size        | default('md') -%}
+{%- set variant     = variant     | default('default') -%}
+{%- set disabled    = disabled    | default(false) -%}
+{%- set ariaLabel   = ariaLabel   | default(null) -%}
+{%- set name        = name        | default(null) -%}
+{%- set value       = value       | default(null) -%}
+{%- set className   = className   | default('') -%}
+{%- set attrs       = attrs       | default({}) -%}
+
+{%- set _classes = ['theme-toggle'] -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+<button
+  type="button"
+  class="{{ _classes | join(' ') }}"
+  data-size="{{ size }}"
+  data-variant="{{ variant }}"
+  data-controller="toggle"
+  data-action="click->toggle#toggle"
+  aria-pressed="{{ pressed ? 'true' : 'false' }}"
+  {%- if disabled %} disabled{% endif -%}
+  {%- if name %} name="{{ name }}"{% endif -%}
+  {%- if value is not null %} value="{{ value }}"{% endif -%}
+  {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
+  {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
+>
+  {%- if iconLeading -%}
+    {% include '@theme/components/icon/icon.html.twig' with {
+      name: iconLeading,
+      decorative: true,
+      size: size == 'sm' ? 'sm' : 'md',
+      className: 'theme-toggle__icon',
+    } %}
+  {%- endif -%}
+  {%- if label -%}
+    <span class="theme-toggle__label">{{ label }}</span>
+  {%- endif -%}
+</button>

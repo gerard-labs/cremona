@@ -1,0 +1,100 @@
+{#-
+  Form-PhoneInput — international phone input (intl-tel-input lazy ~25 kB).
+
+  Per Forms family doctrine (Form-WithSteps.md §1) :
+    - Field primitive (Ring 1) is the composition keystone.
+    - intl-tel-input library lazy-loaded on first focus per ADR-0022 (6e cascade) —
+      saves ~25 kB chunk if user never reaches phone field via Tab.
+
+  Parameters:
+    htmlId             (string,  optional) — auto-generated.
+    label              (string,  required) — visible Field label.
+    name               (string,  required) — form field name (hidden input captures E.164).
+    help               (string,  optional) — help text below the widget.
+    error              (string,  optional) — error message.
+    required           (bool,    optional) — default false.
+    initialCountry     (string,  optional) — ISO 2-letter (default 'fr') OR 'auto' for IP-based detection.
+    preferredCountries (array,   optional) — top of country list (default ['fr','us','gb','de','es']).
+    separateDialCode   (bool,    optional) — show dial code separately (default false).
+    nationalMode       (bool,    optional) — display national format by default (default true).
+    placeholder        (string,  optional) — '06 12 34 56 78'
+    className          (string,  optional)
+
+  Events emitted on the wrapper :
+    phone-input:mount          { initialCountry }
+    phone-input:ready          { country }
+    phone-input:change         { number, country, valid }
+    phone-input:country-change { iso2, dialCode, name }
+
+  Usage:
+
+    {% include '@theme/components/form-phone-input/form-phone-input.html.twig' with {
+      label: 'theme.form.phone-input.label.contact'|trans,
+      name: 'phone',
+      initialCountry: 'fr',
+    } %}
+-#}
+
+{%- set htmlId             = htmlId             | default('theme-form-phone-' ~ random()) -%}
+{%- set required           = required           | default(false) -%}
+{%- set initialCountry     = initialCountry     | default('fr') -%}
+{%- set preferredCountries = preferredCountries | default(['fr', 'us', 'gb', 'de', 'es']) -%}
+{%- set separateDialCode   = separateDialCode   | default(false) -%}
+{%- set nationalMode       = nationalMode       | default(true) -%}
+{%- set placeholder        = placeholder        | default('') -%}
+{%- set className          = className          | default('') -%}
+
+{%- set isInvalid = error is defined and error -%}
+{%- set _classes = ['theme-field', 'theme-form-phone-input'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
+
+{%- set describedByIds = [] -%}
+{%- if help -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-help']) -%}{%- endif -%}
+{%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
+
+<div
+  class="{{ _classes | join(' ') }}"
+  data-controller="phone-input"
+  data-phone-input-initial-country-value="{{ initialCountry }}"
+  data-phone-input-preferred-countries-value="{{ preferredCountries | json_encode | e('html_attr') }}"
+  data-phone-input-separate-dial-code-value="{{ separateDialCode ? 'true' : 'false' }}"
+  data-phone-input-national-mode-value="{{ nationalMode ? 'true' : 'false' }}"
+>
+  {% include '@theme/components/label/label.html.twig' with {
+    content: label,
+    htmlFor: htmlId ~ '-input',
+    required: required,
+    requiredAriaText: 'theme.form.phone-input.required'|trans,
+  } only %}
+
+  {% include '@theme/components/input/input.html.twig' with {
+    type: 'tel',
+    htmlId: htmlId ~ '-input',
+    name: htmlId ~ '-display',
+    autocomplete: 'tel',
+    inputmode: 'tel',
+    required: required,
+    invalid: isInvalid,
+    describedBy: describedByIds | length ? describedByIds | join(' ') : null,
+    placeholder: placeholder,
+    className: 'theme-form-phone-input__input',
+    attrs: {
+      'aria-label': 'theme.form.phone-input.aria.label'|trans,
+      'data-phone-input-target': 'input',
+    },
+  } only %}
+
+  <input
+    type="hidden"
+    name="{{ name }}"
+    data-phone-input-target="hiddenInput"
+  />
+
+  {%- if help -%}
+    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+  {%- endif -%}
+  {%- if isInvalid -%}
+    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+  {%- endif -%}
+</div>
