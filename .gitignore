@@ -4,6 +4,12 @@ node_modules/
 .pnpm-debug.log*
 npm-debug.log*
 
+# PHP / Composer
+/vendor/
+composer.phar
+.phpunit.cache/
+.phpunit.result.cache
+
 # Build output
 dist/
 .histoire/

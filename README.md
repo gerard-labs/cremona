@@ -54,8 +54,9 @@ layer powers light/dark themes, three density modes, and full RTL support.
   axe-core audit on every story.
 - 📦 **Dual distribution** — NPM (JS + CSS + tokens) and Composer (Twig templates
   + a minimal Symfony bridge).
-- ✅ **Quality-gated** — 673 unit tests, an axe accessibility suite, Playwright
-  visual-regression tests, and 7 lint gates run in CI.
+- ✅ **Quality-gated** — CI runs 673 unit tests, an axe accessibility audit, a
+  PHPUnit suite for the Symfony bridge, the library build, and 7 lint gates;
+  a Playwright visual-regression suite ships too.
 
 ---
 
@@ -358,6 +359,23 @@ theme/
 | `lint:manifest`   | ring invariants + `dependsOn` graph (`tools/check-manifest.js`) |
 | `lint:tokens`     | light/dark token parity |
 | `lint:composition`| component composition rules |
+
+Beyond lint, CI also runs the unit tests, the library build, the accessibility
+audit, and the Symfony bridge's PHPUnit suite — see
+[the workflow](./.github/workflows/ci.yml).
+
+### Symfony bridge tests
+
+The PHP bridge under `Bridge/Symfony/` ships its own PHPUnit suite (needs
+PHP ≥ 8.4 and Composer):
+
+```bash
+composer install
+composer test
+```
+
+It exercises the bundle's DI extension — `@theme` Twig namespace registration
+and translation-catalog discovery.
 
 ### The ring methodology
 
