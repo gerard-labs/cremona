@@ -1,5 +1,5 @@
 {
-    "name": "gerard/theme",
+    "name": "gerard/cremona",
     "type": "symfony-bundle",
     "description": "Universal tokenized UI kit (Tailwind v4 + Stimulus + Twig) — Symfony bridge minimal (Twig @theme namespace).",
     "license": "MIT",

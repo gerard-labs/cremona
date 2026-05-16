@@ -1,5 +1,5 @@
 {
-  "name": "@gerard/theme",
+  "name": "@gerard/cremona",
   "version": "0.2.6",
   "private": true,
   "description": "Universal tokenized UI kit (Tailwind v4 + Stimulus + Twig). Symfony-first, portable to React/Vue/Drupal/static.",

@@ -1,4 +1,4 @@
-# theme
+# Cremona
 
 > **Universal tokenized UI kit** — Tailwind v4 · Stimulus · Twig.
 > Symfony-first, portable to React / Vue / Drupal / plain HTML.
@@ -11,8 +11,8 @@
 ![pnpm](https://img.shields.io/badge/pnpm-%E2%89%A5%2010-f69220.svg)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v4-38bdf8.svg)
 
-`theme` is a framework-agnostic design system. It ships **124 components** — from
-primitives (Button, Input, Tooltip…) through compounds (Dialog, DataTable,
+**Cremona** is a framework-agnostic design system. It ships **124 components** —
+from primitives (Button, Input, Tooltip…) through compounds (Dialog, DataTable,
 Combobox…) to full-page patterns (Auth flows, Error pages, Dashboards…) — all
 driven by one set of design tokens.
 
@@ -112,7 +112,7 @@ catalogs into the Symfony Translator.
    ```
 
    ```bash
-   composer require gerard/theme:dev-main
+   composer require gerard/cremona:dev-main
    ```
 
 2. Register the bundle (`config/bundles.php`):
@@ -138,8 +138,8 @@ catalogs into the Symfony Translator.
 
    ```js
    // assets/app.js
-   import '@gerard/theme/theme.css';
-   import { start } from '@gerard/theme';
+   import '@gerard/cremona/theme.css';
+   import { start } from '@gerard/cremona';
 
    start(); // boots Stimulus + registers every kit controller
    ```
@@ -150,8 +150,8 @@ the `fr.json` / `en.json` translation catalogs.
 ### Option B — JavaScript bundler (Vite, Webpack, Rspack…)
 
 ```js
-import '@gerard/theme/theme.css';
-import { start } from '@gerard/theme';
+import '@gerard/cremona/theme.css';
+import { start } from '@gerard/cremona';
 
 start(); // auto-boots a Stimulus application on <html>
 ```
@@ -161,7 +161,7 @@ into it instead of auto-booting:
 
 ```js
 import { Application } from '@hotwired/stimulus';
-import { register } from '@gerard/theme';
+import { register } from '@gerard/cremona';
 
 const application = Application.start();
 register(application); // adds all 58 kit controllers
@@ -249,7 +249,7 @@ i18n is mandatory, not an afterthought:
   interpolation.
 
 ```js
-import { t, setLocale, setDirection } from '@gerard/theme';
+import { t, setLocale, setDirection } from '@gerard/cremona';
 
 setLocale('en');         // also reflects on <html lang>
 setDirection('rtl');     // flips <html dir> — logical CSS does the rest

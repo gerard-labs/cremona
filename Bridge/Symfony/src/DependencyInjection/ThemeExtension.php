@@ -30,7 +30,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  * Optional Stimulus integration: if `symfony/ux-stimulus-bundle` is installed,
  * a hint is logged in `load()` for the consumer to wire the kit's controllers
  * into their import-map. The actual auto-wire bridge is deferred — for now,
- * consumers manually `import { boot } from '@gerard/theme'` in their app.js.
+ * consumers manually `import { boot } from '@gerard/cremona'` in their app.js.
  */
 final class ThemeExtension extends Extension implements PrependExtensionInterface
 {

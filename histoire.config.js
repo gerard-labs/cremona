@@ -27,7 +27,7 @@ export default defineConfig({
     plugins: [vue(), tailwindcss()],
   },
   theme: {
-    title: 'gerard/theme',
+    title: 'gerard/cremona',
     favicon: undefined,
   },
   // Ring-based grouping in the sidebar tree. Each story declares

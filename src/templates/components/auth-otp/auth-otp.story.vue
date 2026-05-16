@@ -5,7 +5,7 @@
 
   No new Stimulus controller — InputOTP S2.7 (`input-otp`) is composed
   verbatim. The story renders the static markup ; the controller is
-  registered via `import { register } from '@gerard/theme'` at boot
+  registered via `import { register } from '@gerard/cremona'` at boot
   time (Histoire wires Stimulus through histoire.setup.js).
 
   See `docs/specs/ring3/Auth-OTP.md` for the full state matrix.

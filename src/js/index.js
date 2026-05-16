@@ -2,9 +2,9 @@
  * theme.js — Stimulus boot + controller register.
  *
  * Consumers use either:
- *  - Auto: `import { start } from '@gerard/theme'` → kit boots its own
+ *  - Auto: `import { start } from '@gerard/cremona'` → kit boots its own
  *    Stimulus application on `document.documentElement`.
- *  - Manual: `import { register } from '@gerard/theme'` → consumer
+ *  - Manual: `import { register } from '@gerard/cremona'` → consumer
  *    provides its own Stimulus application (Symfony UX, custom boot)
  *    and registers the kit's controllers into it.
  *
