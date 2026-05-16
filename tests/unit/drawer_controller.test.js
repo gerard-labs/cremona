@@ -73,17 +73,17 @@ describe('DrawerController', () => {
   } = {}) {
     document.body.innerHTML = `
       <button id="trigger" type="button">Open</button>
-      <div id="wrap" class="theme-drawer-wrap"
+      <div id="wrap" class="cremona-drawer-wrap"
         data-controller="drawer"
         data-drawer-open-value="${open ? 'true' : 'false'}"
         data-drawer-edge-value="${edge}"
         data-drawer-close-on-escape-value="${closeOnEscape ? 'true' : 'false'}"
         data-drawer-close-on-backdrop-click-value="${closeOnBackdropClick ? 'true' : 'false'}">
-        <dialog id="dr" class="theme-drawer" data-drawer-target="dialog" data-edge="${edge}" aria-labelledby="dr-title">
-          <header class="theme-drawer__header">
-            <h2 id="dr-title" class="theme-drawer__title">Title</h2>
+        <dialog id="dr" class="cremona-drawer" data-drawer-target="dialog" data-edge="${edge}" aria-labelledby="dr-title">
+          <header class="cremona-drawer__header">
+            <h2 id="dr-title" class="cremona-drawer__title">Title</h2>
           </header>
-          <div class="theme-drawer__body">
+          <div class="cremona-drawer__body">
             <p>Body text</p>
             <button id="inner-btn" type="button">Inner action</button>
           </div>

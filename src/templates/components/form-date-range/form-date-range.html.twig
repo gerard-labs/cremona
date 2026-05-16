@@ -26,7 +26,7 @@
 
   Usage:
 
-    {% include '@theme/components/form-date-range/form-date-range.html.twig' with {
+    {% include '@cremona/components/form-date-range/form-date-range.html.twig' with {
       label: 'theme.form.date-range.label.booking'|trans,
       name: 'booking',
       min: '2026-01-01',
@@ -42,7 +42,7 @@
     form-date-range:clear    { which }
 -#}
 
-{%- set htmlId     = htmlId     | default('theme-form-date-range-' ~ random()) -%}
+{%- set htmlId     = htmlId     | default('cremona-form-date-range-' ~ random()) -%}
 {%- set startValue = startValue | default('') -%}
 {%- set endValue   = endValue   | default('') -%}
 {%- set min        = min        | default('') -%}
@@ -52,28 +52,28 @@
 {%- set className  = className  | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-field', 'theme-form-date-range'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field', 'cremona-form-date-range'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-{%- set _legendClasses = ['theme-label', 'theme-form-date-range__legend'] -%}
+{%- set _legendClasses = ['cremona-label', 'cremona-form-date-range__legend'] -%}
 
 <div class="{{ _classes | join(' ') }}">
-  <fieldset class="theme-form-date-range__fieldset" aria-labelledby="{{ htmlId }}-legend">
+  <fieldset class="cremona-form-date-range__fieldset" aria-labelledby="{{ htmlId }}-legend">
     <legend id="{{ htmlId }}-legend" class="{{ _legendClasses | join(' ') }}">
       {{ label }}
       {%- if required %} <span aria-hidden="true">*</span><span class="sr-only">{{ 'theme.form.date-range.required'|trans }}</span>{% endif -%}
     </legend>
 
     <div
-      class="theme-form-date-range__wrap"
+      class="cremona-form-date-range__wrap"
       data-controller="form-date-range"
       data-form-date-range-start-date-value="{{ startValue }}"
       data-form-date-range-end-date-value="{{ endValue }}"
     >
-      <div class="theme-form-date-range__field theme-form-date-range__field--start" data-form-date-range-target="startInput">
-        <label class="theme-form-date-range__label" for="{{ htmlId }}-start-input">{{ 'theme.form.date-range.label.start'|trans }}</label>
-        {% include '@theme/components/date-picker/date-picker.html.twig' with {
+      <div class="cremona-form-date-range__field cremona-form-date-range__field--start" data-form-date-range-target="startInput">
+        <label class="cremona-form-date-range__label" for="{{ htmlId }}-start-input">{{ 'theme.form.date-range.label.start'|trans }}</label>
+        {% include '@cremona/components/date-picker/date-picker.html.twig' with {
           htmlId: htmlId ~ '-start',
           name: name ~ '_start',
           value: startValue,
@@ -86,11 +86,11 @@
         } only %}
       </div>
 
-      <span class="theme-form-date-range__separator" aria-hidden="true">→</span>
+      <span class="cremona-form-date-range__separator" aria-hidden="true">→</span>
 
-      <div class="theme-form-date-range__field theme-form-date-range__field--end" data-form-date-range-target="endInput">
-        <label class="theme-form-date-range__label" for="{{ htmlId }}-end-input">{{ 'theme.form.date-range.label.end'|trans }}</label>
-        {% include '@theme/components/date-picker/date-picker.html.twig' with {
+      <div class="cremona-form-date-range__field cremona-form-date-range__field--end" data-form-date-range-target="endInput">
+        <label class="cremona-form-date-range__label" for="{{ htmlId }}-end-input">{{ 'theme.form.date-range.label.end'|trans }}</label>
+        {% include '@cremona/components/date-picker/date-picker.html.twig' with {
           htmlId: htmlId ~ '-end',
           name: name ~ '_end',
           value: endValue,
@@ -104,7 +104,7 @@
       </div>
 
       <p
-        class="theme-form-date-range__error"
+        class="cremona-form-date-range__error"
         data-form-date-range-target="errorMessage"
         role="alert"
         hidden
@@ -113,9 +113,9 @@
   </fieldset>
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

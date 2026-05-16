@@ -92,7 +92,7 @@ export default class ProductTourController extends Controller {
     this._driverInstance = driverFn({
       steps: this.stepsValue,
       showProgress: this.showProgressValue,
-      popoverClass: 'theme-product-tour',
+      popoverClass: 'cremona-product-tour',
       nextBtnText: t('theme.onboarding.product-tour.next'),
       prevBtnText: t('theme.onboarding.product-tour.previous'),
       doneBtnText: t('theme.onboarding.product-tour.finish'),

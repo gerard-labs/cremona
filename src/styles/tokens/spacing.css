@@ -1,6 +1,6 @@
 /*
  * Spacing tokens — 8px-based scale with sub-steps for fine control.
- * Tailwind v4 maps these to p-*, m-*, gap-* etc. via @theme in theme.css.
+ * Tailwind v4 maps these to p-*, m-*, gap-* etc. via @theme in cremona.css.
  */
 
 :root {

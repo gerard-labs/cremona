@@ -23,7 +23,7 @@
   (non-modal — clicking outside dismisses, focus is not trapped).
 
   Parameters:
-    htmlId       (string, optional)  auto-generated 'theme-date-picker-<rand>'
+    htmlId       (string, optional)  auto-generated 'cremona-date-picker-<rand>'
     name         (string, optional)  hidden-input form field name
     value        (string, optional)  ISO 8601 yyyy-mm-dd pre-selected date
     min          (string, optional)  ISO 8601 lower bound
@@ -46,7 +46,7 @@
     className    (string, optional)
 -#}
 
-{%- set htmlId            = htmlId            | default('theme-date-picker-' ~ random()) -%}
+{%- set htmlId            = htmlId            | default('cremona-date-picker-' ~ random()) -%}
 {%- set name              = name              | default(null) -%}
 {%- set value             = value             | default(null) -%}
 {%- set min               = min               | default(null) -%}
@@ -65,7 +65,7 @@
 {%- set calendarAriaLabel = calendarAriaLabel | default('theme.date-picker.aria.dialog'|trans) -%}
 {%- set className         = className         | default('') -%}
 
-{%- set _classes = ['theme-popover', 'theme-date-picker'] -%}
+{%- set _classes = ['cremona-popover', 'cremona-date-picker'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _contentId  = htmlId ~ '-popover' -%}
@@ -87,8 +87,8 @@
   {%- if min is not null %} data-date-picker-min-value="{{ min }}"{% endif -%}
   {%- if max is not null %} data-date-picker-max-value="{{ max }}"{% endif -%}
 >
-  <div class="theme-date-picker__trigger">
-    {% include '@theme/components/input/input.html.twig' with {
+  <div class="cremona-date-picker__trigger">
+    {% include '@cremona/components/input/input.html.twig' with {
       type: 'text',
       htmlId: _inputId,
       size: size,
@@ -97,7 +97,7 @@
       required: required,
       disabled: disabled,
       describedBy: describedBy,
-      className: 'theme-date-picker__input',
+      className: 'cremona-date-picker__input',
       attrs: {
         'data-popover-target': 'trigger',
         'data-date-picker-target': 'input',
@@ -110,7 +110,7 @@
       },
     } only %}
     <svg
-      class="theme-date-picker__icon"
+      class="cremona-date-picker__icon"
       aria-hidden="true"
       width="16" height="16" viewBox="0 0 24 24"
       fill="none" stroke="currentColor" stroke-width="2"
@@ -123,7 +123,7 @@
 
   <div
     id="{{ _contentId }}"
-    class="theme-popover__content theme-date-picker__panel"
+    class="cremona-popover__content cremona-date-picker__panel"
     data-popover-target="content"
     data-state="closed"
     data-placement="{{ placement }}"
@@ -133,7 +133,7 @@
     hidden
   >
     <span id="{{ _dialogLabelId }}" class="sr-only">{{ calendarAriaLabel }}</span>
-    {% include '@theme/components/calendar/calendar.html.twig' with {
+    {% include '@cremona/components/calendar/calendar.html.twig' with {
       htmlId: _calendarId,
       value: value,
       min: min,

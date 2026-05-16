@@ -38,13 +38,13 @@
 {%- set autocomplete= autocomplete| default(null) -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _wrapClasses = ['theme-native-select-wrap'] -%}
-{%- if disabled -%}{%- set _wrapClasses = _wrapClasses | merge(['theme-native-select-wrap--disabled']) -%}{%- endif -%}
+{%- set _wrapClasses = ['cremona-native-select-wrap'] -%}
+{%- if disabled -%}{%- set _wrapClasses = _wrapClasses | merge(['cremona-native-select-wrap--disabled']) -%}{%- endif -%}
 {%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
 
 <div class="{{ _wrapClasses | join(' ') }}" data-size="{{ size }}">
   <select
-    class="theme-native-select"
+    class="cremona-native-select"
     data-size="{{ size }}"
     {%- if name %} name="{{ name }}"{% endif -%}
     {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
@@ -66,5 +66,5 @@
       {%- endif -%}
     {%- endfor -%}
   </select>
-  {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down', decorative: true, size: 'sm', className: 'theme-native-select__chevron' } %}
+  {% include '@cremona/components/icon/icon.html.twig' with { name: 'chevron-down', decorative: true, size: 'sm', className: 'cremona-native-select__chevron' } %}
 </div>

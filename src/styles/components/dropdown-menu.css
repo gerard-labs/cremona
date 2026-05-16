@@ -11,18 +11,18 @@
  * Per WAI-ARIA APG "Menu Button" pattern + 13-accessibility-baseline §2.
  *
  * Styling is minimal — the menu surface inherits everything from
- * .theme-popover__content (bg, border, radius, shadow, padding, scale
+ * .cremona-popover__content (bg, border, radius, shadow, padding, scale
  * animation). The dropdown-menu adds:
  *   - reduced inline padding on the content (items already have their
  *     own padding-inline; doubled padding feels too generous in menus)
  *   - separator hr rule for in-menu dividers
  *
- * Items inside the menu render as `.theme-item` (from Item.css). The
+ * Items inside the menu render as `.cremona-item` (from Item.css). The
  * dropdown-menu controller stamps `role="menuitem"` + tabindex on each
  * at connect time — consumers don't have to remember.
  */
 
-.theme-dropdown-menu__content {
+.cremona-dropdown-menu__content {
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-1);
   min-inline-size: 200px;
@@ -30,21 +30,21 @@
 
 /* Items inside the menu — tighten the inline padding so the icon-label-trailing
    triplet has consistent spacing without doubling Item's own padding. */
-.theme-dropdown-menu__content .theme-item {
+.cremona-dropdown-menu__content .cremona-item {
   inline-size: 100%;
   cursor: pointer;
 }
 
 /* Disabled items — visual dim + no pointer events. The dropdown-menu
    controller's `items` getter excludes them from keyboard nav too. */
-.theme-dropdown-menu__content .theme-item[aria-disabled="true"],
-.theme-dropdown-menu__content .theme-item[data-state="disabled"] {
+.cremona-dropdown-menu__content .cremona-item[aria-disabled="true"],
+.cremona-dropdown-menu__content .cremona-item[data-state="disabled"] {
   opacity: 0.5;
   pointer-events: none;
 }
 
 /* Separator between item groups — uses Separator-like styling via hr. */
-.theme-dropdown-menu__separator {
+.cremona-dropdown-menu__separator {
   block-size: 1px;
   border: 0;
   margin-block: var(--spacing-1);
@@ -54,7 +54,7 @@
 
 /* Optional group label — overline typography to introduce a cluster
    of related items (e.g. "Actions destructives" before delete entries). */
-.theme-dropdown-menu__group-label {
+.cremona-dropdown-menu__group-label {
   font: var(--typography-overline);
   color: var(--color-text-tertiary);
   padding-block: var(--spacing-1);

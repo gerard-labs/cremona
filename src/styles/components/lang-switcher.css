@@ -8,17 +8,17 @@
  * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
  */
 
-.theme-lang-switcher__trigger {
+.cremona-lang-switcher__trigger {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1_5);
 }
 
-.theme-lang-switcher__content {
+.cremona-lang-switcher__content {
   min-inline-size: 180px;
 }
 
-.theme-lang-switcher__item {
+.cremona-lang-switcher__item {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -26,12 +26,12 @@
   padding-block: var(--spacing-1_5);
 }
 
-.theme-lang-switcher__item[aria-current="true"] {
+.cremona-lang-switcher__item[aria-current="true"] {
   background-color: var(--color-bg-sunken);
   font-weight: var(--font-weight-semibold);
 }
 
-.theme-lang-switcher__flag {
+.cremona-lang-switcher__flag {
   font-size: 1em;
   line-height: 1;
 }

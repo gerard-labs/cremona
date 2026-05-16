@@ -10,7 +10,7 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderSkeleton({ shape = 'rect', width, height, count = 1, className }) {
-  const classes = ['theme-skeleton', `theme-skeleton--${shape}`];
+  const classes = ['cremona-skeleton', `cremona-skeleton--${shape}`];
   if (className) classes.push(className);
   const style = [];
   if (width) style.push(`inline-size: ${width}`);
@@ -20,7 +20,7 @@ function renderSkeleton({ shape = 'rect', width, height, count = 1, className })
     const lines = Array.from({ length: count }, () =>
       `<div class="${classes.join(' ')}" data-shape="${shape}"${styleAttr}></div>`,
     ).join('');
-    return `<div class="theme-skeleton-group" aria-hidden="true">${lines}</div>`;
+    return `<div class="cremona-skeleton-group" aria-hidden="true">${lines}</div>`;
   }
   return `<div class="${classes.join(' ')}" data-shape="${shape}"${styleAttr} aria-hidden="true"></div>`;
 }
@@ -33,51 +33,51 @@ const bodyHtml = `
     </header>
 
     <section class="skeleton-story__section" aria-labelledby="skeleton-section-shapes">
-      <h2 id="skeleton-section-shapes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.shapes')}</h2>
+      <h2 id="skeleton-section-shapes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.shapes')}</h2>
       <div class="skeleton-story__row">
         <div class="skeleton-story__demo">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.rect')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.rect')}</span>
           ${renderSkeleton({ shape: 'rect', width: '160px', height: '40px' })}
         </div>
         <div class="skeleton-story__demo">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.circle')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.circle')}</span>
           ${renderSkeleton({ shape: 'circle', width: '48px' })}
         </div>
         <div class="skeleton-story__demo">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.text')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.text')}</span>
           ${renderSkeleton({ shape: 'text', width: '160px' })}
         </div>
       </div>
     </section>
 
     <section class="skeleton-story__section" aria-labelledby="skeleton-section-sizes">
-      <h2 id="skeleton-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.sizes')}</h2>
+      <h2 id="skeleton-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.sizes')}</h2>
       <div class="skeleton-story__stack">
         <div class="skeleton-story__demo">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.tiny')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.tiny')}</span>
           ${renderSkeleton({ shape: 'rect', width: '60px', height: '12px' })}
         </div>
         <div class="skeleton-story__demo">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.medium')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.medium')}</span>
           ${renderSkeleton({ shape: 'rect', width: '240px', height: '20px' })}
         </div>
         <div class="skeleton-story__demo">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.large')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.label.large')}</span>
           ${renderSkeleton({ shape: 'rect', width: '360px', height: '48px' })}
         </div>
       </div>
     </section>
 
     <section class="skeleton-story__section" aria-labelledby="skeleton-section-paragraph">
-      <h2 id="skeleton-section-paragraph" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.paragraph')}</h2>
+      <h2 id="skeleton-section-paragraph" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.paragraph')}</h2>
       <div class="skeleton-story__paragraph">
         ${renderSkeleton({ shape: 'text', count: 4 })}
       </div>
     </section>
 
     <section class="skeleton-story__section" aria-labelledby="skeleton-section-composite">
-      <h2 id="skeleton-section-composite" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.composite')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.composite-explainer')}</p>
+      <h2 id="skeleton-section-composite" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.skeleton.story.section.composite')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.skeleton.story.composite-explainer')}</p>
       <div class="skeleton-story__card" role="status" aria-busy="true">
         <div class="skeleton-story__card-head">
           ${renderSkeleton({ shape: 'circle', width: '40px' })}
@@ -88,7 +88,7 @@ const bodyHtml = `
         </div>
         ${renderSkeleton({ shape: 'rect', height: '120px' })}
         ${renderSkeleton({ shape: 'text', count: 3 })}
-        <span class="theme-sr-only">${t('theme.skeleton.story.aria-busy-message')}</span>
+        <span class="cremona-sr-only">${t('theme.skeleton.story.aria-busy-message')}</span>
       </div>
     </section>
   </section>

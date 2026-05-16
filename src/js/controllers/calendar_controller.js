@@ -110,7 +110,7 @@ export default class CalendarController extends Controller {
    * areas don't trigger selection.
    */
   onDayClick(event) {
-    const cell = event.target && event.target.closest && event.target.closest('.theme-calendar__day');
+    const cell = event.target && event.target.closest && event.target.closest('.cremona-calendar__day');
     if (!cell || !this.element.contains(cell)) return;
     if (cell.getAttribute('aria-disabled') === 'true') return;
     const iso = cell.dataset.iso;
@@ -132,7 +132,7 @@ export default class CalendarController extends Controller {
    * buttons stay native (Enter activates the button via the browser).
    */
   onKeydown(event) {
-    const cell = event.target && event.target.classList && event.target.classList.contains('theme-calendar__day')
+    const cell = event.target && event.target.classList && event.target.classList.contains('cremona-calendar__day')
       ? event.target
       : null;
     if (!cell) return;
@@ -269,7 +269,7 @@ export default class CalendarController extends Controller {
     for (const lbl of labels) {
       // The wrapping span is decorative (aria-hidden on the parent). The
       // first letter is the narrow weekday name from Intl.DateTimeFormat.
-      html += `<span class="theme-calendar__weekday">${escapeHtml(lbl)}</span>`;
+      html += `<span class="cremona-calendar__weekday">${escapeHtml(lbl)}</span>`;
     }
     this.weekdaysTarget.innerHTML = html;
   }
@@ -303,7 +303,7 @@ export default class CalendarController extends Controller {
     }
 
     const gridId = this.gridTarget.id || '';
-    const cellIdBase = `${gridId || 'theme-calendar-grid'}-cell`;
+    const cellIdBase = `${gridId || 'cremona-calendar-grid'}-cell`;
 
     // Render rows. Each row is a `<div role="row">` with 7 day buttons.
     const rowsHtml = [];
@@ -342,9 +342,9 @@ export default class CalendarController extends Controller {
         if (isToday) ariaParts.push(`aria-current="date"`);
         if (isDisabled) ariaParts.push(`aria-disabled="true"`);
 
-        return `<button type="button" class="theme-calendar__day" ${ariaParts.join(' ')}>${cell.day}</button>`;
+        return `<button type="button" class="cremona-calendar__day" ${ariaParts.join(' ')}>${cell.day}</button>`;
       }).join('');
-      rowsHtml.push(`<div class="theme-calendar__row" role="row">${cellsHtml}</div>`);
+      rowsHtml.push(`<div class="cremona-calendar__row" role="row">${cellsHtml}</div>`);
     }
 
     this.gridTarget.innerHTML = rowsHtml.join('');
@@ -369,7 +369,7 @@ export default class CalendarController extends Controller {
     const minIso = this.minValue;
     const maxIso = this.maxValue;
     const disabledWeekdaysSet = parseDisabledWeekdays(this.disabledWeekdaysValue);
-    const cells = this.gridTarget.querySelectorAll('.theme-calendar__day');
+    const cells = this.gridTarget.querySelectorAll('.cremona-calendar__day');
     for (const cell of cells) {
       const iso = cell.dataset.iso;
       const weekday = Number(cell.dataset.weekday);
@@ -394,7 +394,7 @@ export default class CalendarController extends Controller {
     }
     this.gridTarget.setAttribute(
       'aria-activedescendant',
-      `${this.gridTarget.id || 'theme-calendar-grid'}-cell-${this._focusedIso}`,
+      `${this.gridTarget.id || 'cremona-calendar-grid'}-cell-${this._focusedIso}`,
     );
   }
 
@@ -433,7 +433,7 @@ export default class CalendarController extends Controller {
 
   _focusCell(iso) {
     if (!this.hasGridTarget) return;
-    const cells = this.gridTarget.querySelectorAll('.theme-calendar__day');
+    const cells = this.gridTarget.querySelectorAll('.cremona-calendar__day');
     for (const cell of cells) {
       if (cell.dataset.iso === iso) {
         cell.tabIndex = 0;
@@ -448,7 +448,7 @@ export default class CalendarController extends Controller {
     }
     this.gridTarget.setAttribute(
       'aria-activedescendant',
-      `${this.gridTarget.id || 'theme-calendar-grid'}-cell-${iso}`,
+      `${this.gridTarget.id || 'cremona-calendar-grid'}-cell-${iso}`,
     );
   }
 

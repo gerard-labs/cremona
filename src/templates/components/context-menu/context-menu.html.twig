@@ -37,19 +37,19 @@
 
   Blocks:
     items (required) — N Item.html.twig embeds (with `as: 'div'`) and
-                       optional `<hr class="theme-dropdown-menu__separator">`
-                       dividers + `<div class="theme-dropdown-menu__group-label">`
+                       optional `<hr class="cremona-dropdown-menu__separator">`
+                       dividers + `<div class="cremona-dropdown-menu__group-label">`
                        labels. The dropdown-menu controller stamps
                        role="menuitem" + tabindex on each automatically.
 -#}
 
-{%- set htmlId    = htmlId    | default('theme-context-menu-' ~ random()) -%}
+{%- set htmlId    = htmlId    | default('cremona-context-menu-' ~ random()) -%}
 {%- set area      = area      | default('self') -%}
 {%- set placement = placement | default('bottom-start') -%}
 {%- set offset    = offset    | default(0) -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-popover', 'theme-dropdown-menu', 'theme-context-menu'] -%}
+{%- set _classes = ['cremona-popover', 'cremona-dropdown-menu', 'cremona-context-menu'] -%}
 {%- if className %}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set contextMenuHtmlId = htmlId -%}
@@ -64,7 +64,7 @@
   data-context-menu-area-value="{{ area }}"
 >
   <span
-    class="theme-context-menu__phantom"
+    class="cremona-context-menu__phantom"
     data-popover-target="trigger"
     data-context-menu-target="phantom"
     aria-hidden="true"
@@ -72,7 +72,7 @@
 
   <div
     id="{{ htmlId }}"
-    class="theme-popover__content theme-dropdown-menu__content theme-context-menu__content"
+    class="cremona-popover__content cremona-dropdown-menu__content cremona-context-menu__content"
     data-popover-target="content"
     data-state="closed"
     data-placement="{{ placement }}"

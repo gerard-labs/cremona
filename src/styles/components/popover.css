@@ -16,7 +16,7 @@
  * Don't try to override with `inset-inline-*` — it would double-flip in RTL.
  *
  * The transform-origin per placement (so the scale grows from the trigger
- * direction) is also controller-set via `--theme-popover-origin` CSS custom
+ * direction) is also controller-set via `--cremona-popover-origin` CSS custom
  * property, computed from Floating UI's resolved placement (after flip).
  *
  * Animations (per 14-motion-baseline §1 Popover):
@@ -33,12 +33,12 @@
  * stopPropagation inside the popover content doesn't break dismiss-on-doc.
  */
 
-.theme-popover {
+.cremona-popover {
   display: inline-block;
   position: relative;
 }
 
-.theme-popover__content {
+.cremona-popover__content {
   /* Pinned to viewport top-left; Floating UI inline-styles `left` / `top`
      to the resolved coordinates. Physical positioning — see header comment. */
   position: fixed;
@@ -65,14 +65,14 @@
      to remove it from the accessibility tree). */
   opacity: 0;
   transform: scale(0.96);
-  transform-origin: var(--theme-popover-origin, 50% 0%);
+  transform-origin: var(--cremona-popover-origin, 50% 0%);
   pointer-events: none;
   transition:
     opacity var(--motion-duration-fast) var(--motion-easing-accelerate),
     transform var(--motion-duration-fast) var(--motion-easing-accelerate);
 }
 
-.theme-popover__content[data-state="open"] {
+.cremona-popover__content[data-state="open"] {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
@@ -84,20 +84,20 @@
    transition completes — removes the popover from the accessibility tree
    while keeping it in the DOM for the next open (so consumers' Stimulus
    targets / data-* state survive). */
-.theme-popover__content[hidden] {
+.cremona-popover__content[hidden] {
   display: none;
 }
 
 /* Inline-flex header pattern when the consumer composes a title + dismiss
    button at the top of the content. Optional — most popovers are plain. */
-.theme-popover__header {
+.cremona-popover__header {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
   margin-block-end: var(--spacing-2);
 }
 
-.theme-popover__title {
+.cremona-popover__title {
   font: var(--typography-h3);
   color: var(--color-text-primary);
   margin: 0;
@@ -106,7 +106,7 @@
 
 /* ----- dark mode --------------------------------------------------- */
 
-[data-theme="dark"] .theme-popover__content {
+[data-theme="dark"] .cremona-popover__content {
   background-color: var(--color-bg-elevated);
   border-color: var(--color-border-default);
   /* Shadow opacities are lifted in tokens/shadow.css [data-theme="dark"] —

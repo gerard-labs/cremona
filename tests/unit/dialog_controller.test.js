@@ -79,16 +79,16 @@ describe('DialogController', () => {
   } = {}) {
     document.body.innerHTML = `
       <button id="trigger" type="button">Open</button>
-      <div id="wrap" class="theme-dialog-wrap"
+      <div id="wrap" class="cremona-dialog-wrap"
         data-controller="dialog"
         data-dialog-open-value="${open ? 'true' : 'false'}"
         data-dialog-close-on-escape-value="${closeOnEscape ? 'true' : 'false'}"
         data-dialog-close-on-backdrop-click-value="${closeOnBackdropClick ? 'true' : 'false'}">
-        <dialog id="dlg" class="theme-dialog" data-dialog-target="dialog" aria-labelledby="dlg-title">
-          <header class="theme-dialog__header">
-            <h2 id="dlg-title" class="theme-dialog__title">Title</h2>
+        <dialog id="dlg" class="cremona-dialog" data-dialog-target="dialog" aria-labelledby="dlg-title">
+          <header class="cremona-dialog__header">
+            <h2 id="dlg-title" class="cremona-dialog__title">Title</h2>
           </header>
-          <div class="theme-dialog__body">
+          <div class="cremona-dialog__body">
             <p>Body text</p>
             <button id="inner-btn" type="button">Inner action</button>
           </div>

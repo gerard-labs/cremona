@@ -23,7 +23,7 @@ const ICONS = Object.fromEntries(
 );
 
 function renderIcon({ name, size = 'lg' }) {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] ?? ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] ?? ''}</span>`;
 }
 
 function computeInitials(name) {
@@ -34,21 +34,21 @@ function computeInitials(name) {
 }
 
 function renderAvatar({ src, alt = '', initials, name, size = 'md', status, statusLabel, hue, className }) {
-  const classes = ['theme-avatar'];
-  if (status) classes.push('theme-avatar--has-status');
+  const classes = ['cremona-avatar'];
+  if (status) classes.push('cremona-avatar--has-status');
   if (className) classes.push(className);
-  const style = hue ? ` style="--theme-avatar-hue: var(--color-kpi-${hue})"` : '';
+  const style = hue ? ` style="--cremona-avatar-hue: var(--color-kpi-${hue})"` : '';
   const displayInitials = initials ?? computeInitials(name);
   const showIconFallback = !src && !displayInitials;
 
   let body;
   if (src) {
-    body = `<img class="theme-avatar__img" data-avatar-fallback-target="img" data-action="error->avatar-fallback#onError" src="${src}" alt="${alt}">`;
+    body = `<img class="cremona-avatar__img" data-avatar-fallback-target="img" data-action="error->avatar-fallback#onError" src="${src}" alt="${alt}">`;
   } else if (showIconFallback) {
     const iconSize = size === 'xs' || size === 'sm' ? 'sm' : (size === 'xl' ? 'xl' : 'lg');
     body = renderIcon({ name: 'user', size: iconSize });
   } else {
-    body = `<span class="theme-avatar__fallback" aria-hidden="true">${displayInitials}</span>`;
+    body = `<span class="cremona-avatar__fallback" aria-hidden="true">${displayInitials}</span>`;
   }
 
   const stimulusAttrs = src
@@ -56,7 +56,7 @@ function renderAvatar({ src, alt = '', initials, name, size = 'md', status, stat
     : '';
 
   const statusHtml = status
-    ? `<span class="theme-avatar__status" data-status="${status}" role="status" aria-label="${statusLabel ?? status}"></span>`
+    ? `<span class="cremona-avatar__status" data-status="${status}" role="status" aria-label="${statusLabel ?? status}"></span>`
     : '';
 
   return `<span class="${classes.join(' ')}" data-size="${size}" ${stimulusAttrs}${style}>${body}${statusHtml}</span>`;
@@ -76,7 +76,7 @@ const bodyHtml = `
     </header>
 
     <section class="avatar-story__section" aria-labelledby="avatar-section-sizes">
-      <h2 id="avatar-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.sizes')}</h2>
+      <h2 id="avatar-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.sizes')}</h2>
       <div class="avatar-story__row">
         ${SIZES.map((s) => `
           <div class="avatar-story__cell">
@@ -88,15 +88,15 @@ const bodyHtml = `
     </section>
 
     <section class="avatar-story__section" aria-labelledby="avatar-section-image">
-      <h2 id="avatar-section-image" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.image')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar.story.image-explainer')}</p>
+      <h2 id="avatar-section-image" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.image')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar.story.image-explainer')}</p>
       <div class="avatar-story__row">
         ${renderAvatar({ src: TEAL_PIXEL_PNG, alt: 'Marie Dupont', initials: 'MD', name: 'Marie Dupont', size: 'lg' })}
       </div>
     </section>
 
     <section class="avatar-story__section" aria-labelledby="avatar-section-initials">
-      <h2 id="avatar-section-initials" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.initials')}</h2>
+      <h2 id="avatar-section-initials" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.initials')}</h2>
       <div class="avatar-story__row">
         ${renderAvatar({ name: 'Marie Dupont',   initials: 'MD', size: 'lg', hue: 1 })}
         ${renderAvatar({ name: 'Jean Pierre',    initials: 'JP', size: 'lg', hue: 2 })}
@@ -108,15 +108,15 @@ const bodyHtml = `
     </section>
 
     <section class="avatar-story__section" aria-labelledby="avatar-section-icon-fallback">
-      <h2 id="avatar-section-icon-fallback" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.icon-fallback')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar.story.icon-fallback-explainer')}</p>
+      <h2 id="avatar-section-icon-fallback" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.icon-fallback')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar.story.icon-fallback-explainer')}</p>
       <div class="avatar-story__row">
         ${renderAvatar({ size: 'lg' })}
       </div>
     </section>
 
     <section class="avatar-story__section" aria-labelledby="avatar-section-status">
-      <h2 id="avatar-section-status" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.status')}</h2>
+      <h2 id="avatar-section-status" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.status')}</h2>
       <div class="avatar-story__row">
         ${STATUSES.map((s) => `
           <div class="avatar-story__cell">
@@ -128,8 +128,8 @@ const bodyHtml = `
     </section>
 
     <section class="avatar-story__section" aria-labelledby="avatar-section-broken">
-      <h2 id="avatar-section-broken" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.broken')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar.story.broken-explainer')}</p>
+      <h2 id="avatar-section-broken" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar.story.section.broken')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar.story.broken-explainer')}</p>
       <div class="avatar-story__row">
         ${renderAvatar({
           src: 'https://example.invalid/missing-avatar.png',

@@ -52,14 +52,14 @@ describe('PaginationController', () => {
 
   async function mount({ page = 1, pageSize = 25, totalItems = 142 } = {}) {
     document.body.innerHTML = `
-      <nav id="pg" class="theme-pagination"
+      <nav id="pg" class="cremona-pagination"
         role="navigation" aria-label="Pagination"
         data-controller="pagination"
         data-action="change->pagination#changePageSize"
         data-pagination-page-value="${page}"
         data-pagination-page-size-value="${pageSize}"
         data-pagination-total-items-value="${totalItems}">
-        <span class="theme-pagination__range" data-pagination-target="rangeLabel" aria-live="polite"></span>
+        <span class="cremona-pagination__range" data-pagination-target="rangeLabel" aria-live="polite"></span>
         <select id="size-select">
           <option value="10">10</option>
           <option value="25"${pageSize === 25 ? ' selected' : ''}>25</option>

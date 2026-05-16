@@ -53,7 +53,7 @@ let _alertCounter = 0;
 function nextId() { return `alert-${++_alertCounter}`; }
 
 function icon(name, size = 'md') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderAlert({
@@ -74,24 +74,24 @@ function renderAlert({
   const iconName = iconOverride ?? ICON_MAP[variant];
   const iconBlock = hideIcon
     ? ''
-    : `<span class="theme-icon theme-alert__icon" data-icon="${iconName}" data-size="md" aria-hidden="true" role="presentation">${ICONS[iconName] || ''}</span>`;
-  const titleBlock = title ? `<p class="theme-alert__title">${title}</p>` : '';
+    : `<span class="cremona-icon cremona-alert__icon" data-icon="${iconName}" data-size="md" aria-hidden="true" role="presentation">${ICONS[iconName] || ''}</span>`;
+  const titleBlock = title ? `<p class="cremona-alert__title">${title}</p>` : '';
   const bodyBlock = bodyHtml
-    ? `<div class="theme-alert__body">${bodyHtml}</div>`
+    ? `<div class="cremona-alert__body">${bodyHtml}</div>`
     : body
-      ? `<div class="theme-alert__body"><p>${body}</p></div>`
+      ? `<div class="cremona-alert__body"><p>${body}</p></div>`
       : '';
-  const actionBlock = actionHtml ? `<div class="theme-alert__actions">${actionHtml}</div>` : '';
+  const actionBlock = actionHtml ? `<div class="cremona-alert__actions">${actionHtml}</div>` : '';
   const dismissBlock = dismissible
-    ? `<button type="button" class="theme-alert__dismiss" aria-label="${dismissAriaLabel}" data-action="click->alert-dismiss#dismiss">${icon('x', 'sm')}</button>`
+    ? `<button type="button" class="cremona-alert__dismiss" aria-label="${dismissAriaLabel}" data-action="click->alert-dismiss#dismiss">${icon('x', 'sm')}</button>`
     : '';
   const ctrlAttrs = dismissible
     ? `data-controller="alert-dismiss" data-alert-dismiss-message-value="${dismissMessage}"`
     : '';
   return `
-    <div class="theme-alert" id="${id}" role="${role}" data-variant="${variant}" data-tone="${tone}" ${ctrlAttrs}>
+    <div class="cremona-alert" id="${id}" role="${role}" data-variant="${variant}" data-tone="${tone}" ${ctrlAttrs}>
       ${iconBlock}
-      <div class="theme-alert__content">
+      <div class="cremona-alert__content">
         ${titleBlock}
         ${bodyBlock}
         ${actionBlock}
@@ -132,7 +132,7 @@ const SAMPLES = {
 };
 
 function actionButton(label) {
-  return `<button type="button" class="theme-button" data-variant="ghost" data-size="sm"><span class="theme-button__label">${label}</span></button>`;
+  return `<button type="button" class="cremona-button" data-variant="ghost" data-size="sm"><span class="cremona-button__label">${label}</span></button>`;
 }
 
 const bodyHtml = `
@@ -143,16 +143,16 @@ const bodyHtml = `
     </header>
 
     <section class="alert-story__section" aria-labelledby="alert-section-default">
-      <h2 id="alert-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.default')}</h2>
-      <p class="alert-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.default')}</p>
+      <h2 id="alert-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.default')}</h2>
+      <p class="alert-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.default')}</p>
       <div class="alert-story__stack">
         ${row(renderAlert({ variant: 'info', tone: 'soft', body: SAMPLES.infoBody }), 'info soft (body only)')}
       </div>
     </section>
 
     <section class="alert-story__section" aria-labelledby="alert-section-variants">
-      <h2 id="alert-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.variants')}</h2>
-      <p class="alert-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.variants')}</p>
+      <h2 id="alert-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.variants')}</h2>
+      <p class="alert-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.variants')}</p>
       <div class="alert-story__stack">
         ${row(renderAlert({ variant: 'info',    tone: 'soft', title: SAMPLES.infoTitle,    body: SAMPLES.infoBody }),    'info soft')}
         ${row(renderAlert({ variant: 'warning', tone: 'soft', title: SAMPLES.warningTitle, body: SAMPLES.warningBody }), 'warning soft')}
@@ -162,8 +162,8 @@ const bodyHtml = `
     </section>
 
     <section class="alert-story__section" aria-labelledby="alert-section-tones">
-      <h2 id="alert-section-tones" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.tones')}</h2>
-      <p class="alert-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.tones')}</p>
+      <h2 id="alert-section-tones" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.tones')}</h2>
+      <p class="alert-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.tones')}</p>
       <div class="alert-story__stack">
         ${row(renderAlert({ variant: 'info',    tone: 'solid', title: SAMPLES.infoTitle,    body: SAMPLES.infoBody }),    'info solid')}
         ${row(renderAlert({ variant: 'warning', tone: 'solid', title: SAMPLES.warningTitle, body: SAMPLES.warningBody }), 'warning solid')}
@@ -173,8 +173,8 @@ const bodyHtml = `
     </section>
 
     <section class="alert-story__section" aria-labelledby="alert-section-full-anatomy">
-      <h2 id="alert-section-full-anatomy" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.full-anatomy')}</h2>
-      <p class="alert-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.full-anatomy')}</p>
+      <h2 id="alert-section-full-anatomy" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.full-anatomy')}</h2>
+      <p class="alert-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.full-anatomy')}</p>
       <div class="alert-story__stack">
         ${row(renderAlert({
           variant: 'warning',
@@ -198,16 +198,16 @@ const bodyHtml = `
     </section>
 
     <section class="alert-story__section" aria-labelledby="alert-section-no-icon">
-      <h2 id="alert-section-no-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.no-icon')}</h2>
-      <p class="alert-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.no-icon')}</p>
+      <h2 id="alert-section-no-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.no-icon')}</h2>
+      <p class="alert-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.no-icon')}</p>
       <div class="alert-story__stack">
         ${row(renderAlert({ variant: 'info', tone: 'soft', hideIcon: true, body: SAMPLES.noIconBody }), 'info soft · hideIcon')}
       </div>
     </section>
 
     <section class="alert-story__section" aria-labelledby="alert-section-long-content">
-      <h2 id="alert-section-long-content" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.long-content')}</h2>
-      <p class="alert-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.long-content')}</p>
+      <h2 id="alert-section-long-content" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert.story.section.long-content')}</h2>
+      <p class="alert-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert.story.explainer.long-content')}</p>
       <div class="alert-story__stack">
         ${row(renderAlert({
           variant: 'info',

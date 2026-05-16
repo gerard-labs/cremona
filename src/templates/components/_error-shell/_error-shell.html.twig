@@ -8,12 +8,12 @@
   Composition pattern — Twig {% embed %} with blocks (mirror `_auth-shell`
   verbatim per S3.1 doctrine cascade):
 
-    {% embed '@theme/components/_error-shell/_error-shell.html.twig' with {
+    {% embed '@cremona/components/_error-shell/_error-shell.html.twig' with {
       variant: 'default',                  # default | hero
       htmlId: 'error-404',
     } %}
       {% block content %}
-        {% include '@theme/components/empty/empty.html.twig' with { ... } %}
+        {% include '@cremona/components/empty/empty.html.twig' with { ... } %}
       {% endblock %}
     {% endembed %}
 
@@ -66,20 +66,20 @@
       an action via the Empty body + actions slots (no dead-ends).
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-error-shell-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-error-shell-' ~ random()) -%}
 {%- set variant     = variant     | default('default') -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _classes = ['theme-error-shell'] -%}
-{%- if variant == 'hero' -%}{%- set _classes = _classes | merge(['theme-error-shell--hero']) -%}{%- endif -%}
+{%- set _classes = ['cremona-error-shell'] -%}
+{%- if variant == 'hero' -%}{%- set _classes = _classes | merge(['cremona-error-shell--hero']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <main class="{{ _classes | join(' ') }}" data-variant="{{ variant }}" id="{{ htmlId }}">
-  <section class="theme-error-shell__panel">
+  <section class="cremona-error-shell__panel">
     {%- block content -%}{%- endblock -%}
 
     {%- if block('footer') is defined and block('footer') is not empty -%}
-      <footer class="theme-error-shell__footer">
+      <footer class="cremona-error-shell__footer">
         {%- block footer -%}{%- endblock -%}
       </footer>
     {%- endif -%}

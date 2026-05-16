@@ -21,7 +21,7 @@
  * background-color. No JS, no SVG <use>, no extra HTTP round-trip.
  */
 
-.theme-table {
+.cremona-table {
   inline-size: 100%;
   border-collapse: separate;
   border-spacing: 0;
@@ -31,7 +31,7 @@
 }
 
 /* Caption — visible (above the table) or sr-only. */
-.theme-table__caption {
+.cremona-table__caption {
   caption-side: top;
   padding-block: var(--spacing-2);
   text-align: start;
@@ -39,7 +39,7 @@
   color: var(--color-text-secondary);
 }
 
-.theme-table__caption.sr-only {
+.cremona-table__caption.sr-only {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -53,7 +53,7 @@
 
 /* --- Header --------------------------------------------------------- */
 
-.theme-table__thead > tr > th {
+.cremona-table__thead > tr > th {
   background-color: var(--color-bg-sunken);
   color: var(--color-text-secondary);
   font: var(--typography-label);
@@ -67,8 +67,8 @@
 
 /* --- Body ----------------------------------------------------------- */
 
-.theme-table__tbody > tr > th,
-.theme-table__tbody > tr > td {
+.cremona-table__tbody > tr > th,
+.cremona-table__tbody > tr > td {
   padding-block: var(--density-cell-padding-y);
   padding-inline: var(--density-cell-padding-x);
   border-block-end: 1px solid var(--color-border-subtle);
@@ -76,38 +76,38 @@
   vertical-align: middle;
 }
 
-.theme-table__tbody > tr > th {
+.cremona-table__tbody > tr > th {
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
 }
 
 /* Last row — no bottom border for clean edge. */
-.theme-table__tbody > tr:last-child > th,
-.theme-table__tbody > tr:last-child > td {
+.cremona-table__tbody > tr:last-child > th,
+.cremona-table__tbody > tr:last-child > td {
   border-block-end: 0;
 }
 
 /* Row hover — pointer hint without committing to interactive semantics.
    Consumer attaches click handlers if rows are clickable; the hover state
    is the visual signal. */
-.theme-table__tbody > tr:hover {
+.cremona-table__tbody > tr:hover {
   background-color: var(--color-hover-overlay);
 }
 
 /* Row selected — bulk-select state via DataTable header checkbox. */
-.theme-table__tbody > tr[data-selected="true"] {
+.cremona-table__tbody > tr[data-selected="true"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-table__tbody > tr[data-selected="true"]:hover {
+.cremona-table__tbody > tr[data-selected="true"]:hover {
   background-color: var(--color-selected-bg);
 }
 
 /* --- Footer --------------------------------------------------------- */
 
-.theme-table__tfoot > tr > th,
-.theme-table__tfoot > tr > td {
+.cremona-table__tfoot > tr > th,
+.cremona-table__tfoot > tr > td {
   padding-block: var(--density-cell-padding-y);
   padding-inline: var(--density-cell-padding-x);
   background-color: var(--color-bg-sunken);
@@ -122,8 +122,8 @@
 [data-align="center"] { text-align: center; }
 [data-align="end"] { text-align: end; }
 
-.theme-table th[data-numeric="true"],
-.theme-table td[data-numeric="true"] {
+.cremona-table th[data-numeric="true"],
+.cremona-table td[data-numeric="true"] {
   text-align: end;
   font-feature-settings: var(--font-feature-tabular);
   font-variant-numeric: tabular-nums;
@@ -132,46 +132,46 @@
 
 /* --- Size variants -------------------------------------------------- */
 
-.theme-table[data-size="sm"] > thead > tr > th,
-.theme-table[data-size="sm"] > tbody > tr > th,
-.theme-table[data-size="sm"] > tbody > tr > td,
-.theme-table[data-size="sm"] > tfoot > tr > th,
-.theme-table[data-size="sm"] > tfoot > tr > td {
+.cremona-table[data-size="sm"] > thead > tr > th,
+.cremona-table[data-size="sm"] > tbody > tr > th,
+.cremona-table[data-size="sm"] > tbody > tr > td,
+.cremona-table[data-size="sm"] > tfoot > tr > th,
+.cremona-table[data-size="sm"] > tfoot > tr > td {
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-3);
   font-size: var(--font-size-xs);
 }
 
-.theme-table[data-size="lg"] > thead > tr > th,
-.theme-table[data-size="lg"] > tbody > tr > th,
-.theme-table[data-size="lg"] > tbody > tr > td,
-.theme-table[data-size="lg"] > tfoot > tr > th,
-.theme-table[data-size="lg"] > tfoot > tr > td {
+.cremona-table[data-size="lg"] > thead > tr > th,
+.cremona-table[data-size="lg"] > tbody > tr > th,
+.cremona-table[data-size="lg"] > tbody > tr > td,
+.cremona-table[data-size="lg"] > tfoot > tr > th,
+.cremona-table[data-size="lg"] > tfoot > tr > td {
   padding-block: var(--spacing-4);
   padding-inline: var(--spacing-5);
 }
 
 /* --- Variant: striped (zebra rows) ---------------------------------- */
 
-.theme-table[data-variant="striped"] > tbody > tr:nth-child(2n) {
+.cremona-table[data-variant="striped"] > tbody > tr:nth-child(2n) {
   background-color: var(--color-bg-sunken);
 }
 
-.theme-table[data-variant="striped"] > tbody > tr:nth-child(2n):hover {
+.cremona-table[data-variant="striped"] > tbody > tr:nth-child(2n):hover {
   background-color: var(--color-hover-overlay);
 }
 
-.theme-table[data-variant="striped"] > tbody > tr[data-selected="true"]:nth-child(2n) {
+.cremona-table[data-variant="striped"] > tbody > tr[data-selected="true"]:nth-child(2n) {
   background-color: var(--color-selected-bg);
 }
 
 /* --- Sortable column header --------------------------------------- */
 
-.theme-table th[data-sortable="true"] {
+.cremona-table th[data-sortable="true"] {
   padding: 0; /* button takes over padding for proper hit-area */
 }
 
-.theme-table__sort {
+.cremona-table__sort {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1_5);
@@ -187,11 +187,11 @@
   transition: color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-table__sort:hover {
+.cremona-table__sort:hover {
   color: var(--color-text-primary);
 }
 
-.theme-table__sort:focus-visible {
+.cremona-table__sort:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: calc(var(--ring-offset-width) * -1);
 }
@@ -200,7 +200,7 @@
    the "unsorted" double-chevron (chevrons-up-down), and switches to
    chevron-up / chevron-down per aria-sort value. currentColor flows via
    background-color + mask-image. */
-.theme-table__sort-icon {
+.cremona-table__sort-icon {
   display: inline-block;
   inline-size: 14px;
   block-size: 14px;
@@ -218,32 +218,32 @@
 
 /* Active sort direction → single chevron pointing up (ascending) or
    down (descending). aria-sort is the source of truth (set on <th>). */
-.theme-table th[aria-sort="ascending"] .theme-table__sort-icon {
+.cremona-table th[aria-sort="ascending"] .cremona-table__sort-icon {
   opacity: 1;
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>');
 }
 
-.theme-table th[aria-sort="descending"] .theme-table__sort-icon {
+.cremona-table th[aria-sort="descending"] .cremona-table__sort-icon {
   opacity: 1;
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
 }
 
-.theme-table th[aria-sort="ascending"],
-.theme-table th[aria-sort="descending"] {
+.cremona-table th[aria-sort="ascending"],
+.cremona-table th[aria-sort="descending"] {
   color: var(--color-text-primary);
 }
 
 /* Touch target hardening — sortable header button must reach 44 px. */
 @media (pointer: coarse) {
-  .theme-table__sort {
+  .cremona-table__sort {
     min-block-size: 44px;
   }
 }
 
 /* Reduced motion — disable the sort-indicator transitions. */
 @media (prefers-reduced-motion: reduce) {
-  .theme-table__sort,
-  .theme-table__sort-icon {
+  .cremona-table__sort,
+  .cremona-table__sort-icon {
     transition: none;
   }
 }

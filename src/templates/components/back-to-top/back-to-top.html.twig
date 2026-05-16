@@ -10,16 +10,16 @@
     ariaLabel  (string, optional)  — default 'Revenir en haut de la page'
 -#}
 
-{%- set htmlId    = htmlId    | default('theme-back-to-top-' ~ random()) -%}
+{%- set htmlId    = htmlId    | default('cremona-back-to-top-' ~ random()) -%}
 {%- set threshold = threshold | default(400) -%}
 {%- set ariaLabel = ariaLabel | default('theme.back-to-top.aria.label'|trans) -%}
 
-{% include '@theme/components/button/button.html.twig' with {
+{% include '@cremona/components/button/button.html.twig' with {
   variant: 'primary',
   iconLeading: 'arrow-up',
   ariaLabel: ariaLabel,
   htmlId: htmlId,
-  className: 'theme-back-to-top',
+  className: 'cremona-back-to-top',
   attrs: {
     'data-controller': 'back-to-top',
     'data-back-to-top-threshold-value': threshold,

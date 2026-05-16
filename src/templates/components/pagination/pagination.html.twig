@@ -48,7 +48,7 @@
 
   Usage:
 
-    {% include '@theme/components/pagination/pagination.html.twig' with {
+    {% include '@cremona/components/pagination/pagination.html.twig' with {
       page: 3,
       pageSize: 25,
       totalItems: 142,
@@ -64,7 +64,7 @@
     pagination:change — detail.{page, pageSize, from, to, total, totalPages}
 -#}
 
-{%- set htmlId            = htmlId            | default('theme-pagination-' ~ random()) -%}
+{%- set htmlId            = htmlId            | default('cremona-pagination-' ~ random()) -%}
 {%- set page              = page              | default(1) -%}
 {%- set pageSize          = pageSize          | default(25) -%}
 {%- set totalItems        = totalItems        | default(0) -%}
@@ -78,7 +78,7 @@
 {%- set lastAriaLabel     = lastAriaLabel     | default('Dernière page') -%}
 {%- set className         = className         | default('') -%}
 
-{%- set _classes = ['theme-pagination'] -%}
+{%- set _classes = ['cremona-pagination'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _pageSizeOptions = [] -%}
@@ -98,19 +98,19 @@
   data-pagination-total-items-value="{{ totalItems }}"
 >
   <span
-    class="theme-pagination__range"
+    class="cremona-pagination__range"
     data-pagination-target="rangeLabel"
     aria-live="polite"
     aria-atomic="true"
   ></span>
 
-  <span class="theme-pagination__page-size">
+  <span class="cremona-pagination__page-size">
     {%- if pageSizeLabel -%}
-      <label class="theme-pagination__page-size-label" for="{{ htmlId }}-size">
+      <label class="cremona-pagination__page-size-label" for="{{ htmlId }}-size">
         {{ pageSizeLabel }}
       </label>
     {%- endif -%}
-    {% include '@theme/components/native-select/native-select.html.twig' with {
+    {% include '@cremona/components/native-select/native-select.html.twig' with {
       htmlId: htmlId ~ '-size',
       value: pageSize | string,
       options: _pageSizeOptions,
@@ -118,46 +118,46 @@
     } %}
   </span>
 
-  <span class="theme-pagination__nav" role="group">
-    {% include '@theme/components/button/button.html.twig' with {
+  <span class="cremona-pagination__nav" role="group">
+    {% include '@cremona/components/button/button.html.twig' with {
       variant: 'ghost',
       size: 'sm',
       ariaLabel: firstAriaLabel,
-      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--first" aria-hidden="true"></span>',
-      className: 'theme-pagination__btn',
+      iconLeadingRaw: '<span class="cremona-pagination__icon cremona-pagination__icon--first" aria-hidden="true"></span>',
+      className: 'cremona-pagination__btn',
       attrs: {
         'data-pagination-target': 'firstButton',
         'data-action': 'click->pagination#first',
       },
     } only %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       variant: 'ghost',
       size: 'sm',
       ariaLabel: prevAriaLabel,
-      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--prev" aria-hidden="true"></span>',
-      className: 'theme-pagination__btn',
+      iconLeadingRaw: '<span class="cremona-pagination__icon cremona-pagination__icon--prev" aria-hidden="true"></span>',
+      className: 'cremona-pagination__btn',
       attrs: {
         'data-pagination-target': 'prevButton',
         'data-action': 'click->pagination#prev',
       },
     } only %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       variant: 'ghost',
       size: 'sm',
       ariaLabel: nextAriaLabel,
-      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--next" aria-hidden="true"></span>',
-      className: 'theme-pagination__btn',
+      iconLeadingRaw: '<span class="cremona-pagination__icon cremona-pagination__icon--next" aria-hidden="true"></span>',
+      className: 'cremona-pagination__btn',
       attrs: {
         'data-pagination-target': 'nextButton',
         'data-action': 'click->pagination#next',
       },
     } only %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       variant: 'ghost',
       size: 'sm',
       ariaLabel: lastAriaLabel,
-      iconLeadingRaw: '<span class="theme-pagination__icon theme-pagination__icon--last" aria-hidden="true"></span>',
-      className: 'theme-pagination__btn',
+      iconLeadingRaw: '<span class="cremona-pagination__icon cremona-pagination__icon--last" aria-hidden="true"></span>',
+      className: 'cremona-pagination__btn',
       attrs: {
         'data-pagination-target': 'lastButton',
         'data-action': 'click->pagination#last',

@@ -17,24 +17,24 @@ import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
 setTranslations('fr', frDict);
 setLocale('fr');
 
-const userIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon theme-empty__icon" data-size="xl"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+const userIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cremona-icon cremona-empty__icon" data-size="xl"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
 
 function renderError401({ htmlId, withSecondary = true }) {
   const titleId = `${htmlId}-title`;
-  const primaryHtml = `<a class="theme-button" data-variant="primary" data-size="md" href="/login"><span class="theme-button__label">${t('theme.error.401.primary-cta')}</span></a>`;
+  const primaryHtml = `<a class="cremona-button" data-variant="primary" data-size="md" href="/login"><span class="cremona-button__label">${t('theme.error.401.primary-cta')}</span></a>`;
   const secondaryHtml = withSecondary
-    ? `<a class="theme-button" data-variant="ghost" data-size="md" href="/register"><span class="theme-button__label">${t('theme.error.401.secondary-cta')}</span></a>`
+    ? `<a class="cremona-button" data-variant="ghost" data-size="md" href="/register"><span class="cremona-button__label">${t('theme.error.401.secondary-cta')}</span></a>`
     : '';
 
   return `
-    <main class="theme-error-shell theme-error-401" data-variant="default" id="${htmlId}">
-      <section class="theme-error-shell__panel">
-        <div class="theme-empty" data-size="lg" role="region" aria-labelledby="${titleId}">
-          <div class="theme-empty__illustration" aria-hidden="true">${userIconSvg}</div>
-          <div class="theme-empty__content">
-            <h1 id="${titleId}" class="theme-empty__title">${t('theme.error.401.title')}</h1>
-            <div class="theme-empty__body"><p>${t('theme.error.401.body')}</p></div>
-            <div class="theme-empty__actions">${primaryHtml}${secondaryHtml}</div>
+    <main class="cremona-error-shell cremona-error-401" data-variant="default" id="${htmlId}">
+      <section class="cremona-error-shell__panel">
+        <div class="cremona-empty" data-size="lg" role="region" aria-labelledby="${titleId}">
+          <div class="cremona-empty__illustration" aria-hidden="true">${userIconSvg}</div>
+          <div class="cremona-empty__content">
+            <h1 id="${titleId}" class="cremona-empty__title">${t('theme.error.401.title')}</h1>
+            <div class="cremona-empty__body"><p>${t('theme.error.401.body')}</p></div>
+            <div class="cremona-empty__actions">${primaryHtml}${secondaryHtml}</div>
           </div>
         </div>
       </section>
@@ -50,14 +50,14 @@ const bodyHtml = `
     </header>
 
     <section class="error-401-story__section" aria-labelledby="error-401-section-default">
-      <h2 id="error-401-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.error.401.story.section.default')}</h2>
-      <p class="error-401-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.error.401.story.explainer.default')}</p>
+      <h2 id="error-401-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.error.401.story.section.default')}</h2>
+      <p class="error-401-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.error.401.story.explainer.default')}</p>
       <div class="error-401-story__frame">${renderError401({ htmlId: 'story-error-401-default' })}</div>
     </section>
 
     <section class="error-401-story__section" aria-labelledby="error-401-section-primary-only">
-      <h2 id="error-401-section-primary-only" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.error.401.story.section.primary-only')}</h2>
-      <p class="error-401-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.error.401.story.explainer.primary-only')}</p>
+      <h2 id="error-401-section-primary-only" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.error.401.story.section.primary-only')}</h2>
+      <p class="error-401-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.error.401.story.explainer.primary-only')}</p>
       <div class="error-401-story__frame">${renderError401({ htmlId: 'story-error-401-primary', withSecondary: false })}</div>
     </section>
   </section>
@@ -80,6 +80,6 @@ const bodyHtml = `
 .error-401-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .error-401-story__explainer { max-inline-size: 70ch; }
 .error-401-story__frame { min-block-size: 32rem; max-block-size: 48rem; overflow: hidden; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.error-401-story__frame .theme-error-shell { min-block-size: 100%; }
+.error-401-story__frame .cremona-error-shell { min-block-size: 100%; }
 .error-401-dark-wrap { background: var(--color-bg-base); }
 </style>

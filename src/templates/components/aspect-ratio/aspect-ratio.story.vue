@@ -35,10 +35,10 @@ const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20
 
 function renderAspectRatio(props = {}, innerHtml = '') {
   const { ratio = '16/9', fit = 'cover', className = '' } = props;
-  const classes = ['theme-aspect-ratio'];
-  if (fit !== 'cover') classes.push(`theme-aspect-ratio--fit-${fit}`);
+  const classes = ['cremona-aspect-ratio'];
+  if (fit !== 'cover') classes.push(`cremona-aspect-ratio--fit-${fit}`);
   if (className) classes.push(className);
-  return `<div class="${classes.join(' ')}" style="--theme-aspect-ratio: ${ratio};">${innerHtml}</div>`;
+  return `<div class="${classes.join(' ')}" style="--cremona-aspect-ratio: ${ratio};">${innerHtml}</div>`;
 }
 
 function block(html, label) {
@@ -68,16 +68,16 @@ const bodyHtml = `
     </header>
 
     <section class="aspect-story__section" aria-labelledby="ar-section-common">
-      <h2 id="ar-section-common" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.common')}</h2>
-      <p class="aspect-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.common')}</p>
+      <h2 id="ar-section-common" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.common')}</h2>
+      <p class="aspect-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.common')}</p>
       <div class="aspect-story__grid">
         ${COMMON_RATIOS.map(({ ratio, label }) => block(renderAspectRatio({ ratio }, PLACEHOLDER_SVG), label)).join('')}
       </div>
     </section>
 
     <section class="aspect-story__section" aria-labelledby="ar-section-fit">
-      <h2 id="ar-section-fit" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.fit')}</h2>
-      <p class="aspect-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.fit')}</p>
+      <h2 id="ar-section-fit" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.fit')}</h2>
+      <p class="aspect-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.fit')}</p>
       <div class="aspect-story__grid">
         ${block(renderAspectRatio({ ratio: '16/9', fit: 'cover'   }, PLACEHOLDER_SVG), 'cover (défaut)')}
         ${block(renderAspectRatio({ ratio: '16/9', fit: 'contain' }, PLACEHOLDER_SVG), 'contain')}
@@ -87,19 +87,19 @@ const bodyHtml = `
     </section>
 
     <section class="aspect-story__section" aria-labelledby="ar-section-iframe">
-      <h2 id="ar-section-iframe" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.iframe')}</h2>
-      <p class="aspect-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.iframe')}</p>
+      <h2 id="ar-section-iframe" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.iframe')}</h2>
+      <p class="aspect-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.iframe')}</p>
       <div class="aspect-story__grid">
         ${block(renderAspectRatio({ ratio: '16/9' }, `<div role="img" aria-label="${t('theme.aspect-ratio.story.iframe-placeholder')}" style="background: linear-gradient(135deg, var(--color-bg-sunken), var(--color-bg-elevated)); display: flex; align-items: center; justify-content: center; color: var(--color-text-tertiary); font-family: var(--font-mono); font-size: var(--font-size-sm);">&lt;iframe&gt;</div>`), 'iframe embed 16/9')}
       </div>
     </section>
 
     <section class="aspect-story__section" aria-labelledby="ar-section-empty">
-      <h2 id="ar-section-empty" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.empty')}</h2>
-      <p class="aspect-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.empty')}</p>
+      <h2 id="ar-section-empty" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.aspect-ratio.story.section.empty')}</h2>
+      <p class="aspect-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.aspect-ratio.story.explainer.empty')}</p>
       <div class="aspect-story__grid">
-        ${block(renderAspectRatio({ ratio: '1/1' }, `<span class="theme-skeleton theme-skeleton--rect" data-shape="rect" aria-hidden="true"></span>`), 'avatar 1/1 (skeleton)')}
-        ${block(renderAspectRatio({ ratio: '4/3' }, `<span class="theme-skeleton theme-skeleton--rect" data-shape="rect" aria-hidden="true"></span>`), 'cover 4/3 (skeleton)')}
+        ${block(renderAspectRatio({ ratio: '1/1' }, `<span class="cremona-skeleton cremona-skeleton--rect" data-shape="rect" aria-hidden="true"></span>`), 'avatar 1/1 (skeleton)')}
+        ${block(renderAspectRatio({ ratio: '4/3' }, `<span class="cremona-skeleton cremona-skeleton--rect" data-shape="rect" aria-hidden="true"></span>`), 'cover 4/3 (skeleton)')}
       </div>
     </section>
   </section>

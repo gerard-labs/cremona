@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Gerard\\Theme\\Bridge\\Symfony\\": "Bridge/Symfony/src/"
+            "Gerard\\Cremona\\Bridge\\Symfony\\": "Bridge/Symfony/src/"
         }
     },
     "extra": {
@@ -24,7 +24,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Gerard\\Theme\\Bridge\\Symfony\\Tests\\": "Bridge/Symfony/tests/"
+            "Gerard\\Cremona\\Bridge\\Symfony\\Tests\\": "Bridge/Symfony/tests/"
         }
     },
     "require-dev": {

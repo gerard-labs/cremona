@@ -20,8 +20,8 @@
  * Surface :
  *   data-controller="drawer chatbot"
  *
- *   data-chatbot-target="messages"           (ol.theme-chatbot__messages — append target)
- *   data-chatbot-target="messageTemplate"    (li.theme-chatbot__message — template clone source)
+ *   data-chatbot-target="messages"           (ol.cremona-chatbot__messages — append target)
+ *   data-chatbot-target="messageTemplate"    (li.cremona-chatbot__message — template clone source)
  *   data-chatbot-target="input"              (input — send-on-submit / clear-on-send)
  *   data-chatbot-target="typing"             (typing indicator, [data-active])
  *
@@ -88,14 +88,14 @@ export default class ChatbotController extends Controller {
     if (!this.hasMessagesTarget) return;
     const validRole = ['user', 'bot', 'system'].includes(role) ? role : 'bot';
     const li = document.createElement('li');
-    li.className = 'theme-chatbot__message';
+    li.className = 'cremona-chatbot__message';
     li.setAttribute('data-role', validRole);
     const item = document.createElement('div');
-    item.className = 'theme-item';
+    item.className = 'cremona-item';
     const textWrap = document.createElement('div');
-    textWrap.className = 'theme-item__text';
+    textWrap.className = 'cremona-item__text';
     const label = document.createElement('span');
-    label.className = 'theme-item__label';
+    label.className = 'cremona-item__label';
     label.textContent = String(text);
     textWrap.appendChild(label);
     item.appendChild(textWrap);

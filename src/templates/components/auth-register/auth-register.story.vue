@@ -20,13 +20,13 @@ setLocale('fr');
 function renderAlert({ variant = 'danger', body = '', tone = 'soft', htmlId = '' }) {
   const role = variant === 'danger' ? 'alert' : 'status';
   return `
-    <div class="theme-alert" data-variant="${variant}" data-tone="${tone}" role="${role}" id="${htmlId}">
-      <span class="theme-alert__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon" data-size="md">
+    <div class="cremona-alert" data-variant="${variant}" data-tone="${tone}" role="${role}" id="${htmlId}">
+      <span class="cremona-alert__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cremona-icon" data-size="md">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
       </span>
-      <div class="theme-alert__content"><p class="theme-alert__body">${body}</p></div>
+      <div class="cremona-alert__content"><p class="cremona-alert__body">${body}</p></div>
     </div>
   `;
 }
@@ -39,17 +39,17 @@ function renderField({ label, htmlId, type = 'text', name, value = '', placehold
   if (error) describedByList.push(errorId);
   const describedBy = describedByList.join(' ');
   const isInvalid = !!error;
-  const fieldClasses = ['theme-field'];
-  if (isInvalid) fieldClasses.push('theme-field--invalid');
+  const fieldClasses = ['cremona-field'];
+  if (isInvalid) fieldClasses.push('cremona-field--invalid');
 
   return `
     <div class="${fieldClasses.join(' ')}">
-      <label class="theme-label" data-size="sm" for="${htmlId}">
-        <span class="theme-label__text">${label}</span>
-        <span class="theme-label__required" aria-hidden="true">*</span>
+      <label class="cremona-label" data-size="sm" for="${htmlId}">
+        <span class="cremona-label__text">${label}</span>
+        <span class="cremona-label__required" aria-hidden="true">*</span>
       </label>
       <input
-        class="theme-input"
+        class="cremona-input"
         data-size="md"
         id="${htmlId}"
         type="${type}"
@@ -64,21 +64,21 @@ function renderField({ label, htmlId, type = 'text', name, value = '', placehold
         ${isInvalid ? 'aria-invalid="true"' : ''}
         ${describedBy ? `aria-describedby="${describedBy}"` : ''}
       />
-      ${help ? `<p id="${helpId}" class="theme-field__help">${help}</p>` : ''}
-      ${error ? `<p id="${errorId}" class="theme-field__error" role="alert" aria-live="polite">${error}</p>` : ''}
+      ${help ? `<p id="${helpId}" class="cremona-field__help">${help}</p>` : ''}
+      ${error ? `<p id="${errorId}" class="cremona-field__error" role="alert" aria-live="polite">${error}</p>` : ''}
     </div>
   `;
 }
 
 function renderCheckbox({ htmlId, name, label, checked = false, invalid = false, describedBy = null }) {
-  const classes = ['theme-checkbox-row'];
-  if (invalid) classes.push('theme-checkbox-row--invalid');
+  const classes = ['cremona-checkbox-row'];
+  if (invalid) classes.push('cremona-checkbox-row--invalid');
   return `
     <label class="${classes.join(' ')}" data-size="sm">
-      <span class="theme-checkbox" data-size="sm">
+      <span class="cremona-checkbox" data-size="sm">
         <input
           type="checkbox"
-          class="theme-checkbox__input"
+          class="cremona-checkbox__input"
           id="${htmlId}"
           name="${name}"
           value="1"
@@ -88,15 +88,15 @@ function renderCheckbox({ htmlId, name, label, checked = false, invalid = false,
           ${invalid ? 'aria-invalid="true"' : ''}
           ${describedBy ? `aria-describedby="${describedBy}"` : ''}
         />
-        <span class="theme-checkbox__box" aria-hidden="true">
-          <svg class="theme-checkbox__glyph theme-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
+        <span class="cremona-checkbox__box" aria-hidden="true">
+          <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
             <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
       </span>
-      <span class="theme-checkbox-row__text">
-        <span class="theme-checkbox-row__label">${label}</span>
-        <span class="theme-checkbox-row__required" aria-hidden="true">*</span>
+      <span class="cremona-checkbox-row__text">
+        <span class="cremona-checkbox-row__label">${label}</span>
+        <span class="cremona-checkbox-row__required" aria-hidden="true">*</span>
       </span>
     </label>
   `;
@@ -104,8 +104,8 @@ function renderCheckbox({ htmlId, name, label, checked = false, invalid = false,
 
 function renderLink({ label, href = '#', size = 'md' }) {
   return `
-    <a class="theme-button" data-variant="link" data-size="${size}" href="${href}">
-      <span class="theme-button__label">${label}</span>
+    <a class="cremona-button" data-variant="link" data-size="${size}" href="${href}">
+      <span class="cremona-button__label">${label}</span>
     </a>
   `;
 }
@@ -113,14 +113,14 @@ function renderLink({ label, href = '#', size = 'md' }) {
 function renderSubmitButton({ label, loading = false }) {
   return `
     <button
-      class="theme-button theme-button--full-width"
+      class="cremona-button cremona-button--full-width"
       data-variant="primary"
       data-size="md"
       type="submit"
       ${loading ? 'disabled aria-busy="true"' : ''}
     >
-      ${loading ? `<span class="theme-button__spinner"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 1-9 9" stroke-linecap="round"/></svg></span>` : ''}
-      <span class="theme-button__label">${label}</span>
+      ${loading ? `<span class="cremona-button__spinner"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 1-9 9" stroke-linecap="round"/></svg></span>` : ''}
+      <span class="cremona-button__label">${label}</span>
     </button>
   `;
 }
@@ -128,17 +128,17 @@ function renderSubmitButton({ label, loading = false }) {
 function renderEmpty({ title, body, htmlId, resendHref = null, resendLabel = null }) {
   const titleId = `${htmlId}-title`;
   return `
-    <div class="theme-empty" data-size="md" role="region" aria-labelledby="${titleId}">
-      <div class="theme-empty__illustration" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-empty__icon theme-icon" data-size="xl">
+    <div class="cremona-empty" data-size="md" role="region" aria-labelledby="${titleId}">
+      <div class="cremona-empty__illustration" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cremona-empty__icon cremona-icon" data-size="xl">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
           <polyline points="22,6 12,13 2,6"/>
         </svg>
       </div>
-      <div class="theme-empty__content">
-        <h2 id="${titleId}" class="theme-empty__title">${title}</h2>
-        <div class="theme-empty__body"><p>${body}</p></div>
-        ${resendHref ? `<div class="theme-empty__actions"><a class="theme-button" data-variant="secondary" data-size="md" href="${resendHref}"><span class="theme-button__label">${resendLabel}</span></a></div>` : ''}
+      <div class="cremona-empty__content">
+        <h2 id="${titleId}" class="cremona-empty__title">${title}</h2>
+        <div class="cremona-empty__body"><p>${body}</p></div>
+        ${resendHref ? `<div class="cremona-empty__actions"><a class="cremona-button" data-variant="secondary" data-size="md" href="${resendHref}"><span class="cremona-button__label">${resendLabel}</span></a></div>` : ''}
       </div>
     </div>
   `;
@@ -180,7 +180,7 @@ function renderAuthRegister(opts = {}) {
       })
     : `
       <form
-        class="theme-auth-register"
+        class="cremona-auth-register"
         action="/register"
         method="post"
         novalidate
@@ -221,7 +221,7 @@ function renderAuthRegister(opts = {}) {
           help: t('theme.auth.register.password-help'),
           error: passwordError,
         })}
-        <div class="theme-auth-register__terms">
+        <div class="cremona-auth-register__terms">
           ${renderCheckbox({
             htmlId: `${htmlId}-terms`,
             name: 'terms',
@@ -230,7 +230,7 @@ function renderAuthRegister(opts = {}) {
             invalid: !!termsError,
             describedBy: termsError ? `${htmlId}-terms-error` : null,
           })}
-          ${termsError ? `<p id="${htmlId}-terms-error" class="theme-field__error" role="alert" aria-live="polite">${termsError}</p>` : ''}
+          ${termsError ? `<p id="${htmlId}-terms-error" class="cremona-field__error" role="alert" aria-live="polite">${termsError}</p>` : ''}
         </div>
         ${renderSubmitButton({
           label: t('theme.auth.register.submit'),
@@ -240,22 +240,22 @@ function renderAuthRegister(opts = {}) {
     `;
 
   const footerContent = loginHref ? `
-    <span class="theme-auth-register__footer-question">${t('theme.auth.register.has-account')}</span>
+    <span class="cremona-auth-register__footer-question">${t('theme.auth.register.has-account')}</span>
     ${renderLink({ label: t('theme.auth.register.login'), href: loginHref })}
   ` : '';
 
   return `
-    <main class="theme-auth-shell" data-variant="default">
-      <section class="theme-auth-shell__panel">
-        <article class="theme-card theme-auth-shell__card" aria-labelledby="${titleId}">
-          <header class="theme-card__header theme-auth-shell__card-header">
-            <h1 id="${titleId}" class="theme-auth-shell__title">${title}</h1>
-            <p class="theme-auth-shell__subtitle">${subtitle}</p>
+    <main class="cremona-auth-shell" data-variant="default">
+      <section class="cremona-auth-shell__panel">
+        <article class="cremona-card cremona-auth-shell__card" aria-labelledby="${titleId}">
+          <header class="cremona-card__header cremona-auth-shell__card-header">
+            <h1 id="${titleId}" class="cremona-auth-shell__title">${title}</h1>
+            <p class="cremona-auth-shell__subtitle">${subtitle}</p>
           </header>
-          <div class="theme-card__body theme-auth-shell__card-body">
+          <div class="cremona-card__body cremona-auth-shell__card-body">
             ${formContent}
           </div>
-          ${footerContent ? `<footer class="theme-card__footer theme-auth-shell__card-footer">${footerContent}</footer>` : ''}
+          ${footerContent ? `<footer class="cremona-card__footer cremona-auth-shell__card-footer">${footerContent}</footer>` : ''}
         </article>
       </section>
     </main>
@@ -270,14 +270,14 @@ const bodyHtml = `
     </header>
 
     <section class="auth-register-story__section" aria-labelledby="auth-register-section-default">
-      <h2 id="auth-register-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.default')}</h2>
-      <p class="auth-register-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.default')}</p>
+      <h2 id="auth-register-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.default')}</h2>
+      <p class="auth-register-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.default')}</p>
       <div class="auth-register-story__frame">${renderAuthRegister({ htmlId: 'story-auth-register-default' })}</div>
     </section>
 
     <section class="auth-register-story__section" aria-labelledby="auth-register-section-email-taken">
-      <h2 id="auth-register-section-email-taken" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.email-taken')}</h2>
-      <p class="auth-register-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.email-taken')}</p>
+      <h2 id="auth-register-section-email-taken" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.email-taken')}</h2>
+      <p class="auth-register-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.email-taken')}</p>
       <div class="auth-register-story__frame">${renderAuthRegister({
         htmlId: 'story-auth-register-email-taken',
         nameValue: 'Marie Dupont',
@@ -287,8 +287,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-register-story__section" aria-labelledby="auth-register-section-terms">
-      <h2 id="auth-register-section-terms" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.terms')}</h2>
-      <p class="auth-register-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.terms')}</p>
+      <h2 id="auth-register-section-terms" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.terms')}</h2>
+      <p class="auth-register-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.terms')}</p>
       <div class="auth-register-story__frame">${renderAuthRegister({
         htmlId: 'story-auth-register-terms',
         nameValue: 'Marie Dupont',
@@ -298,8 +298,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-register-story__section" aria-labelledby="auth-register-section-loading">
-      <h2 id="auth-register-section-loading" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.loading')}</h2>
-      <p class="auth-register-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.loading')}</p>
+      <h2 id="auth-register-section-loading" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.loading')}</h2>
+      <p class="auth-register-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.loading')}</p>
       <div class="auth-register-story__frame">${renderAuthRegister({
         htmlId: 'story-auth-register-loading',
         nameValue: 'Marie Dupont',
@@ -310,8 +310,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-register-story__section" aria-labelledby="auth-register-section-success">
-      <h2 id="auth-register-section-success" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.success')}</h2>
-      <p class="auth-register-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.success')}</p>
+      <h2 id="auth-register-section-success" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.register.story.section.success')}</h2>
+      <p class="auth-register-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.register.story.explainer.success')}</p>
       <div class="auth-register-story__frame">${renderAuthRegister({
         htmlId: 'story-auth-register-success',
         successState: true,
@@ -337,6 +337,6 @@ const bodyHtml = `
 .auth-register-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .auth-register-story__explainer { max-inline-size: 70ch; }
 .auth-register-story__frame { min-block-size: 36rem; max-block-size: 56rem; overflow: hidden; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.auth-register-story__frame .theme-auth-shell { min-block-size: 100%; }
+.auth-register-story__frame .cremona-auth-shell { min-block-size: 100%; }
 .auth-register-dark-wrap { background: var(--color-bg-base); }
 </style>

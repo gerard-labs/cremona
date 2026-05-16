@@ -6,17 +6,17 @@
  * default chrome (flag picker, dropdown) to match the kit's token vocabulary.
  */
 
-.theme-form-phone-input__input {
+.cremona-form-phone-input__input {
   /* intl-tel-input wraps this input ; the wrap takes over styling. */
   inline-size: 100%;
 }
 
 /* Override intl-tel-input's default chrome (CSS classes prefixed with .iti). */
-.theme-form-phone-input .iti {
+.cremona-form-phone-input .iti {
   inline-size: 100%;
 }
 
-.theme-form-phone-input .iti__country-list {
+.cremona-form-phone-input .iti__country-list {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
@@ -26,7 +26,7 @@
   color: var(--color-text-primary);
 }
 
-.theme-form-phone-input .iti__country {
+.cremona-form-phone-input .iti__country {
   padding: var(--spacing-2) var(--spacing-3);
   min-block-size: 2.5rem;
   display: flex;
@@ -36,28 +36,28 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-form-phone-input .iti__country.iti__highlight,
-.theme-form-phone-input .iti__country:hover {
+.cremona-form-phone-input .iti__country.iti__highlight,
+.cremona-form-phone-input .iti__country:hover {
   background: var(--color-hover-overlay);
 }
 
-.theme-form-phone-input .iti__selected-flag {
+.cremona-form-phone-input .iti__selected-flag {
   padding-inline: var(--spacing-2);
   padding-block: var(--spacing-1);
   min-inline-size: 2.5rem;
   min-block-size: 2.5rem;
 }
 
-.theme-form-phone-input .iti__selected-flag:focus-visible {
+.cremona-form-phone-input .iti__selected-flag:focus-visible {
   outline: var(--ring-width) solid var(--ring-color);
   outline-offset: calc(-1 * var(--ring-offset-width));
   border-radius: var(--radius-sm);
 }
 
-.theme-form-phone-input .iti__dial-code {
+.cremona-form-phone-input .iti__dial-code {
   color: var(--color-text-secondary);
 }
 
-.theme-field--invalid .iti__tel-input {
+.cremona-field--invalid .iti__tel-input {
   border-color: var(--color-danger);
 }

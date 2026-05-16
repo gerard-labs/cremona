@@ -31,15 +31,15 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function icon(name, modifier) {
-  return `<span class="theme-icon theme-item__icon theme-item__icon--${modifier}" data-icon="${name}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon cremona-item__icon cremona-item__icon--${modifier}" data-icon="${name}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function kbd(keys, separator = '+') {
   const items = keys.map((k, i) => {
-    const sep = i < keys.length - 1 ? `<span class="theme-kbd-sep" aria-hidden="true">${separator}</span>` : '';
-    return `<kbd class="theme-kbd" data-size="sm">${k}</kbd>${sep}`;
+    const sep = i < keys.length - 1 ? `<span class="cremona-kbd-sep" aria-hidden="true">${separator}</span>` : '';
+    return `<kbd class="cremona-kbd" data-size="sm">${k}</kbd>${sep}`;
   }).join('');
-  return `<kbd class="theme-kbd-group" data-size="sm">${items}</kbd>`;
+  return `<kbd class="cremona-kbd-group" data-size="sm">${items}</kbd>`;
 }
 
 function renderItem(props = {}) {
@@ -49,17 +49,17 @@ function renderItem(props = {}) {
     ariaLabel, ariaCurrent, className = '',
   } = props;
 
-  const classes = ['theme-item'];
+  const classes = ['cremona-item'];
   if (className) classes.push(className);
 
   const leadingHtml = iconLeading ? icon(iconLeading, 'leading') : '';
   const textHtml = (label || description) ? `
-    <div class="theme-item__text">
-      ${label ? `<span class="theme-item__label">${label}</span>` : ''}
-      ${description ? `<span class="theme-item__description">${description}</span>` : ''}
+    <div class="cremona-item__text">
+      ${label ? `<span class="cremona-item__label">${label}</span>` : ''}
+      ${description ? `<span class="cremona-item__description">${description}</span>` : ''}
     </div>` : '';
   const trailingHtml = kbdShortcut
-    ? `<span class="theme-item__trailing">${kbd(kbdShortcut)}</span>`
+    ? `<span class="cremona-item__trailing">${kbd(kbdShortcut)}</span>`
     : (iconTrailing ? icon(iconTrailing, 'trailing') : '');
 
   const attrs = [
@@ -114,7 +114,7 @@ const bodyHtml = `
     </header>
 
     <section class="item-story__section" aria-labelledby="item-section-default">
-      <h2 id="item-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.default')}</h2>
+      <h2 id="item-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.default')}</h2>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.profile }) +
@@ -125,7 +125,7 @@ const bodyHtml = `
     </section>
 
     <section class="item-story__section" aria-labelledby="item-section-slots">
-      <h2 id="item-section-slots" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.slots')}</h2>
+      <h2 id="item-section-slots" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.slots')}</h2>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.profile,       iconLeading: 'user' }) +
@@ -137,8 +137,8 @@ const bodyHtml = `
     </section>
 
     <section class="item-story__section" aria-labelledby="item-section-states">
-      <h2 id="item-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.states')}</h2>
-      <p class="item-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.states')}</p>
+      <h2 id="item-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.states')}</h2>
+      <p class="item-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.states')}</p>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.profile,       iconLeading: 'user' }) +
@@ -149,8 +149,8 @@ const bodyHtml = `
     </section>
 
     <section class="item-story__section" aria-labelledby="item-section-elements">
-      <h2 id="item-section-elements" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.elements')}</h2>
-      <p class="item-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.elements')}</p>
+      <h2 id="item-section-elements" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.elements')}</h2>
+      <p class="item-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.elements')}</p>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.profile, iconLeading: 'user', as: 'div' }) +
@@ -161,8 +161,8 @@ const bodyHtml = `
     </section>
 
     <section class="item-story__section" aria-labelledby="item-section-kbd">
-      <h2 id="item-section-kbd" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.kbd')}</h2>
-      <p class="item-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.kbd')}</p>
+      <h2 id="item-section-kbd" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.kbd')}</h2>
+      <p class="item-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.kbd')}</p>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.newProject, iconLeading: 'search', kbdShortcut: ['Cmd', 'N'] }) +
@@ -173,8 +173,8 @@ const bodyHtml = `
     </section>
 
     <section class="item-story__section" aria-labelledby="item-section-description">
-      <h2 id="item-section-description" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.description')}</h2>
-      <p class="item-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.description')}</p>
+      <h2 id="item-section-description" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.description')}</h2>
+      <p class="item-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.description')}</p>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.profile,  description: SAMPLES.descTeam,     iconLeading: 'user',     as: 'a', href: '#profile' }) +
@@ -185,8 +185,8 @@ const bodyHtml = `
     </section>
 
     <section class="item-story__section" aria-labelledby="item-section-aria-current">
-      <h2 id="item-section-aria-current" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.aria-current')}</h2>
-      <p class="item-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.aria-current')}</p>
+      <h2 id="item-section-aria-current" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.item.story.section.aria-current')}</h2>
+      <p class="item-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.item.story.explainer.aria-current')}</p>
       <div class="item-story__stack">
         ${block(list(
           renderItem({ label: SAMPLES.profile,       iconLeading: 'user',     as: 'a', href: '#profile' }) +

@@ -11,15 +11,15 @@
  * token set. Defaults to bg-elevated (neutral) when `hue` is absent.
  */
 
-.theme-avatar {
+.cremona-avatar {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--theme-avatar-size, 40px);
-  block-size: var(--theme-avatar-size, 40px);
+  inline-size: var(--cremona-avatar-size, 40px);
+  block-size: var(--cremona-avatar-size, 40px);
   border-radius: var(--radius-pill);
-  background: var(--theme-avatar-hue, var(--color-bg-elevated));
+  background: var(--cremona-avatar-hue, var(--color-bg-elevated));
   color: var(--color-text-primary);
   font: var(--typography-label);
   font-weight: var(--font-weight-semibold);
@@ -28,57 +28,57 @@
   vertical-align: middle;
 }
 
-.theme-avatar[data-size="xs"] {
-  --theme-avatar-size: 24px;
+.cremona-avatar[data-size="xs"] {
+  --cremona-avatar-size: 24px;
 
   font-size: var(--font-size-2xs);
 }
 
-.theme-avatar[data-size="sm"] {
-  --theme-avatar-size: 32px;
+.cremona-avatar[data-size="sm"] {
+  --cremona-avatar-size: 32px;
 
   font-size: var(--font-size-xs);
 }
 
-.theme-avatar[data-size="md"] {
-  --theme-avatar-size: 40px;
+.cremona-avatar[data-size="md"] {
+  --cremona-avatar-size: 40px;
 
   font-size: var(--font-size-sm);
 }
 
-.theme-avatar[data-size="lg"] {
-  --theme-avatar-size: 56px;
+.cremona-avatar[data-size="lg"] {
+  --cremona-avatar-size: 56px;
 
   font-size: var(--font-size-lg);
 }
 
-.theme-avatar[data-size="xl"] {
-  --theme-avatar-size: 80px;
+.cremona-avatar[data-size="xl"] {
+  --cremona-avatar-size: 80px;
 
   font-size: var(--font-size-2xl);
 }
 
-.theme-avatar__img {
+.cremona-avatar__img {
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
   display: block;
 }
 
-.theme-avatar__fallback {
+.cremona-avatar__fallback {
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wide);
 }
 
-/* Status dot — bottom-end (logical) — overflow is hidden on .theme-avatar
+/* Status dot — bottom-end (logical) — overflow is hidden on .cremona-avatar
    so the dot is clipped to the circle's edge by design.
    To keep it outside the clip, we use a 0-bound inset + a content-box border
    that visually carves out the avatar's edge. */
-.theme-avatar--has-status {
+.cremona-avatar--has-status {
   overflow: visible;
 }
 
-.theme-avatar__status {
+.cremona-avatar__status {
   position: absolute;
   inset-block-end: 0;
   inset-inline-end: 0;
@@ -96,11 +96,11 @@
      correctly because inset-inline-end maps to right/left. */
 }
 
-[dir="rtl"] .theme-avatar__status {
+[dir="rtl"] .cremona-avatar__status {
   transform: translate(-15%, 15%);
 }
 
-.theme-avatar__status[data-status="online"]  { background: var(--color-success); }
-.theme-avatar__status[data-status="away"]    { background: var(--color-warning); }
-.theme-avatar__status[data-status="busy"]    { background: var(--color-danger); }
-.theme-avatar__status[data-status="offline"] { background: var(--color-text-tertiary); }
+.cremona-avatar__status[data-status="online"]  { background: var(--color-success); }
+.cremona-avatar__status[data-status="away"]    { background: var(--color-warning); }
+.cremona-avatar__status[data-status="busy"]    { background: var(--color-danger); }
+.cremona-avatar__status[data-status="offline"] { background: var(--color-text-tertiary); }

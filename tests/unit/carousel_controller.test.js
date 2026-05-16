@@ -81,14 +81,14 @@ describe('CarouselController', () => {
     withNav = true,
     withAutoplayToggle = false,
   } = {}) {
-    const slides = Array.from({ length: slideCount }, (_, i) => `<article id="slide-${i}" class="theme-carousel__slide"
+    const slides = Array.from({ length: slideCount }, (_, i) => `<article id="slide-${i}" class="cremona-carousel__slide"
       data-carousel-target="slide"
       role="group"
       aria-roledescription="slide"
       aria-label="${i + 1} sur ${slideCount}">Slide ${i + 1}</article>`).join('');
     const dots = withDots
       ? Array.from({ length: slideCount }, (_, i) => `<button id="dot-${i}" type="button"
-        class="theme-carousel__dot"
+        class="cremona-carousel__dot"
         data-carousel-target="dot"
         data-slide-index="${i}"
         data-action="click->carousel#goTo"
@@ -105,17 +105,17 @@ describe('CarouselController', () => {
       data-action="click->carousel#toggleAutoplay"
       aria-label="Pause / Play" aria-pressed="false">⏸</button>` : '';
     document.body.innerHTML = `
-      <div id="car" class="theme-carousel"
+      <div id="car" class="cremona-carousel"
         data-controller="carousel"
         data-carousel-current-slide-value="${currentSlide}"
         data-carousel-autoplay-interval-value="${autoplayInterval}"
         data-carousel-loop-value="${loop}"
         role="region" aria-roledescription="carousel" aria-label="Demo">
-        <div class="theme-carousel__viewport" data-carousel-target="viewport">
-          <div class="theme-carousel__track" data-carousel-target="track">${slides}</div>
+        <div class="cremona-carousel__viewport" data-carousel-target="viewport">
+          <div class="cremona-carousel__track" data-carousel-target="track">${slides}</div>
         </div>
         ${navHtml}
-        <div class="theme-carousel__pagination">${dots}</div>
+        <div class="cremona-carousel__pagination">${dots}</div>
         ${autoplayHtml}
       </div>
     `;

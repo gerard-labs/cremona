@@ -9,7 +9,7 @@
  * for thin pattern — marker class + launcher button styling only).
  */
 
-.theme-search-command-palette {
+.cremona-search-command-palette {
   /*
    * Marker class on the Command Ring 2 wrap when used as a global search
    * palette. Allows consumer to style the palette differently from a
@@ -17,7 +17,7 @@
    */
 }
 
-.theme-search-command-palette__launcher {
+.cremona-search-command-palette__launcher {
   /*
    * Optional consumer-provided launcher button (typically in app header).
    * Mostly inherits from Button Ring 1 variant=ghost or secondary ; this
@@ -28,6 +28,6 @@
   gap: var(--spacing-2);
 }
 
-.theme-search-command-palette__launcher-kbd {
+.cremona-search-command-palette__launcher-kbd {
   margin-inline-start: var(--spacing-2);
 }

@@ -19,23 +19,23 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderIcon(name) {
-  return `<svg class="theme-icon" data-size="md" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
+  return `<svg class="cremona-icon" data-size="md" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
 }
 
 function renderBadge(count) {
-  return `<span class="theme-badge" data-variant="danger" data-size="sm">${count}</span>`;
+  return `<span class="cremona-badge" data-variant="danger" data-size="sm">${count}</span>`;
 }
 
 function renderUtilityButton({ icon, label, badge = null }) {
   return `
-    <button type="button" class="theme-button theme-button--ghost theme-nav-header__utility-button" aria-label="${label}">
+    <button type="button" class="cremona-button cremona-button--ghost cremona-nav-header__utility-button" aria-label="${label}">
       ${renderIcon(icon)}${badge ? renderBadge(badge) : ''}
     </button>
   `;
 }
 
 function renderNavItem({ href, label, current = false }) {
-  return `<a href="${href}" class="theme-nav-header__nav-link"${current ? ' aria-current="page"' : ''}>${label}</a>`;
+  return `<a href="${href}" class="cremona-nav-header__nav-link"${current ? ' aria-current="page"' : ''}>${label}</a>`;
 }
 
 function renderNavHeader({
@@ -44,20 +44,20 @@ function renderNavHeader({
   mobileTriggerControls = 'story-mobile-drawer',
   navItems = [],
   utility = '',
-  brand = `<a href="/" class="theme-nav-header__brand-link"><strong>Gerard</strong></a>`,
+  brand = `<a href="/" class="cremona-nav-header__brand-link"><strong>Gerard</strong></a>`,
 }) {
-  const classes = ['theme-nav-header', sticky ? 'theme-nav-header--sticky' : ''].filter(Boolean).join(' ');
+  const classes = ['cremona-nav-header', sticky ? 'cremona-nav-header--sticky' : ''].filter(Boolean).join(' ');
   const navMarkup = navItems.length
-    ? `<nav class="theme-nav-header__nav" aria-label="${t('theme.nav.header.aria.label')}">${navItems.map(renderNavItem).join('')}</nav>`
+    ? `<nav class="cremona-nav-header__nav" aria-label="${t('theme.nav.header.aria.label')}">${navItems.map(renderNavItem).join('')}</nav>`
     : '';
-  const utilityMarkup = utility ? `<div class="theme-nav-header__utility">${utility}</div>` : '';
+  const utilityMarkup = utility ? `<div class="cremona-nav-header__utility">${utility}</div>` : '';
   return `
     <header class="${classes}" id="${htmlId}"${sticky ? ' data-sticky="true"' : ''}>
-      <div class="theme-nav-header__inner">
-        <div class="theme-nav-header__brand">${brand}</div>
+      <div class="cremona-nav-header__inner">
+        <div class="cremona-nav-header__brand">${brand}</div>
         ${navMarkup}
         ${utilityMarkup}
-        <button type="button" class="theme-button theme-button--ghost theme-nav-header__mobile-trigger"
+        <button type="button" class="cremona-button cremona-button--ghost cremona-nav-header__mobile-trigger"
                 aria-label="${t('theme.nav.header.mobile-trigger.open')}"
                 aria-controls="${mobileTriggerControls}"
                 aria-expanded="false">
@@ -89,14 +89,14 @@ const bodyHtml = `
     </header>
 
     <section class="nav-header-story__section" aria-labelledby="nav-header-section-default">
-      <h2 id="nav-header-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.default')}</h2>
-      <p class="nav-header-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.default')}</p>
+      <h2 id="nav-header-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.default')}</h2>
+      <p class="nav-header-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.default')}</p>
       <div class="nav-header-story__frame">${renderNavHeader({ navItems, utility })}</div>
     </section>
 
     <section class="nav-header-story__section" aria-labelledby="nav-header-section-sticky">
-      <h2 id="nav-header-section-sticky" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.sticky')}</h2>
-      <p class="nav-header-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.sticky')}</p>
+      <h2 id="nav-header-section-sticky" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.sticky')}</h2>
+      <p class="nav-header-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.sticky')}</p>
       <div class="nav-header-story__frame nav-header-story__frame--tall">
         ${renderNavHeader({ htmlId: 'story-nav-header-sticky', sticky: true, navItems, utility })}
         <div class="nav-header-story__scroll-content">
@@ -106,8 +106,8 @@ const bodyHtml = `
     </section>
 
     <section class="nav-header-story__section" aria-labelledby="nav-header-section-mega-menu">
-      <h2 id="nav-header-section-mega-menu" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.mega-menu')}</h2>
-      <p class="nav-header-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.mega-menu')}</p>
+      <h2 id="nav-header-section-mega-menu" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.mega-menu')}</h2>
+      <p class="nav-header-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.mega-menu')}</p>
       <div class="nav-header-story__frame">${renderNavHeader({
         htmlId: 'story-nav-header-mega',
         navItems: [
@@ -120,8 +120,8 @@ const bodyHtml = `
     </section>
 
     <section class="nav-header-story__section" aria-labelledby="nav-header-section-mobile">
-      <h2 id="nav-header-section-mobile" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.mobile')}</h2>
-      <p class="nav-header-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.mobile')}</p>
+      <h2 id="nav-header-section-mobile" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.mobile')}</h2>
+      <p class="nav-header-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.mobile')}</p>
       <div class="nav-header-story__frame nav-header-story__frame--mobile">${renderNavHeader({
         htmlId: 'story-nav-header-mobile',
         navItems,
@@ -130,8 +130,8 @@ const bodyHtml = `
     </section>
 
     <section class="nav-header-story__section" aria-labelledby="nav-header-section-notifications">
-      <h2 id="nav-header-section-notifications" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.notifications')}</h2>
-      <p class="nav-header-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.notifications')}</p>
+      <h2 id="nav-header-section-notifications" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.header.story.section.notifications')}</h2>
+      <p class="nav-header-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.header.story.explainer.notifications')}</p>
       <div class="nav-header-story__frame">${renderNavHeader({
         htmlId: 'story-nav-header-notifs',
         navItems,
@@ -165,10 +165,10 @@ const bodyHtml = `
 .nav-header-story__frame--tall { block-size: 280px; overflow: auto; }
 .nav-header-story__frame--mobile { max-inline-size: 375px; }
 .nav-header-story__scroll-content { padding: var(--spacing-6); min-block-size: 600px; }
-.nav-header-story .theme-nav-header__nav-link { text-decoration: none; padding-inline: var(--spacing-3); padding-block: var(--spacing-2); color: var(--color-text-primary); border-radius: var(--radius-button); }
-.nav-header-story .theme-nav-header__nav-link[aria-current="page"] { background-color: var(--color-selected-bg); color: var(--color-selected-foreground); }
-.nav-header-story .theme-nav-header__nav-link:hover { background-color: var(--color-hover-overlay); }
-.nav-header-story .theme-nav-header__utility-button { position: relative; }
-.nav-header-story .theme-nav-header__utility-button .theme-badge { position: absolute; inset-block-start: 4px; inset-inline-end: 4px; }
+.nav-header-story .cremona-nav-header__nav-link { text-decoration: none; padding-inline: var(--spacing-3); padding-block: var(--spacing-2); color: var(--color-text-primary); border-radius: var(--radius-button); }
+.nav-header-story .cremona-nav-header__nav-link[aria-current="page"] { background-color: var(--color-selected-bg); color: var(--color-selected-foreground); }
+.nav-header-story .cremona-nav-header__nav-link:hover { background-color: var(--color-hover-overlay); }
+.nav-header-story .cremona-nav-header__utility-button { position: relative; }
+.nav-header-story .cremona-nav-header__utility-button .cremona-badge { position: absolute; inset-block-start: 4px; inset-inline-end: 4px; }
 .nav-header-dark-wrap { background: var(--color-bg-base); }
 </style>

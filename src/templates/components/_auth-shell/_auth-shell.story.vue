@@ -25,17 +25,17 @@ function renderShell({
   htmlId = 'story-shell',
 }, content) {
   const titleId = `${htmlId}-title`;
-  const classes = ['theme-auth-shell'];
-  if (variant === 'split') classes.push('theme-auth-shell--split');
+  const classes = ['cremona-auth-shell'];
+  if (variant === 'split') classes.push('cremona-auth-shell--split');
 
   const illustrationHtml = (variant === 'split' && illustration)
-    ? `<aside class="theme-auth-shell__illustration" aria-hidden="true">${illustration}</aside>`
+    ? `<aside class="cremona-auth-shell__illustration" aria-hidden="true">${illustration}</aside>`
     : '';
   const brandHtml = brand
-    ? `<header class="theme-auth-shell__brand">${brand}</header>`
+    ? `<header class="cremona-auth-shell__brand">${brand}</header>`
     : '';
   const footerHtml = footer
-    ? `<footer class="theme-card__footer theme-auth-shell__card-footer">${footer}</footer>`
+    ? `<footer class="cremona-card__footer cremona-auth-shell__card-footer">${footer}</footer>`
     : '';
 
   const title = t('theme.auth-shell.story.sample.title');
@@ -44,14 +44,14 @@ function renderShell({
   return `
     <main class="${classes.join(' ')}" data-variant="${variant}">
       ${illustrationHtml}
-      <section class="theme-auth-shell__panel">
+      <section class="cremona-auth-shell__panel">
         ${brandHtml}
-        <article class="theme-card theme-auth-shell__card" aria-labelledby="${titleId}">
-          <header class="theme-card__header theme-auth-shell__card-header">
-            <h1 id="${titleId}" class="theme-auth-shell__title">${title}</h1>
-            <p class="theme-auth-shell__subtitle">${subtitle}</p>
+        <article class="cremona-card cremona-auth-shell__card" aria-labelledby="${titleId}">
+          <header class="cremona-card__header cremona-auth-shell__card-header">
+            <h1 id="${titleId}" class="cremona-auth-shell__title">${title}</h1>
+            <p class="cremona-auth-shell__subtitle">${subtitle}</p>
           </header>
-          <div class="theme-card__body theme-auth-shell__card-body">
+          <div class="cremona-card__body cremona-auth-shell__card-body">
             ${content}
           </div>
           ${footerHtml}
@@ -63,18 +63,18 @@ function renderShell({
 
 const sampleBrandHtml = `<strong class="auth-shell-story__brand-text">${t('theme.auth-shell.story.sample.brand')}</strong>`;
 
-const sampleFooterHtml = `<span>${t('theme.auth-shell.story.sample.footer-question')}</span> <a href="#" class="theme-button" data-variant="link" data-size="md"><span class="theme-button__label">${t('theme.auth-shell.story.sample.footer-link')}</span></a>`;
+const sampleFooterHtml = `<span>${t('theme.auth-shell.story.sample.footer-question')}</span> <a href="#" class="cremona-button" data-variant="link" data-size="md"><span class="cremona-button__label">${t('theme.auth-shell.story.sample.footer-link')}</span></a>`;
 
 const sampleFormHtml = `
-  <div class="theme-field">
-    <label class="theme-label" for="shell-story-email">${t('theme.auth-shell.story.sample.email-label')}</label>
-    <input class="theme-input" id="shell-story-email" type="email" autocomplete="email" />
+  <div class="cremona-field">
+    <label class="cremona-label" for="shell-story-email">${t('theme.auth-shell.story.sample.email-label')}</label>
+    <input class="cremona-input" id="shell-story-email" type="email" autocomplete="email" />
   </div>
-  <div class="theme-field">
-    <label class="theme-label" for="shell-story-password">${t('theme.auth-shell.story.sample.password-label')}</label>
-    <input class="theme-input" id="shell-story-password" type="password" autocomplete="current-password" />
+  <div class="cremona-field">
+    <label class="cremona-label" for="shell-story-password">${t('theme.auth-shell.story.sample.password-label')}</label>
+    <input class="cremona-input" id="shell-story-password" type="password" autocomplete="current-password" />
   </div>
-  <button class="theme-button" data-variant="primary" data-size="md" type="submit"><span class="theme-button__label">${t('theme.auth-shell.story.sample.submit')}</span></button>
+  <button class="cremona-button" data-variant="primary" data-size="md" type="submit"><span class="cremona-button__label">${t('theme.auth-shell.story.sample.submit')}</span></button>
 `;
 
 const sampleIllustrationHtml = `
@@ -98,8 +98,8 @@ const bodyHtml = `
     </header>
 
     <section class="auth-shell-story__section" aria-labelledby="auth-shell-section-default">
-      <h2 id="auth-shell-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth-shell.story.section.default')}</h2>
-      <p class="auth-shell-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth-shell.story.explainer.default')}</p>
+      <h2 id="auth-shell-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth-shell.story.section.default')}</h2>
+      <p class="auth-shell-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth-shell.story.explainer.default')}</p>
       <div class="auth-shell-story__frame">
         ${renderShell({
           variant: 'default',
@@ -111,8 +111,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-shell-story__section" aria-labelledby="auth-shell-section-with-brand-only">
-      <h2 id="auth-shell-section-with-brand-only" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth-shell.story.section.with-brand-only')}</h2>
-      <p class="auth-shell-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth-shell.story.explainer.with-brand-only')}</p>
+      <h2 id="auth-shell-section-with-brand-only" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth-shell.story.section.with-brand-only')}</h2>
+      <p class="auth-shell-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth-shell.story.explainer.with-brand-only')}</p>
       <div class="auth-shell-story__frame">
         ${renderShell({
           variant: 'default',
@@ -123,8 +123,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-shell-story__section" aria-labelledby="auth-shell-section-split">
-      <h2 id="auth-shell-section-split" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth-shell.story.section.split')}</h2>
-      <p class="auth-shell-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth-shell.story.explainer.split')}</p>
+      <h2 id="auth-shell-section-split" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth-shell.story.section.split')}</h2>
+      <p class="auth-shell-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth-shell.story.explainer.split')}</p>
       <div class="auth-shell-story__frame">
         ${renderShell({
           variant: 'split',
@@ -157,7 +157,7 @@ const bodyHtml = `
 /* Frame the shell preview so each section caps at a reasonable height and
    we don't get 100vh-per-section pushing the page to 4×100vh tall. */
 .auth-shell-story__frame { min-block-size: 32rem; max-block-size: 48rem; overflow: hidden; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.auth-shell-story__frame .theme-auth-shell { min-block-size: 100%; }
+.auth-shell-story__frame .cremona-auth-shell { min-block-size: 100%; }
 .auth-shell-story__brand { display: flex; align-items: center; gap: var(--spacing-2); }
 .auth-shell-dark-wrap { background: var(--color-bg-base); }
 </style>

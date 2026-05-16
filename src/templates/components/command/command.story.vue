@@ -67,37 +67,37 @@ function commandPalette({
   kbdFooter = [],
 }) {
   const footerHtml = kbdFooter.length > 0
-    ? `<footer class="theme-command__footer">${kbdFooter.map((h) =>
-        `<span class="theme-command__footer-hint">${h.keys.map((k) =>
-          `<kbd class="theme-kbd">${k}</kbd>`).join('')}<span class="theme-command__footer-label">${h.label}</span></span>`,
+    ? `<footer class="cremona-command__footer">${kbdFooter.map((h) =>
+        `<span class="cremona-command__footer-hint">${h.keys.map((k) =>
+          `<kbd class="cremona-kbd">${k}</kbd>`).join('')}<span class="cremona-command__footer-label">${h.label}</span></span>`,
       ).join('')}</footer>`
     : '';
-  return `<div id="${id}" class="theme-command"
+  return `<div id="${id}" class="cremona-command"
     data-controller="dialog combobox command"
     data-command-hotkey-value="${hotkey}"
     data-command-placeholder-value="${placeholder}"
     data-combobox-placeholder-value="${placeholder}">
-    <dialog class="theme-command__dialog theme-dialog"
+    <dialog class="cremona-command__dialog cremona-dialog"
       data-dialog-target="dialog"
       aria-labelledby="${id}-title">
-      <h2 id="${id}-title" class="theme-command__sr-only">${label}</h2>
-      <div class="theme-command__input-wrap">
-        <span class="theme-command__search-icon" aria-hidden="true"></span>
-        <input type="text" class="theme-command__input theme-input"
+      <h2 id="${id}-title" class="cremona-command__sr-only">${label}</h2>
+      <div class="cremona-command__input-wrap">
+        <span class="cremona-command__search-icon" aria-hidden="true"></span>
+        <input type="text" class="cremona-command__input cremona-input"
           data-combobox-target="input"
           data-action="input->combobox#filter keydown->combobox#keydown"
           role="combobox" aria-autocomplete="list" aria-expanded="true"
           aria-haspopup="listbox" aria-controls="${id}-listbox"
           placeholder="${placeholder}" />
-        <kbd class="theme-command__esc-hint theme-kbd" aria-hidden="true">Esc</kbd>
+        <kbd class="cremona-command__esc-hint cremona-kbd" aria-hidden="true">Esc</kbd>
       </div>
-      <ul id="${id}-listbox" class="theme-command__listbox" role="listbox"
+      <ul id="${id}-listbox" class="cremona-command__listbox" role="listbox"
         data-combobox-target="optionsContainer"></ul>
-      <div class="theme-command__empty" data-combobox-target="empty" hidden
+      <div class="cremona-command__empty" data-combobox-target="empty" hidden
         role="status" aria-live="polite">
-        <strong class="theme-command__empty-title">${S('empty.title')}</strong>
-        <span class="theme-command__empty-query">${S('empty.query-prefix')} <strong data-combobox-target="emptyQuery"></strong></span>
-        <span class="theme-command__empty-body">${S('empty.body')}</span>
+        <strong class="cremona-command__empty-title">${S('empty.title')}</strong>
+        <span class="cremona-command__empty-query">${S('empty.query-prefix')} <strong data-combobox-target="emptyQuery"></strong></span>
+        <span class="cremona-command__empty-body">${S('empty.body')}</span>
       </div>
       ${footerHtml}
     </dialog>
@@ -110,14 +110,14 @@ const bodyHtml = `
       <h1>${t('theme.command.story.title')}</h1>
       <p>${t('theme.command.story.subtitle')}</p>
       <div class="cmd-story__hint">
-        ${S('hint.prefix')} <kbd class="theme-kbd">⌘</kbd> + <kbd class="theme-kbd">K</kbd> ${S('hint.suffix')}
-        <button id="cmd-open-btn" type="button" class="theme-button" data-variant="secondary">${S('hint.button-label')}</button>
+        ${S('hint.prefix')} <kbd class="cremona-kbd">⌘</kbd> + <kbd class="cremona-kbd">K</kbd> ${S('hint.suffix')}
+        <button id="cmd-open-btn" type="button" class="cremona-button" data-variant="secondary">${S('hint.button-label')}</button>
       </div>
     </header>
 
     <section class="cmd-story__section" aria-labelledby="cmd-section-default">
-      <h2 id="cmd-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="cmd-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="cmd-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="cmd-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${commandPalette({
         id: 'cmd-events-demo',
         label: S('label.default'),
@@ -129,7 +129,7 @@ const bodyHtml = `
         ],
       })}
       <div class="cmd-story__log" data-events-log="cmd-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="cmd-story__log-out"></div>
       </div>
     </section>

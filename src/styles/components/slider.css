@@ -20,7 +20,7 @@
 
 /* ----- root surface — strip default OS styling, paint via tokens ----- */
 
-.theme-slider {
+.cremona-slider {
   appearance: none;
   inline-size: 100%;
   margin: 0;
@@ -28,35 +28,35 @@
   background-color: transparent;
   cursor: pointer;
   /* sm defaults — md / lg override the local custom props below. */
-  --theme-slider-track-h: 4px;
-  --theme-slider-thumb: 14px;
-  --theme-slider-touch: 24px; /* the invisible padding around the thumb to widen tap zone */
+  --cremona-slider-track-h: 4px;
+  --cremona-slider-thumb: 14px;
+  --cremona-slider-touch: 24px; /* the invisible padding around the thumb to widen tap zone */
 
-  block-size: max(var(--theme-slider-thumb), var(--theme-slider-touch));
+  block-size: max(var(--cremona-slider-thumb), var(--cremona-slider-touch));
 }
 
-.theme-slider[data-size="md"] {
-  --theme-slider-track-h: 6px;
-  --theme-slider-thumb: 18px;
-  --theme-slider-touch: 28px;
+.cremona-slider[data-size="md"] {
+  --cremona-slider-track-h: 6px;
+  --cremona-slider-thumb: 18px;
+  --cremona-slider-touch: 28px;
 }
 
-.theme-slider[data-size="lg"] {
-  --theme-slider-track-h: 8px;
-  --theme-slider-thumb: 22px;
-  --theme-slider-touch: 32px;
+.cremona-slider[data-size="lg"] {
+  --cremona-slider-track-h: 8px;
+  --cremona-slider-thumb: 22px;
+  --cremona-slider-touch: 32px;
 }
 
-.theme-slider:disabled {
+.cremona-slider:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
 /* ----- WebKit / Blink track + thumb ----- */
 
-.theme-slider::-webkit-slider-runnable-track {
+.cremona-slider::-webkit-slider-runnable-track {
   inline-size: 100%;
-  block-size: var(--theme-slider-track-h);
+  block-size: var(--cremona-slider-track-h);
   background-color: var(--color-bg-sunken);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-pill);
@@ -65,58 +65,58 @@
     border-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-slider::-webkit-slider-thumb {
+.cremona-slider::-webkit-slider-thumb {
   appearance: none;
-  inline-size: var(--theme-slider-thumb);
-  block-size: var(--theme-slider-thumb);
+  inline-size: var(--cremona-slider-thumb);
+  block-size: var(--cremona-slider-thumb);
   border-radius: 50%;
   background-color: var(--color-primary);
   border: 2px solid var(--color-bg-elevated);
   box-shadow: var(--shadow-1);
   cursor: pointer;
-  /* Vertical-center the thumb on the track. The track is `--theme-slider-track-h`
-     tall and the thumb is `--theme-slider-thumb` tall; the negative margin
+  /* Vertical-center the thumb on the track. The track is `--cremona-slider-track-h`
+     tall and the thumb is `--cremona-slider-thumb` tall; the negative margin
      centers the thumb across the track. */
-  margin-block-start: calc((var(--theme-slider-track-h) - var(--theme-slider-thumb)) / 2);
+  margin-block-start: calc((var(--cremona-slider-track-h) - var(--cremona-slider-thumb)) / 2);
   transition:
     background-color var(--motion-duration-fast) var(--motion-easing-standard),
     box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-slider:hover:not(:disabled, [aria-invalid="true"])::-webkit-slider-runnable-track {
+.cremona-slider:hover:not(:disabled, [aria-invalid="true"])::-webkit-slider-runnable-track {
   border-color: var(--color-border-strong);
 }
 
-.theme-slider:hover:not(:disabled, [aria-invalid="true"])::-webkit-slider-thumb {
+.cremona-slider:hover:not(:disabled, [aria-invalid="true"])::-webkit-slider-thumb {
   background-color: var(--color-primary-hover);
 }
 
-.theme-slider:focus-visible {
+.cremona-slider:focus-visible {
   outline: none;
 }
 
-.theme-slider:focus-visible::-webkit-slider-thumb {
+.cremona-slider:focus-visible::-webkit-slider-thumb {
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus), var(--shadow-1);
 }
 
-.theme-slider[aria-invalid="true"]::-webkit-slider-runnable-track {
+.cremona-slider[aria-invalid="true"]::-webkit-slider-runnable-track {
   border-color: var(--color-danger);
 }
 
-.theme-slider[aria-invalid="true"]::-webkit-slider-thumb {
+.cremona-slider[aria-invalid="true"]::-webkit-slider-thumb {
   background-color: var(--color-danger);
 }
 
-.theme-slider[aria-invalid="true"]:focus-visible::-webkit-slider-thumb {
+.cremona-slider[aria-invalid="true"]:focus-visible::-webkit-slider-thumb {
   box-shadow: 0 0 0 var(--ring-width) var(--color-danger), var(--shadow-1);
 }
 
-.theme-slider:disabled::-webkit-slider-runnable-track {
+.cremona-slider:disabled::-webkit-slider-runnable-track {
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-default);
 }
 
-.theme-slider:disabled::-webkit-slider-thumb {
+.cremona-slider:disabled::-webkit-slider-thumb {
   background-color: var(--color-text-disabled);
   box-shadow: none;
   cursor: not-allowed;
@@ -124,9 +124,9 @@
 
 /* ----- Gecko (Firefox) track + thumb — same visual targets ----- */
 
-.theme-slider::-moz-range-track {
+.cremona-slider::-moz-range-track {
   inline-size: 100%;
-  block-size: var(--theme-slider-track-h);
+  block-size: var(--cremona-slider-track-h);
   background-color: var(--color-bg-sunken);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-pill);
@@ -135,9 +135,9 @@
     border-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-slider::-moz-range-thumb {
-  inline-size: var(--theme-slider-thumb);
-  block-size: var(--theme-slider-thumb);
+.cremona-slider::-moz-range-thumb {
+  inline-size: var(--cremona-slider-thumb);
+  block-size: var(--cremona-slider-thumb);
   border-radius: 50%;
   background-color: var(--color-primary);
   border: 2px solid var(--color-bg-elevated);
@@ -148,36 +148,36 @@
     box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-slider:hover:not(:disabled, [aria-invalid="true"])::-moz-range-track {
+.cremona-slider:hover:not(:disabled, [aria-invalid="true"])::-moz-range-track {
   border-color: var(--color-border-strong);
 }
 
-.theme-slider:hover:not(:disabled, [aria-invalid="true"])::-moz-range-thumb {
+.cremona-slider:hover:not(:disabled, [aria-invalid="true"])::-moz-range-thumb {
   background-color: var(--color-primary-hover);
 }
 
-.theme-slider:focus-visible::-moz-range-thumb {
+.cremona-slider:focus-visible::-moz-range-thumb {
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus), var(--shadow-1);
 }
 
-.theme-slider[aria-invalid="true"]::-moz-range-track {
+.cremona-slider[aria-invalid="true"]::-moz-range-track {
   border-color: var(--color-danger);
 }
 
-.theme-slider[aria-invalid="true"]::-moz-range-thumb {
+.cremona-slider[aria-invalid="true"]::-moz-range-thumb {
   background-color: var(--color-danger);
 }
 
-.theme-slider[aria-invalid="true"]:focus-visible::-moz-range-thumb {
+.cremona-slider[aria-invalid="true"]:focus-visible::-moz-range-thumb {
   box-shadow: 0 0 0 var(--ring-width) var(--color-danger), var(--shadow-1);
 }
 
-.theme-slider:disabled::-moz-range-track {
+.cremona-slider:disabled::-moz-range-track {
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-default);
 }
 
-.theme-slider:disabled::-moz-range-thumb {
+.cremona-slider:disabled::-moz-range-thumb {
   background-color: var(--color-text-disabled);
   box-shadow: none;
   cursor: not-allowed;
@@ -185,7 +185,7 @@
 
 /* ----- row mode — <label> wraps header + native input ----- */
 
-.theme-slider-row {
+.cremona-slider-row {
   display: grid;
   gap: var(--spacing-1_5);
   inline-size: 100%;
@@ -193,35 +193,35 @@
   cursor: pointer;
 }
 
-.theme-slider-row[data-state="disabled"] {
+.cremona-slider-row[data-state="disabled"] {
   cursor: not-allowed;
 }
 
-.theme-slider-row__header {
+.cremona-slider-row__header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: var(--spacing-2);
 }
 
-.theme-slider-row__label {
+.cremona-slider-row__label {
   font: var(--typography-label);
   color: var(--color-text-primary);
   user-select: none;
 }
 
-.theme-slider-row[data-size="md"] .theme-slider-row__label {
+.cremona-slider-row[data-size="md"] .cremona-slider-row__label {
   font-size: var(--font-size-base);
 }
 
-.theme-slider-row__required {
+.cremona-slider-row__required {
   color: var(--color-danger);
   font-weight: var(--font-weight-bold);
   line-height: 1;
   margin-inline-start: calc(var(--spacing-0_5) * -1);
 }
 
-.theme-slider-row__value {
+.cremona-slider-row__value {
   font: var(--typography-caption);
   font-variant-numeric: tabular-nums;
   color: var(--color-text-tertiary);
@@ -230,14 +230,14 @@
   margin-inline-start: auto;
 }
 
-.theme-slider-row[data-state="disabled"] .theme-slider-row__label,
-.theme-slider-row[data-state="disabled"] .theme-slider-row__value {
+.cremona-slider-row[data-state="disabled"] .cremona-slider-row__label,
+.cremona-slider-row[data-state="disabled"] .cremona-slider-row__value {
   color: var(--color-text-disabled);
 }
 
 /* ----- bare mode — <span> with just the native input ----- */
 
-.theme-slider-wrap {
+.cremona-slider-wrap {
   display: inline-block;
   inline-size: 100%;
   max-inline-size: 320px;
@@ -250,7 +250,7 @@
      reliable touch the kit recommends md/lg sizes (≥ 18 / 22 px) on touch
      contexts. We don't artificially inflate sm because thumb resizing on
      coarse pointers degrades visual rhythm. Documented at L14 in the spec. */
-  .theme-slider {
-    --theme-slider-touch: 44px;
+  .cremona-slider {
+    --cremona-slider-touch: 44px;
   }
 }

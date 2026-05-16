@@ -50,30 +50,30 @@ let _ddCounter = 0;
 function nextId() { return `dd-${++_ddCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function kbd(keys, separator = '+') {
   const parts = keys.map((k, i) => {
-    const sep = i < keys.length - 1 ? `<span class="theme-kbd-sep" aria-hidden="true">${separator}</span>` : '';
-    return `<kbd class="theme-kbd" data-size="sm">${k}</kbd>${sep}`;
+    const sep = i < keys.length - 1 ? `<span class="cremona-kbd-sep" aria-hidden="true">${separator}</span>` : '';
+    return `<kbd class="cremona-kbd" data-size="sm">${k}</kbd>${sep}`;
   }).join('');
-  return `<kbd class="theme-kbd-group" data-size="sm">${parts}</kbd>`;
+  return `<kbd class="cremona-kbd-group" data-size="sm">${parts}</kbd>`;
 }
 
 function renderItem({ label, iconLeading, iconTrailing, kbdShortcut, disabled = false }) {
   const leadingHtml = iconLeading
-    ? `<span class="theme-item__icon theme-item__icon--leading">${icon(iconLeading)}</span>` : '';
+    ? `<span class="cremona-item__icon cremona-item__icon--leading">${icon(iconLeading)}</span>` : '';
   const trailingHtml = kbdShortcut
-    ? `<span class="theme-item__trailing">${kbd(kbdShortcut)}</span>`
+    ? `<span class="cremona-item__trailing">${kbd(kbdShortcut)}</span>`
     : iconTrailing
-      ? `<span class="theme-item__icon theme-item__icon--trailing">${icon(iconTrailing)}</span>`
+      ? `<span class="cremona-item__icon cremona-item__icon--trailing">${icon(iconTrailing)}</span>`
       : '';
   const attrs = disabled ? ' aria-disabled="true" data-state="disabled"' : '';
-  return `<div class="theme-item"${attrs}>
+  return `<div class="cremona-item"${attrs}>
     ${leadingHtml}
-    <div class="theme-item__text">
-      <span class="theme-item__label">${label}</span>
+    <div class="cremona-item__text">
+      <span class="cremona-item__label">${label}</span>
     </div>
     ${trailingHtml}
   </div>`;
@@ -82,26 +82,26 @@ function renderItem({ label, iconLeading, iconTrailing, kbdShortcut, disabled = 
 function triggerButton(label, opts = {}) {
   const { variant = 'ghost', size = 'md', iconLeading = null } = opts;
   const leadingHtml = iconLeading
-    ? `<span class="theme-button__icon theme-button__icon--leading">${icon(iconLeading)}</span>` : '';
-  return (id) => `<button type="button" class="theme-button" data-variant="${variant}" data-size="${size}"
+    ? `<span class="cremona-button__icon cremona-button__icon--leading">${icon(iconLeading)}</span>` : '';
+  return (id) => `<button type="button" class="cremona-button" data-variant="${variant}" data-size="${size}"
     data-popover-target="trigger"
     aria-haspopup="menu" aria-expanded="false" aria-controls="${id}">
-    ${leadingHtml}<span class="theme-button__label">${label}</span>
-    <span class="theme-button__icon theme-button__icon--trailing">${icon('chevron-down', 'sm')}</span>
+    ${leadingHtml}<span class="cremona-button__label">${label}</span>
+    <span class="cremona-button__icon cremona-button__icon--trailing">${icon('chevron-down', 'sm')}</span>
   </button>`;
 }
 
 function renderMenu({ placement = 'bottom', triggerHtml, itemsHtml }) {
   const id = nextId();
   return `
-    <div class="theme-popover theme-dropdown-menu"
+    <div class="cremona-popover cremona-dropdown-menu"
       data-controller="popover dropdown-menu"
       data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
       data-popover-placement-value="${placement}"
       data-popover-offset-value="8"
       data-popover-open-value="false">
       ${triggerHtml(id)}
-      <div id="${id}" class="theme-popover__content theme-dropdown-menu__content"
+      <div id="${id}" class="cremona-popover__content cremona-dropdown-menu__content"
         data-popover-target="content"
         data-state="closed"
         data-placement="${placement}"
@@ -159,8 +159,8 @@ const bodyHtml = `
     </header>
 
     <section class="dropdown-menu-story__section" aria-labelledby="dd-section-default">
-      <h2 id="dd-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.default')}</h2>
-      <p class="dropdown-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.default')}</p>
+      <h2 id="dd-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.default')}</h2>
+      <p class="dropdown-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.default')}</p>
       <div class="dropdown-menu-story__row">
         ${renderMenu({
           triggerHtml: triggerButton(S.actionsTrig, { iconLeading: 'more-horizontal' }),
@@ -175,8 +175,8 @@ const bodyHtml = `
     </section>
 
     <section class="dropdown-menu-story__section" aria-labelledby="dd-section-icons">
-      <h2 id="dd-section-icons" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.with-icons')}</h2>
-      <p class="dropdown-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.with-icons')}</p>
+      <h2 id="dd-section-icons" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.with-icons')}</h2>
+      <p class="dropdown-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.with-icons')}</p>
       <div class="dropdown-menu-story__row">
         ${renderMenu({
           triggerHtml: triggerButton(S.iconsTrig, { iconLeading: 'user' }),
@@ -184,7 +184,7 @@ const bodyHtml = `
             renderItem({ label: S.iconsProf, iconLeading: 'user' }),
             renderItem({ label: S.iconsSet, iconLeading: 'settings' }),
             renderItem({ label: S.iconsNotif, iconLeading: 'bell' }),
-            '<hr class="theme-dropdown-menu__separator">',
+            '<hr class="cremona-dropdown-menu__separator">',
             renderItem({ label: S.iconsSign, iconLeading: 'delete' }),
           ].join(''),
         })}
@@ -192,8 +192,8 @@ const bodyHtml = `
     </section>
 
     <section class="dropdown-menu-story__section" aria-labelledby="dd-section-kbd">
-      <h2 id="dd-section-kbd" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.with-kbd')}</h2>
-      <p class="dropdown-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.with-kbd')}</p>
+      <h2 id="dd-section-kbd" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.with-kbd')}</h2>
+      <p class="dropdown-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.with-kbd')}</p>
       <div class="dropdown-menu-story__row">
         ${renderMenu({
           triggerHtml: triggerButton(S.kbdTrig, { iconLeading: 'edit-3' }),
@@ -201,7 +201,7 @@ const bodyHtml = `
             renderItem({ label: S.kbdCopy, iconLeading: 'copy', kbdShortcut: ['⌘', 'C'] }),
             renderItem({ label: S.kbdPaste, iconLeading: 'copy', kbdShortcut: ['⌘', 'V'] }),
             renderItem({ label: S.kbdCut, iconLeading: 'copy', kbdShortcut: ['⌘', 'X'] }),
-            '<hr class="theme-dropdown-menu__separator">',
+            '<hr class="cremona-dropdown-menu__separator">',
             renderItem({ label: S.kbdSearch, iconLeading: 'search', kbdShortcut: ['⌘', 'K'] }),
           ].join(''),
         })}
@@ -209,18 +209,18 @@ const bodyHtml = `
     </section>
 
     <section class="dropdown-menu-story__section" aria-labelledby="dd-section-groups">
-      <h2 id="dd-section-groups" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.groups')}</h2>
-      <p class="dropdown-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.groups')}</p>
+      <h2 id="dd-section-groups" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.groups')}</h2>
+      <p class="dropdown-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.groups')}</p>
       <div class="dropdown-menu-story__row">
         ${renderMenu({
           triggerHtml: triggerButton(S.groupsTrig, { iconLeading: 'settings' }),
           itemsHtml: [
-            `<div class="theme-dropdown-menu__group-label" role="presentation">${S.groupsLabelView}</div>`,
+            `<div class="cremona-dropdown-menu__group-label" role="presentation">${S.groupsLabelView}</div>`,
             renderItem({ label: S.groupsLight, iconLeading: 'eye' }),
             renderItem({ label: S.groupsDark, iconLeading: 'eye' }),
             renderItem({ label: S.groupsSystem, iconLeading: 'eye' }),
-            '<hr class="theme-dropdown-menu__separator">',
-            `<div class="theme-dropdown-menu__group-label" role="presentation">${S.groupsLabelDensity}</div>`,
+            '<hr class="cremona-dropdown-menu__separator">',
+            `<div class="cremona-dropdown-menu__group-label" role="presentation">${S.groupsLabelDensity}</div>`,
             renderItem({ label: S.groupsComf, iconLeading: 'menu' }),
             renderItem({ label: S.groupsCozy, iconLeading: 'menu' }),
             renderItem({ label: S.groupsComp, iconLeading: 'menu' }),
@@ -230,8 +230,8 @@ const bodyHtml = `
     </section>
 
     <section class="dropdown-menu-story__section" aria-labelledby="dd-section-disabled">
-      <h2 id="dd-section-disabled" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.disabled')}</h2>
-      <p class="dropdown-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.disabled')}</p>
+      <h2 id="dd-section-disabled" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.disabled')}</h2>
+      <p class="dropdown-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.disabled')}</p>
       <div class="dropdown-menu-story__row">
         ${renderMenu({
           triggerHtml: triggerButton(S.disTrig, { iconLeading: 'user' }),
@@ -245,8 +245,8 @@ const bodyHtml = `
     </section>
 
     <section class="dropdown-menu-story__section" aria-labelledby="dd-section-placements">
-      <h2 id="dd-section-placements" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.placements')}</h2>
-      <p class="dropdown-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.placements')}</p>
+      <h2 id="dd-section-placements" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dropdown-menu.story.section.placements')}</h2>
+      <p class="dropdown-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dropdown-menu.story.explainer.placements')}</p>
       <div class="dropdown-menu-story__placements-grid">
         ${renderMenu({
           placement: 'top',

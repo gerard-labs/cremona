@@ -39,10 +39,10 @@
 {%- set registerLabel     = registerLabel     | default('theme.auth.login.register'|trans) -%}
 {%- set globalError       = globalError       | default(null) -%}
 {%- set rateLimitedNotice = rateLimitedNotice | default(null) -%}
-{%- set htmlId            = htmlId            | default('theme-auth-login') -%}
+{%- set htmlId            = htmlId            | default('cremona-auth-login') -%}
 {%- set className         = className         | default('') -%}
 
-{%- set _formClasses = ['theme-auth-login'] -%}
+{%- set _formClasses = ['cremona-auth-login'] -%}
 {%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _state = 'default' -%}
@@ -51,7 +51,7 @@
 {%- elseif globalError or emailError or passwordError -%}{%- set _state = 'error' -%}
 {%- endif -%}
 
-{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+{% embed '@cremona/components/_auth-shell/_auth-shell.html.twig' with {
   title: title,
   subtitle: subtitle,
   htmlId: htmlId,
@@ -67,7 +67,7 @@
       {%- if loading %} data-loading="true"{% endif -%}
     >
       {% if globalError %}
-        {% include '@theme/components/alert/alert.html.twig' with {
+        {% include '@cremona/components/alert/alert.html.twig' with {
           variant: 'danger',
           tone: 'soft',
           body: globalError,
@@ -77,7 +77,7 @@
       {% endif %}
 
       {% if rateLimitedNotice %}
-        {% include '@theme/components/alert/alert.html.twig' with {
+        {% include '@cremona/components/alert/alert.html.twig' with {
           variant: 'warning',
           tone: 'soft',
           body: rateLimitedNotice,
@@ -90,14 +90,14 @@
         <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
       {% endif %}
 
-      {% embed '@theme/components/field/field.html.twig' with {
+      {% embed '@cremona/components/field/field.html.twig' with {
         label: emailLabel,
         htmlId: htmlId ~ '-email',
         required: true,
         error: emailError,
       } %}
         {% block control %}
-          {% include '@theme/components/input/input.html.twig' with {
+          {% include '@cremona/components/input/input.html.twig' with {
             htmlId: fieldHtmlId,
             describedBy: fieldDescribedBy,
             invalid: fieldInvalid,
@@ -114,14 +114,14 @@
         {% endblock %}
       {% endembed %}
 
-      {% embed '@theme/components/field/field.html.twig' with {
+      {% embed '@cremona/components/field/field.html.twig' with {
         label: passwordLabel,
         htmlId: htmlId ~ '-password',
         required: true,
         error: passwordError,
       } %}
         {% block control %}
-          {% include '@theme/components/input/input.html.twig' with {
+          {% include '@cremona/components/input/input.html.twig' with {
             htmlId: fieldHtmlId,
             describedBy: fieldDescribedBy,
             invalid: fieldInvalid,
@@ -135,9 +135,9 @@
       {% endembed %}
 
       {% if rememberMe or forgotHref %}
-        <div class="theme-auth-login__row">
+        <div class="cremona-auth-login__row">
           {% if rememberMe %}
-            {% include '@theme/components/checkbox/checkbox.html.twig' with {
+            {% include '@cremona/components/checkbox/checkbox.html.twig' with {
               name: 'remember_me',
               htmlId: htmlId ~ '-remember',
               value: '1',
@@ -147,18 +147,18 @@
             } %}
           {% endif %}
           {% if forgotHref %}
-            {% include '@theme/components/button/button.html.twig' with {
+            {% include '@cremona/components/button/button.html.twig' with {
               label: forgotLabel,
               variant: 'link',
               size: 'sm',
               href: forgotHref,
-              className: 'theme-auth-login__forgot',
+              className: 'cremona-auth-login__forgot',
             } %}
           {% endif %}
         </div>
       {% endif %}
 
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: submitLabel,
         variant: 'primary',
         size: 'md',
@@ -172,8 +172,8 @@
 
   {% if registerHref %}
     {% block footer %}
-      <span class="theme-auth-login__footer-question">{{ noAccountQuestion }}</span>
-      {% include '@theme/components/button/button.html.twig' with {
+      <span class="cremona-auth-login__footer-question">{{ noAccountQuestion }}</span>
+      {% include '@cremona/components/button/button.html.twig' with {
         label: registerLabel,
         variant: 'link',
         size: 'md',

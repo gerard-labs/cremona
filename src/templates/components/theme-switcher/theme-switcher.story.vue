@@ -17,17 +17,17 @@ function renderThemeSwitcher({ id, currentMode = 'system', target = 'self' }) {
   ];
   const toggles = opts.map((o) => `
     <button type="button"
-            class="theme-toggle theme-toggle-group__item theme-theme-switcher__item"
+            class="cremona-toggle cremona-toggle-group__item cremona-theme-switcher__item"
             data-size="md" data-variant="default"
             data-theme-mode="${o.mode}"
             aria-pressed="${o.mode === currentMode ? 'true' : 'false'}"
             aria-label="${o.label}">
-      <span class="theme-toggle__label">${o.label}</span>
+      <span class="cremona-toggle__label">${o.label}</span>
     </button>`).join('');
   return `
-    <div class="theme-toggle-group-wrap theme-theme-switcher" data-orientation="horizontal">
-      <span id="${id}-label" class="theme-toggle-group__label">${t('theme.theme-switcher.label.group')}</span>
-      <div class="theme-toggle-group theme-theme-switcher__group"
+    <div class="cremona-toggle-group-wrap cremona-theme-switcher" data-orientation="horizontal">
+      <span id="${id}-label" class="cremona-toggle-group__label">${t('theme.theme-switcher.label.group')}</span>
+      <div class="cremona-toggle-group cremona-theme-switcher__group"
            role="group" aria-labelledby="${id}-label"
            data-theme-switcher-current-mode-value="${currentMode}"
            data-theme-switcher-storage-key-value="theme.mode"
@@ -46,20 +46,20 @@ const bodyHtml = `
     </header>
 
     <section class="theme-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.theme-switcher.story.section.system')}</h2>
-      <p class="theme-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.theme-switcher.story.explainer.system')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.theme-switcher.story.section.system')}</h2>
+      <p class="theme-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.theme-switcher.story.explainer.system')}</p>
       <div class="theme-switcher-story__frame">${renderThemeSwitcher({ id: 'story-system', currentMode: 'system' })}</div>
     </section>
 
     <section class="theme-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.theme-switcher.story.section.light')}</h2>
-      <p class="theme-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.theme-switcher.story.explainer.light')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.theme-switcher.story.section.light')}</h2>
+      <p class="theme-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.theme-switcher.story.explainer.light')}</p>
       <div class="theme-switcher-story__frame">${renderThemeSwitcher({ id: 'story-light', currentMode: 'light' })}</div>
     </section>
 
     <section class="theme-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.theme-switcher.story.section.dark')}</h2>
-      <p class="theme-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.theme-switcher.story.explainer.dark')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.theme-switcher.story.section.dark')}</h2>
+      <p class="theme-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.theme-switcher.story.explainer.dark')}</p>
       <div class="theme-switcher-story__frame">${renderThemeSwitcher({ id: 'story-dark', currentMode: 'dark' })}</div>
     </section>
   </section>

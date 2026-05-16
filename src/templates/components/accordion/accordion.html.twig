@@ -34,11 +34,11 @@
             ARIA attributes (single source of truth — the inner Collapsible).
 -#}
 
-{%- set htmlId    = htmlId    | default('theme-accordion-' ~ random()) -%}
+{%- set htmlId    = htmlId    | default('cremona-accordion-' ~ random()) -%}
 {%- set mode      = mode      | default('single') -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-accordion'] -%}
+{%- set _classes = ['cremona-accordion'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div

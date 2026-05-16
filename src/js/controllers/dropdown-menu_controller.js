@@ -7,7 +7,7 @@ import { Controller } from '@hotwired/stimulus';
  * `data-controller="popover dropdown-menu"`).
  *
  * Responsibilities:
- *   1. Stamp `role="menuitem"` on each `.theme-item` descendant of the
+ *   1. Stamp `role="menuitem"` on each `.cremona-item` descendant of the
  *      popover content. Idempotent: if the consumer already wrote a role
  *      on the Item, we don't overwrite. The Popover content gets
  *      `role="menu"` (also idempotent).
@@ -69,7 +69,7 @@ export default class DropdownMenuController extends Controller {
   };
 
   /** Stamp role="menu" on the popover content + role="menuitem" on every
-      .theme-item descendant. Non-destructive: existing roles are kept. */
+      .cremona-item descendant. Non-destructive: existing roles are kept. */
   _initRoles() {
     const content = this._content;
     if (content && !content.hasAttribute('role')) {
@@ -99,7 +99,7 @@ export default class DropdownMenuController extends Controller {
 
   get _allItems() {
     if (!this._content) return [];
-    return Array.from(this._content.querySelectorAll('.theme-item'));
+    return Array.from(this._content.querySelectorAll('.cremona-item'));
   }
 
   get _content() {

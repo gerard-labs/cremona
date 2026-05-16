@@ -22,8 +22,8 @@ import InputOtpController from '../../../js/controllers/input-otp_controller.js'
 setTranslations('fr', frDict);
 setLocale('fr');
 
-const sectionTitle = (id, key) => `<h2 id="${id}" class="theme-typography" data-variant="overline" data-color="tertiary">${t(key)}</h2>`;
-const sectionExplainer = (key) => `<p class="theme-typography" data-variant="caption" data-color="tertiary">${t(key)}</p>`;
+const sectionTitle = (id, key) => `<h2 id="${id}" class="cremona-typography" data-variant="overline" data-color="tertiary">${t(key)}</h2>`;
+const sectionExplainer = (key) => `<p class="cremona-typography" data-variant="caption" data-color="tertiary">${t(key)}</p>`;
 
 function renderInputOtp({
   id = 'otp',
@@ -42,7 +42,7 @@ function renderInputOtp({
     const valueAttr = v ? ` value="${v}"` : '';
     const ariaLabel = t('theme.input-otp.aria.digit', { position: i + 1, total: length });
     cells.push(
-      `<input id="${id}-${i}" type="text" class="theme-input theme-input-otp__cell"
+      `<input id="${id}-${i}" type="text" class="cremona-input cremona-input-otp__cell"
         data-input-otp-target="input"
         data-input-otp-index="${i}"
         data-action="input->input-otp#onInput keydown->input-otp#onKeydown paste->input-otp#onPaste focus->input-otp#onFocus"
@@ -52,15 +52,15 @@ function renderInputOtp({
     );
   }
   return `
-    <fieldset id="${id}" class="theme-input-otp"
+    <fieldset id="${id}" class="cremona-input-otp"
       data-controller="input-otp"
       data-input-otp-length-value="${length}"
       ${value ? `data-input-otp-value-value="${value}"` : ''}
       ${invalid ? 'aria-invalid="true"' : ''}
       ${disabled ? 'disabled' : ''}
     >
-      <legend class="theme-input-otp__legend" id="${legendId}">${label}</legend>
-      <div class="theme-input-otp__cells">${cells.join('')}</div>
+      <legend class="cremona-input-otp__legend" id="${legendId}">${label}</legend>
+      <div class="cremona-input-otp__cells">${cells.join('')}</div>
       ${name ? `<input type="hidden" name="${name}" data-input-otp-target="hiddenInput">` : ''}
     </fieldset>
   `;
@@ -143,10 +143,10 @@ const bodyHtml = `
     <section class="otp-story__section" aria-labelledby="otp-section-field">
       ${sectionTitle('otp-section-field', 'theme.input-otp.story.section.field')}
       ${sectionExplainer('theme.input-otp.story.section.field-explainer')}
-      <div class="theme-field" style="max-inline-size: 360px;">
-        <label class="theme-label">${t('theme.input-otp.story.field.label')}</label>
+      <div class="cremona-field" style="max-inline-size: 360px;">
+        <label class="cremona-label">${t('theme.input-otp.story.field.label')}</label>
         ${renderInputOtp({ id: 'otp-field', name: 'verification-code', describedBy: 'otp-field-help' })}
-        <p class="theme-field__help" id="otp-field-help">${t('theme.input-otp.story.field.help')}</p>
+        <p class="cremona-field__help" id="otp-field-help">${t('theme.input-otp.story.field.help')}</p>
       </div>
     </section>
 
@@ -154,7 +154,7 @@ const bodyHtml = `
       ${sectionTitle('otp-section-events', 'theme.input-otp.story.section.events')}
       ${sectionExplainer('theme.input-otp.story.section.events-explainer')}
       <div class="otp-story__events">
-        <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.input-otp.story.sample.events-log-label')}</p>
+        <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.input-otp.story.sample.events-log-label')}</p>
         <ol id="${eventsLogId}" class="otp-story__log" aria-live="polite"></ol>
       </div>
     </section>

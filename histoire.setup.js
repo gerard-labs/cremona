@@ -1,5 +1,5 @@
 import { defineSetupVue3 } from '@histoire/plugin-vue';
-import './src/styles/theme.css';
+import './src/styles/cremona.css';
 import { boot } from './src/js/index.js';
 
 /**

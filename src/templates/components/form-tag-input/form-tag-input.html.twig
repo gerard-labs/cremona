@@ -31,7 +31,7 @@
 
   Usage:
 
-    {% include '@theme/components/form-tag-input/form-tag-input.html.twig' with {
+    {% include '@cremona/components/form-tag-input/form-tag-input.html.twig' with {
       label: 'theme.form.tag-input.label.projects'|trans,
       name: 'tags',
       whitelist: ['frontend', 'backend', 'design'],
@@ -39,7 +39,7 @@
     } %}
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-form-tag-input-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-form-tag-input-' ~ random()) -%}
 {%- set required    = required    | default(false) -%}
 {%- set placeholder = placeholder | default('') -%}
 {%- set whitelist   = whitelist   | default([]) -%}
@@ -50,8 +50,8 @@
 {%- set className   = className   | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-field', 'theme-form-tag-input'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field', 'cremona-form-tag-input'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set describedByIds = [htmlId ~ '-counter'] -%}
@@ -66,14 +66,14 @@
   data-tag-input-duplicates-value="{{ duplicates ? 'true' : 'false' }}"
   data-tag-input-delimiters-value="{{ delimiters }}"
 >
-  {% include '@theme/components/label/label.html.twig' with {
+  {% include '@cremona/components/label/label.html.twig' with {
     content: label,
     htmlFor: htmlId ~ '-input',
     required: required,
     requiredAriaText: 'theme.form.tag-input.required'|trans,
   } only %}
 
-  {% include '@theme/components/input/input.html.twig' with {
+  {% include '@cremona/components/input/input.html.twig' with {
     type: 'text',
     htmlId: htmlId ~ '-input',
     name: htmlId ~ '-display',
@@ -83,7 +83,7 @@
     invalid: isInvalid,
     describedBy: describedByIds | join(' '),
     autocomplete: 'off',
-    className: 'theme-form-tag-input__input',
+    className: 'cremona-form-tag-input__input',
     attrs: {
       role: 'textbox',
       'aria-multiline': 'false',
@@ -100,7 +100,7 @@
   />
 
   <p
-    class="theme-field__help theme-form-tag-input__counter"
+    class="cremona-field__help cremona-form-tag-input__counter"
     id="{{ htmlId }}-counter"
     data-tag-input-target="counter"
     aria-live="polite"
@@ -116,9 +116,9 @@
   </p>
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

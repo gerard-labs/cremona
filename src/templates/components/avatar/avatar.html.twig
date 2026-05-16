@@ -33,12 +33,12 @@
 {%- set className   = className   | default('') -%}
 {%- set attrs       = attrs       | default({}) -%}
 
-{%- set _classes = ['theme-avatar'] -%}
-{%- if status -%}{%- set _classes = _classes | merge(['theme-avatar--has-status']) -%}{%- endif -%}
+{%- set _classes = ['cremona-avatar'] -%}
+{%- if status -%}{%- set _classes = _classes | merge(['cremona-avatar--has-status']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _style = [] -%}
-{%- if hue -%}{%- set _style = _style | merge(['--theme-avatar-hue: var(--color-kpi-' ~ hue ~ ')']) -%}{%- endif -%}
+{%- if hue -%}{%- set _style = _style | merge(['--cremona-avatar-hue: var(--color-kpi-' ~ hue ~ ')']) -%}{%- endif -%}
 {%- set _styleAttr = _style | join('; ') -%}
 
 {%- set _showIconFallback = (not src) and (not initials) -%}
@@ -52,13 +52,13 @@
   {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
 >
   {%- if src -%}
-    <img class="theme-avatar__img" data-avatar-fallback-target="img" data-action="error->avatar-fallback#onError" src="{{ src }}" alt="{{ alt }}">
+    <img class="cremona-avatar__img" data-avatar-fallback-target="img" data-action="error->avatar-fallback#onError" src="{{ src }}" alt="{{ alt }}">
   {%- elseif _showIconFallback -%}
-    {% include '@theme/components/icon/icon.html.twig' with { name: 'user', decorative: true, size: size in ['xs', 'sm'] ? 'sm' : (size == 'xl' ? 'xl' : 'lg') } %}
+    {% include '@cremona/components/icon/icon.html.twig' with { name: 'user', decorative: true, size: size in ['xs', 'sm'] ? 'sm' : (size == 'xl' ? 'xl' : 'lg') } %}
   {%- else -%}
-    <span class="theme-avatar__fallback" aria-hidden="true">{{ initials }}</span>
+    <span class="cremona-avatar__fallback" aria-hidden="true">{{ initials }}</span>
   {%- endif -%}
   {%- if status -%}
-    <span class="theme-avatar__status" data-status="{{ status }}" role="status" aria-label="{{ _effectiveStatusLabel }}"></span>
+    <span class="cremona-avatar__status" data-status="{{ status }}" role="status" aria-label="{{ _effectiveStatusLabel }}"></span>
   {%- endif -%}
 </span>

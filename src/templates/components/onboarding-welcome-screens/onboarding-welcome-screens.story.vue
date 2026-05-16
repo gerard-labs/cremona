@@ -10,15 +10,15 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderIcon(name) {
-  return `<svg class="theme-icon" data-size="lg" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
+  return `<svg class="cremona-icon" data-size="lg" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
 }
 
 function renderStepperItem({ idx, currentStep, label }) {
   const state = idx < currentStep ? 'done' : (idx === currentStep ? 'active' : 'upcoming');
   return `
-    <li class="theme-stepper__step"${idx === currentStep ? ' aria-current="step"' : ''} data-state="${state}">
-      <span class="theme-stepper__index">${idx + 1}</span>
-      <span class="theme-stepper__label">${label}</span>
+    <li class="cremona-stepper__step"${idx === currentStep ? ' aria-current="step"' : ''} data-state="${state}">
+      <span class="cremona-stepper__index">${idx + 1}</span>
+      <span class="cremona-stepper__label">${label}</span>
     </li>
   `;
 }
@@ -28,26 +28,26 @@ function renderWelcome({ id = 'story-welcome', title, steps, currentStep = 0 }) 
   const isFirst = currentStep === 0;
   const step = steps[currentStep];
   return `
-    <main class="theme-onboarding-welcome-screens" id="${id}">
-      <article class="theme-card theme-onboarding-welcome-screens__card">
-        <header class="theme-card__header theme-onboarding-welcome-screens__header">
-          <h1 class="theme-typography theme-onboarding-welcome-screens__title" data-variant="h1">${title}</h1>
-          <nav class="theme-onboarding-welcome-screens__stepper" aria-label="${t('theme.onboarding.welcome-screens.stepper.aria')}">
-            <ol class="theme-stepper">
+    <main class="cremona-onboarding-welcome-screens" id="${id}">
+      <article class="cremona-card cremona-onboarding-welcome-screens__card">
+        <header class="cremona-card__header cremona-onboarding-welcome-screens__header">
+          <h1 class="cremona-typography cremona-onboarding-welcome-screens__title" data-variant="h1">${title}</h1>
+          <nav class="cremona-onboarding-welcome-screens__stepper" aria-label="${t('theme.onboarding.welcome-screens.stepper.aria')}">
+            <ol class="cremona-stepper">
               ${steps.map((s, idx) => renderStepperItem({ idx, currentStep, label: s.heading })).join('')}
             </ol>
           </nav>
         </header>
-        <div class="theme-card__body theme-onboarding-welcome-screens__body">
-          <div class="theme-onboarding-welcome-screens__step-icon" aria-hidden="true">${renderIcon(step.icon)}</div>
-          <h2 class="theme-typography theme-onboarding-welcome-screens__step-heading" data-variant="h2">${step.heading}</h2>
-          <p class="theme-onboarding-welcome-screens__step-body">${step.body}</p>
+        <div class="cremona-card__body cremona-onboarding-welcome-screens__body">
+          <div class="cremona-onboarding-welcome-screens__step-icon" aria-hidden="true">${renderIcon(step.icon)}</div>
+          <h2 class="cremona-typography cremona-onboarding-welcome-screens__step-heading" data-variant="h2">${step.heading}</h2>
+          <p class="cremona-onboarding-welcome-screens__step-body">${step.body}</p>
         </div>
-        <footer class="theme-card__footer theme-onboarding-welcome-screens__footer">
-          <button type="button" class="theme-button theme-button--ghost theme-onboarding-welcome-screens__skip">${t('theme.onboarding.welcome-screens.skip')}</button>
-          <div class="theme-onboarding-welcome-screens__nav">
-            ${!isFirst ? `<button type="button" class="theme-button theme-button--outline">${t('theme.onboarding.welcome-screens.previous')}</button>` : ''}
-            <button type="button" class="theme-button theme-button--primary">${isLast ? t('theme.onboarding.welcome-screens.finish') : t('theme.onboarding.welcome-screens.next')}</button>
+        <footer class="cremona-card__footer cremona-onboarding-welcome-screens__footer">
+          <button type="button" class="cremona-button cremona-button--ghost cremona-onboarding-welcome-screens__skip">${t('theme.onboarding.welcome-screens.skip')}</button>
+          <div class="cremona-onboarding-welcome-screens__nav">
+            ${!isFirst ? `<button type="button" class="cremona-button cremona-button--outline">${t('theme.onboarding.welcome-screens.previous')}</button>` : ''}
+            <button type="button" class="cremona-button cremona-button--primary">${isLast ? t('theme.onboarding.welcome-screens.finish') : t('theme.onboarding.welcome-screens.next')}</button>
           </div>
         </footer>
       </article>
@@ -70,17 +70,17 @@ const bodyHtml = `
     </header>
 
     <section class="onboarding-welcome-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.welcome-screens.story.section.step-1')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.welcome-screens.story.section.step-1')}</h2>
       <div class="onboarding-welcome-story__frame">${renderWelcome({ id: 'story-step-1', title, steps, currentStep: 0 })}</div>
     </section>
 
     <section class="onboarding-welcome-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.welcome-screens.story.section.step-2')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.welcome-screens.story.section.step-2')}</h2>
       <div class="onboarding-welcome-story__frame">${renderWelcome({ id: 'story-step-2', title, steps, currentStep: 1 })}</div>
     </section>
 
     <section class="onboarding-welcome-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.welcome-screens.story.section.step-3')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.welcome-screens.story.section.step-3')}</h2>
       <div class="onboarding-welcome-story__frame">${renderWelcome({ id: 'story-step-3', title, steps, currentStep: 2 })}</div>
     </section>
   </section>

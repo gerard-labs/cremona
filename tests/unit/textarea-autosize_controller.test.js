@@ -43,7 +43,7 @@ describe('TextareaAutosizeController', () => {
   async function mountWithScrollHeight(initialScrollHeight, { value = '', minRows = 2, maxRows = 8 } = {}) {
     document.body.innerHTML = `
       <textarea
-        class="theme-textarea"
+        class="cremona-textarea"
         data-controller="textarea-autosize"
         data-action="input->textarea-autosize#resize"
         data-textarea-autosize-min-rows-value="${minRows}"

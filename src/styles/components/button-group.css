@@ -3,10 +3,10 @@
  * borders (horizontal default) or stacked block-wise (vertical).
  *
  * Anatomy:
- *   .theme-button-group[role="group"][data-orientation="horizontal|vertical"]
- *     ├── .theme-button       (first  → outer + inner border, no rounding inline-end)
- *     ├── .theme-button       (middle → no inline borders, no rounding)
- *     └── .theme-button       (last   → outer + inner border, no rounding inline-start)
+ *   .cremona-button-group[role="group"][data-orientation="horizontal|vertical"]
+ *     ├── .cremona-button       (first  → outer + inner border, no rounding inline-end)
+ *     ├── .cremona-button       (middle → no inline borders, no rounding)
+ *     └── .cremona-button       (last   → outer + inner border, no rounding inline-start)
  *
  * Border collapsing relies on `:not(:first-child)` / `:not(:last-child)`
  * + logical border-radius zeroing. The inner Button keeps its own
@@ -23,19 +23,19 @@
  * (first-child stays at inline-start regardless of direction).
  */
 
-.theme-button-group {
+.cremona-button-group {
   display: inline-flex;
   align-items: stretch;
 }
 
 /* ----- horizontal (default) — adjacent borders collapse ----------- */
 
-.theme-button-group[data-orientation="horizontal"] {
+.cremona-button-group[data-orientation="horizontal"] {
   flex-direction: row;
 }
 
 /* Middle buttons: zero inline borders + zero inline radii on both sides. */
-.theme-button-group[data-orientation="horizontal"] > .theme-button:not(:first-child, :last-child) {
+.cremona-button-group[data-orientation="horizontal"] > .cremona-button:not(:first-child, :last-child) {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
   border-start-end-radius: 0;
@@ -44,14 +44,14 @@
 }
 
 /* First child: zero inline-end radii only. */
-.theme-button-group[data-orientation="horizontal"] > .theme-button:first-child:not(:last-child) {
+.cremona-button-group[data-orientation="horizontal"] > .cremona-button:first-child:not(:last-child) {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
 
 /* Last child: zero inline-start radii + zero inline-start border (the
    previous sibling's inline-end border is the visible seam). */
-.theme-button-group[data-orientation="horizontal"] > .theme-button:last-child:not(:first-child) {
+.cremona-button-group[data-orientation="horizontal"] > .cremona-button:last-child:not(:first-child) {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
   border-inline-start: 0;
@@ -59,21 +59,21 @@
 
 /* ----- vertical — adjacent block-borders collapse ----------------- */
 
-.theme-button-group[data-orientation="vertical"] {
+.cremona-button-group[data-orientation="vertical"] {
   flex-direction: column;
 }
 
-.theme-button-group[data-orientation="vertical"] > .theme-button:not(:first-child, :last-child) {
+.cremona-button-group[data-orientation="vertical"] > .cremona-button:not(:first-child, :last-child) {
   border-radius: 0;
   border-block-start: 0;
 }
 
-.theme-button-group[data-orientation="vertical"] > .theme-button:first-child:not(:last-child) {
+.cremona-button-group[data-orientation="vertical"] > .cremona-button:first-child:not(:last-child) {
   border-end-start-radius: 0;
   border-end-end-radius: 0;
 }
 
-.theme-button-group[data-orientation="vertical"] > .theme-button:last-child:not(:first-child) {
+.cremona-button-group[data-orientation="vertical"] > .cremona-button:last-child:not(:first-child) {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
   border-block-start: 0;
@@ -81,11 +81,11 @@
 
 /* ----- detached variant: no border collapsing, just a gap --------- */
 
-.theme-button-group--detached {
+.cremona-button-group--detached {
   gap: var(--spacing-2);
 }
 
-.theme-button-group--detached > .theme-button {
+.cremona-button-group--detached > .cremona-button {
   /* Reset every collapsing rule so each Button is fully standalone. */
   border-radius: var(--radius-button);
   border-block-start-width: 1px;
@@ -97,12 +97,12 @@
 /* When a Button in the group is :focus-visible, its outer ring would be
    clipped by the adjacent button's bg. Lift it via z-index so the ring
    stays fully visible. The lift is reset on focus-out. */
-.theme-button-group:not(.theme-button-group--detached) > .theme-button {
+.cremona-button-group:not(.cremona-button-group--detached) > .cremona-button {
   position: relative;
 }
 
-.theme-button-group:not(.theme-button-group--detached) > .theme-button:focus-visible,
-.theme-button-group:not(.theme-button-group--detached) > .theme-button:hover {
+.cremona-button-group:not(.cremona-button-group--detached) > .cremona-button:focus-visible,
+.cremona-button-group:not(.cremona-button-group--detached) > .cremona-button:hover {
   /* Hover too — so the hovered button's full border paints over the
      collapsed-with-neighbour seam. */
   z-index: var(--z-raised);

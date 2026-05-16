@@ -19,7 +19,7 @@ const tick = () => new Promise((r) => setTimeout(r, 0));
  *
  * Responsibilities covered (14 tests):
  *   1. connect — stamps role="separator", aria-orientation, aria-valuemin/max/now, tabindex.
- *   2. connect — applies initial size via --theme-resizable-size custom prop.
+ *   2. connect — applies initial size via --cremona-resizable-size custom prop.
  *   3. ArrowRight on horizontal → size += step, dispatch.
  *   4. ArrowLeft on horizontal → size -= step.
  *   5. ArrowDown on vertical → size += step.
@@ -49,7 +49,7 @@ describe('ResizableController', () => {
 
   async function mount({ orientation = 'horizontal', size = 50, minSize = 10, maxSize = 90, step = 5 } = {}) {
     document.body.innerHTML = `
-      <div id="rs" class="theme-resizable"
+      <div id="rs" class="cremona-resizable"
         data-orientation="${orientation}"
         data-controller="resizable"
         data-resizable-orientation-value="${orientation}"
@@ -57,11 +57,11 @@ describe('ResizableController', () => {
         data-resizable-min-size-value="${minSize}"
         data-resizable-max-size-value="${maxSize}"
         data-resizable-step-value="${step}"
-        style="--theme-resizable-size: ${size}%; inline-size: 600px; block-size: 400px;">
-        <div id="rs-start" class="theme-resizable__pane theme-resizable__pane--start" data-resizable-target="startPane">Start</div>
-        <div id="rs-handle" class="theme-resizable__handle" data-resizable-target="handle"
-             aria-controls="rs-start"><span class="theme-resizable__grip"></span></div>
-        <div class="theme-resizable__pane theme-resizable__pane--end">End</div>
+        style="--cremona-resizable-size: ${size}%; inline-size: 600px; block-size: 400px;">
+        <div id="rs-start" class="cremona-resizable__pane cremona-resizable__pane--start" data-resizable-target="startPane">Start</div>
+        <div id="rs-handle" class="cremona-resizable__handle" data-resizable-target="handle"
+             aria-controls="rs-start"><span class="cremona-resizable__grip"></span></div>
+        <div class="cremona-resizable__pane cremona-resizable__pane--end">End</div>
       </div>
     `;
     // Stub getBoundingClientRect for predictable pointer math.
@@ -93,7 +93,7 @@ describe('ResizableController', () => {
 
   it('connect — applies initial size as CSS custom prop', async () => {
     const { wrap } = await mount({ size: 35 });
-    expect(wrap.style.getPropertyValue('--theme-resizable-size')).toBe('35%');
+    expect(wrap.style.getPropertyValue('--cremona-resizable-size')).toBe('35%');
   });
 
   it('ArrowRight on horizontal → size += step, dispatch', async () => {
@@ -102,7 +102,7 @@ describe('ResizableController', () => {
     wrap.addEventListener('resizable:change', (e) => events.push(e.detail));
     ctrl._onKeyDown({ key: 'ArrowRight', preventDefault: () => {} });
     expect(ctrl.sizeValue).toBe(55);
-    expect(wrap.style.getPropertyValue('--theme-resizable-size')).toBe('55%');
+    expect(wrap.style.getPropertyValue('--cremona-resizable-size')).toBe('55%');
     expect(events).toHaveLength(1);
     expect(events[0]).toMatchObject({ size: 55, orientation: 'horizontal' });
   });
@@ -177,7 +177,7 @@ describe('ResizableController', () => {
     // Move pointer to clientX=420 (+120 px = +20% of 600 px wrap).
     ctrl._onPointerMove({ clientX: 420, clientY: 200 });
     expect(ctrl.sizeValue).toBe(70);
-    expect(wrap.style.getPropertyValue('--theme-resizable-size')).toBe('70%');
+    expect(wrap.style.getPropertyValue('--cremona-resizable-size')).toBe('70%');
     // No dispatch yet — only on pointerup.
     expect(events).toHaveLength(0);
     // Release.

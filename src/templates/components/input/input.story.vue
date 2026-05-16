@@ -23,7 +23,7 @@ function renderInput(props = {}) {
     autocomplete, maxlength, inputmode, spellcheck, className,
   } = props;
 
-  const classes = ['theme-input'];
+  const classes = ['cremona-input'];
   if (className) classes.push(className);
 
   const attrs = [
@@ -81,7 +81,7 @@ const bodyHtml = `
     </header>
 
     <section class="input-story__section" aria-labelledby="input-section-default">
-      <h2 id="input-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.default')}</h2>
+      <h2 id="input-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.default')}</h2>
       <div class="input-story__stack">
         ${row(renderInput({ type: 'email', htmlId: 'demo-default-email', placeholder: PH.email }), 'email')}
         ${row(renderInput({ type: 'text',  htmlId: 'demo-default-name',  placeholder: PH.name }),  'name')}
@@ -89,7 +89,7 @@ const bodyHtml = `
     </section>
 
     <section class="input-story__section" aria-labelledby="input-section-states">
-      <h2 id="input-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.states')}</h2>
+      <h2 id="input-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.states')}</h2>
       <div class="input-story__stack">
         ${row(renderInput({ htmlId: 'demo-state-default',  placeholder: PH.name }),                          'default')}
         ${row(renderInput({ htmlId: 'demo-state-value',    value: 'Marie Dupont' }),                         'with value')}
@@ -98,11 +98,11 @@ const bodyHtml = `
         ${row(renderInput({ htmlId: 'demo-state-required', placeholder: PH.email, required: true }),         'required')}
         ${row(renderInput({ htmlId: 'demo-state-invalid',  value: 'pas-un-email', invalid: true, describedBy: 'demo-state-invalid-error' }), 'invalid')}
       </div>
-      <p class="input-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.input.story.explainer.invalid')}</p>
+      <p class="input-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.input.story.explainer.invalid')}</p>
     </section>
 
     <section class="input-story__section" aria-labelledby="input-section-sizes">
-      <h2 id="input-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.sizes')}</h2>
+      <h2 id="input-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.sizes')}</h2>
       <div class="input-story__stack">
         ${row(renderInput({ htmlId: 'demo-size-sm', size: 'sm', placeholder: PH.name }), 'sm (32 px)')}
         ${row(renderInput({ htmlId: 'demo-size-md', size: 'md', placeholder: PH.name }), 'md (40 px)')}
@@ -111,7 +111,7 @@ const bodyHtml = `
     </section>
 
     <section class="input-story__section" aria-labelledby="input-section-types">
-      <h2 id="input-section-types" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.types')}</h2>
+      <h2 id="input-section-types" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.types')}</h2>
       <div class="input-story__stack">
         ${row(renderInput({ type: 'text',     htmlId: 'demo-type-text',     placeholder: PH.name }),    'text')}
         ${row(renderInput({ type: 'email',    htmlId: 'demo-type-email',    placeholder: PH.email }),   'email')}
@@ -125,15 +125,15 @@ const bodyHtml = `
     </section>
 
     <section class="input-story__section" aria-labelledby="input-section-long-value">
-      <h2 id="input-section-long-value" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.long-value')}</h2>
+      <h2 id="input-section-long-value" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.long-value')}</h2>
       <div class="input-story__stack">
         ${row(renderInput({ htmlId: 'demo-long', value: t('theme.input.sample.value-long') }), 'long')}
       </div>
     </section>
 
     <section class="input-story__section" aria-labelledby="input-section-autocomplete">
-      <h2 id="input-section-autocomplete" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.autocomplete')}</h2>
-      <p class="input-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.input.story.explainer.autocomplete')}</p>
+      <h2 id="input-section-autocomplete" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.autocomplete')}</h2>
+      <p class="input-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.input.story.explainer.autocomplete')}</p>
       <div class="input-story__stack">
         ${row(renderInput({ type: 'email',    htmlId: 'demo-ac-email',    placeholder: PH.email,    autocomplete: 'email',            inputmode: 'email' }),    'email + autocomplete')}
         ${row(renderInput({ type: 'tel',      htmlId: 'demo-ac-tel',      placeholder: PH.phone,    autocomplete: 'tel',              inputmode: 'tel' }),      'tel + autocomplete')}
@@ -142,8 +142,8 @@ const bodyHtml = `
     </section>
 
     <section class="input-story__section" aria-labelledby="input-section-densities">
-      <h2 id="input-section-densities" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.densities')}</h2>
-      <p class="input-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.input.story.explainer.densities')}</p>
+      <h2 id="input-section-densities" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input.story.section.densities')}</h2>
+      <p class="input-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.input.story.explainer.densities')}</p>
       <div class="input-story__stack">
         ${DENSITIES.map(([d, h]) => `
           <div data-density="${d}" class="input-story__density">

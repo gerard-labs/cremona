@@ -10,22 +10,22 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderFormSignature({ id, label, help, error, fallback = false, width = 400, height = 160 }) {
-  const invalid = error ? ' theme-form-signature--invalid' : '';
+  const invalid = error ? ' cremona-form-signature--invalid' : '';
   return `
-    <div class="theme-form-signature${invalid}" data-controller="signature-pad" data-signature-pad-pen-color-value="#000000" data-signature-pad-min-width-value="0.5" data-signature-pad-max-width-value="2.5">
-      <span class="theme-form-signature__label" id="${id}-label">${label}</span>
-      <article class="theme-card theme-form-signature__surface" data-variant="elevated">
-        <div class="theme-card__body theme-form-signature__body">
-          <canvas class="theme-form-signature__canvas" data-signature-pad-target="canvas" role="img" aria-labelledby="${id}-label" aria-label="${t('theme.form.signature.aria.label')}" width="${width}" height="${height}"></canvas>
+    <div class="cremona-form-signature${invalid}" data-controller="signature-pad" data-signature-pad-pen-color-value="#000000" data-signature-pad-min-width-value="0.5" data-signature-pad-max-width-value="2.5">
+      <span class="cremona-form-signature__label" id="${id}-label">${label}</span>
+      <article class="cremona-card cremona-form-signature__surface" data-variant="elevated">
+        <div class="cremona-card__body cremona-form-signature__body">
+          <canvas class="cremona-form-signature__canvas" data-signature-pad-target="canvas" role="img" aria-labelledby="${id}-label" aria-label="${t('theme.form.signature.aria.label')}" width="${width}" height="${height}"></canvas>
         </div>
-        <footer class="theme-card__footer theme-form-signature__footer">
-          <button type="button" class="theme-button" data-variant="secondary" data-size="sm" data-signature-pad-target="clearBtn" data-action="click->signature-pad#clear">${t('theme.form.signature.actions.clear')}</button>
+        <footer class="cremona-card__footer cremona-form-signature__footer">
+          <button type="button" class="cremona-button" data-variant="secondary" data-size="sm" data-signature-pad-target="clearBtn" data-action="click->signature-pad#clear">${t('theme.form.signature.actions.clear')}</button>
         </footer>
       </article>
       <input type="hidden" name="${id}" data-signature-pad-target="hiddenInput" />
-      ${fallback ? `<details class="theme-form-signature__fallback"><summary>${t('theme.form.signature.fallback.summary')}</summary><input type="text" class="theme-input" name="${id}_typed" placeholder="${t('theme.form.signature.placeholder.fallback')}" autocomplete="name" /></details>` : ''}
-      ${help ? `<p class="theme-field__help" id="${id}-help">${help}</p>` : ''}
-      ${error ? `<p class="theme-field__error" id="${id}-error">${error}</p>` : ''}
+      ${fallback ? `<details class="cremona-form-signature__fallback"><summary>${t('theme.form.signature.fallback.summary')}</summary><input type="text" class="cremona-input" name="${id}_typed" placeholder="${t('theme.form.signature.placeholder.fallback')}" autocomplete="name" /></details>` : ''}
+      ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
+      ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
     </div>
   `;
 }
@@ -38,22 +38,22 @@ const bodyHtml = `
     </header>
 
     <section class="form-signature-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.default')}</h2>
       <div class="form-signature-story__frame">${renderFormSignature({ id: 'story-default', label: t('theme.form.signature.label.contract'), help: t('theme.form.signature.help.format') })}</div>
     </section>
 
     <section class="form-signature-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.with-help')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.with-help')}</h2>
       <div class="form-signature-story__frame">${renderFormSignature({ id: 'story-help', label: t('theme.form.signature.label.delivery'), help: t('theme.form.signature.help.format') })}</div>
     </section>
 
     <section class="form-signature-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.with-fallback')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.with-fallback')}</h2>
       <div class="form-signature-story__frame">${renderFormSignature({ id: 'story-fallback', label: t('theme.form.signature.label.contract'), help: t('theme.form.signature.help.fallback'), fallback: true })}</div>
     </section>
 
     <section class="form-signature-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.validation-error')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.signature.story.section.validation-error')}</h2>
       <div class="form-signature-story__frame">${renderFormSignature({ id: 'story-error', label: t('theme.form.signature.label.contract'), error: t('theme.form.signature.error.required') })}</div>
     </section>
   </section>

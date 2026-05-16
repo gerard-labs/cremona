@@ -11,43 +11,43 @@ setLocale('fr');
 
 function renderDataExport({ id, state = 'idle', withMeta = true }) {
   const meta = withMeta ? `
-    <ul class="theme-rgpd-data-export__meta" role="list">
-      <li class="theme-rgpd-data-export__meta-item">
-        <svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-edit-3"/></svg>
+    <ul class="cremona-rgpd-data-export__meta" role="list">
+      <li class="cremona-rgpd-data-export__meta-item">
+        <svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-edit-3"/></svg>
         <span>${t('theme.rgpd-data-export.meta.format').replace('%format%', 'JSON')}</span>
       </li>
-      <li class="theme-rgpd-data-export__meta-item">
+      <li class="cremona-rgpd-data-export__meta-item">
         <span>${t('theme.rgpd-data-export.meta.size').replace('%size%', '~2,4 Mo')}</span>
       </li>
-      <li class="theme-rgpd-data-export__meta-item">
+      <li class="cremona-rgpd-data-export__meta-item">
         <span>${t('theme.rgpd-data-export.meta.time').replace('%time%', t('theme.rgpd-data-export.story.time-estimate'))}</span>
       </li>
     </ul>
   ` : '';
 
-  const buttonIcon = state === 'success' ? `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg>`
-                   : state === 'loading' ? `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-option"/></svg>`
-                   : state === 'error'   ? `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-alert-triangle"/></svg>`
+  const buttonIcon = state === 'success' ? `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg>`
+                   : state === 'loading' ? `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-option"/></svg>`
+                   : state === 'error'   ? `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-alert-triangle"/></svg>`
                    : '';
 
   const isDisabled = state === 'loading' ? 'disabled aria-disabled="true"' : '';
 
   return `
-    <article class="theme-card theme-rgpd-data-export"
+    <article class="cremona-card cremona-rgpd-data-export"
              id="${id}"
              data-variant="elevated"
              data-rgpd-data-export-state="${state}"
              aria-labelledby="${id}-title">
-      <header class="theme-card__header">
-        <h2 id="${id}-title" class="theme-card__title">${t('theme.rgpd-data-export.title')}</h2>
-        <p class="theme-card__description">${t('theme.rgpd-data-export.description')}</p>
+      <header class="cremona-card__header">
+        <h2 id="${id}-title" class="cremona-card__title">${t('theme.rgpd-data-export.title')}</h2>
+        <p class="cremona-card__description">${t('theme.rgpd-data-export.description')}</p>
       </header>
-      <div class="theme-card__body">
+      <div class="cremona-card__body">
         ${meta}
-        <p class="theme-rgpd-data-export__legal-note">${t('theme.rgpd-data-export.legal-note')}</p>
+        <p class="cremona-rgpd-data-export__legal-note">${t('theme.rgpd-data-export.legal-note')}</p>
       </div>
-      <footer class="theme-card__footer">
-        <button type="button" class="theme-button theme-rgpd-data-export__button-state" data-variant="primary" ${isDisabled}>
+      <footer class="cremona-card__footer">
+        <button type="button" class="cremona-button cremona-rgpd-data-export__button-state" data-variant="primary" ${isDisabled}>
           ${buttonIcon}
           <span>${t('theme.rgpd-data-export.button.' + state)}</span>
         </button>
@@ -64,26 +64,26 @@ const bodyHtml = `
     </header>
 
     <section class="rgpd-data-export-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.idle')}</h2>
-      <p class="rgpd-data-export-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.idle')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.idle')}</h2>
+      <p class="rgpd-data-export-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.idle')}</p>
       <div class="rgpd-data-export-story__frame">${renderDataExport({ id: 'data-export-idle', state: 'idle' })}</div>
     </section>
 
     <section class="rgpd-data-export-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.loading')}</h2>
-      <p class="rgpd-data-export-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.loading')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.loading')}</h2>
+      <p class="rgpd-data-export-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.loading')}</p>
       <div class="rgpd-data-export-story__frame">${renderDataExport({ id: 'data-export-loading', state: 'loading' })}</div>
     </section>
 
     <section class="rgpd-data-export-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.success')}</h2>
-      <p class="rgpd-data-export-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.success')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.success')}</h2>
+      <p class="rgpd-data-export-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.success')}</p>
       <div class="rgpd-data-export-story__frame">${renderDataExport({ id: 'data-export-success', state: 'success' })}</div>
     </section>
 
     <section class="rgpd-data-export-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.error')}</h2>
-      <p class="rgpd-data-export-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.error')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-data-export.story.section.error')}</h2>
+      <p class="rgpd-data-export-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-data-export.story.explainer.error')}</p>
       <div class="rgpd-data-export-story__frame">${renderDataExport({ id: 'data-export-error', state: 'error' })}</div>
     </section>
 

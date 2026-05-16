@@ -40,10 +40,10 @@
 {%- set successBody        = successBody        | default('theme.auth.register.success.body'|trans) -%}
 {%- set successResendHref  = successResendHref  | default(null) -%}
 {%- set successResendLabel = successResendLabel | default('theme.auth.register.success.resend'|trans) -%}
-{%- set htmlId             = htmlId             | default('theme-auth-register') -%}
+{%- set htmlId             = htmlId             | default('cremona-auth-register') -%}
 {%- set className          = className          | default('') -%}
 
-{%- set _formClasses = ['theme-auth-register'] -%}
+{%- set _formClasses = ['cremona-auth-register'] -%}
 {%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _state = 'default' -%}
@@ -52,7 +52,7 @@
 {%- elseif globalError or nameError or emailError or passwordError or termsError -%}{%- set _state = 'error' -%}
 {%- endif -%}
 
-{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+{% embed '@cremona/components/_auth-shell/_auth-shell.html.twig' with {
   title: title,
   subtitle: subtitle,
   htmlId: htmlId,
@@ -60,7 +60,7 @@
 } %}
   {% block content %}
     {% if successState %}
-      {% embed '@theme/components/empty/empty.html.twig' with {
+      {% embed '@cremona/components/empty/empty.html.twig' with {
         title: successTitle,
         body: successBody,
         icon: 'mail',
@@ -70,7 +70,7 @@
       } %}
         {% if successResendHref %}
           {% block actions %}
-            {% include '@theme/components/button/button.html.twig' with {
+            {% include '@cremona/components/button/button.html.twig' with {
               label: successResendLabel,
               variant: 'secondary',
               size: 'md',
@@ -89,7 +89,7 @@
         {%- if loading %} data-loading="true"{% endif -%}
       >
         {% if globalError %}
-          {% include '@theme/components/alert/alert.html.twig' with {
+          {% include '@cremona/components/alert/alert.html.twig' with {
             variant: 'danger',
             tone: 'soft',
             body: globalError,
@@ -101,14 +101,14 @@
           <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
         {% endif %}
 
-        {% embed '@theme/components/field/field.html.twig' with {
+        {% embed '@cremona/components/field/field.html.twig' with {
           label: nameLabel,
           htmlId: htmlId ~ '-name',
           required: true,
           error: nameError,
         } %}
           {% block control %}
-            {% include '@theme/components/input/input.html.twig' with {
+            {% include '@cremona/components/input/input.html.twig' with {
               htmlId: fieldHtmlId,
               describedBy: fieldDescribedBy,
               invalid: fieldInvalid,
@@ -123,14 +123,14 @@
           {% endblock %}
         {% endembed %}
 
-        {% embed '@theme/components/field/field.html.twig' with {
+        {% embed '@cremona/components/field/field.html.twig' with {
           label: emailLabel,
           htmlId: htmlId ~ '-email',
           required: true,
           error: emailError,
         } %}
           {% block control %}
-            {% include '@theme/components/input/input.html.twig' with {
+            {% include '@cremona/components/input/input.html.twig' with {
               htmlId: fieldHtmlId,
               describedBy: fieldDescribedBy,
               invalid: fieldInvalid,
@@ -147,7 +147,7 @@
           {% endblock %}
         {% endembed %}
 
-        {% embed '@theme/components/field/field.html.twig' with {
+        {% embed '@cremona/components/field/field.html.twig' with {
           label: passwordLabel,
           htmlId: htmlId ~ '-password',
           required: true,
@@ -155,7 +155,7 @@
           error: passwordError,
         } %}
           {% block control %}
-            {% include '@theme/components/input/input.html.twig' with {
+            {% include '@cremona/components/input/input.html.twig' with {
               htmlId: fieldHtmlId,
               describedBy: fieldDescribedBy,
               invalid: fieldInvalid,
@@ -170,8 +170,8 @@
           {% endblock %}
         {% endembed %}
 
-        <div class="theme-auth-register__terms">
-          {% include '@theme/components/checkbox/checkbox.html.twig' with {
+        <div class="cremona-auth-register__terms">
+          {% include '@cremona/components/checkbox/checkbox.html.twig' with {
             name: 'terms',
             htmlId: htmlId ~ '-terms',
             value: '1',
@@ -183,11 +183,11 @@
             size: 'sm',
           } %}
           {% if termsError %}
-            <p id="{{ htmlId }}-terms-error" class="theme-field__error" role="alert" aria-live="polite">{{ termsError }}</p>
+            <p id="{{ htmlId }}-terms-error" class="cremona-field__error" role="alert" aria-live="polite">{{ termsError }}</p>
           {% endif %}
         </div>
 
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           label: submitLabel,
           variant: 'primary',
           size: 'md',
@@ -201,8 +201,8 @@
 
   {% if loginHref %}
     {% block footer %}
-      <span class="theme-auth-register__footer-question">{{ hasAccountQuestion }}</span>
-      {% include '@theme/components/button/button.html.twig' with {
+      <span class="cremona-auth-register__footer-question">{{ hasAccountQuestion }}</span>
+      {% include '@cremona/components/button/button.html.twig' with {
         label: loginLabel,
         variant: 'link',
         size: 'md',

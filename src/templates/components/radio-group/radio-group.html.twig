@@ -39,9 +39,9 @@
 {%- set requiredAriaText = requiredAriaText | default('obligatoire') -%}
 {%- set className        = className        | default('') -%}
 
-{%- set _classes = ['theme-radiogroup'] -%}
-{%- if invalid  -%}{%- set _classes = _classes | merge(['theme-radiogroup--invalid']) -%}{%- endif -%}
-{%- if disabled -%}{%- set _classes = _classes | merge(['theme-radiogroup--disabled']) -%}{%- endif -%}
+{%- set _classes = ['cremona-radiogroup'] -%}
+{%- if invalid  -%}{%- set _classes = _classes | merge(['cremona-radiogroup--invalid']) -%}{%- endif -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['cremona-radiogroup--disabled']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <fieldset
@@ -50,29 +50,29 @@
   data-orientation="{{ orientation }}"
   {%- if disabled %} disabled{% endif -%}
 >
-  <legend class="theme-radiogroup__legend{% if hideLegend %} theme-sr-only{% endif %}">
+  <legend class="cremona-radiogroup__legend{% if hideLegend %} cremona-sr-only{% endif %}">
     {{ legend }}
     {%- if required and not hideLegend -%}
-      <span class="theme-radiogroup__required" aria-hidden="true">*</span>
-      <span class="theme-sr-only">{{ requiredAriaText }}</span>
+      <span class="cremona-radiogroup__required" aria-hidden="true">*</span>
+      <span class="cremona-sr-only">{{ requiredAriaText }}</span>
     {%- endif -%}
   </legend>
 
-  <div class="theme-radiogroup__items" role="presentation">
+  <div class="cremona-radiogroup__items" role="presentation">
     {%- for option in options -%}
       {%- set _optChecked  = option.checked | default(false) -%}
       {%- set _optDisabled = option.disabled | default(false) -%}
       {%- set _optDesc     = option.description | default(null) -%}
       {%- set _optId       = option.htmlId | default(name ~ '-' ~ loop.index) -%}
       <label
-        class="theme-radio-row"
+        class="cremona-radio-row"
         data-size="{{ size }}"
         {%- if _optDisabled or disabled %} data-state="disabled"{% endif -%}
       >
-        <span class="theme-radio" data-size="{{ size }}">
+        <span class="cremona-radio" data-size="{{ size }}">
           <input
             type="radio"
-            class="theme-radio__input"
+            class="cremona-radio__input"
             id="{{ _optId }}"
             name="{{ name }}"
             value="{{ option.value }}"
@@ -82,12 +82,12 @@
             {%- if invalid %} aria-invalid="true"{% endif -%}
             {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
           >
-          <span class="theme-radio__box" aria-hidden="true"></span>
+          <span class="cremona-radio__box" aria-hidden="true"></span>
         </span>
-        <span class="theme-radio-row__text">
-          <span class="theme-radio-row__label">{{ option.label }}</span>
+        <span class="cremona-radio-row__text">
+          <span class="cremona-radio-row__label">{{ option.label }}</span>
           {%- if _optDesc -%}
-            <span class="theme-radio-row__description">{{ _optDesc }}</span>
+            <span class="cremona-radio-row__description">{{ _optDesc }}</span>
           {%- endif -%}
         </span>
       </label>

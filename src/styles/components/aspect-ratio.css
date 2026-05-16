@@ -3,7 +3,7 @@
  *
  * Modern `aspect-ratio` property (Baseline 2022). Zero polyfill, zero JS.
  *
- * The ratio is consumed from `--theme-aspect-ratio` (set by the Twig
+ * The ratio is consumed from `--cremona-aspect-ratio` (set by the Twig
  * partial via inline style, or by the consumer directly). Falls back to
  * 16/9 if absent (the most common photographic ratio).
  *
@@ -14,9 +14,9 @@
  * targeting their own inner element.
  */
 
-.theme-aspect-ratio {
+.cremona-aspect-ratio {
   inline-size: 100%;
-  aspect-ratio: var(--theme-aspect-ratio, 16 / 9);
+  aspect-ratio: var(--cremona-aspect-ratio, 16 / 9);
   overflow: hidden;
   border-radius: 0;
   position: relative;
@@ -24,13 +24,13 @@
 
 /* Inner elements that have intrinsic dimensions (img, video, iframe,
    picture, canvas, svg) auto-fill the box. */
-.theme-aspect-ratio > img,
-.theme-aspect-ratio > video,
-.theme-aspect-ratio > iframe,
-.theme-aspect-ratio > picture,
-.theme-aspect-ratio > picture > img,
-.theme-aspect-ratio > canvas,
-.theme-aspect-ratio > svg {
+.cremona-aspect-ratio > img,
+.cremona-aspect-ratio > video,
+.cremona-aspect-ratio > iframe,
+.cremona-aspect-ratio > picture,
+.cremona-aspect-ratio > picture > img,
+.cremona-aspect-ratio > canvas,
+.cremona-aspect-ratio > svg {
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
@@ -39,34 +39,34 @@
 
 /* Generic block child (e.g. a div with a background-image) — make it
    fill the box too. */
-.theme-aspect-ratio > div,
-.theme-aspect-ratio > section,
-.theme-aspect-ratio > article {
+.cremona-aspect-ratio > div,
+.cremona-aspect-ratio > section,
+.cremona-aspect-ratio > article {
   inline-size: 100%;
   block-size: 100%;
 }
 
 /* object-fit modifiers. */
-.theme-aspect-ratio--fit-contain > img,
-.theme-aspect-ratio--fit-contain > video,
-.theme-aspect-ratio--fit-contain > picture > img {
+.cremona-aspect-ratio--fit-contain > img,
+.cremona-aspect-ratio--fit-contain > video,
+.cremona-aspect-ratio--fit-contain > picture > img {
   object-fit: contain;
 }
 
-.theme-aspect-ratio--fit-fill > img,
-.theme-aspect-ratio--fit-fill > video,
-.theme-aspect-ratio--fit-fill > picture > img {
+.cremona-aspect-ratio--fit-fill > img,
+.cremona-aspect-ratio--fit-fill > video,
+.cremona-aspect-ratio--fit-fill > picture > img {
   object-fit: fill;
 }
 
-.theme-aspect-ratio--fit-none > img,
-.theme-aspect-ratio--fit-none > video,
-.theme-aspect-ratio--fit-none > picture > img {
+.cremona-aspect-ratio--fit-none > img,
+.cremona-aspect-ratio--fit-none > video,
+.cremona-aspect-ratio--fit-none > picture > img {
   object-fit: none;
 }
 
-.theme-aspect-ratio--fit-scale-down > img,
-.theme-aspect-ratio--fit-scale-down > video,
-.theme-aspect-ratio--fit-scale-down > picture > img {
+.cremona-aspect-ratio--fit-scale-down > img,
+.cremona-aspect-ratio--fit-scale-down > video,
+.cremona-aspect-ratio--fit-scale-down > picture > img {
   object-fit: scale-down;
 }

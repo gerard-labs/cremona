@@ -127,7 +127,7 @@ export default class TagInputController extends Controller {
       maxTags: this.maxTagsValue || undefined,
       duplicates: this.duplicatesValue,
       delimiters: delimitersRegex,
-      classNames: { tags: 'theme-tag-input' },
+      classNames: { tags: 'cremona-tag-input' },
     });
     this.element.setAttribute('data-tag-input-state', 'ready');
 

@@ -58,13 +58,13 @@
 
 {%- set _labelId = htmlId ~ '-label' -%}
 
-{%- set _classes = ['theme-toggle-group'] -%}
+{%- set _classes = ['cremona-toggle-group'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-<div class="theme-toggle-group-wrap{% if wrapClass %} {{ wrapClass }}{% endif %}" data-orientation="{{ orientation }}">
+<div class="cremona-toggle-group-wrap{% if wrapClass %} {{ wrapClass }}{% endif %}" data-orientation="{{ orientation }}">
   <span
     id="{{ _labelId }}"
-    class="theme-toggle-group__label{% if hideLabel %} theme-sr-only{% endif %}"
+    class="cremona-toggle-group__label{% if hideLabel %} cremona-sr-only{% endif %}"
   >{{ label }}</span>
 
   <div
@@ -81,7 +81,7 @@
     {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
   >
     {%- for option in options -%}
-      {% include '@theme/components/toggle/toggle.html.twig' with {
+      {% include '@cremona/components/toggle/toggle.html.twig' with {
         label: option.label | default(null),
         iconLeading: option.iconLeading | default(null),
         pressed: option.pressed | default(false),
@@ -91,7 +91,7 @@
         disabled: disabled or (option.disabled | default(false)),
         name: name,
         value: option.value | default(null),
-        className: ('theme-toggle-group__item ' ~ (option.className | default(''))) | trim,
+        className: ('cremona-toggle-group__item ' ~ (option.className | default(''))) | trim,
         attrs: option.attrs | default({}),
       } %}
     {%- endfor -%}

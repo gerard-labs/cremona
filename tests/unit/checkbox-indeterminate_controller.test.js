@@ -28,7 +28,7 @@ describe('CheckboxIndeterminateController', () => {
       : '';
     document.body.innerHTML = `
       <input type="checkbox"
-        class="theme-checkbox__input"
+        class="cremona-checkbox__input"
         data-controller="checkbox-indeterminate"
         data-action="change->checkbox-indeterminate#clear"
         ${indeterminateAttr}>

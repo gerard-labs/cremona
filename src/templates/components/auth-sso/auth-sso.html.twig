@@ -28,10 +28,10 @@
 {%- set passwordLoginQuestion = passwordLoginQuestion | default('theme.auth.sso.password-login-question'|trans) -%}
 {%- set passwordLoginHref     = passwordLoginHref     | default(null) -%}
 {%- set passwordLoginLabel    = passwordLoginLabel    | default('theme.auth.sso.password-login-cta'|trans) -%}
-{%- set htmlId                = htmlId                | default('theme-auth-sso') -%}
+{%- set htmlId                = htmlId                | default('cremona-auth-sso') -%}
 {%- set className             = className             | default('') -%}
 
-{%- set _formClasses = ['theme-auth-sso'] -%}
+{%- set _formClasses = ['cremona-auth-sso'] -%}
 {%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _state = 'default' -%}
@@ -39,7 +39,7 @@
 {%- elseif globalError or emailError -%}{%- set _state = 'error' -%}
 {%- endif -%}
 
-{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+{% embed '@cremona/components/_auth-shell/_auth-shell.html.twig' with {
   title: title,
   subtitle: subtitle,
   htmlId: htmlId,
@@ -55,7 +55,7 @@
       {%- if loading %} data-loading="true"{% endif -%}
     >
       {% if globalError %}
-        {% include '@theme/components/alert/alert.html.twig' with {
+        {% include '@cremona/components/alert/alert.html.twig' with {
           variant: 'danger',
           tone: 'soft',
           body: globalError,
@@ -68,14 +68,14 @@
         <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
       {% endif %}
 
-      {% embed '@theme/components/field/field.html.twig' with {
+      {% embed '@cremona/components/field/field.html.twig' with {
         label: emailLabel,
         htmlId: htmlId ~ '-email',
         required: true,
         error: emailError,
       } %}
         {% block control %}
-          {% include '@theme/components/input/input.html.twig' with {
+          {% include '@cremona/components/input/input.html.twig' with {
             htmlId: fieldHtmlId,
             describedBy: fieldDescribedBy,
             invalid: fieldInvalid,
@@ -92,7 +92,7 @@
         {% endblock %}
       {% endembed %}
 
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: submitLabel,
         variant: 'primary',
         size: 'md',
@@ -105,8 +105,8 @@
 
   {% if passwordLoginHref %}
     {% block footer %}
-      <span class="theme-auth-sso__footer-question">{{ passwordLoginQuestion }}</span>
-      {% include '@theme/components/button/button.html.twig' with {
+      <span class="cremona-auth-sso__footer-question">{{ passwordLoginQuestion }}</span>
+      {% include '@cremona/components/button/button.html.twig' with {
         label: passwordLoginLabel,
         variant: 'link',
         size: 'md',

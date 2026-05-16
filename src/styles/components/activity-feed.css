@@ -4,32 +4,32 @@
  * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
  */
 
-.theme-activity-feed {
+.cremona-activity-feed {
   max-inline-size: 40rem;
 }
 
-.theme-activity-feed__header {
+.cremona-activity-feed__header {
   margin-block-end: var(--spacing-4);
 }
 
-.theme-activity-feed__empty {
+.cremona-activity-feed__empty {
   padding: var(--spacing-6);
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
 }
 
-.theme-activity-feed__buckets {
+.cremona-activity-feed__buckets {
   display: grid;
   gap: var(--spacing-6);
 }
 
-.theme-activity-feed__bucket-heading {
+.cremona-activity-feed__bucket-heading {
   color: var(--color-text-tertiary);
   margin-block-end: var(--spacing-2);
 }
 
-.theme-activity-feed__entries {
+.cremona-activity-feed__entries {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -37,7 +37,7 @@
   gap: var(--spacing-3);
 }
 
-.theme-activity-feed__entry {
+.cremona-activity-feed__entry {
   display: flex;
   gap: var(--spacing-3);
   padding: var(--spacing-3);
@@ -47,39 +47,39 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-activity-feed__entry:hover {
+.cremona-activity-feed__entry:hover {
   background-color: var(--color-surface-2);
 }
 
-.theme-activity-feed__entry-body {
+.cremona-activity-feed__entry-body {
   flex-grow: 1;
   display: grid;
   gap: var(--spacing-1);
   min-inline-size: 0;
 }
 
-.theme-activity-feed__entry-line {
+.cremona-activity-feed__entry-line {
   margin: 0;
   color: var(--color-text-primary);
   font: var(--typography-body);
 }
 
-.theme-activity-feed__entry-line a {
+.cremona-activity-feed__entry-line a {
   color: var(--color-text-link);
   text-decoration: none;
 }
 
-.theme-activity-feed__entry-line a:hover {
+.cremona-activity-feed__entry-line a:hover {
   text-decoration: underline;
 }
 
-.theme-activity-feed__entry-text {
+.cremona-activity-feed__entry-text {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   margin: 0;
 }
 
-.theme-activity-feed__entry-time {
+.cremona-activity-feed__entry-time {
   color: var(--color-text-tertiary);
   font-size: var(--font-size-xs);
   font-variant-numeric: tabular-nums;

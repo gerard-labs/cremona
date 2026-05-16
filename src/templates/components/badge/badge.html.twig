@@ -23,8 +23,8 @@
 {%- set className   = className   | default('') -%}
 {%- set attrs       = attrs       | default({}) -%}
 
-{%- set _classes = ['theme-badge'] -%}
-{%- if dot -%}{%- set _classes = _classes | merge(['theme-badge--dot']) -%}{%- endif -%}
+{%- set _classes = ['cremona-badge'] -%}
+{%- if dot -%}{%- set _classes = _classes | merge(['cremona-badge--dot']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- if count is not null -%}
@@ -52,7 +52,7 @@
   {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
 >
   {%- if leadingIcon -%}
-    {% include '@theme/components/icon/icon.html.twig' with { name: leadingIcon, decorative: true, size: 'xs' } %}
+    {% include '@cremona/components/icon/icon.html.twig' with { name: leadingIcon, decorative: true, size: 'xs' } %}
   {%- endif -%}
   <span>{{ _displayLabel }}</span>
 </span>

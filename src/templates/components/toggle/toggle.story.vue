@@ -47,13 +47,13 @@ function renderToggle(props = {}) {
     disabled, ariaLabel, name, value, className,
   } = props;
 
-  const classes = ['theme-toggle'];
+  const classes = ['cremona-toggle'];
   if (className) classes.push(className);
 
   const iconHtml = iconLeading
-    ? `<span class="theme-icon theme-toggle__icon" data-icon="${iconLeading}" data-size="${size === 'sm' ? 'sm' : 'md'}" aria-hidden="true" role="presentation">${ICONS[iconLeading] || ''}</span>`
+    ? `<span class="cremona-icon cremona-toggle__icon" data-icon="${iconLeading}" data-size="${size === 'sm' ? 'sm' : 'md'}" aria-hidden="true" role="presentation">${ICONS[iconLeading] || ''}</span>`
     : '';
-  const labelHtml = label ? `<span class="theme-toggle__label">${label}</span>` : '';
+  const labelHtml = label ? `<span class="cremona-toggle__label">${label}</span>` : '';
 
   const attrs = [
     `type="button"`,
@@ -104,7 +104,7 @@ const bodyHtml = `
     </header>
 
     <section class="toggle-story__section" aria-labelledby="toggle-section-default">
-      <h2 id="toggle-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.default')}</h2>
+      <h2 id="toggle-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.default')}</h2>
       <div class="toggle-story__stack">
         ${row(renderToggle({ label: SAMPLES.preview }),                  'unpressed')}
         ${row(renderToggle({ label: SAMPLES.preview, pressed: true }),   'pressed')}
@@ -112,8 +112,8 @@ const bodyHtml = `
     </section>
 
     <section class="toggle-story__section" aria-labelledby="toggle-section-variants">
-      <h2 id="toggle-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.variants')}</h2>
-      <p class="toggle-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle.story.explainer.variants')}</p>
+      <h2 id="toggle-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.variants')}</h2>
+      <p class="toggle-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle.story.explainer.variants')}</p>
       <div class="toggle-story__stack">
         ${row(renderToggle({ label: SAMPLES.notify, variant: 'default', pressed: true }), 'default pressed')}
         ${row(renderToggle({ label: SAMPLES.notify, variant: 'accent',  pressed: true }), 'accent pressed')}
@@ -121,7 +121,7 @@ const bodyHtml = `
     </section>
 
     <section class="toggle-story__section" aria-labelledby="toggle-section-states">
-      <h2 id="toggle-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.states')}</h2>
+      <h2 id="toggle-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.states')}</h2>
       <div class="toggle-story__stack">
         ${row(renderToggle({ label: SAMPLES.favorite }),                                          'unpressed')}
         ${row(renderToggle({ label: SAMPLES.favorite, pressed: true }),                           'pressed')}
@@ -131,7 +131,7 @@ const bodyHtml = `
     </section>
 
     <section class="toggle-story__section" aria-labelledby="toggle-section-sizes">
-      <h2 id="toggle-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.sizes')}</h2>
+      <h2 id="toggle-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.sizes')}</h2>
       <div class="toggle-story__stack">
         ${row(renderToggle({ label: SAMPLES.preview, size: 'sm' }),                  'sm (28 px)')}
         ${row(renderToggle({ label: SAMPLES.preview, size: 'md', pressed: true }),   'md (36 px) pressed')}
@@ -140,8 +140,8 @@ const bodyHtml = `
     </section>
 
     <section class="toggle-story__section" aria-labelledby="toggle-section-icon-only">
-      <h2 id="toggle-section-icon-only" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.icon-only')}</h2>
-      <p class="toggle-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle.story.explainer.icon-only')}</p>
+      <h2 id="toggle-section-icon-only" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.icon-only')}</h2>
+      <p class="toggle-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle.story.explainer.icon-only')}</p>
       <div class="toggle-story__stack">
         ${row(renderToggle({ iconLeading: 'menu',  ariaLabel: ARIA.iconBold }),                        'menu (default)')}
         ${row(renderToggle({ iconLeading: 'star',  ariaLabel: ARIA.iconStar, pressed: true }),          'star pressed (default)')}
@@ -150,7 +150,7 @@ const bodyHtml = `
     </section>
 
     <section class="toggle-story__section" aria-labelledby="toggle-section-with-icon">
-      <h2 id="toggle-section-with-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.with-icon')}</h2>
+      <h2 id="toggle-section-with-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle.story.section.with-icon')}</h2>
       <div class="toggle-story__stack">
         ${row(renderToggle({ iconLeading: 'eye',      label: SAMPLES.preview, pressed: true }),     'preview pressed')}
         ${row(renderToggle({ iconLeading: 'star',     label: SAMPLES.favorite }),                    'favorite (off)')}

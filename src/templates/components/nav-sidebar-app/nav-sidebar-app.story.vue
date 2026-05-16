@@ -10,19 +10,19 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderIcon(name) {
-  return `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
+  return `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
 }
 
 function renderAvatar({ url, alt = '' }) {
-  return `<img src="${url}" alt="${alt}" class="theme-avatar" data-size="md">`;
+  return `<img src="${url}" alt="${alt}" class="cremona-avatar" data-size="md">`;
 }
 
 function renderItem({ href, label, icon, current = false }) {
   return `
     <li>
-      <a href="${href}" class="theme-nav-sidebar-app__item"${current ? ' aria-current="page"' : ''}>
+      <a href="${href}" class="cremona-nav-sidebar-app__item"${current ? ' aria-current="page"' : ''}>
         ${icon ? renderIcon(icon) : ''}
-        <span class="theme-nav-sidebar-app__item-label">${label}</span>
+        <span class="cremona-nav-sidebar-app__item-label">${label}</span>
       </a>
     </li>
   `;
@@ -30,33 +30,33 @@ function renderItem({ href, label, icon, current = false }) {
 
 function renderSection({ heading, items }) {
   return `
-    <section class="theme-nav-sidebar-app__section">
-      <h3 class="theme-typography theme-nav-sidebar-app__section-heading" data-variant="overline">${heading}</h3>
-      <ul class="theme-nav-sidebar-app__section-items">${items.map(renderItem).join('')}</ul>
+    <section class="cremona-nav-sidebar-app__section">
+      <h3 class="cremona-typography cremona-nav-sidebar-app__section-heading" data-variant="overline">${heading}</h3>
+      <ul class="cremona-nav-sidebar-app__section-items">${items.map(renderItem).join('')}</ul>
     </section>
   `;
 }
 
 function renderSidebarApp({ id = 'story-sidebar-app', collapsed = false, sections, workspace, user }) {
-  const classes = ['theme-nav-sidebar-app', collapsed ? 'theme-nav-sidebar-app--collapsed' : ''].filter(Boolean).join(' ');
+  const classes = ['cremona-nav-sidebar-app', collapsed ? 'cremona-nav-sidebar-app--collapsed' : ''].filter(Boolean).join(' ');
   return `
     <aside class="${classes}" id="${id}" aria-label="${t('theme.nav.sidebar-app.aria.label')}"${collapsed ? ' data-collapsed="true"' : ''}>
-      <header class="theme-nav-sidebar-app__workspace">
-        <a href="#switch" class="theme-nav-sidebar-app__workspace-link" aria-haspopup="true" aria-expanded="false">
+      <header class="cremona-nav-sidebar-app__workspace">
+        <a href="#switch" class="cremona-nav-sidebar-app__workspace-link" aria-haspopup="true" aria-expanded="false">
           ${renderAvatar({ url: workspace.avatarUrl })}
-          <span class="theme-nav-sidebar-app__workspace-name">${workspace.name}</span>
+          <span class="cremona-nav-sidebar-app__workspace-name">${workspace.name}</span>
           ${renderIcon('chevron-down')}
         </a>
       </header>
-      <nav class="theme-nav-sidebar-app__sections" aria-label="${t('theme.nav.sidebar-app.aria.label')}">
+      <nav class="cremona-nav-sidebar-app__sections" aria-label="${t('theme.nav.sidebar-app.aria.label')}">
         ${sections.map(renderSection).join('')}
       </nav>
-      <footer class="theme-nav-sidebar-app__user">
-        <button type="button" class="theme-nav-sidebar-app__user-trigger" aria-haspopup="true" aria-expanded="false" aria-label="${t('theme.nav.sidebar-app.user.menu')}">
+      <footer class="cremona-nav-sidebar-app__user">
+        <button type="button" class="cremona-nav-sidebar-app__user-trigger" aria-haspopup="true" aria-expanded="false" aria-label="${t('theme.nav.sidebar-app.user.menu')}">
           ${renderAvatar({ url: user.avatarUrl })}
-          <div class="theme-nav-sidebar-app__user-meta">
-            <strong class="theme-nav-sidebar-app__user-name">${user.name}</strong>
-            <span class="theme-nav-sidebar-app__user-role">${user.role}</span>
+          <div class="cremona-nav-sidebar-app__user-meta">
+            <strong class="cremona-nav-sidebar-app__user-name">${user.name}</strong>
+            <span class="cremona-nav-sidebar-app__user-role">${user.role}</span>
           </div>
           ${renderIcon('more-horizontal')}
         </button>
@@ -87,14 +87,14 @@ const bodyHtml = `
     </header>
 
     <section class="nav-sidebar-app-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.sidebar-app.story.section.default')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.sidebar-app.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.sidebar-app.story.section.default')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.sidebar-app.story.explainer.default')}</p>
       <div class="nav-sidebar-app-story__frame">${renderSidebarApp({ id: 'story-default', sections, workspace, user })}</div>
     </section>
 
     <section class="nav-sidebar-app-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.sidebar-app.story.section.collapsed')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.sidebar-app.story.explainer.collapsed')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.sidebar-app.story.section.collapsed')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.sidebar-app.story.explainer.collapsed')}</p>
       <div class="nav-sidebar-app-story__frame">${renderSidebarApp({ id: 'story-collapsed', collapsed: true, sections, workspace, user })}</div>
     </section>
   </section>
@@ -116,6 +116,6 @@ const bodyHtml = `
 .nav-sidebar-app-story__header p { font: var(--typography-body); color: var(--color-text-secondary); max-inline-size: 70ch; }
 .nav-sidebar-app-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .nav-sidebar-app-story__frame { display: flex; gap: var(--spacing-4); border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); overflow: hidden; min-block-size: 400px; }
-.nav-sidebar-app-story__frame .theme-nav-sidebar-app { block-size: 400px; }
+.nav-sidebar-app-story__frame .cremona-nav-sidebar-app { block-size: 400px; }
 .nav-sidebar-app-dark-wrap { background: var(--color-bg-base); padding: var(--spacing-4); }
 </style>

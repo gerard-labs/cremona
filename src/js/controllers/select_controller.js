@@ -177,7 +177,7 @@ export default class SelectController extends Controller {
     const opt = opts[idx];
     const value = opt.dataset.value || '';
     const label =
-      opt.querySelector('.theme-item__label')?.textContent ||
+      opt.querySelector('.cremona-item__label')?.textContent ||
       opt.textContent.trim() ||
       '';
 

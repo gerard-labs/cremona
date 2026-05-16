@@ -1,5 +1,5 @@
 /**
- * theme.js — Stimulus boot + controller register.
+ * cremona.js — Stimulus boot + controller register.
  *
  * Consumers use either:
  *  - Auto: `import { start } from '@gerard/cremona'` → kit boots its own

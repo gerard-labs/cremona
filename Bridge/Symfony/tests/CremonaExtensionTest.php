@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Gerard\Theme\Bridge\Symfony\Tests;
+namespace Gerard\Cremona\Bridge\Symfony\Tests;
 
-use Gerard\Theme\Bridge\Symfony\DependencyInjection\ThemeExtension;
+use Gerard\Cremona\Bridge\Symfony\DependencyInjection\CremonaExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Unit tests for the bundle's DI extension — the bridge's only real logic.
  *
- * `prepend()` is the contract surface: it wires the `@theme` Twig namespace
+ * `prepend()` is the contract surface: it wires the `@cremona` Twig namespace
  * and the translation-catalog directory into the consumer's container.
  * `load()` loads the (currently empty) service definitions and, optionally,
  * flags the presence of symfony/ux-stimulus-bundle.
  */
-final class ThemeExtensionTest extends TestCase
+final class CremonaExtensionTest extends TestCase
 {
     public function test_alias_is_theme(): void
     {
-        self::assertSame('theme', (new ThemeExtension())->getAlias());
+        self::assertSame('cremona', (new CremonaExtension())->getAlias());
     }
 
     public function test_load_executes_without_error(): void
     {
         $container = new ContainerBuilder();
-        (new ThemeExtension())->load([], $container);
+        (new CremonaExtension())->load([], $container);
 
         // services.yaml currently declares no services — loading must still
         // succeed, and must NOT set the optional UX-Stimulus parameter while
@@ -37,15 +37,15 @@ final class ThemeExtensionTest extends TestCase
     public function test_prepend_registers_the_theme_twig_namespace(): void
     {
         $container = new ContainerBuilder();
-        (new ThemeExtension())->prepend($container);
+        (new CremonaExtension())->prepend($container);
 
         $twigConfigs = $container->getExtensionConfig('twig');
         self::assertNotEmpty($twigConfigs, 'prepend() should contribute twig config');
 
         $paths = $twigConfigs[0]['paths'] ?? [];
-        $themePath = array_search('theme', $paths, true);
+        $themePath = array_search('cremona', $paths, true);
 
-        self::assertNotFalse($themePath, 'the @theme namespace should be registered');
+        self::assertNotFalse($themePath, 'the @cremona namespace should be registered');
         self::assertStringEndsWith(
             \DIRECTORY_SEPARATOR.'src'.\DIRECTORY_SEPARATOR.'templates',
             (string) $themePath,
@@ -56,12 +56,12 @@ final class ThemeExtensionTest extends TestCase
     public function test_theme_namespace_points_at_the_real_component_templates(): void
     {
         $container = new ContainerBuilder();
-        (new ThemeExtension())->prepend($container);
+        (new CremonaExtension())->prepend($container);
 
         $paths = $container->getExtensionConfig('twig')[0]['paths'] ?? [];
-        $themePath = (string) array_search('theme', $paths, true);
+        $themePath = (string) array_search('cremona', $paths, true);
 
-        // A consumer writing `{% include '@theme/components/button/button.html.twig' %}`
+        // A consumer writing `{% include '@cremona/components/button/button.html.twig' %}`
         // must resolve — so the registered directory has to hold the components.
         self::assertFileExists($themePath.'/components/button/button.html.twig');
     }
@@ -69,7 +69,7 @@ final class ThemeExtensionTest extends TestCase
     public function test_prepend_registers_the_translation_catalog_path(): void
     {
         $container = new ContainerBuilder();
-        (new ThemeExtension())->prepend($container);
+        (new CremonaExtension())->prepend($container);
 
         $frameworkConfigs = $container->getExtensionConfig('framework');
         self::assertNotEmpty($frameworkConfigs, 'prepend() should contribute framework config');
@@ -88,7 +88,7 @@ final class ThemeExtensionTest extends TestCase
     public function test_translation_catalogs_are_discoverable(): void
     {
         $container = new ContainerBuilder();
-        (new ThemeExtension())->prepend($container);
+        (new CremonaExtension())->prepend($container);
 
         $i18nPath = $container->getExtensionConfig('framework')[0]['translator']['paths'][0];
 

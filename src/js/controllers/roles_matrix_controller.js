@@ -132,13 +132,13 @@ export default class RolesMatrixController extends Controller {
     const options = roles
       .map((r) => `<option value="${this._escape(r.value)}" ${r.value === currentRole ? 'selected' : ''}>${this._escape(r.label)}</option>`)
       .join('');
-    return `<select class="theme-roles-matrix__cell-select" autofocus>${options}</select>`;
+    return `<select class="cremona-roles-matrix__cell-select" autofocus>${options}</select>`;
   }
 
   _buildBadgeMarkup(role) {
     const roles = Array.isArray(this.rolesValue) ? this.rolesValue : [];
     const found = roles.find((r) => r.value === role) || { value: role, label: role, badgeVariant: 'muted' };
-    return `<span class="theme-badge" data-variant="${this._escape(found.badgeVariant || 'muted')}">${this._escape(found.label || role)}</span>`;
+    return `<span class="cremona-badge" data-variant="${this._escape(found.badgeVariant || 'muted')}">${this._escape(found.label || role)}</span>`;
   }
 
   _escape(value) {

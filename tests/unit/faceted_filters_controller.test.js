@@ -14,7 +14,7 @@ function mount(html) {
 function template({ presetChecked = [], priceValue = 500 } = {}) {
   const isChecked = (key, val) => presetChecked.some((p) => p.key === key && p.value === val);
   return `
-    <aside class="theme-search-faceted-filters" data-controller="faceted-filters">
+    <aside class="cremona-search-faceted-filters" data-controller="faceted-filters">
       <fieldset data-group-key="categories">
         <legend>Catégories</legend>
         <input type="checkbox" name="categories" value="electronics" ${isChecked('categories', 'electronics') ? 'checked' : ''}>
@@ -69,7 +69,7 @@ describe('faceted-filters controller', () => {
     clothing.checked = true;
     fireChange(clothing);
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'faceted-filters');
     const state = ctrl.getState();
     expect(state.categories).toEqual(['electronics', 'clothing']);
@@ -78,7 +78,7 @@ describe('faceted-filters controller', () => {
   it('omits unchecked checkboxes from state', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'faceted-filters');
     const state = ctrl.getState();
     expect(state.categories).toBeUndefined();
@@ -92,7 +92,7 @@ describe('faceted-filters controller', () => {
     onSale.checked = true;
     fireChange(onSale);
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'faceted-filters');
     const state = ctrl.getState();
     expect(state.onSale).toBe(true);
@@ -101,7 +101,7 @@ describe('faceted-filters controller', () => {
   it('range input → numeric value', async () => {
     app = mount(template({ priceValue: 250 }));
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'faceted-filters');
     const state = ctrl.getState();
     expect(state.priceMax).toBe(250);
@@ -110,7 +110,7 @@ describe('faceted-filters controller', () => {
   it('dispatches faceted-filters:change on checkbox toggle with full state object', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const events = [];
     wrap.addEventListener('faceted-filters:change', (e) => events.push(e.detail));
     const apple = document.querySelector('input[name="brand"][value="apple"]');
@@ -125,7 +125,7 @@ describe('faceted-filters controller', () => {
   it('dispatches faceted-filters:change on range input slide', async () => {
     app = mount(template({ priceValue: 500 }));
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const events = [];
     wrap.addEventListener('faceted-filters:change', (e) => events.push(e.detail));
     const range = document.querySelector('input[name="priceMax"]');
@@ -146,7 +146,7 @@ describe('faceted-filters controller', () => {
       priceValue: 250,
     }));
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     const events = [];
     wrap.addEventListener('faceted-filters:cleared', (e) => events.push(e.detail));
     const clearButton = wrap.querySelector('button');
@@ -164,7 +164,7 @@ describe('faceted-filters controller', () => {
   it('cleans up listener on disconnect (no throw on subsequent input)', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-search-faceted-filters');
+    const wrap = document.querySelector('.cremona-search-faceted-filters');
     wrap.remove();
     await tick();
     // Disconnect should have removed the listener — a new wrap-input fire should not throw.

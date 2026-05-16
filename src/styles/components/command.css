@@ -7,32 +7,32 @@
  *    on the SAME wrap (mirror DatePicker S2.7 pattern verbatim).
  *
  * Anatomy :
- *   <div class="theme-command" data-controller="dialog combobox command">
- *     <dialog class="theme-command__dialog">    \3c !-- native <dialog> -->
- *       <h2 class="theme-command__sr-only">...</h2>
- *       <div class="theme-command__input-wrap">
- *         <span class="theme-command__search-icon">
- *         <input class="theme-command__input theme-input">
- *         <kbd class="theme-command__esc-hint theme-kbd">Esc</kbd>
+ *   <div class="cremona-command" data-controller="dialog combobox command">
+ *     <dialog class="cremona-command__dialog">    \3c !-- native <dialog> -->
+ *       <h2 class="cremona-command__sr-only">...</h2>
+ *       <div class="cremona-command__input-wrap">
+ *         <span class="cremona-command__search-icon">
+ *         <input class="cremona-command__input cremona-input">
+ *         <kbd class="cremona-command__esc-hint cremona-kbd">Esc</kbd>
  *       </div>
- *       <ul class="theme-command__listbox" role="listbox">
- *         <li class="theme-command__group-header" role="presentation">
- *         <li class="theme-command__option" role="option">
+ *       <ul class="cremona-command__listbox" role="listbox">
+ *         <li class="cremona-command__group-header" role="presentation">
+ *         <li class="cremona-command__option" role="option">
  *       </ul>
- *       <div class="theme-command__empty">
- *       <footer class="theme-command__footer">
+ *       <div class="cremona-command__empty">
+ *       <footer class="cremona-command__footer">
  *
  * Most styling is inherited from Dialog + Combobox composed CSS. This file
  * adds only the Command-specific surface (search icon, group headers, Kbd
  * footer hints).
  */
 
-.theme-command {
+.cremona-command {
   /* The wrap is just a marker — the actual surface is the native <dialog>. */
 }
 
-.theme-command__dialog {
-  /* The dialog inherits theme-dialog.css base styles. We tighten layout :
+.cremona-command__dialog {
+  /* The dialog inherits cremona-dialog.css base styles. We tighten layout :
      fixed width, top-anchored, larger padding for the input area. */
   inline-size: min(640px, calc(100% - var(--spacing-8)));
   max-inline-size: 640px;
@@ -46,7 +46,7 @@
   margin-block: 10vh auto;
 }
 
-.theme-command__sr-only {
+.cremona-command__sr-only {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -59,7 +59,7 @@
 }
 
 /* Input row : search icon (inline-start) + input + Esc hint (inline-end). */
-.theme-command__input-wrap {
+.cremona-command__input-wrap {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -68,7 +68,7 @@
   border-block-end: 1px solid var(--color-border-subtle);
 }
 
-.theme-command__search-icon {
+.cremona-command__search-icon {
   flex-shrink: 0;
   inline-size: 20px;
   block-size: 20px;
@@ -79,7 +79,7 @@
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>');
 }
 
-.theme-command__input {
+.cremona-command__input {
   flex-grow: 1;
   inline-size: 100%;
   background: transparent;
@@ -90,17 +90,17 @@
   color: var(--color-text-primary);
 }
 
-.theme-command__input::placeholder {
+.cremona-command__input::placeholder {
   color: var(--color-text-tertiary);
 }
 
-.theme-command__esc-hint {
+.cremona-command__esc-hint {
   flex-shrink: 0;
   /* Decorative — the user can press Esc anywhere. */
 }
 
 /* Listbox : ul with options + group headers. Scrollable. */
-.theme-command__listbox {
+.cremona-command__listbox {
   list-style: none;
   margin: 0;
   padding-block: var(--spacing-2);
@@ -109,7 +109,7 @@
   overflow-y: auto;
 }
 
-.theme-command__group-header {
+.cremona-command__group-header {
   padding-block: var(--spacing-2);
   padding-inline: var(--spacing-4);
   font: var(--typography-overline);
@@ -119,7 +119,7 @@
   pointer-events: none;
 }
 
-.theme-command__option {
+.cremona-command__option {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
@@ -131,38 +131,38 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-command__option:hover,
-.theme-command__option[data-active="true"] {
+.cremona-command__option:hover,
+.cremona-command__option[data-active="true"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-command__option[aria-selected="true"] {
+.cremona-command__option[aria-selected="true"] {
   /* Selected past-tense (after Enter or click) — typically the dialog closes
      immediately, but if it doesn't (consumer-extended), the selection shows. */
   background-color: var(--color-primary-soft);
   color: var(--color-primary-soft-foreground);
 }
 
-.theme-command__option-icon {
+.cremona-command__option-icon {
   flex-shrink: 0;
   inline-size: 18px;
   block-size: 18px;
   color: var(--color-text-tertiary);
 }
 
-.theme-command__option .theme-item__label {
+.cremona-command__option .cremona-item__label {
   flex-grow: 1;
 }
 
-.theme-command__option-kbd {
+.cremona-command__option-kbd {
   flex-shrink: 0;
   /* Kbd primitive auto-styles ; just align to inline-end. */
   margin-inline-start: auto;
 }
 
 /* Empty state — visible when filter produces 0 results. */
-.theme-command__empty {
+.cremona-command__empty {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -173,22 +173,22 @@
   text-align: center;
 }
 
-.theme-command__empty-title {
+.cremona-command__empty-title {
   font: var(--typography-h3);
   color: var(--color-text-primary);
 }
 
-.theme-command__empty-query,
-.theme-command__empty-body {
+.cremona-command__empty-query,
+.cremona-command__empty-body {
   font: var(--typography-body);
 }
 
-.theme-command__empty-query strong {
+.cremona-command__empty-query strong {
   color: var(--color-text-primary);
 }
 
 /* Footer : Kbd hint cluster (Navigate / Execute / Dismiss). */
-.theme-command__footer {
+.cremona-command__footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -201,31 +201,31 @@
   color: var(--color-text-tertiary);
 }
 
-.theme-command__footer-hint {
+.cremona-command__footer-hint {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
 }
 
-.theme-command__footer-label {
+.cremona-command__footer-label {
   /* Sits next to the Kbd primitive(s). */
 }
 
 /* Reduced motion : disable transitions. */
 @media (prefers-reduced-motion: reduce) {
-  .theme-command__option {
+  .cremona-command__option {
     transition: none;
   }
 }
 
 /* Mobile : the dialog fills the viewport width-1, top-anchored. */
 @media (width <= 640px) {
-  .theme-command__dialog {
+  .cremona-command__dialog {
     inline-size: calc(100% - var(--spacing-4));
     margin-block-start: var(--spacing-4);
   }
 
-  .theme-command__listbox {
+  .cremona-command__listbox {
     max-block-size: 70vh;
   }
 }

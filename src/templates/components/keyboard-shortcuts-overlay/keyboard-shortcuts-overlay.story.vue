@@ -10,17 +10,17 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderKbdChord(keys, separator = '+') {
-  const cells = keys.map((k) => `<kbd class="theme-kbd" data-size="sm">${k}</kbd>`).join(`<span class="theme-kbd-sep" aria-hidden="true">${separator}</span>`);
-  return `<kbd class="theme-kbd-group" data-size="sm">${cells}</kbd>`;
+  const cells = keys.map((k) => `<kbd class="cremona-kbd" data-size="sm">${k}</kbd>`).join(`<span class="cremona-kbd-sep" aria-hidden="true">${separator}</span>`);
+  return `<kbd class="cremona-kbd-group" data-size="sm">${cells}</kbd>`;
 }
 
 function renderRow(shortcut) {
   return `
-    <div class="theme-keyboard-shortcuts-overlay__row">
-      <dt class="theme-keyboard-shortcuts-overlay__description">
-        <span class="theme-typography" data-variant="body">${shortcut.description}</span>
+    <div class="cremona-keyboard-shortcuts-overlay__row">
+      <dt class="cremona-keyboard-shortcuts-overlay__description">
+        <span class="cremona-typography" data-variant="body">${shortcut.description}</span>
       </dt>
-      <dd class="theme-keyboard-shortcuts-overlay__chord">
+      <dd class="cremona-keyboard-shortcuts-overlay__chord">
         ${renderKbdChord(shortcut.keys, shortcut.separator || '+')}
       </dd>
     </div>`;
@@ -29,12 +29,12 @@ function renderRow(shortcut) {
 function renderSection(section, index) {
   const rows = section.shortcuts.map(renderRow).join('');
   return `
-    <section class="theme-keyboard-shortcuts-overlay__section"
+    <section class="cremona-keyboard-shortcuts-overlay__section"
              aria-labelledby="story-kbd-section-${index}-title">
       <h3 id="story-kbd-section-${index}-title"
-          class="theme-typography theme-keyboard-shortcuts-overlay__section-title"
+          class="cremona-typography cremona-keyboard-shortcuts-overlay__section-title"
           data-variant="overline" data-color="tertiary">${section.title}</h3>
-      <dl class="theme-keyboard-shortcuts-overlay__list">${rows}</dl>
+      <dl class="cremona-keyboard-shortcuts-overlay__list">${rows}</dl>
     </section>`;
 }
 
@@ -68,25 +68,25 @@ function renderOverlay({ id }) {
   const sectionsHtml = sections.map((s, i) => renderSection(s, i)).join('');
   // For visual baseline, render the Dialog "open" inline (position relative instead of fixed top-layer).
   return `
-    <div class="theme-dialog-wrap" data-dialog-open-value="true">
-      <dialog class="theme-dialog theme-keyboard-shortcuts-overlay"
+    <div class="cremona-dialog-wrap" data-dialog-open-value="true">
+      <dialog class="cremona-dialog cremona-keyboard-shortcuts-overlay"
               data-size="lg"
               open
               aria-labelledby="${id}-title"
               style="position: static; display: block; inline-size: auto; max-inline-size: 720px;">
-        <header class="theme-dialog__header">
-          <h2 id="${id}-title" class="theme-dialog__title">${t('theme.keyboard-shortcuts-overlay.title')}</h2>
-          <button class="theme-button theme-dialog__close"
+        <header class="cremona-dialog__header">
+          <h2 id="${id}-title" class="cremona-dialog__title">${t('theme.keyboard-shortcuts-overlay.title')}</h2>
+          <button class="cremona-button cremona-dialog__close"
                   data-variant="ghost" data-size="sm"
                   aria-label="${t('theme.dialog.aria.close')}">
-            <svg class="theme-icon" data-size="sm" aria-hidden="true"><use href="#icon-x"/></svg>
+            <svg class="cremona-icon" data-size="sm" aria-hidden="true"><use href="#icon-x"/></svg>
           </button>
         </header>
-        <div class="theme-dialog__body">
-          <div class="theme-keyboard-shortcuts-overlay__sections">${sectionsHtml}</div>
+        <div class="cremona-dialog__body">
+          <div class="cremona-keyboard-shortcuts-overlay__sections">${sectionsHtml}</div>
         </div>
-        <footer class="theme-dialog__footer">
-          <p class="theme-keyboard-shortcuts-overlay__footer-hint theme-typography" data-variant="caption" data-color="tertiary">${t('theme.keyboard-shortcuts-overlay.footer.dismiss-hint')}</p>
+        <footer class="cremona-dialog__footer">
+          <p class="cremona-keyboard-shortcuts-overlay__footer-hint cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.keyboard-shortcuts-overlay.footer.dismiss-hint')}</p>
         </footer>
       </dialog>
     </div>`;
@@ -100,8 +100,8 @@ const bodyHtml = `
     </header>
 
     <section class="kbd-overlay-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.keyboard-shortcuts-overlay.story.section.full')}</h2>
-      <p class="kbd-overlay-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.keyboard-shortcuts-overlay.story.explainer.full')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.keyboard-shortcuts-overlay.story.section.full')}</h2>
+      <p class="kbd-overlay-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.keyboard-shortcuts-overlay.story.explainer.full')}</p>
       <div class="kbd-overlay-story__frame">${renderOverlay({ id: 'story-overlay-full' })}</div>
     </section>
   </section>

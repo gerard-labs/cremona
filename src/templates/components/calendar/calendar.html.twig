@@ -34,7 +34,7 @@
   source of truth).
 
   Parameters:
-    htmlId             (string, optional)  auto-generated theme-calendar-<rand>
+    htmlId             (string, optional)  auto-generated cremona-calendar-<rand>
     name               (string, optional)  hidden form input name (form integration)
     value              (string, optional)  ISO 8601 yyyy-mm-dd of pre-selected date
     min                (string, optional)  ISO 8601 lower bound
@@ -51,7 +51,7 @@
     className          (string, optional)  extra utility classes on the wrap
 -#}
 
-{%- set htmlId            = htmlId            | default('theme-calendar-' ~ random()) -%}
+{%- set htmlId            = htmlId            | default('cremona-calendar-' ~ random()) -%}
 {%- set name              = name              | default(null) -%}
 {%- set value             = value             | default(null) -%}
 {%- set min               = min               | default(null) -%}
@@ -65,7 +65,7 @@
 {%- set calendarAria      = calendarAria      | default('theme.calendar.aria.calendar'|trans) -%}
 {%- set className         = className         | default('') -%}
 
-{%- set _classes = ['theme-calendar'] -%}
+{%- set _classes = ['cremona-calendar'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _gridId       = htmlId ~ '-grid' -%}
@@ -84,13 +84,13 @@
   data-calendar-locale-value="{{ locale }}"
   {%- if disabledWeekdays %} data-calendar-disabled-weekdays-value="{{ disabledWeekdays }}"{% endif -%}
 >
-  <header class="theme-calendar__header">
-    {% include '@theme/components/button/button.html.twig' with {
+  <header class="cremona-calendar__header">
+    {% include '@cremona/components/button/button.html.twig' with {
       variant: 'ghost',
       size: 'sm',
       ariaLabel: previousMonthAria,
-      iconLeadingRaw: '<svg class="theme-icon-bidi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
-      className: 'theme-calendar__nav',
+      iconLeadingRaw: '<svg class="cremona-icon-bidi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
+      className: 'cremona-calendar__nav',
       attrs: {
         'data-calendar-target': 'prevButton',
         'data-action': 'click->calendar#prevMonth',
@@ -98,19 +98,19 @@
     } only %}
 
     <h2
-      class="theme-calendar__month-label"
+      class="cremona-calendar__month-label"
       id="{{ _monthLabelId }}"
       data-calendar-target="monthLabel"
       aria-live="polite"
       aria-atomic="true"
     ></h2>
 
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       variant: 'ghost',
       size: 'sm',
       ariaLabel: nextMonthAria,
-      iconLeadingRaw: '<svg class="theme-icon-bidi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
-      className: 'theme-calendar__nav',
+      iconLeadingRaw: '<svg class="cremona-icon-bidi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+      className: 'cremona-calendar__nav',
       attrs: {
         'data-calendar-target': 'nextButton',
         'data-action': 'click->calendar#nextMonth',
@@ -119,13 +119,13 @@
   </header>
 
   <div
-    class="theme-calendar__weekdays"
+    class="cremona-calendar__weekdays"
     data-calendar-target="weekdays"
     aria-hidden="true"
   ></div>
 
   <div
-    class="theme-calendar__grid"
+    class="cremona-calendar__grid"
     id="{{ _gridId }}"
     role="grid"
     aria-labelledby="{{ _monthLabelId }}"

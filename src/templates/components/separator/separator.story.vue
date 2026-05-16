@@ -11,8 +11,8 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderSeparator({ orientation = 'horizontal', variant = 'solid', decorative = true, className }) {
-  const classes = ['theme-separator'];
-  if (variant !== 'solid') classes.push(`theme-separator--${variant}`);
+  const classes = ['cremona-separator'];
+  if (variant !== 'solid') classes.push(`cremona-separator--${variant}`);
   if (className) classes.push(className);
   const ariaAttrs = decorative
     ? 'role="presentation" aria-hidden="true"'
@@ -28,52 +28,52 @@ const bodyHtml = `
     </header>
 
     <section class="separator-story__section" aria-labelledby="separator-section-h">
-      <h2 id="separator-section-h" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.horizontal')}</h2>
+      <h2 id="separator-section-h" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.horizontal')}</h2>
       <div class="separator-story__stack">
         <div>
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.label.solid')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.label.solid')}</span>
           ${renderSeparator({ orientation: 'horizontal', variant: 'solid' })}
         </div>
         <div>
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.label.dashed')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.label.dashed')}</span>
           ${renderSeparator({ orientation: 'horizontal', variant: 'dashed' })}
         </div>
         <div>
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.label.dotted')}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.label.dotted')}</span>
           ${renderSeparator({ orientation: 'horizontal', variant: 'dotted' })}
         </div>
       </div>
     </section>
 
     <section class="separator-story__section" aria-labelledby="separator-section-v">
-      <h2 id="separator-section-v" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.vertical')}</h2>
+      <h2 id="separator-section-v" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.vertical')}</h2>
       <div class="separator-story__vstack">
         <div class="separator-story__vrow">
-          <span class="theme-typography" data-variant="body">${t('theme.separator.story.demo.start')}</span>
+          <span class="cremona-typography" data-variant="body">${t('theme.separator.story.demo.start')}</span>
           ${renderSeparator({ orientation: 'vertical', variant: 'solid' })}
-          <span class="theme-typography" data-variant="body">${t('theme.separator.story.demo.middle')}</span>
+          <span class="cremona-typography" data-variant="body">${t('theme.separator.story.demo.middle')}</span>
           ${renderSeparator({ orientation: 'vertical', variant: 'dashed' })}
-          <span class="theme-typography" data-variant="body">${t('theme.separator.story.demo.end')}</span>
+          <span class="cremona-typography" data-variant="body">${t('theme.separator.story.demo.end')}</span>
         </div>
       </div>
     </section>
 
     <section class="separator-story__section" aria-labelledby="separator-section-semantic">
-      <h2 id="separator-section-semantic" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.semantic')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.semantic-explainer')}</p>
+      <h2 id="separator-section-semantic" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.semantic')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.separator.story.semantic-explainer')}</p>
       <div class="separator-story__stack">
         ${renderSeparator({ orientation: 'horizontal', variant: 'solid', decorative: false })}
       </div>
     </section>
 
     <section class="separator-story__section" aria-labelledby="separator-section-list">
-      <h2 id="separator-section-list" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.in-list')}</h2>
+      <h2 id="separator-section-list" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.separator.story.section.in-list')}</h2>
       <ul class="separator-story__list">
-        <li class="theme-typography" data-variant="body">${t('theme.separator.story.list.first')}</li>
+        <li class="cremona-typography" data-variant="body">${t('theme.separator.story.list.first')}</li>
         ${renderSeparator({ orientation: 'horizontal', variant: 'solid', className: 'separator-story__listsep' })}
-        <li class="theme-typography" data-variant="body">${t('theme.separator.story.list.second')}</li>
+        <li class="cremona-typography" data-variant="body">${t('theme.separator.story.list.second')}</li>
         ${renderSeparator({ orientation: 'horizontal', variant: 'solid', className: 'separator-story__listsep' })}
-        <li class="theme-typography" data-variant="body">${t('theme.separator.story.list.third')}</li>
+        <li class="cremona-typography" data-variant="body">${t('theme.separator.story.list.third')}</li>
       </ul>
     </section>
   </section>

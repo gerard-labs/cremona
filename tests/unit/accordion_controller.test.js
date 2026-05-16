@@ -34,13 +34,13 @@ describe('AccordionController', () => {
 
   function collapsibleHtml(id, { open = false, disabled = false } = {}) {
     return `
-      <div class="theme-collapsible" id="${id}" data-controller="collapsible" data-action="click->collapsible#toggle">
-        <button id="${id}-trigger" type="button" class="theme-collapsible__trigger"
+      <div class="cremona-collapsible" id="${id}" data-controller="collapsible" data-action="click->collapsible#toggle">
+        <button id="${id}-trigger" type="button" class="cremona-collapsible__trigger"
           aria-expanded="${open ? 'true' : 'false'}"
           aria-controls="${id}-content"
           ${disabled ? 'disabled' : ''}>Trigger ${id}</button>
-        <div id="${id}-content" class="theme-collapsible__content" data-state="${open ? 'open' : 'closed'}">
-          <div class="theme-collapsible__content-inner"><p>${id} content</p></div>
+        <div id="${id}-content" class="cremona-collapsible__content" data-state="${open ? 'open' : 'closed'}">
+          <div class="cremona-collapsible__content-inner"><p>${id} content</p></div>
         </div>
       </div>
     `;
@@ -49,7 +49,7 @@ describe('AccordionController', () => {
   async function mount({ mode = 'single', items = [{}, {}, {}] } = {}) {
     const inner = items.map((opts, i) => collapsibleHtml(`c${i + 1}`, opts)).join('');
     document.body.innerHTML = `
-      <div id="acc" class="theme-accordion"
+      <div id="acc" class="cremona-accordion"
         data-controller="accordion"
         data-action="collapsible:toggle->accordion#onChildToggle keydown->accordion#keydown"
         data-accordion-mode-value="${mode}">
@@ -104,8 +104,8 @@ describe('AccordionController', () => {
     collapsibleCtrls[1].toggle();
     expect(triggers[0].getAttribute('aria-expanded')).toBe('false');
     expect(triggers[1].getAttribute('aria-expanded')).toBe('true');
-    expect(collapsibles[0].querySelector('.theme-collapsible__content').dataset.state).toBe('closed');
-    expect(collapsibles[1].querySelector('.theme-collapsible__content').dataset.state).toBe('open');
+    expect(collapsibles[0].querySelector('.cremona-collapsible__content').dataset.state).toBe('closed');
+    expect(collapsibles[1].querySelector('.cremona-collapsible__content').dataset.state).toBe('open');
   });
 
   it('onChildToggle() — multi mode, opening c2 does NOT close c1', async () => {

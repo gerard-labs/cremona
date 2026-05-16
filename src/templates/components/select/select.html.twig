@@ -14,7 +14,7 @@
     - Popover (positioning + dismiss)
     - select controller (listbox semantics, aria-activedescendant nav,
       keyboard handling, hidden input form integration)
-    - Item visual envelope for each option (.theme-item)
+    - Item visual envelope for each option (.cremona-item)
 
   Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter in
   S2.3a. For 200+ options OR async-loading, the consumer migrates to a
@@ -38,7 +38,7 @@
     className   (string, optional)
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-select-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-select-' ~ random()) -%}
 {%- set options     = options     | default([]) -%}
 {%- set value       = value       | default('') -%}
 {%- set placeholder = placeholder | default('') -%}
@@ -51,7 +51,7 @@
 {%- set labelledBy  = labelledBy  | default(null) -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _classes = ['theme-popover', 'theme-select'] -%}
+{%- set _classes = ['cremona-popover', 'cremona-select'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {# Resolve the displayed label: matching option's label OR placeholder. #}
@@ -76,7 +76,7 @@
 >
   <button
     type="button"
-    class="theme-select__trigger"
+    class="cremona-select__trigger"
     data-popover-target="trigger"
     data-select-target="button"
     data-size="{{ size }}"
@@ -89,12 +89,12 @@
     {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
   >
     <span
-      class="theme-select__label"
+      class="cremona-select__label"
       data-select-target="label"
       data-placeholder="{{ _isPlaceholder ? 'true' : 'false' }}"
     >{{ _selectedLabel }}</span>
-    <span class="theme-select__chevron" aria-hidden="true">
-      {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down', size: 'sm', decorative: true } %}
+    <span class="cremona-select__chevron" aria-hidden="true">
+      {% include '@cremona/components/icon/icon.html.twig' with { name: 'chevron-down', size: 'sm', decorative: true } %}
     </span>
   </button>
 
@@ -109,7 +109,7 @@
 
   <div
     id="{{ htmlId }}-listbox"
-    class="theme-popover__content theme-select__listbox"
+    class="cremona-popover__content cremona-select__listbox"
     data-popover-target="content"
     data-state="closed"
     data-placement="{{ placement }}"
@@ -120,12 +120,12 @@
     {%- for opt in options -%}
       {%- set _optDisabled = opt.disabled | default(false) -%}
       {%- set _optSelected = opt.value == value and value != '' -%}
-      {% include '@theme/components/item/item.html.twig' with {
+      {% include '@cremona/components/item/item.html.twig' with {
         label: opt.label,
         iconTrailing: _optSelected ? 'check' : null,
         disabled: _optDisabled,
         htmlId: htmlId ~ '-opt-' ~ loop.index,
-        className: 'theme-select__option',
+        className: 'cremona-select__option',
         attrs: {
           'data-select-target': 'option',
           'data-value': opt.value,

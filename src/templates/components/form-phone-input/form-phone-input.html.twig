@@ -28,14 +28,14 @@
 
   Usage:
 
-    {% include '@theme/components/form-phone-input/form-phone-input.html.twig' with {
+    {% include '@cremona/components/form-phone-input/form-phone-input.html.twig' with {
       label: 'theme.form.phone-input.label.contact'|trans,
       name: 'phone',
       initialCountry: 'fr',
     } %}
 -#}
 
-{%- set htmlId             = htmlId             | default('theme-form-phone-' ~ random()) -%}
+{%- set htmlId             = htmlId             | default('cremona-form-phone-' ~ random()) -%}
 {%- set required           = required           | default(false) -%}
 {%- set initialCountry     = initialCountry     | default('fr') -%}
 {%- set preferredCountries = preferredCountries | default(['fr', 'us', 'gb', 'de', 'es']) -%}
@@ -45,8 +45,8 @@
 {%- set className          = className          | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-field', 'theme-form-phone-input'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field', 'cremona-form-phone-input'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set describedByIds = [] -%}
@@ -61,14 +61,14 @@
   data-phone-input-separate-dial-code-value="{{ separateDialCode ? 'true' : 'false' }}"
   data-phone-input-national-mode-value="{{ nationalMode ? 'true' : 'false' }}"
 >
-  {% include '@theme/components/label/label.html.twig' with {
+  {% include '@cremona/components/label/label.html.twig' with {
     content: label,
     htmlFor: htmlId ~ '-input',
     required: required,
     requiredAriaText: 'theme.form.phone-input.required'|trans,
   } only %}
 
-  {% include '@theme/components/input/input.html.twig' with {
+  {% include '@cremona/components/input/input.html.twig' with {
     type: 'tel',
     htmlId: htmlId ~ '-input',
     name: htmlId ~ '-display',
@@ -78,7 +78,7 @@
     invalid: isInvalid,
     describedBy: describedByIds | length ? describedByIds | join(' ') : null,
     placeholder: placeholder,
-    className: 'theme-form-phone-input__input',
+    className: 'cremona-form-phone-input__input',
     attrs: {
       'aria-label': 'theme.form.phone-input.aria.label'|trans,
       'data-phone-input-target': 'input',
@@ -92,9 +92,9 @@
   />
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

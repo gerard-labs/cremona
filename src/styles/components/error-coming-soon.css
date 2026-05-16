@@ -5,11 +5,11 @@
  * Marketing-feel page (vs error-feel). Marker class + hero size override.
  */
 
-.theme-error-coming-soon {
+.cremona-error-coming-soon {
   /* Marker class — Empty + shell composition does the heavy lifting. */
 }
 
-.theme-error-coming-soon__hero {
+.cremona-error-coming-soon__hero {
   inline-size: 100%;
   max-inline-size: 200px;
   block-size: auto;

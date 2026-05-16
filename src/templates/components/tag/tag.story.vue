@@ -33,20 +33,20 @@ const ICONS = Object.fromEntries(
 );
 
 function renderIcon({ name, size = 'xs' }) {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] ?? ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] ?? ''}</span>`;
 }
 
 function renderTag({ variant = 'default', size = 'md', label, leadingIcon, soft = false, dismissable = false, dismissAria, className }) {
-  const classes = ['theme-tag'];
+  const classes = ['cremona-tag'];
   if (className) classes.push(className);
   const softAttr = soft ? ' data-soft="true"' : '';
   const ctrlAttrs = dismissable ? ` data-controller="tag-dismiss" data-tag-dismiss-label-value="${label}"` : '';
   const iconSize = size === 'sm' ? 'xs' : size === 'lg' ? 'sm' : 'xs';
   const iconHtml = leadingIcon ? renderIcon({ name: leadingIcon, size: iconSize }) : '';
   const dismissHtml = dismissable
-    ? `<button type="button" class="theme-tag__dismiss" aria-label="${dismissAria || t('theme.tag.aria.dismiss', { label })}" data-action="click->tag-dismiss#dismiss"><span aria-hidden="true">×</span></button>`
+    ? `<button type="button" class="cremona-tag__dismiss" aria-label="${dismissAria || t('theme.tag.aria.dismiss', { label })}" data-action="click->tag-dismiss#dismiss"><span aria-hidden="true">×</span></button>`
     : '';
-  return `<span class="${classes.join(' ')}" data-variant="${variant}" data-size="${size}"${softAttr}${ctrlAttrs}>${iconHtml}<span class="theme-tag__label">${label}</span>${dismissHtml}</span>`;
+  return `<span class="${classes.join(' ')}" data-variant="${variant}" data-size="${size}"${softAttr}${ctrlAttrs}>${iconHtml}<span class="cremona-tag__label">${label}</span>${dismissHtml}</span>`;
 }
 
 const VARIANTS = ['default', 'primary', 'success', 'warning', 'danger', 'info'];
@@ -94,22 +94,22 @@ const bodyHtml = `
     </header>
 
     <section class="tag-story__section" aria-labelledby="tag-section-solid">
-      <h2 id="tag-section-solid" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.solid')}</h2>
+      <h2 id="tag-section-solid" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.solid')}</h2>
       <div class="tag-story__row">
         ${VARIANTS.map((v) => renderTag({ variant: v, label: VARIANT_LABELS[v] })).join('')}
       </div>
     </section>
 
     <section class="tag-story__section" aria-labelledby="tag-section-soft">
-      <h2 id="tag-section-soft" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.soft')}</h2>
+      <h2 id="tag-section-soft" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.soft')}</h2>
       <div class="tag-story__row">
         ${VARIANTS.map((v) => renderTag({ variant: v, label: VARIANT_LABELS[v], soft: true })).join('')}
       </div>
     </section>
 
     <section class="tag-story__section" aria-labelledby="tag-section-sizes">
-      <h2 id="tag-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.sizes')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tag.story.section.sizes-explainer')}</p>
+      <h2 id="tag-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.sizes')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tag.story.section.sizes-explainer')}</p>
       <div class="tag-story__row">
         ${renderTag({ variant: 'primary', size: 'sm', label: VARIANT_LABELS.primary })}
         ${renderTag({ variant: 'primary', size: 'md', label: VARIANT_LABELS.primary })}
@@ -121,23 +121,23 @@ const bodyHtml = `
     </section>
 
     <section class="tag-story__section" aria-labelledby="tag-section-icon">
-      <h2 id="tag-section-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.icon')}</h2>
+      <h2 id="tag-section-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.icon')}</h2>
       <div class="tag-story__row">
         ${VARIANTS.map((v) => renderTag({ variant: v, label: VARIANT_LABELS[v], leadingIcon: VARIANT_ICONS[v], soft: true })).join('')}
       </div>
     </section>
 
     <section class="tag-story__section" aria-labelledby="tag-section-dismiss">
-      <h2 id="tag-section-dismiss" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.dismiss')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tag.story.section.dismiss-explainer')}</p>
+      <h2 id="tag-section-dismiss" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.dismiss')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tag.story.section.dismiss-explainer')}</p>
       <div class="tag-story__row" id="dismissable-row">
         ${VARIANTS.slice(1).map((v) => renderTag({ variant: v, soft: true, label: VARIANT_LABELS[v], dismissable: true })).join('')}
       </div>
     </section>
 
     <section class="tag-story__section" aria-labelledby="tag-section-filter">
-      <h2 id="tag-section-filter" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.filter')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tag.story.section.filter-explainer')}</p>
+      <h2 id="tag-section-filter" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tag.story.section.filter')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tag.story.section.filter-explainer')}</p>
       <div class="tag-story__row">
         ${FILTER_PILLS.map((p) => renderTag({ ...p, dismissable: true })).join('')}
       </div>

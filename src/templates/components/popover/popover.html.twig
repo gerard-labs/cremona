@@ -53,17 +53,17 @@
               positioning + animation styles applied.
 -#}
 
-{%- set htmlId            = htmlId            | default('theme-popover-' ~ random()) -%}
+{%- set htmlId            = htmlId            | default('cremona-popover-' ~ random()) -%}
 {%- set placement         = placement         | default('bottom') -%}
 {%- set offset            = offset            | default(8) -%}
 {%- set open              = open              | default(false) -%}
 {%- set className         = className         | default('') -%}
 {%- set contentClassName  = contentClassName  | default('') -%}
 
-{%- set _classes = ['theme-popover'] -%}
+{%- set _classes = ['cremona-popover'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-{%- set _contentClasses = ['theme-popover__content'] -%}
+{%- set _contentClasses = ['cremona-popover__content'] -%}
 {%- if contentClassName -%}{%- set _contentClasses = _contentClasses | merge([contentClassName]) -%}{%- endif -%}
 
 {%- set popoverHtmlId = htmlId -%}

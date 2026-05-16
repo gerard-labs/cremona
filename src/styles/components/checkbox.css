@@ -1,9 +1,9 @@
 /*
  * Checkbox — native HTML5 <input type="checkbox"> styled with kit tokens.
  *
- * Anatomy: a `.theme-checkbox` wrapper anchors two siblings — the native
+ * Anatomy: a `.cremona-checkbox` wrapper anchors two siblings — the native
  * <input> (with `appearance: none` so its OS chrome is removed and we can
- * paint border + bg from tokens) and a `.theme-checkbox__box` overlay carrying
+ * paint border + bg from tokens) and a `.cremona-checkbox__box` overlay carrying
  * two SVG glyphs (check + dash). The glyphs are `display: none` by default
  * and revealed by sibling combinators on the input's state:
  *   :checked:not([data-indeterminate="true"]) → check glyph
@@ -15,8 +15,8 @@
  * native checkbox then announces `aria-checked="mixed"` automatically.
  *
  * Two outer modes:
- *   .theme-checkbox-row   — <label> wraps input+box+text inline (standalone)
- *   .theme-checkbox-wrap  — bare <span> with input+box only (Field composition)
+ *   .cremona-checkbox-row   — <label> wraps input+box+text inline (standalone)
+ *   .cremona-checkbox-wrap  — bare <span> with input+box only (Field composition)
  *
  * Touch target: row mode gets ≥ 44 px on coarse pointers via padding. Bare
  * mode delegates tap area to its wrapping context (Field's Label / DataTable
@@ -25,20 +25,20 @@
 
 /* ----- wrapper that anchors input + box ----- */
 
-.theme-checkbox {
+.cremona-checkbox {
   position: relative;
   display: inline-flex;
-  inline-size: var(--theme-checkbox-size, 18px);
-  block-size: var(--theme-checkbox-size, 18px);
+  inline-size: var(--cremona-checkbox-size, 18px);
+  block-size: var(--cremona-checkbox-size, 18px);
   flex-shrink: 0;
 }
 
-.theme-checkbox[data-size="sm"] { --theme-checkbox-size: 16px; }
-.theme-checkbox[data-size="md"] { --theme-checkbox-size: 20px; }
+.cremona-checkbox[data-size="sm"] { --cremona-checkbox-size: 16px; }
+.cremona-checkbox[data-size="md"] { --cremona-checkbox-size: 20px; }
 
 /* ----- the native input — invisible chrome, painted bg/border via tokens ----- */
 
-.theme-checkbox__input {
+.cremona-checkbox__input {
   appearance: none;
   position: absolute;
   inset: 0;
@@ -56,61 +56,61 @@
 }
 
 /* Hover — clearer affordance than the neutral border-strong used at rest. */
-.theme-checkbox__input:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-checkbox__input:hover:not(:disabled, [aria-invalid="true"]) {
   border-color: var(--color-primary);
 }
 
 /* Focus — inset ring (same envelope as Input). */
-.theme-checkbox__input:focus-visible {
+.cremona-checkbox__input:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
 /* Checked + indeterminate share the same "filled" visual. */
-.theme-checkbox__input:checked,
-.theme-checkbox__input[data-indeterminate="true"] {
+.cremona-checkbox__input:checked,
+.cremona-checkbox__input[data-indeterminate="true"] {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
 
-.theme-checkbox__input:checked:hover:not(:disabled, [aria-invalid="true"]),
-.theme-checkbox__input[data-indeterminate="true"]:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-checkbox__input:checked:hover:not(:disabled, [aria-invalid="true"]),
+.cremona-checkbox__input[data-indeterminate="true"]:hover:not(:disabled, [aria-invalid="true"]) {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
 }
 
 /* Invalid — red border. Pair with aria-describedby → error text (Field's job). */
-.theme-checkbox__input[aria-invalid="true"] {
+.cremona-checkbox__input[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-.theme-checkbox__input[aria-invalid="true"]:checked,
-.theme-checkbox__input[aria-invalid="true"][data-indeterminate="true"] {
+.cremona-checkbox__input[aria-invalid="true"]:checked,
+.cremona-checkbox__input[aria-invalid="true"][data-indeterminate="true"] {
   background-color: var(--color-danger);
   border-color: var(--color-danger);
 }
 
-.theme-checkbox__input[aria-invalid="true"]:focus-visible {
+.cremona-checkbox__input[aria-invalid="true"]:focus-visible {
   box-shadow: 0 0 0 var(--ring-width) var(--color-danger);
 }
 
 /* Disabled — muted, no pointer. */
-.theme-checkbox__input:disabled {
+.cremona-checkbox__input:disabled {
   cursor: not-allowed;
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-default);
   opacity: 1; /* override base reset that opacity-dims [disabled] */
 }
 
-.theme-checkbox__input:disabled:checked,
-.theme-checkbox__input:disabled[data-indeterminate="true"] {
+.cremona-checkbox__input:disabled:checked,
+.cremona-checkbox__input:disabled[data-indeterminate="true"] {
   background-color: var(--color-text-disabled);
   border-color: var(--color-text-disabled);
 }
 
 /* ----- glyph overlay — check + dash SVGs revealed by input state ----- */
 
-.theme-checkbox__box {
+.cremona-checkbox__box {
   position: absolute;
   inset: 0;
   display: grid;
@@ -119,34 +119,34 @@
   pointer-events: none;
 }
 
-.theme-checkbox__glyph {
+.cremona-checkbox__glyph {
   display: none;
   inline-size: 100%;
   block-size: 100%;
 }
 
-.theme-checkbox__input:checked:not([data-indeterminate="true"]) ~ .theme-checkbox__box .theme-checkbox__glyph--check {
+.cremona-checkbox__input:checked:not([data-indeterminate="true"]) ~ .cremona-checkbox__box .cremona-checkbox__glyph--check {
   display: block;
 }
 
-.theme-checkbox__input[data-indeterminate="true"] ~ .theme-checkbox__box .theme-checkbox__glyph--dash {
+.cremona-checkbox__input[data-indeterminate="true"] ~ .cremona-checkbox__box .cremona-checkbox__glyph--dash {
   display: block;
 }
 
 /* ----- row mode — <label> wraps input + box + label text ----- */
 
-.theme-checkbox-row {
+.cremona-checkbox-row {
   display: inline-flex;
   align-items: flex-start;
   gap: var(--spacing-2);
   cursor: pointer;
 }
 
-.theme-checkbox-row[data-state="disabled"] {
+.cremona-checkbox-row[data-state="disabled"] {
   cursor: not-allowed;
 }
 
-.theme-checkbox-row__text {
+.cremona-checkbox-row__text {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -156,27 +156,27 @@
   user-select: none;
 }
 
-.theme-checkbox-row[data-size="sm"] .theme-checkbox-row__text {
+.cremona-checkbox-row[data-size="sm"] .cremona-checkbox-row__text {
   font-size: var(--font-size-sm);
 }
 
-.theme-checkbox-row[data-size="md"] .theme-checkbox-row__text {
+.cremona-checkbox-row[data-size="md"] .cremona-checkbox-row__text {
   font-size: var(--font-size-base);
 }
 
-.theme-checkbox-row__label {
+.cremona-checkbox-row__label {
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-snug);
 }
 
-.theme-checkbox-row__required {
+.cremona-checkbox-row__required {
   color: var(--color-danger);
   font-weight: var(--font-weight-bold);
   line-height: 1;
   margin-inline-start: calc(var(--spacing-0_5) * -1);
 }
 
-.theme-checkbox-row__description {
+.cremona-checkbox-row__description {
   flex-basis: 100%;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
@@ -184,12 +184,12 @@
   line-height: var(--line-height-snug);
 }
 
-.theme-checkbox-row[data-state="disabled"] .theme-checkbox-row__label,
-.theme-checkbox-row[data-state="disabled"] .theme-checkbox-row__description {
+.cremona-checkbox-row[data-state="disabled"] .cremona-checkbox-row__label,
+.cremona-checkbox-row[data-state="disabled"] .cremona-checkbox-row__description {
   color: var(--color-text-disabled);
 }
 
-.theme-checkbox-row--invalid .theme-checkbox-row__label {
+.cremona-checkbox-row--invalid .cremona-checkbox-row__label {
   /* Visual cue stays subtle here — the input itself carries the red border;
      the row's label text staying primary preserves readability of the prompt
      itself ("Tu es d'accord ?" should not turn red, only the missing check
@@ -199,7 +199,7 @@
 
 /* ----- bare mode — <span> with just input + box (Field / DataTable) ----- */
 
-.theme-checkbox-wrap {
+.cremona-checkbox-wrap {
   display: inline-flex;
   flex-shrink: 0;
 }
@@ -207,7 +207,7 @@
 /* ----- touch target hardening ----- */
 
 @media (pointer: coarse) {
-  .theme-checkbox-row {
+  .cremona-checkbox-row {
     /* Extend tap zone block-axis to ≥ 44 px. Padding is on the row, not the
        box, so the visible box stays at its declared size. */
     min-block-size: 44px;

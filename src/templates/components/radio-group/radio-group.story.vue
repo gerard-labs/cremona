@@ -24,22 +24,22 @@ function renderRadioGroup(props = {}) {
     required, disabled, invalid, describedBy, hideLegend, className,
   } = props;
 
-  const classes = ['theme-radiogroup'];
-  if (invalid) classes.push('theme-radiogroup--invalid');
-  if (disabled) classes.push('theme-radiogroup--disabled');
+  const classes = ['cremona-radiogroup'];
+  if (invalid) classes.push('cremona-radiogroup--invalid');
+  if (disabled) classes.push('cremona-radiogroup--disabled');
   if (className) classes.push(className);
-  const legendClasses = ['theme-radiogroup__legend'];
-  if (hideLegend) legendClasses.push('theme-sr-only');
+  const legendClasses = ['cremona-radiogroup__legend'];
+  if (hideLegend) legendClasses.push('cremona-sr-only');
 
   const items = options.map((opt, i) => {
     const checked = opt.checked ? ' checked' : '';
     const optDisabled = (opt.disabled || disabled) ? ' disabled' : '';
     const desc = opt.description
-      ? `<span class="theme-radio-row__description">${opt.description}</span>`
+      ? `<span class="cremona-radio-row__description">${opt.description}</span>`
       : '';
     const inputAttrs = [
       `type="radio"`,
-      `class="theme-radio__input"`,
+      `class="cremona-radio__input"`,
       `id="${name}-${i + 1}"`,
       `name="${name}"`,
       `value="${opt.value}"`,
@@ -51,20 +51,20 @@ function renderRadioGroup(props = {}) {
     ].filter(Boolean).join(' ');
     const dataState = (opt.disabled || disabled) ? ' data-state="disabled"' : '';
     return `
-      <label class="theme-radio-row" data-size="${size}"${dataState}>
-        <span class="theme-radio" data-size="${size}">
+      <label class="cremona-radio-row" data-size="${size}"${dataState}>
+        <span class="cremona-radio" data-size="${size}">
           <input ${inputAttrs}>
-          <span class="theme-radio__box" aria-hidden="true"></span>
+          <span class="cremona-radio__box" aria-hidden="true"></span>
         </span>
-        <span class="theme-radio-row__text">
-          <span class="theme-radio-row__label">${opt.label}</span>
+        <span class="cremona-radio-row__text">
+          <span class="cremona-radio-row__label">${opt.label}</span>
           ${desc}
         </span>
       </label>`;
   }).join('');
 
   const requiredMarker = (required && !hideLegend)
-    ? `<span class="theme-radiogroup__required" aria-hidden="true">*</span><span class="theme-sr-only">${t('theme.label.required-aria')}</span>`
+    ? `<span class="cremona-radiogroup__required" aria-hidden="true">*</span><span class="cremona-sr-only">${t('theme.label.required-aria')}</span>`
     : '';
 
   return `
@@ -75,7 +75,7 @@ function renderRadioGroup(props = {}) {
       ${disabled ? 'disabled' : ''}
     >
       <legend class="${legendClasses.join(' ')}">${legend}${requiredMarker}</legend>
-      <div class="theme-radiogroup__items" role="presentation">${items}</div>
+      <div class="cremona-radiogroup__items" role="presentation">${items}</div>
     </fieldset>`;
 }
 
@@ -121,25 +121,25 @@ const bodyHtml = `
     </header>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-default">
-      <h2 id="radiogroup-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.default')}</h2>
+      <h2 id="radiogroup-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.default')}</h2>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-country', legend: t('theme.radio-group.legend.country'), options: COUNTRY_OPTIONS }), 'country (vertical)')}
       </div>
     </section>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-states">
-      <h2 id="radiogroup-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.states')}</h2>
+      <h2 id="radiogroup-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.states')}</h2>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-state-default', legend: t('theme.radio-group.legend.country'), options: COUNTRY_OPTIONS }),               'default + selection')}
         ${row(renderRadioGroup({ name: 'demo-state-disabled', legend: t('theme.radio-group.legend.country'), options: COUNTRY_OPTIONS, disabled: true }), 'disabled (whole group)')}
         ${row(renderRadioGroup({ name: 'demo-state-required', legend: t('theme.radio-group.legend.country'), options: COUNTRY_OPTIONS.map(o => ({...o, checked: false})), required: true }), 'required (no selection)')}
         ${row(renderRadioGroup({ name: 'demo-state-invalid',  legend: t('theme.radio-group.legend.country'), options: COUNTRY_OPTIONS.map(o => ({...o, checked: false})), required: true, invalid: true, describedBy: 'demo-state-invalid-error' }), 'invalid + required')}
       </div>
-      <p class="radiogroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.radio-group.story.explainer.invalid')}</p>
+      <p class="radiogroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.radio-group.story.explainer.invalid')}</p>
     </section>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-sizes">
-      <h2 id="radiogroup-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.sizes')}</h2>
+      <h2 id="radiogroup-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.sizes')}</h2>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-size-sm', legend: t('theme.radio-group.legend.shipping'), options: SHIPPING_OPTIONS, size: 'sm' }), 'sm (16 px discs)')}
         ${row(renderRadioGroup({ name: 'demo-size-md', legend: t('theme.radio-group.legend.shipping'), options: SHIPPING_OPTIONS, size: 'md' }), 'md (20 px discs)')}
@@ -147,8 +147,8 @@ const bodyHtml = `
     </section>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-orientation">
-      <h2 id="radiogroup-section-orientation" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.orientation')}</h2>
-      <p class="radiogroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.radio-group.story.explainer.orientation')}</p>
+      <h2 id="radiogroup-section-orientation" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.orientation')}</h2>
+      <p class="radiogroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.radio-group.story.explainer.orientation')}</p>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-orient-h', legend: t('theme.radio-group.legend.shipping'), options: SHIPPING_OPTIONS, orientation: 'horizontal' }), 'horizontal')}
         ${row(renderRadioGroup({ name: 'demo-orient-v', legend: t('theme.radio-group.legend.shipping'), options: SHIPPING_OPTIONS, orientation: 'vertical' }), 'vertical (default)')}
@@ -156,23 +156,23 @@ const bodyHtml = `
     </section>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-description">
-      <h2 id="radiogroup-section-description" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.description')}</h2>
-      <p class="radiogroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.radio-group.story.explainer.description')}</p>
+      <h2 id="radiogroup-section-description" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.description')}</h2>
+      <p class="radiogroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.radio-group.story.explainer.description')}</p>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-plan', legend: t('theme.radio-group.legend.plan'), options: PLAN_OPTIONS }), 'plan tier (with description per option)')}
       </div>
     </section>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-hidden-legend">
-      <h2 id="radiogroup-section-hidden-legend" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.hidden-legend')}</h2>
-      <p class="radiogroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.radio-group.story.explainer.hidden-legend')}</p>
+      <h2 id="radiogroup-section-hidden-legend" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.hidden-legend')}</h2>
+      <p class="radiogroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.radio-group.story.explainer.hidden-legend')}</p>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-hidden', legend: t('theme.radio-group.legend.shipping'), options: SHIPPING_OPTIONS, hideLegend: true }), 'legend sr-only')}
       </div>
     </section>
 
     <section class="radiogroup-story__section" aria-labelledby="radiogroup-section-long-labels">
-      <h2 id="radiogroup-section-long-labels" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.long-labels')}</h2>
+      <h2 id="radiogroup-section-long-labels" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.radio-group.story.section.long-labels')}</h2>
       <div class="radiogroup-story__stack">
         ${row(renderRadioGroup({ name: 'demo-long', legend: t('theme.radio-group.legend.long'), options: LONG_OPTIONS }), 'labels longs (+30 % FR)')}
       </div>

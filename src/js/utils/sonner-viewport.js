@@ -31,7 +31,7 @@
 
 import { t } from './i18n.js';
 
-const VIEWPORT_SELECTOR = 'aside.theme-sonner__viewport[data-controller~="sonner"]';
+const VIEWPORT_SELECTOR = 'aside.cremona-sonner__viewport[data-controller~="sonner"]';
 
 /**
  * Ensure a Sonner viewport exists in document.body. Idempotent — if a
@@ -47,7 +47,7 @@ export function ensureSonnerViewport() {
   if (existing) return existing;
 
   const viewport = document.createElement('aside');
-  viewport.className = 'theme-sonner__viewport';
+  viewport.className = 'cremona-sonner__viewport';
   viewport.setAttribute('aria-label', t('theme.sonner.aria.viewport'));
   viewport.setAttribute('data-controller', 'sonner');
   viewport.setAttribute(
@@ -61,7 +61,7 @@ export function ensureSonnerViewport() {
 
   const indicator = document.createElement('button');
   indicator.type = 'button';
-  indicator.className = 'theme-sonner__queue-indicator';
+  indicator.className = 'cremona-sonner__queue-indicator';
   indicator.setAttribute('data-action', 'click->sonner#expandQueue');
   indicator.setAttribute('data-sonner-target', 'indicator');
   indicator.hidden = true;

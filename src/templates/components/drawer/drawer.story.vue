@@ -11,7 +11,7 @@
 
   The drawer Stimulus controller extends DialogController — same modal
   mechanics, distinct events. Slide direction is CSS-time per edge with
-  --theme-drawer-flip handling RTL for inline-axis edges.
+  --cremona-drawer-flip handling RTL for inline-axis edges.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';
@@ -56,20 +56,20 @@ let _drCounter = 0;
 function nextId() { return `dr-${++_drCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function triggerButton(label, opts = {}) {
   const { variant = 'primary', size = 'md', iconLeading = null } = opts;
-  const leadingHtml = iconLeading ? `<span class="theme-button__icon theme-button__icon--leading">${icon(iconLeading)}</span>` : '';
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-size="${size}"
+  const leadingHtml = iconLeading ? `<span class="cremona-button__icon cremona-button__icon--leading">${icon(iconLeading)}</span>` : '';
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-size="${size}"
     data-action="click->drawer#open">
-    ${leadingHtml}<span class="theme-button__label">${label}</span>
+    ${leadingHtml}<span class="cremona-button__label">${label}</span>
   </button>`;
 }
 
 function closeXButton(ariaLabel) {
-  return `<button type="button" class="theme-button theme-drawer__close" data-variant="ghost" data-size="sm"
+  return `<button type="button" class="cremona-button cremona-drawer__close" data-variant="ghost" data-size="sm"
     aria-label="${ariaLabel}" data-action="click->drawer#close">${icon('x')}</button>`;
 }
 
@@ -86,23 +86,23 @@ function renderDrawer({
   const id = nextId();
   const titleId = `${id}-title`;
   return `
-    <div class="theme-drawer-wrap"
+    <div class="cremona-drawer-wrap"
       data-controller="drawer"
       data-drawer-open-value="false"
       data-drawer-edge-value="${edge}"
       data-drawer-close-on-escape-value="${closeOnEscape}"
       data-drawer-close-on-backdrop-click-value="${closeOnBackdropClick}">
       ${trigger}
-      <dialog id="${id}" class="theme-drawer"
+      <dialog id="${id}" class="cremona-drawer"
         data-drawer-target="dialog"
         data-edge="${edge}"
         aria-labelledby="${titleId}">
-        <header class="theme-drawer__header">
-          <h2 id="${titleId}" class="theme-drawer__title">${title}</h2>
+        <header class="cremona-drawer__header">
+          <h2 id="${titleId}" class="cremona-drawer__title">${title}</h2>
           ${showCloseButton ? closeXButton(S.ariaClose) : ''}
         </header>
-        <div class="theme-drawer__body">${body}</div>
-        ${footer ? `<footer class="theme-drawer__footer">${footer}</footer>` : ''}
+        <div class="cremona-drawer__body">${body}</div>
+        ${footer ? `<footer class="cremona-drawer__footer">${footer}</footer>` : ''}
       </dialog>
     </div>
   `;
@@ -169,8 +169,8 @@ const bodyHtml = `
     </header>
 
     <section class="drawer-story__section" aria-labelledby="dr-section-default">
-      <h2 id="dr-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.default')}</h2>
-      <p class="drawer-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.default')}</p>
+      <h2 id="dr-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.default')}</h2>
+      <p class="drawer-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.default')}</p>
       <div class="drawer-story__row">
         ${renderDrawer({
           edge: 'end',
@@ -178,79 +178,79 @@ const bodyHtml = `
           title: S.defTitle,
           body: `<p>${S.defBody}</p>`,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->drawer#close"><span class="theme-button__label">${S.defCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="primary"><span class="theme-button__label">${S.defConfirm}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->drawer#close"><span class="cremona-button__label">${S.defCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="primary"><span class="cremona-button__label">${S.defConfirm}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="drawer-story__section" aria-labelledby="dr-section-edges">
-      <h2 id="dr-section-edges" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.edges')}</h2>
-      <p class="drawer-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.edges')}</p>
+      <h2 id="dr-section-edges" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.edges')}</h2>
+      <p class="drawer-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.edges')}</p>
       <div class="drawer-story__row">
         ${renderDrawer({
           edge: 'start',
           trigger: triggerButton(S.edgeTrigStart, { variant: 'secondary' }),
           title: S.edgeTitleStart,
           body: `<p>${S.edgeBodyStart}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->drawer#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->drawer#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
         ${renderDrawer({
           edge: 'end',
           trigger: triggerButton(S.edgeTrigEnd, { variant: 'secondary' }),
           title: S.edgeTitleEnd,
           body: `<p>${S.edgeBodyEnd}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->drawer#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->drawer#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
         ${renderDrawer({
           edge: 'top',
           trigger: triggerButton(S.edgeTrigTop, { variant: 'secondary' }),
           title: S.edgeTitleTop,
           body: `<p>${S.edgeBodyTop}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->drawer#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->drawer#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
         ${renderDrawer({
           edge: 'bottom',
           trigger: triggerButton(S.edgeTrigBottom, { variant: 'secondary' }),
           title: S.edgeTitleBottom,
           body: `<p>${S.edgeBodyBottom}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->drawer#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->drawer#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="drawer-story__section" aria-labelledby="dr-section-form">
-      <h2 id="dr-section-form" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.with-form')}</h2>
-      <p class="drawer-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.with-form')}</p>
+      <h2 id="dr-section-form" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.with-form')}</h2>
+      <p class="drawer-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.with-form')}</p>
       <div class="drawer-story__row">
         ${renderDrawer({
           edge: 'end',
           trigger: triggerButton(S.formTrig, { iconLeading: 'user' }),
           title: S.formTitle,
           body: `
-            <label class="theme-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formNameLabel}</label>
-            <input type="text" class="theme-input" placeholder="${S.formNamePlaceholder}" />
-            <label class="theme-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formEmailLabel}</label>
-            <input type="email" class="theme-input" placeholder="${S.formEmailPlaceholder}" />
-            <label class="theme-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formRoleLabel}</label>
-            <select class="theme-native-select">
+            <label class="cremona-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formNameLabel}</label>
+            <input type="text" class="cremona-input" placeholder="${S.formNamePlaceholder}" />
+            <label class="cremona-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formEmailLabel}</label>
+            <input type="email" class="cremona-input" placeholder="${S.formEmailPlaceholder}" />
+            <label class="cremona-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formRoleLabel}</label>
+            <select class="cremona-native-select">
               <option>${S.formRoleAdmin}</option>
               <option>${S.formRoleMember}</option>
               <option>${S.formRoleViewer}</option>
             </select>
           `,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->drawer#close"><span class="theme-button__label">${S.formCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="primary"><span class="theme-button__label">${S.formSubmit}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->drawer#close"><span class="cremona-button__label">${S.formCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="primary"><span class="cremona-button__label">${S.formSubmit}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="drawer-story__section" aria-labelledby="dr-section-long">
-      <h2 id="dr-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.long-content')}</h2>
-      <p class="drawer-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.long-content')}</p>
+      <h2 id="dr-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.long-content')}</h2>
+      <p class="drawer-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.long-content')}</p>
       <div class="drawer-story__row">
         ${renderDrawer({
           edge: 'end',
@@ -263,14 +263,14 @@ const bodyHtml = `
             <p>${S.longBodyP4}</p>
             <p>${S.longBodyP5}</p>
           `,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->drawer#close"><span class="theme-button__label">${S.longClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->drawer#close"><span class="cremona-button__label">${S.longClose}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="drawer-story__section" aria-labelledby="dr-section-destructive">
-      <h2 id="dr-section-destructive" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.destructive')}</h2>
-      <p class="drawer-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.destructive')}</p>
+      <h2 id="dr-section-destructive" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.destructive')}</h2>
+      <p class="drawer-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.destructive')}</p>
       <div class="drawer-story__row">
         ${renderDrawer({
           edge: 'end',
@@ -280,16 +280,16 @@ const bodyHtml = `
           closeOnEscape: false,
           closeOnBackdropClick: false,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->drawer#close"><span class="theme-button__label">${S.destrCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="primary"><span class="theme-button__label">${S.destrConfirm}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->drawer#close"><span class="cremona-button__label">${S.destrCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="primary"><span class="cremona-button__label">${S.destrConfirm}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="drawer-story__section" aria-labelledby="dr-section-events">
-      <h2 id="dr-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.events')}</h2>
-      <p class="drawer-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.events')}</p>
+      <h2 id="dr-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.drawer.story.section.events')}</h2>
+      <p class="drawer-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.drawer.story.explainer.events')}</p>
       <div class="drawer-story__events">
         <div class="drawer-story__events-trigger-row">
           ${renderDrawer({
@@ -297,11 +297,11 @@ const bodyHtml = `
             trigger: triggerButton(S.eventsTrig, { iconLeading: 'bell' }),
             title: S.eventsTitle,
             body: `<p>${S.eventsBody}</p>`,
-            footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->drawer#close"><span class="theme-button__label">${S.eventsClose}</span></button>`,
+            footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->drawer#close"><span class="cremona-button__label">${S.eventsClose}</span></button>`,
           })}
         </div>
         <div class="drawer-story__events-log">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
           <pre class="drawer-story__events-log-output" data-drawer-events-log data-empty="1">${S.eventsLogEmpty}</pre>
         </div>
       </div>

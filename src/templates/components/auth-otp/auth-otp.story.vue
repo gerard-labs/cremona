@@ -20,11 +20,11 @@ setLocale('fr');
 
 function renderAlert({ body = '', htmlId = '' }) {
   return `
-    <div class="theme-alert" data-variant="danger" data-tone="soft" role="alert" id="${htmlId}">
-      <span class="theme-alert__icon" aria-hidden="true">
-        <span class="theme-icon" data-size="md">${iconAlertCircleRaw}</span>
+    <div class="cremona-alert" data-variant="danger" data-tone="soft" role="alert" id="${htmlId}">
+      <span class="cremona-alert__icon" aria-hidden="true">
+        <span class="cremona-icon" data-size="md">${iconAlertCircleRaw}</span>
       </span>
-      <div class="theme-alert__content"><p class="theme-alert__body">${body}</p></div>
+      <div class="cremona-alert__content"><p class="cremona-alert__body">${body}</p></div>
     </div>
   `;
 }
@@ -41,7 +41,7 @@ function renderInputOtp({ htmlId, name, length = 6, label, value = '' }) {
     cellsHtml += `
       <input
         type="text"
-        class="theme-input theme-input-otp__cell"
+        class="cremona-input cremona-input-otp__cell"
         data-input-otp-target="input"
         data-input-otp-index="${i}"
         data-action="input->input-otp#onInput keydown->input-otp#onKeydown paste->input-otp#onPaste focus->input-otp#onFocus"
@@ -55,9 +55,9 @@ function renderInputOtp({ htmlId, name, length = 6, label, value = '' }) {
       />`;
   }
   return `
-    <fieldset class="theme-input-otp" id="${htmlId}" data-controller="input-otp" data-input-otp-length-value="${length}" ${value ? `data-input-otp-value-value="${value}"` : ''}>
-      <legend class="theme-input-otp__legend" id="${legendId}">${label}</legend>
-      <div class="theme-input-otp__cells">${cellsHtml}</div>
+    <fieldset class="cremona-input-otp" id="${htmlId}" data-controller="input-otp" data-input-otp-length-value="${length}" ${value ? `data-input-otp-value-value="${value}"` : ''}>
+      <legend class="cremona-input-otp__legend" id="${legendId}">${label}</legend>
+      <div class="cremona-input-otp__cells">${cellsHtml}</div>
       <input type="hidden" name="${name}" data-input-otp-target="hiddenInput" value="${value}"/>
     </fieldset>
   `;
@@ -65,15 +65,15 @@ function renderInputOtp({ htmlId, name, length = 6, label, value = '' }) {
 
 function renderButton({ label, variant = 'primary', href = null, type = null, fullWidth = false, loading = false, size = 'md' }) {
   const tag = href ? 'a' : 'button';
-  const fullCls = fullWidth ? ' theme-button--full-width' : '';
+  const fullCls = fullWidth ? ' cremona-button--full-width' : '';
   const hrefAttr = href ? `href="${href}"` : '';
   const typeAttr = !href && type ? `type="${type}"` : '';
   const busyAttr = loading ? 'aria-busy="true"' : '';
   const disabledAttr = loading && !href ? 'disabled' : (loading ? 'aria-disabled="true"' : '');
   const spinner = loading
-    ? `<span class="theme-button__spinner"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 1-9 9" stroke-linecap="round"/></svg></span>`
+    ? `<span class="cremona-button__spinner"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 1-9 9" stroke-linecap="round"/></svg></span>`
     : '';
-  return `<${tag} class="theme-button${fullCls}" data-variant="${variant}" data-size="${size}" ${hrefAttr} ${typeAttr} ${busyAttr} ${disabledAttr}>${spinner}<span class="theme-button__label">${label}</span></${tag}>`;
+  return `<${tag} class="cremona-button${fullCls}" data-variant="${variant}" data-size="${size}" ${hrefAttr} ${typeAttr} ${busyAttr} ${disabledAttr}>${spinner}<span class="cremona-button__label">${label}</span></${tag}>`;
 }
 
 function renderAuthOtp({
@@ -95,15 +95,15 @@ function renderAuthOtp({
   });
 
   const resendRowHtml = `
-    <div class="theme-auth-otp__resend-row">
-      <span class="theme-auth-otp__resend-question">${t('theme.auth.otp.resend-question')}</span>
+    <div class="cremona-auth-otp__resend-row">
+      <span class="cremona-auth-otp__resend-question">${t('theme.auth.otp.resend-question')}</span>
       ${renderButton({ label: t('theme.auth.otp.resend-cta'), variant: 'link', size: 'sm', href: '/auth/otp/resend' })}
       ${withEmailFallback ? renderButton({ label: t('theme.auth.otp.email-fallback-cta'), variant: 'link', size: 'sm', href: '/auth/otp/email-fallback' }) : ''}
     </div>
   `;
 
   const formHtml = `
-    <form class="theme-auth-otp" action="/auth/otp/verify" method="post" novalidate data-state="${state}" ${loading ? 'data-loading="true"' : ''}>
+    <form class="cremona-auth-otp" action="/auth/otp/verify" method="post" novalidate data-state="${state}" ${loading ? 'data-loading="true"' : ''}>
       ${globalError ? renderAlert({ body: globalError, htmlId: `${htmlId}-global-error` }) : ''}
       <input type="hidden" name="_token" value="csrf-demo-otp-1234"/>
       ${inputOtpHtml}
@@ -113,14 +113,14 @@ function renderAuthOtp({
   `;
 
   return `
-    <main class="theme-auth-shell" data-variant="default">
-      <section class="theme-auth-shell__panel">
-        <article class="theme-card theme-auth-shell__card" aria-labelledby="${titleId}">
-          <header class="theme-card__header theme-auth-shell__card-header">
-            <h1 id="${titleId}" class="theme-auth-shell__title">${t('theme.auth.otp.title')}</h1>
-            <p class="theme-auth-shell__subtitle">${t('theme.auth.otp.subtitle')}</p>
+    <main class="cremona-auth-shell" data-variant="default">
+      <section class="cremona-auth-shell__panel">
+        <article class="cremona-card cremona-auth-shell__card" aria-labelledby="${titleId}">
+          <header class="cremona-card__header cremona-auth-shell__card-header">
+            <h1 id="${titleId}" class="cremona-auth-shell__title">${t('theme.auth.otp.title')}</h1>
+            <p class="cremona-auth-shell__subtitle">${t('theme.auth.otp.subtitle')}</p>
           </header>
-          <div class="theme-card__body theme-auth-shell__card-body">${formHtml}</div>
+          <div class="cremona-card__body cremona-auth-shell__card-body">${formHtml}</div>
         </article>
       </section>
     </main>
@@ -135,14 +135,14 @@ const bodyHtml = `
     </header>
 
     <section class="auth-otp-story__section" aria-labelledby="auth-otp-section-default">
-      <h2 id="auth-otp-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.default')}</h2>
-      <p class="auth-otp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.default')}</p>
+      <h2 id="auth-otp-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.default')}</h2>
+      <p class="auth-otp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.default')}</p>
       <div class="auth-otp-story__frame">${renderAuthOtp({ htmlId: 'story-auth-otp-default' })}</div>
     </section>
 
     <section class="auth-otp-story__section" aria-labelledby="auth-otp-section-error">
-      <h2 id="auth-otp-section-error" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.error')}</h2>
-      <p class="auth-otp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.error')}</p>
+      <h2 id="auth-otp-section-error" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.error')}</h2>
+      <p class="auth-otp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.error')}</p>
       <div class="auth-otp-story__frame">${renderAuthOtp({
         htmlId: 'story-auth-otp-error',
         otpValue: '123456',
@@ -151,8 +151,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-otp-story__section" aria-labelledby="auth-otp-section-email-fallback">
-      <h2 id="auth-otp-section-email-fallback" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.email-fallback')}</h2>
-      <p class="auth-otp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.email-fallback')}</p>
+      <h2 id="auth-otp-section-email-fallback" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.email-fallback')}</h2>
+      <p class="auth-otp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.email-fallback')}</p>
       <div class="auth-otp-story__frame">${renderAuthOtp({
         htmlId: 'story-auth-otp-fallback',
         withEmailFallback: true,
@@ -160,8 +160,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-otp-story__section" aria-labelledby="auth-otp-section-length-4">
-      <h2 id="auth-otp-section-length-4" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.length-4')}</h2>
-      <p class="auth-otp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.length-4')}</p>
+      <h2 id="auth-otp-section-length-4" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.otp.story.section.length-4')}</h2>
+      <p class="auth-otp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.otp.story.explainer.length-4')}</p>
       <div class="auth-otp-story__frame">${renderAuthOtp({
         htmlId: 'story-auth-otp-length-4',
         length: 4,
@@ -187,6 +187,6 @@ const bodyHtml = `
 .auth-otp-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .auth-otp-story__explainer { max-inline-size: 70ch; }
 .auth-otp-story__frame { min-block-size: 32rem; max-block-size: 48rem; overflow: hidden; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.auth-otp-story__frame .theme-auth-shell { min-block-size: 100%; }
+.auth-otp-story__frame .cremona-auth-shell { min-block-size: 100%; }
 .auth-otp-dark-wrap { background: var(--color-bg-base); }
 </style>

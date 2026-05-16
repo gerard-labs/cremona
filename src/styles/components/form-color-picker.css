@@ -5,15 +5,15 @@
  * Popover Ring 2 carries the positioning ; color-picker controller owns lazy
  * Coloris load + preview sync.
  *
- * Coloris theme-aware CSS vars (--clr-*) overridden here to match kit tokens.
+ * Coloris cremona-aware CSS vars (--clr-*) overridden here to match kit tokens.
  */
 
-.theme-form-color-picker__wrap {
+.cremona-form-color-picker__wrap {
   position: relative;
   display: inline-block;
 }
 
-.theme-form-color-picker__trigger {
+.cremona-form-color-picker__trigger {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -22,7 +22,7 @@
   min-block-size: 2.5rem;
 }
 
-.theme-form-color-picker__preview {
+.cremona-form-color-picker__preview {
   display: inline-block;
   inline-size: 1.5rem;
   block-size: 1.5rem;
@@ -32,7 +32,7 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-form-color-picker__hex {
+.cremona-form-color-picker__hex {
   /* Compact hex input inside the trigger — uppercase + monospace for clarity. */
   inline-size: 7rem;
   text-transform: uppercase;
@@ -40,14 +40,14 @@
   letter-spacing: 0.02em;
 }
 
-.theme-form-color-picker__panel {
+.cremona-form-color-picker__panel {
   /* Coloris's picker UI renders inside this Popover content area. */
   min-inline-size: 14rem;
   padding: var(--spacing-3);
 }
 
-/* Override Coloris CSS variables to match kit tokens (theme-aware light/dark). */
-.theme-form-color-picker {
+/* Override Coloris CSS variables to match kit tokens (cremona-aware light/dark). */
+.cremona-form-color-picker {
   --clr-bg: var(--color-bg-elevated);
   --clr-border: var(--color-border-default);
   --clr-text: var(--color-text-primary);

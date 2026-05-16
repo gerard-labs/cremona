@@ -43,7 +43,7 @@
                          Consumer-provided HTML.
 -#}
 
-{%- set htmlId     = htmlId     | default('theme-hover-card-' ~ random()) -%}
+{%- set htmlId     = htmlId     | default('cremona-hover-card-' ~ random()) -%}
 {%- set placement  = placement  | default('top') -%}
 {%- set offset     = offset     | default(8) -%}
 {%- set openDelay  = openDelay  | default(400) -%}
@@ -51,7 +51,7 @@
 {%- set open       = open       | default(false) -%}
 {%- set className  = className  | default('') -%}
 
-{%- set _classes = ['theme-popover', 'theme-hover-card'] -%}
+{%- set _classes = ['cremona-popover', 'cremona-hover-card'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set hoverCardHtmlId = htmlId -%}
@@ -69,7 +69,7 @@
   {%- block trigger -%}{%- endblock -%}
   <div
     id="{{ htmlId }}"
-    class="theme-popover__content theme-hover-card__content"
+    class="cremona-popover__content cremona-hover-card__content"
     data-popover-target="content"
     data-state="{{ open ? 'open' : 'closed' }}"
     data-placement="{{ placement }}"

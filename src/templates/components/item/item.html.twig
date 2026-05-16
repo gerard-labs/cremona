@@ -64,7 +64,7 @@
 {%- set attrs        = attrs        | default({}) -%}
 {%- set htmlId       = htmlId       | default(null) -%}
 
-{%- set _classes = ['theme-item'] -%}
+{%- set _classes = ['cremona-item'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <{{ as }}
@@ -83,29 +83,29 @@
     {%- block content -%}{%- endblock -%}
   {%- else -%}
   {%- if iconLeading -%}
-    {% include '@theme/components/icon/icon.html.twig' with {
+    {% include '@cremona/components/icon/icon.html.twig' with {
       name: iconLeading,
       decorative: true,
       size: 'sm',
-      className: 'theme-item__icon theme-item__icon--leading',
+      className: 'cremona-item__icon cremona-item__icon--leading',
     } %}
   {%- endif -%}
   {%- if label or description -%}
-    <div class="theme-item__text">
-      {%- if label -%}<span class="theme-item__label">{{ label }}</span>{%- endif -%}
-      {%- if description -%}<span class="theme-item__description">{{ description }}</span>{%- endif -%}
+    <div class="cremona-item__text">
+      {%- if label -%}<span class="cremona-item__label">{{ label }}</span>{%- endif -%}
+      {%- if description -%}<span class="cremona-item__description">{{ description }}</span>{%- endif -%}
     </div>
   {%- endif -%}
   {%- if kbdShortcut -%}
-    <span class="theme-item__trailing">
-      {% include '@theme/components/kbd/kbd.html.twig' with { keys: kbdShortcut, size: 'sm' } %}
+    <span class="cremona-item__trailing">
+      {% include '@cremona/components/kbd/kbd.html.twig' with { keys: kbdShortcut, size: 'sm' } %}
     </span>
   {%- elseif iconTrailing -%}
-    {% include '@theme/components/icon/icon.html.twig' with {
+    {% include '@cremona/components/icon/icon.html.twig' with {
       name: iconTrailing,
       decorative: true,
       size: 'sm',
-      className: 'theme-item__icon theme-item__icon--trailing',
+      className: 'cremona-item__icon cremona-item__icon--trailing',
     } %}
   {%- endif -%}
   {%- endif -%}

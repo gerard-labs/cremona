@@ -82,13 +82,13 @@ describe('SelectController', () => {
     const optionsHtml = opts.map((o, i) => {
       const dis = o.disabled ? ' aria-disabled="true" data-state="disabled"' : '';
       const sel = o.value === value && value !== '';
-      return `<div class="theme-item theme-select__option"
+      return `<div class="cremona-item cremona-select__option"
         id="sel-opt-${i + 1}"
         data-select-target="option"
         data-value="${o.value}"
         role="option"
         aria-selected="${sel ? 'true' : 'false'}"${dis}>
-        <span class="theme-item__text"><span class="theme-item__label">${o.label}</span></span>
+        <span class="cremona-item__text"><span class="cremona-item__label">${o.label}</span></span>
       </div>`;
     }).join('');
     const selectedOpt = opts.find((o) => o.value === value && value !== '');
@@ -96,7 +96,7 @@ describe('SelectController', () => {
     const isPlaceholder = !selectedOpt;
     document.body.innerHTML = `
       <form id="form">
-        <div id="wrap" class="theme-popover theme-select"
+        <div id="wrap" class="cremona-popover cremona-select"
           data-controller="popover select"
           data-action="click->popover#toggle keydown.esc@window->popover#close keydown->select#keydown click->select#onOptionClick"
           data-popover-placement-value="bottom-start"
@@ -104,15 +104,15 @@ describe('SelectController', () => {
           data-popover-open-value="false"
           data-select-value-value="${value}"
           data-select-placeholder-value="${placeholder}">
-          <button type="button" class="theme-select__trigger"
+          <button type="button" class="cremona-select__trigger"
             data-popover-target="trigger"
             data-select-target="button"
             aria-haspopup="listbox" aria-expanded="false" aria-controls="sel-listbox">
-            <span class="theme-select__label" data-select-target="label" data-placeholder="${isPlaceholder}">${labelText}</span>
-            <span class="theme-select__chevron" aria-hidden="true">v</span>
+            <span class="cremona-select__label" data-select-target="label" data-placeholder="${isPlaceholder}">${labelText}</span>
+            <span class="cremona-select__chevron" aria-hidden="true">v</span>
           </button>
           <input type="hidden" name="lang" value="${value}" data-select-target="hiddenInput">
-          <div id="sel-listbox" class="theme-popover__content theme-select__listbox"
+          <div id="sel-listbox" class="cremona-popover__content cremona-select__listbox"
             data-popover-target="content"
             data-state="closed"
             role="listbox"

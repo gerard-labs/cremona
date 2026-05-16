@@ -47,7 +47,7 @@ function fileUpload({
 }) {
   const wrapId = id || nextId('fu');
   const multiple = maxFiles !== 1;
-  return `<div id="${wrapId}" class="theme-file-upload"
+  return `<div id="${wrapId}" class="cremona-file-upload"
     data-controller="file-upload"
     data-file-upload-accept-value="${accept}"
     data-file-upload-max-file-size-value="${maxFileSize}"
@@ -64,9 +64,9 @@ function fileUpload({
       accept="${accept}"
       ${multiple ? 'multiple' : ''}
       aria-describedby="${wrapId}-affordance" />
-    <label for="${wrapId}-input" class="theme-file-upload__affordance" id="${wrapId}-affordance">
-      <span class="theme-file-upload__icon" aria-hidden="true"></span>
-      <span class="theme-file-upload__affordance-text">${label}</span>
+    <label for="${wrapId}-input" class="cremona-file-upload__affordance" id="${wrapId}-affordance">
+      <span class="cremona-file-upload__icon" aria-hidden="true"></span>
+      <span class="cremona-file-upload__affordance-text">${label}</span>
     </label>
   </div>`;
 }
@@ -79,35 +79,35 @@ const bodyHtml = `
     </header>
 
     <section class="fu-story__section" aria-labelledby="fu-section-default">
-      <h2 id="fu-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="fu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="fu-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="fu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${fileUpload({ name: 'documents', label: S('label.default'), accept: '*/*', maxFileSize: '10MB' })}
     </section>
 
     <section class="fu-story__section" aria-labelledby="fu-section-image">
-      <h2 id="fu-section-image" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.image')}</h2>
-      <p class="fu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.image')}</p>
+      <h2 id="fu-section-image" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.image')}</h2>
+      <p class="fu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.image')}</p>
       ${fileUpload({ name: 'photos', label: S('label.image'), accept: 'image/*', maxFileSize: '5MB', imagePreview: true })}
     </section>
 
     <section class="fu-story__section" aria-labelledby="fu-section-single">
-      <h2 id="fu-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.single')}</h2>
-      <p class="fu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.single')}</p>
+      <h2 id="fu-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.single')}</h2>
+      <p class="fu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.single')}</p>
       ${fileUpload({ name: 'avatar', label: S('label.single'), accept: 'image/*', maxFileSize: '2MB', maxFiles: 1, imagePreview: true })}
     </section>
 
     <section class="fu-story__section" aria-labelledby="fu-section-strict">
-      <h2 id="fu-section-strict" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.strict')}</h2>
-      <p class="fu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.strict')}</p>
+      <h2 id="fu-section-strict" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.strict')}</h2>
+      <p class="fu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.strict')}</p>
       ${fileUpload({ name: 'pdfs', label: S('label.strict'), accept: 'application/pdf', maxFileSize: '2MB', maxFiles: 3 })}
     </section>
 
     <section class="fu-story__section" aria-labelledby="fu-section-events">
-      <h2 id="fu-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="fu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="fu-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="fu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       ${fileUpload({ id: 'fu-events-demo', name: 'events', label: S('label.events'), maxFileSize: '5MB' })}
       <div class="fu-story__log" data-events-log="fu-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="fu-story__log-out"></div>
       </div>
     </section>

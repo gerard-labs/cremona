@@ -29,7 +29,7 @@ import { t } from '../utils/i18n.js';
  * from variant" sealed in ADR-0008):
  *   - variant ∈ {success, info, warning} → toast is a native <output>
  *     (implicit role="status" + aria-live="polite" + aria-atomic="true").
- *     Controller pushes the message to `#theme-announcer` as a backup
+ *     Controller pushes the message to `#cremona-announcer` as a backup
  *     for SR implementations that miss rapid <output> mutations.
  *   - variant === 'danger' → toast is `<div role="alert">` (assertive
  *     auto-bump). Announcer push is SKIPPED to avoid double-announce.
@@ -246,7 +246,7 @@ export default class SonnerController extends Controller {
     const isDanger = toast.variant === 'danger';
     const el = document.createElement(isDanger ? 'div' : 'output');
     el.id = `sonner-toast-${toast.id}`;
-    el.className = 'theme-sonner__toast';
+    el.className = 'cremona-sonner__toast';
     el.dataset.variant = toast.variant;
     el.dataset.state = 'entering';
     el.dataset.toastId = toast.id;
@@ -259,16 +259,16 @@ export default class SonnerController extends Controller {
     const icon = ICONS[toast.variant] || '';
     const dismissAria = t('theme.sonner.aria.dismiss');
     const titleHtml = toast.title
-      ? `<strong class="theme-sonner__title">${escapeHtml(toast.title)}</strong>`
+      ? `<strong class="cremona-sonner__title">${escapeHtml(toast.title)}</strong>`
       : '';
     const undoHtml = toast.hasUndo
-      ? `<button type="button" class="theme-sonner__undo theme-button" data-variant="ghost" data-size="sm" data-action="click->sonner#undo" data-toast-id="${escapeHtml(toast.id)}">${escapeHtml(toast.undoLabel)}</button>`
+      ? `<button type="button" class="cremona-sonner__undo cremona-button" data-variant="ghost" data-size="sm" data-action="click->sonner#undo" data-toast-id="${escapeHtml(toast.id)}">${escapeHtml(toast.undoLabel)}</button>`
       : '';
     return (
-      `<span class="theme-sonner__icon" aria-hidden="true">${icon}</span>` +
-      `<div class="theme-sonner__body">${titleHtml}<p class="theme-sonner__message">${escapeHtml(toast.message)}</p></div>` +
+      `<span class="cremona-sonner__icon" aria-hidden="true">${icon}</span>` +
+      `<div class="cremona-sonner__body">${titleHtml}<p class="cremona-sonner__message">${escapeHtml(toast.message)}</p></div>` +
       `${undoHtml}` +
-      `<button type="button" class="theme-sonner__dismiss" data-action="click->sonner#dismiss" data-toast-id="${escapeHtml(toast.id)}" aria-label="${escapeHtml(dismissAria)}"><span aria-hidden="true">×</span></button>`
+      `<button type="button" class="cremona-sonner__dismiss" data-action="click->sonner#dismiss" data-toast-id="${escapeHtml(toast.id)}" aria-label="${escapeHtml(dismissAria)}"><span aria-hidden="true">×</span></button>`
     );
   }
 
@@ -356,7 +356,7 @@ export default class SonnerController extends Controller {
 
   _announce(toast) {
     if (typeof document === 'undefined') return;
-    const announcer = document.getElementById('theme-announcer');
+    const announcer = document.getElementById('cremona-announcer');
     if (!announcer) return;
     announcer.textContent = toast.title ? `${toast.title} : ${toast.message}` : toast.message;
   }

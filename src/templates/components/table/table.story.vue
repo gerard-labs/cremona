@@ -35,9 +35,9 @@ function thCell({ label, sortable = false, sortDir = 'none', numeric = false, al
   const alignAttrStr = alignAttr ? ` data-align="${alignAttr}"` : '';
   if (sortable) {
     return `<th scope="col"${alignAttrStr}${numericAttr}${sortableAttrs}>
-      <button type="button" class="theme-table__sort" data-sort-dir="${sortDir}">
-        <span class="theme-table__sort-label">${label}</span>
-        <span class="theme-table__sort-icon" aria-hidden="true"></span>
+      <button type="button" class="cremona-table__sort" data-sort-dir="${sortDir}">
+        <span class="cremona-table__sort-label">${label}</span>
+        <span class="cremona-table__sort-icon" aria-hidden="true"></span>
       </button>
     </th>`;
   }
@@ -60,15 +60,15 @@ function row({ cells, selected = false }) {
 
 function table({ caption = null, captionSrOnly = false, size = 'md', variant = 'default', columns = [], rows = [], className = '' }) {
   const captionHtml = caption
-    ? `<caption class="theme-table__caption${captionSrOnly ? ' sr-only' : ''}">${caption}</caption>`
+    ? `<caption class="cremona-table__caption${captionSrOnly ? ' sr-only' : ''}">${caption}</caption>`
     : '';
   const theadHtml = columns.length > 0
-    ? `<thead class="theme-table__thead"><tr>${columns.map(thCell).join('')}</tr></thead>`
+    ? `<thead class="cremona-table__thead"><tr>${columns.map(thCell).join('')}</tr></thead>`
     : '';
   const tbodyHtml = rows.length > 0
-    ? `<tbody class="theme-table__tbody">${rows.map(row).join('')}</tbody>`
+    ? `<tbody class="cremona-table__tbody">${rows.map(row).join('')}</tbody>`
     : '';
-  const classes = ['theme-table', className].filter(Boolean).join(' ');
+  const classes = ['cremona-table', className].filter(Boolean).join(' ');
   return `<table class="${classes}" data-size="${size}" data-variant="${variant}">${captionHtml}${theadHtml}${tbodyHtml}</table>`;
 }
 
@@ -137,8 +137,8 @@ const bodyHtml = `
     </header>
 
     <section class="tb-story__section" aria-labelledby="tb-section-default">
-      <h2 id="tb-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="tb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="tb-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="tb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${table({
         caption: S('caption.team'),
         captionSrOnly: true,
@@ -148,8 +148,8 @@ const bodyHtml = `
     </section>
 
     <section class="tb-story__section" aria-labelledby="tb-section-sortable">
-      <h2 id="tb-section-sortable" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.sortable')}</h2>
-      <p class="tb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.sortable')}</p>
+      <h2 id="tb-section-sortable" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.sortable')}</h2>
+      <p class="tb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.sortable')}</p>
       ${table({
         caption: S('caption.sortable'),
         captionSrOnly: true,
@@ -159,8 +159,8 @@ const bodyHtml = `
     </section>
 
     <section class="tb-story__section" aria-labelledby="tb-section-numeric">
-      <h2 id="tb-section-numeric" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.numeric')}</h2>
-      <p class="tb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.numeric')}</p>
+      <h2 id="tb-section-numeric" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.numeric')}</h2>
+      <p class="tb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.numeric')}</p>
       ${table({
         caption: S('caption.numeric'),
         captionSrOnly: true,
@@ -170,8 +170,8 @@ const bodyHtml = `
     </section>
 
     <section class="tb-story__section" aria-labelledby="tb-section-selected">
-      <h2 id="tb-section-selected" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.selected')}</h2>
-      <p class="tb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.selected')}</p>
+      <h2 id="tb-section-selected" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.selected')}</h2>
+      <p class="tb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.selected')}</p>
       ${table({
         caption: S('caption.selected'),
         captionSrOnly: true,
@@ -181,8 +181,8 @@ const bodyHtml = `
     </section>
 
     <section class="tb-story__section" aria-labelledby="tb-section-striped">
-      <h2 id="tb-section-striped" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.striped')}</h2>
-      <p class="tb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.striped')}</p>
+      <h2 id="tb-section-striped" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.striped')}</h2>
+      <p class="tb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.striped')}</p>
       ${table({
         caption: S('caption.striped'),
         captionSrOnly: true,
@@ -193,11 +193,11 @@ const bodyHtml = `
     </section>
 
     <section class="tb-story__section" aria-labelledby="tb-section-sizes">
-      <h2 id="tb-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
-      <p class="tb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
+      <h2 id="tb-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
+      <p class="tb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
       <div class="tb-story__sizes">
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('size.sm')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('size.sm')}</p>
           ${table({
             captionSrOnly: true,
             size: 'sm',
@@ -206,7 +206,7 @@ const bodyHtml = `
           })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('size.md')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('size.md')}</p>
           ${table({
             captionSrOnly: true,
             size: 'md',
@@ -215,7 +215,7 @@ const bodyHtml = `
           })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('size.lg')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('size.lg')}</p>
           ${table({
             captionSrOnly: true,
             size: 'lg',

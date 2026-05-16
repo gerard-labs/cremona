@@ -3,10 +3,10 @@
  *
  * 6 semantic variants × 2 sizes × {solid (default), soft (data-soft="true")}.
  * Always pill-shaped via --radius-pill.
- * Dot-only mode (.theme-badge--dot) for compact status indicators.
+ * Dot-only mode (.cremona-badge--dot) for compact status indicators.
  */
 
-.theme-badge {
+.cremona-badge {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
@@ -21,78 +21,78 @@
   border: 1px solid transparent;
 }
 
-.theme-badge[data-size="sm"] {
+.cremona-badge[data-size="sm"] {
   padding-inline: var(--spacing-1_5);
   padding-block: 1px;
   font-size: var(--font-size-2xs);
 }
 
 /* --- Solid variants ---------------------------------------------------- */
-.theme-badge[data-variant="default"] {
+.cremona-badge[data-variant="default"] {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
   border-color: var(--color-border-default);
 }
 
-.theme-badge[data-variant="primary"] {
+.cremona-badge[data-variant="primary"] {
   background: var(--color-primary);
   color: var(--color-primary-foreground);
 }
 
-.theme-badge[data-variant="success"] {
+.cremona-badge[data-variant="success"] {
   background: var(--color-success);
   color: var(--color-success-foreground);
 }
 
-.theme-badge[data-variant="warning"] {
+.cremona-badge[data-variant="warning"] {
   background: var(--color-warning);
   color: var(--color-warning-foreground);
 }
 
-.theme-badge[data-variant="danger"] {
+.cremona-badge[data-variant="danger"] {
   background: var(--color-danger);
   color: var(--color-danger-foreground);
 }
 
-.theme-badge[data-variant="info"] {
+.cremona-badge[data-variant="info"] {
   background: var(--color-info);
   color: var(--color-info-foreground);
 }
 
 /* --- Soft variants (lower visual weight) ------------------------------- */
-.theme-badge[data-soft="true"][data-variant="default"] {
+.cremona-badge[data-soft="true"][data-variant="default"] {
   background: var(--color-bg-sunken);
   color: var(--color-text-secondary);
   border-color: var(--color-border-subtle);
 }
 
-.theme-badge[data-soft="true"][data-variant="primary"] {
+.cremona-badge[data-soft="true"][data-variant="primary"] {
   background: var(--color-primary-soft);
   color: var(--color-primary-soft-foreground);
 }
 
-.theme-badge[data-soft="true"][data-variant="success"] {
+.cremona-badge[data-soft="true"][data-variant="success"] {
   background: var(--color-success-soft);
   color: var(--color-success-soft-foreground);
 }
 
-.theme-badge[data-soft="true"][data-variant="warning"] {
+.cremona-badge[data-soft="true"][data-variant="warning"] {
   background: var(--color-warning-soft);
   color: var(--color-warning-soft-foreground);
 }
 
-.theme-badge[data-soft="true"][data-variant="danger"] {
+.cremona-badge[data-soft="true"][data-variant="danger"] {
   background: var(--color-danger-soft);
   color: var(--color-danger-soft-foreground);
 }
 
-.theme-badge[data-soft="true"][data-variant="info"] {
+.cremona-badge[data-soft="true"][data-variant="info"] {
   background: var(--color-info-soft);
   color: var(--color-info-soft-foreground);
 }
 
 /* --- Dot mode --------------------------------------------------------- */
-.theme-badge--dot {
+.cremona-badge--dot {
   inline-size: 8px;
   block-size: 8px;
   padding: 0;
@@ -100,7 +100,7 @@
   border: 0;
 }
 
-.theme-badge--dot[data-size="sm"] {
+.cremona-badge--dot[data-size="sm"] {
   inline-size: 6px;
   block-size: 6px;
 }

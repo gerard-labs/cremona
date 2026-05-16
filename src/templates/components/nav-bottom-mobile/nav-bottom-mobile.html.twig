@@ -11,35 +11,35 @@
     showLabels  (bool, optional)    — default true ; false = icon-only
 -#}
 
-{%- set htmlId     = htmlId     | default('theme-nav-bottom-mobile-' ~ random()) -%}
+{%- set htmlId     = htmlId     | default('cremona-nav-bottom-mobile-' ~ random()) -%}
 {%- set ariaLabel  = ariaLabel  | default('theme.nav.bottom-mobile.aria.label'|trans) -%}
 {%- set showLabels = showLabels | default(true) -%}
 
-{%- set _classes = ['theme-nav-bottom-mobile'] -%}
-{%- if not showLabels -%}{%- set _classes = _classes | merge(['theme-nav-bottom-mobile--icon-only']) -%}{%- endif -%}
+{%- set _classes = ['cremona-nav-bottom-mobile'] -%}
+{%- if not showLabels -%}{%- set _classes = _classes | merge(['cremona-nav-bottom-mobile--icon-only']) -%}{%- endif -%}
 
 <nav class="{{ _classes | join(' ') }}" id="{{ htmlId }}" aria-label="{{ ariaLabel }}">
-  <ul class="theme-nav-bottom-mobile__list">
+  <ul class="cremona-nav-bottom-mobile__list">
     {%- for item in items -%}
-      <li class="theme-nav-bottom-mobile__item">
+      <li class="cremona-nav-bottom-mobile__item">
         <a href="{{ item.href }}"
-           class="theme-nav-bottom-mobile__link"
+           class="cremona-nav-bottom-mobile__link"
            {% if item.current %}aria-current="page"{% endif %}
            {% if not showLabels %}aria-label="{{ item.label }}"{% endif %}>
-          <span class="theme-nav-bottom-mobile__icon-wrap">
-            {% include '@theme/components/icon/icon.html.twig' with { name: item.icon } %}
+          <span class="cremona-nav-bottom-mobile__icon-wrap">
+            {% include '@cremona/components/icon/icon.html.twig' with { name: item.icon } %}
             {%- if item.badge -%}
-              {% include '@theme/components/badge/badge.html.twig' with {
+              {% include '@cremona/components/badge/badge.html.twig' with {
                 variant: 'danger',
                 size: 'sm',
                 count: item.badge,
-                className: 'theme-nav-bottom-mobile__badge',
+                className: 'cremona-nav-bottom-mobile__badge',
                 attrs: { 'aria-label': 'theme.nav.bottom-mobile.badge.aria'|trans({'{count}': item.badge}) },
               } only %}
             {%- endif -%}
           </span>
           {%- if showLabels -%}
-            <span class="theme-nav-bottom-mobile__label">{{ item.label }}</span>
+            <span class="cremona-nav-bottom-mobile__label">{{ item.label }}</span>
           {%- endif -%}
         </a>
       </li>

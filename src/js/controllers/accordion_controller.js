@@ -42,11 +42,11 @@ export default class AccordionController extends Controller {
 
   /** Re-queried each call so dynamically added/removed Collapsibles work. */
   get collapsibles() {
-    return Array.from(this.element.querySelectorAll('.theme-collapsible'));
+    return Array.from(this.element.querySelectorAll('.cremona-collapsible'));
   }
 
   get triggers() {
-    return Array.from(this.element.querySelectorAll('.theme-collapsible__trigger'));
+    return Array.from(this.element.querySelectorAll('.cremona-collapsible__trigger'));
   }
 
   /**
@@ -84,11 +84,11 @@ export default class AccordionController extends Controller {
       this.setRovingTabindex();
       return;
     }
-    const opened = event.target; // .theme-collapsible wrapper
+    const opened = event.target; // .cremona-collapsible wrapper
     this.collapsibles.forEach((c) => {
       if (c === opened) return;
-      const trigger = c.querySelector('.theme-collapsible__trigger');
-      const content = c.querySelector('.theme-collapsible__content');
+      const trigger = c.querySelector('.cremona-collapsible__trigger');
+      const content = c.querySelector('.cremona-collapsible__content');
       if (!trigger || !content) return;
       if (trigger.getAttribute('aria-expanded') === 'true') {
         trigger.setAttribute('aria-expanded', 'false');

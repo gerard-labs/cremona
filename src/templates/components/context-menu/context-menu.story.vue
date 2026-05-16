@@ -63,26 +63,26 @@ let _cmCounter = 0;
 function nextId() { return `cm-${++_cmCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function kbd(keys) {
   const parts = keys.map((k, i) => {
-    const sep = i < keys.length - 1 ? `<span class="theme-kbd-sep" aria-hidden="true">+</span>` : '';
-    return `<kbd class="theme-kbd" data-size="sm">${k}</kbd>${sep}`;
+    const sep = i < keys.length - 1 ? `<span class="cremona-kbd-sep" aria-hidden="true">+</span>` : '';
+    return `<kbd class="cremona-kbd" data-size="sm">${k}</kbd>${sep}`;
   }).join('');
-  return `<kbd class="theme-kbd-group" data-size="sm">${parts}</kbd>`;
+  return `<kbd class="cremona-kbd-group" data-size="sm">${parts}</kbd>`;
 }
 
 function renderItem({ label, iconLeading, kbdShortcut, disabled = false }) {
   const leadingHtml = iconLeading
-    ? `<span class="theme-item__icon theme-item__icon--leading">${icon(iconLeading)}</span>` : '';
+    ? `<span class="cremona-item__icon cremona-item__icon--leading">${icon(iconLeading)}</span>` : '';
   const trailingHtml = kbdShortcut
-    ? `<span class="theme-item__trailing">${kbd(kbdShortcut)}</span>` : '';
+    ? `<span class="cremona-item__trailing">${kbd(kbdShortcut)}</span>` : '';
   const attrs = disabled ? ' aria-disabled="true" data-state="disabled"' : '';
-  return `<div class="theme-item"${attrs}>
+  return `<div class="cremona-item"${attrs}>
     ${leadingHtml}
-    <div class="theme-item__text"><span class="theme-item__label">${label}</span></div>
+    <div class="cremona-item__text"><span class="cremona-item__label">${label}</span></div>
     ${trailingHtml}
   </div>`;
 }
@@ -92,29 +92,29 @@ function hint(text) {
 }
 
 function groupLabel(text) {
-  return `<div class="theme-dropdown-menu__group-label" role="presentation">${text}</div>`;
+  return `<div class="cremona-dropdown-menu__group-label" role="presentation">${text}</div>`;
 }
 
-const SEPARATOR = '<hr class="theme-dropdown-menu__separator">';
+const SEPARATOR = '<hr class="cremona-dropdown-menu__separator">';
 
 function renderContextMenu({ area = 'self', itemsHtml, areaContent, ariaLabel }) {
   const id = nextId();
   return `
     <div class="context-menu-story__area" aria-label="${ariaLabel}">
       ${areaContent}
-      <div class="theme-popover theme-dropdown-menu theme-context-menu"
+      <div class="cremona-popover cremona-dropdown-menu cremona-context-menu"
         data-controller="popover dropdown-menu context-menu"
         data-action="contextmenu->context-menu#openAt keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
         data-popover-placement-value="bottom-start"
         data-popover-offset-value="0"
         data-popover-open-value="false"
         data-context-menu-area-value="${area}">
-        <span class="theme-context-menu__phantom"
+        <span class="cremona-context-menu__phantom"
           data-popover-target="trigger"
           data-context-menu-target="phantom"
           aria-hidden="true"></span>
         <div id="${id}"
-          class="theme-popover__content theme-dropdown-menu__content theme-context-menu__content"
+          class="cremona-popover__content cremona-dropdown-menu__content cremona-context-menu__content"
           data-popover-target="content"
           data-state="closed"
           data-placement="bottom-start"
@@ -165,8 +165,8 @@ const bodyHtml = `
     </header>
 
     <section class="context-menu-story__section" aria-labelledby="cm-section-default">
-      <h2 id="cm-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.default')}</h2>
-      <p class="context-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.default')}</p>
+      <h2 id="cm-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.default')}</h2>
+      <p class="context-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.default')}</p>
       ${renderContextMenu({
         area: 'self',
         ariaLabel: S.defaultArea,
@@ -181,8 +181,8 @@ const bodyHtml = `
     </section>
 
     <section class="context-menu-story__section" aria-labelledby="cm-section-icons">
-      <h2 id="cm-section-icons" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.icons')}</h2>
-      <p class="context-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.icons')}</p>
+      <h2 id="cm-section-icons" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.icons')}</h2>
+      <p class="context-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.icons')}</p>
       ${renderContextMenu({
         area: 'self',
         ariaLabel: S.iconsArea,
@@ -198,8 +198,8 @@ const bodyHtml = `
     </section>
 
     <section class="context-menu-story__section" aria-labelledby="cm-section-groups">
-      <h2 id="cm-section-groups" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.groups')}</h2>
-      <p class="context-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.groups')}</p>
+      <h2 id="cm-section-groups" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.groups')}</h2>
+      <p class="context-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.groups')}</p>
       ${renderContextMenu({
         area: 'self',
         ariaLabel: S.groupsArea,
@@ -220,8 +220,8 @@ const bodyHtml = `
     </section>
 
     <section class="context-menu-story__section" aria-labelledby="cm-section-parent">
-      <h2 id="cm-section-parent" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.parent')}</h2>
-      <p class="context-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.parent')}</p>
+      <h2 id="cm-section-parent" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.parent')}</h2>
+      <p class="context-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.parent')}</p>
       <div class="context-menu-story__table" aria-label="${S.parentArea}">
         <div class="context-menu-story__table-row">
           <span class="context-menu-story__table-cell">${S.parentRow1}</span>
@@ -253,8 +253,8 @@ const bodyHtml = `
     </section>
 
     <section class="context-menu-story__section" aria-labelledby="cm-section-events">
-      <h2 id="cm-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.events')}</h2>
-      <p class="context-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.events')}</p>
+      <h2 id="cm-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.context-menu.story.section.events')}</h2>
+      <p class="context-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.context-menu.story.explainer.events')}</p>
       ${renderContextMenu({
         area: 'self',
         ariaLabel: S.eventsArea,
@@ -265,7 +265,7 @@ const bodyHtml = `
         ].join(''),
       })}
       <div class="context-menu-story__events">
-        <h3 class="theme-typography" data-variant="caption" data-color="secondary">${S.eventsLogTitle}</h3>
+        <h3 class="cremona-typography" data-variant="caption" data-color="secondary">${S.eventsLogTitle}</h3>
         <ul id="cm-events-log" class="context-menu-story__events-log"></ul>
       </div>
     </section>

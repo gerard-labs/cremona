@@ -1,13 +1,13 @@
 # Theme bundle services.
 #
 # Ring 1 lock-in (ADR-0008) ships:
-#   - Twig @theme namespace (via ThemeExtension::prepend)
-#   - framework.translator.paths registering src/js/i18n/ (via ThemeExtension::prepend)
+#   - Twig @theme namespace (via CremonaExtension::prepend)
+#   - framework.translator.paths registering src/js/i18n/ (via CremonaExtension::prepend)
 #
 # Deferred to Ring 2 / future ADRs:
 #   - Symfony UX-Stimulus bridge that registers the kit's controllers into the
 #     consumer's import-map. Today, `class_exists('Symfony\UX\StimulusBundle\StimulusBundle')`
-#     is checked in ThemeExtension::load() and a parameter is set; the actual
+#     is checked in CremonaExtension::load() and a parameter is set; the actual
 #     bridging is consumer-side.
-#   - PHPUnit test fixtures beyond ThemeBundleTest (boot smoke).
+#   - PHPUnit test fixtures beyond CremonaBundleTest (boot smoke).
 services: {}

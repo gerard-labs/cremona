@@ -10,38 +10,38 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderItem(locale, currentLocale) {
-  const flag = locale.flag ? `<span class="theme-lang-switcher__flag" aria-hidden="true">${locale.flag}</span>` : '';
+  const flag = locale.flag ? `<span class="cremona-lang-switcher__flag" aria-hidden="true">${locale.flag}</span>` : '';
   const current = locale.code === currentLocale ? ' aria-current="true"' : '';
   return `
-    <div class="theme-item theme-lang-switcher__item"
+    <div class="cremona-item cremona-lang-switcher__item"
          role="menuitem" tabindex="-1"
          data-action="click->lang-switcher#select"
          data-locale="${locale.code}"${current}>
       ${flag}
-      <span class="theme-lang-switcher__label">${locale.label}</span>
+      <span class="cremona-lang-switcher__label">${locale.label}</span>
     </div>`;
 }
 
 function renderLangSwitcher({ id, locales, currentLocale = 'fr' }) {
   const items = locales.map((l) => renderItem(l, currentLocale)).join('');
   return `
-    <div class="theme-popover theme-dropdown-menu theme-lang-switcher"
+    <div class="cremona-popover cremona-dropdown-menu cremona-lang-switcher"
          data-popover-placement-value="bottom"
          data-popover-offset-value="8"
          data-popover-open-value="false"
          data-lang-switcher-current-locale-value="${currentLocale}"
          data-lang-switcher-storage-key-value="theme.locale">
       <button type="button"
-              class="theme-button theme-lang-switcher__trigger"
+              class="cremona-button cremona-lang-switcher__trigger"
               data-variant="ghost" data-size="sm"
               aria-haspopup="menu" aria-expanded="false"
               aria-controls="${id}-content"
               aria-label="${t('theme.lang-switcher.aria.trigger')}">
-        <span class="theme-button__label" data-lang-switcher-target="current">${currentLocale.toUpperCase()}</span>
-        <svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-chevron-down"/></svg>
+        <span class="cremona-button__label" data-lang-switcher-target="current">${currentLocale.toUpperCase()}</span>
+        <svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-chevron-down"/></svg>
       </button>
       <div id="${id}-content"
-           class="theme-popover__content theme-dropdown-menu__content theme-lang-switcher__content"
+           class="cremona-popover__content cremona-dropdown-menu__content cremona-lang-switcher__content"
            data-popover-target="content"
            role="menu"
            style="position: relative; display: block;">
@@ -78,20 +78,20 @@ const bodyHtml = `
     </header>
 
     <section class="lang-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.lang-switcher.story.section.default')}</h2>
-      <p class="lang-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.lang-switcher.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.lang-switcher.story.section.default')}</h2>
+      <p class="lang-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.lang-switcher.story.explainer.default')}</p>
       <div class="lang-switcher-story__frame">${renderLangSwitcher({ id: 'story-default', locales: locales3, currentLocale: 'fr' })}</div>
     </section>
 
     <section class="lang-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.lang-switcher.story.section.with-flags')}</h2>
-      <p class="lang-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.lang-switcher.story.explainer.with-flags')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.lang-switcher.story.section.with-flags')}</h2>
+      <p class="lang-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.lang-switcher.story.explainer.with-flags')}</p>
       <div class="lang-switcher-story__frame">${renderLangSwitcher({ id: 'story-flags', locales: localesWithFlags, currentLocale: 'fr' })}</div>
     </section>
 
     <section class="lang-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.lang-switcher.story.section.five')}</h2>
-      <p class="lang-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.lang-switcher.story.explainer.five')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.lang-switcher.story.section.five')}</h2>
+      <p class="lang-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.lang-switcher.story.explainer.five')}</p>
       <div class="lang-switcher-story__frame">${renderLangSwitcher({ id: 'story-five', locales: locales5, currentLocale: 'en' })}</div>
     </section>
   </section>

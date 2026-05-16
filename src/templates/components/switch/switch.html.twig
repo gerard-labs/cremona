@@ -12,9 +12,9 @@
   See STATE.md S1.3 §"Resolved at session opening" / OQ-8 for the full record.
 
   Two rendering modes (mirrors Checkbox):
-    1. `label` set        → <label class="theme-switch-row"> wraps input + track
+    1. `label` set        → <label class="cremona-switch-row"> wraps input + track
                             + thumb + label text (standalone usage).
-    2. `label` not set    → <span class="theme-switch-wrap"> bare layout
+    2. `label` not set    → <span class="cremona-switch-wrap"> bare layout
                             (Field / DataTable composition).
 
   Parameters (enumerated):
@@ -47,9 +47,9 @@
 {%- set ariaLabel     = ariaLabel     | default(null) -%}
 {%- set className     = className     | default('') -%}
 
-{%- set _rootClasses = [label ? 'theme-switch-row' : 'theme-switch-wrap'] -%}
-{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['theme-switch-row--disabled']) -%}{%- endif -%}
-{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['theme-switch-row--invalid']) -%}{%- endif -%}
+{%- set _rootClasses = [label ? 'cremona-switch-row' : 'cremona-switch-wrap'] -%}
+{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['cremona-switch-row--disabled']) -%}{%- endif -%}
+{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['cremona-switch-row--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _rootClasses = _rootClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _tag = label ? 'label' : 'span' -%}
@@ -59,11 +59,11 @@
   data-size="{{ size }}"
   {%- if disabled %} data-state="disabled"{% endif -%}
 >
-  <span class="theme-switch" data-size="{{ size }}">
+  <span class="cremona-switch" data-size="{{ size }}">
     <input
       type="checkbox"
       role="switch"
-      class="theme-switch__input"
+      class="cremona-switch__input"
       {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
       {%- if name %} name="{{ name }}"{% endif -%}
       {%- if value is not null %} value="{{ value }}"{% endif -%}
@@ -74,18 +74,18 @@
       {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
       {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif -%}
     >
-    <span class="theme-switch__track" aria-hidden="true">
-      <span class="theme-switch__thumb"></span>
+    <span class="cremona-switch__track" aria-hidden="true">
+      <span class="cremona-switch__thumb"></span>
     </span>
   </span>
   {%- if label -%}
-    <span class="theme-switch-row__text">
-      <span class="theme-switch-row__label">{{ label }}</span>
+    <span class="cremona-switch-row__text">
+      <span class="cremona-switch-row__label">{{ label }}</span>
       {%- if required -%}
-        <span class="theme-switch-row__required" aria-hidden="true">*</span>
+        <span class="cremona-switch-row__required" aria-hidden="true">*</span>
       {%- endif -%}
       {%- if description -%}
-        <span class="theme-switch-row__description">{{ description }}</span>
+        <span class="cremona-switch-row__description">{{ description }}</span>
       {%- endif -%}
     </span>
   {%- endif -%}

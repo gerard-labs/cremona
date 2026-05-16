@@ -37,33 +37,33 @@ function renderMatrix({ bulkEdit = false, empty = false } = {}) {
   const roleVariant = (v) => v === 'admin' ? 'success' : (v === 'member' ? 'default' : (v === 'viewer' ? 'info' : 'muted'));
 
   const toolbar = `
-    <div class="theme-roles-matrix__toolbar">
-      <button type="button" class="theme-button" data-variant="${bulkEdit ? 'primary' : 'secondary'}" data-size="sm" aria-pressed="${bulkEdit}">${t('theme.roles-matrix.bulk-edit.label')}</button>
+    <div class="cremona-roles-matrix__toolbar">
+      <button type="button" class="cremona-button" data-variant="${bulkEdit ? 'primary' : 'secondary'}" data-size="sm" aria-pressed="${bulkEdit}">${t('theme.roles-matrix.bulk-edit.label')}</button>
     </div>
   `;
 
   if (empty) {
-    return `<div class="theme-roles-matrix">${toolbar}<div class="theme-roles-matrix__scroll-wrap" style="padding:2rem;text-align:center;"><p class="theme-typography" data-variant="body" data-color="secondary">${t('theme.roles-matrix.story.sample.empty')}</p></div></div>`;
+    return `<div class="cremona-roles-matrix">${toolbar}<div class="cremona-roles-matrix__scroll-wrap" style="padding:2rem;text-align:center;"><p class="cremona-typography" data-variant="body" data-color="secondary">${t('theme.roles-matrix.story.sample.empty')}</p></div></div>`;
   }
 
-  const colHeaders = permissions.map(p => `<th scope="col" class="theme-roles-matrix__col-header">${p.label}</th>`).join('');
+  const colHeaders = permissions.map(p => `<th scope="col" class="cremona-roles-matrix__col-header">${p.label}</th>`).join('');
   const rows = members.map(m => `
     <tr>
-      <th scope="row" class="theme-roles-matrix__row-header"><span class="theme-roles-matrix__member-name">${m.name}</span></th>
+      <th scope="row" class="cremona-roles-matrix__row-header"><span class="cremona-roles-matrix__member-name">${m.name}</span></th>
       ${permissions.map(p => {
         const r = cells[m.id][p.id] || 'none';
-        return `<td class="theme-roles-matrix__cell" role="button" tabindex="0"><span class="theme-badge" data-variant="${roleVariant(r)}">${roleLabel(r)}</span></td>`;
+        return `<td class="cremona-roles-matrix__cell" role="button" tabindex="0"><span class="cremona-badge" data-variant="${roleVariant(r)}">${roleLabel(r)}</span></td>`;
       }).join('')}
     </tr>
   `).join('');
 
   return `
-    <div class="theme-roles-matrix" data-roles-matrix-bulk-edit-value="${bulkEdit}">
+    <div class="cremona-roles-matrix" data-roles-matrix-bulk-edit-value="${bulkEdit}">
       ${toolbar}
-      <div class="theme-roles-matrix__scroll-wrap">
-        <table class="theme-table theme-roles-matrix__table" data-size="md">
+      <div class="cremona-roles-matrix__scroll-wrap">
+        <table class="cremona-table cremona-roles-matrix__table" data-size="md">
           <caption class="sr-only">${t('theme.roles-matrix.story.sample.caption')}</caption>
-          <thead><tr><th scope="col" class="theme-roles-matrix__corner"><span class="sr-only">${t('theme.roles-matrix.aria.corner')}</span></th>${colHeaders}</tr></thead>
+          <thead><tr><th scope="col" class="cremona-roles-matrix__corner"><span class="sr-only">${t('theme.roles-matrix.aria.corner')}</span></th>${colHeaders}</tr></thead>
           <tbody>${rows}</tbody>
         </table>
       </div>
@@ -89,5 +89,5 @@ onMounted(() => boot(document.documentElement));
 </template>
 
 <style>
-.theme-roles-matrix { color: var(--color-text-primary); }
+.cremona-roles-matrix { color: var(--color-text-primary); }
 </style>

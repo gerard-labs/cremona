@@ -4,35 +4,35 @@
  * The SVGs use stroke="currentColor", so coloring an icon is just
  * setting `color` on a parent. Sizes map to a fixed px scale.
  *
- * RTL bidi flip: applied via `.theme-icon-bidi` class for direction-
+ * RTL bidi flip: applied via `.cremona-icon-bidi` class for direction-
  * sensitive icons (arrows, chevrons, corner-down-left). See
  * src/assets/icons/README.md §RTL flip whitelist.
  */
 
-.theme-icon {
+.cremona-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  inline-size: var(--theme-icon-size, 20px);
-  block-size: var(--theme-icon-size, 20px);
+  inline-size: var(--cremona-icon-size, 20px);
+  block-size: var(--cremona-icon-size, 20px);
   color: currentcolor;
   vertical-align: middle;
 }
 
-.theme-icon[data-size="xs"] { --theme-icon-size: 12px; }
-.theme-icon[data-size="sm"] { --theme-icon-size: 16px; }
-.theme-icon[data-size="md"] { --theme-icon-size: 20px; }
-.theme-icon[data-size="lg"] { --theme-icon-size: 24px; }
-.theme-icon[data-size="xl"] { --theme-icon-size: 32px; }
+.cremona-icon[data-size="xs"] { --cremona-icon-size: 12px; }
+.cremona-icon[data-size="sm"] { --cremona-icon-size: 16px; }
+.cremona-icon[data-size="md"] { --cremona-icon-size: 20px; }
+.cremona-icon[data-size="lg"] { --cremona-icon-size: 24px; }
+.cremona-icon[data-size="xl"] { --cremona-icon-size: 32px; }
 
-.theme-icon > svg {
+.cremona-icon > svg {
   inline-size: 100%;
   block-size: 100%;
   display: block;
 }
 
 /* RTL flip — applied only to direction-sensitive icons (whitelist). */
-[dir="rtl"] .theme-icon-bidi > svg {
+[dir="rtl"] .cremona-icon-bidi > svg {
   transform: scaleX(-1);
 }

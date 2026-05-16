@@ -22,13 +22,13 @@
 {%- set inverted  = inverted  | default(false) -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-spinner'] -%}
-{%- if inverted -%}{%- set _classes = _classes | merge(['theme-spinner--inverted']) -%}{%- endif -%}
+{%- set _classes = ['cremona-spinner'] -%}
+{%- if inverted -%}{%- set _classes = _classes | merge(['cremona-spinner--inverted']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <span class="{{ _classes | join(' ') }}" data-size="{{ size }}" role="status" aria-live="polite">
   <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false">
     <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="25 75"></circle>
   </svg>
-  <span class="theme-sr-only">{{ label }}</span>
+  <span class="cremona-sr-only">{{ label }}</span>
 </span>

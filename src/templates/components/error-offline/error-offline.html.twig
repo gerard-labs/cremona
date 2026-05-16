@@ -20,19 +20,19 @@
 {%- set primaryHref    = primaryHref    | default('javascript:location.reload();') -%}
 {%- set secondaryLabel = secondaryLabel | default(null) -%}
 {%- set secondaryHref  = secondaryHref  | default(null) -%}
-{%- set htmlId         = htmlId         | default('theme-error-offline') -%}
+{%- set htmlId         = htmlId         | default('cremona-error-offline') -%}
 {%- set className      = className      | default('') -%}
 
-{%- set _classes = ['theme-error-offline'] -%}
+{%- set _classes = ['cremona-error-offline'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-{% embed '@theme/components/_error-shell/_error-shell.html.twig' with {
+{% embed '@cremona/components/_error-shell/_error-shell.html.twig' with {
   variant: 'hero',
   htmlId: htmlId,
   className: _classes | join(' '),
 } %}
   {% block content %}
-    {% embed '@theme/components/empty/empty.html.twig' with {
+    {% embed '@cremona/components/empty/empty.html.twig' with {
       size: 'lg',
       titleLevel: 'h1',
       title: title,
@@ -43,7 +43,7 @@
         {# Hero illustration : wifi-off motif on a sunken surface. Consumer-
            overridable — wrap this pattern with their own {% block
            illustration %} via {% embed %}. #}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160" aria-hidden="true" class="theme-error-offline__hero">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160" aria-hidden="true" class="cremona-error-offline__hero">
           <defs>
             <linearGradient id="error-offline-grad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="var(--color-bg-sunken)"/>
@@ -68,14 +68,14 @@
       {% endblock %}
 
       {% block actions %}
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           label: primaryLabel,
           variant: 'primary',
           size: 'md',
           href: primaryHref,
         } %}
         {% if secondaryLabel and secondaryHref %}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: secondaryLabel,
             variant: 'ghost',
             size: 'md',

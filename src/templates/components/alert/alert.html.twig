@@ -69,7 +69,7 @@
 {%- set dismissible      = dismissible      | default(false) -%}
 {%- set dismissAriaLabel = dismissAriaLabel | default(null) -%}
 {%- set dismissMessage   = dismissMessage   | default('theme.alert.aria.dismissed') -%}
-{%- set htmlId           = htmlId           | default('theme-alert-' ~ random()) -%}
+{%- set htmlId           = htmlId           | default('cremona-alert-' ~ random()) -%}
 {%- set roleOverride     = roleOverride     | default(null) -%}
 {%- set className        = className        | default('') -%}
 
@@ -82,7 +82,7 @@
 {%- set _effectiveIcon = icon ?? _iconMap[variant] -%}
 {%- set _role = roleOverride ?? (variant == 'danger' ? 'alert' : 'status') -%}
 
-{%- set _classes = ['theme-alert'] -%}
+{%- set _classes = ['cremona-alert'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -97,36 +97,36 @@
   {%- endif %}
 >
   {%- if not hideIcon -%}
-    {% include '@theme/components/icon/icon.html.twig' with {
+    {% include '@cremona/components/icon/icon.html.twig' with {
       name: _effectiveIcon,
       decorative: true,
       size: 'md',
-      className: 'theme-alert__icon',
+      className: 'cremona-alert__icon',
     } %}
   {%- endif -%}
 
-  <div class="theme-alert__content">
+  <div class="cremona-alert__content">
     {%- if title -%}
-      <p class="theme-alert__title">{{ title }}</p>
+      <p class="cremona-alert__title">{{ title }}</p>
     {%- endif -%}
     {%- if block('body') is defined and block('body') is not empty -%}
-      <div class="theme-alert__body">{%- block body -%}{%- endblock -%}</div>
+      <div class="cremona-alert__body">{%- block body -%}{%- endblock -%}</div>
     {%- elseif body -%}
-      <div class="theme-alert__body"><p>{{ body }}</p></div>
+      <div class="cremona-alert__body"><p>{{ body }}</p></div>
     {%- endif -%}
     {%- if block('action') is defined and block('action') is not empty -%}
-      <div class="theme-alert__actions">{%- block action -%}{%- endblock -%}</div>
+      <div class="cremona-alert__actions">{%- block action -%}{%- endblock -%}</div>
     {%- endif -%}
   </div>
 
   {%- if dismissible -%}
     <button
       type="button"
-      class="theme-alert__dismiss"
+      class="cremona-alert__dismiss"
       aria-label="{{ dismissAriaLabel }}"
       data-action="click->alert-dismiss#dismiss"
     >
-      {% include '@theme/components/icon/icon.html.twig' with {
+      {% include '@cremona/components/icon/icon.html.twig' with {
         name: 'x',
         decorative: true,
         size: 'sm',

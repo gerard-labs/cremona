@@ -14,7 +14,7 @@
  * `data-state="ready"` → FilePond enhanced ; affordance + file list visible.
  */
 
-.theme-file-upload {
+.cremona-file-upload {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
@@ -37,7 +37,7 @@
 /* Native input is visually hidden until FilePond enhances. The affordance
    label below makes the file picker discoverable + clickable. After FilePond
    enhancement, FilePond replaces this entire surface with its own drop zone. */
-.theme-file-upload input[type="file"][data-file-upload-target="input"] {
+.cremona-file-upload input[type="file"][data-file-upload-target="input"] {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -52,7 +52,7 @@
 /* Drop zone affordance (sync paint, visible pre-enhancement). FilePond hides
    this once it enhances the input ; until then, consumers see a clickable
    labeled drop zone. */
-.theme-file-upload__affordance {
+.cremona-file-upload__affordance {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,17 +71,17 @@
   text-align: center;
 }
 
-.theme-file-upload__affordance:hover {
+.cremona-file-upload__affordance:hover {
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-strong);
 }
 
-.theme-file-upload__affordance:focus-within {
+.cremona-file-upload__affordance:focus-within {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: 2px;
 }
 
-.theme-file-upload__icon {
+.cremona-file-upload__icon {
   display: inline-block;
   inline-size: 32px;
   block-size: 32px;
@@ -93,56 +93,56 @@
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>');
 }
 
-[dir="rtl"] .theme-file-upload__icon {
+[dir="rtl"] .cremona-file-upload__icon {
   /* cloud icon is direction-neutral ; no flip needed. */
 }
 
-.theme-file-upload__affordance-text {
+.cremona-file-upload__affordance-text {
   font: var(--typography-body);
 }
 
 /* After FilePond enhances the input, FilePond renders its own affordance
    inside .filepond--root. We hide the kit's affordance label at that point
    to avoid duplication. data-state="ready" is stamped by the controller. */
-.theme-file-upload[data-state="ready"] .theme-file-upload__affordance {
+.cremona-file-upload[data-state="ready"] .cremona-file-upload__affordance {
   display: none;
 }
 
 /* FilePond root overrides — match the kit's idle paint. */
-.theme-file-upload .filepond--root {
+.cremona-file-upload .filepond--root {
   margin-block-end: 0;
   font: var(--typography-body);
 }
 
-.theme-file-upload .filepond--drop-label {
+.cremona-file-upload .filepond--drop-label {
   color: var(--color-text-secondary);
   cursor: pointer;
 }
 
-.theme-file-upload .filepond--panel-root {
+.cremona-file-upload .filepond--panel-root {
   background-color: var(--color-bg-elevated);
   border-radius: var(--radius-md);
 }
 
-.theme-file-upload .filepond--item-panel {
+.cremona-file-upload .filepond--item-panel {
   background-color: var(--color-bg-elevated);
   border-radius: var(--radius-sm);
 }
 
-.theme-file-upload .filepond--progress-indicator {
+.cremona-file-upload .filepond--progress-indicator {
   color: var(--color-primary);
 }
 
 /* Touch hardening : ensure the affordance is ≥ 44 × 44 px on coarse pointer. */
 @media (pointer: coarse) {
-  .theme-file-upload__affordance {
+  .cremona-file-upload__affordance {
     min-block-size: 88px;
   }
 }
 
 /* Reduced-motion : disable any non-essential transitions. */
 @media (prefers-reduced-motion: reduce) {
-  .theme-file-upload__affordance {
+  .cremona-file-upload__affordance {
     transition: none;
   }
 }

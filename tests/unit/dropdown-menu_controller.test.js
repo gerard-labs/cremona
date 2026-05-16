@@ -72,12 +72,12 @@ describe('DropdownMenuController', () => {
   async function mount({ items = ['One', 'Two', 'Three'], disabledIdx = -1 } = {}) {
     const itemsHtml = items.map((label, i) => {
       const dis = i === disabledIdx ? ' aria-disabled="true"' : '';
-      return `<div id="it-${i}" class="theme-item"${dis}>
-        <div class="theme-item__text"><span class="theme-item__label">${label}</span></div>
+      return `<div id="it-${i}" class="cremona-item"${dis}>
+        <div class="cremona-item__text"><span class="cremona-item__label">${label}</span></div>
       </div>`;
     }).join('');
     document.body.innerHTML = `
-      <div id="wrap" class="theme-popover theme-dropdown-menu"
+      <div id="wrap" class="cremona-popover cremona-dropdown-menu"
         data-controller="popover dropdown-menu"
         data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
         data-popover-placement-value="bottom"
@@ -85,7 +85,7 @@ describe('DropdownMenuController', () => {
         data-popover-open-value="false">
         <button id="trigger" data-popover-target="trigger"
           aria-haspopup="menu" aria-expanded="false" aria-controls="dd-content">Open</button>
-        <div id="dd-content" class="theme-popover__content theme-dropdown-menu__content"
+        <div id="dd-content" class="cremona-popover__content cremona-dropdown-menu__content"
           data-popover-target="content"
           data-state="closed"
           hidden>

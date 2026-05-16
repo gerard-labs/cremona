@@ -64,29 +64,29 @@ describe('NavigationMenuController', () => {
   async function mount({ triggers = ['Solutions', 'Pricing', 'Resources'] } = {}) {
     const menusHtml = triggers
       .map((label, i) => {
-        return `<div id="sm-${i}" class="theme-popover theme-dropdown-menu"
+        return `<div id="sm-${i}" class="cremona-popover cremona-dropdown-menu"
           data-controller="popover dropdown-menu"
           data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
           data-popover-placement-value="bottom-start"
           data-popover-offset-value="2"
           data-popover-open-value="false">
-          <button id="tr-${i}" type="button" class="theme-menubar__trigger"
+          <button id="tr-${i}" type="button" class="cremona-menubar__trigger"
             data-popover-target="trigger"
             data-navigation-menu-target="trigger"
             aria-haspopup="menu" aria-expanded="false" aria-controls="sm-${i}-content">${label}</button>
-          <div id="sm-${i}-content" class="theme-popover__content theme-dropdown-menu__content"
+          <div id="sm-${i}-content" class="cremona-popover__content cremona-dropdown-menu__content"
             data-popover-target="content"
             data-state="closed"
             hidden>
-            <a class="theme-item" id="it-${i}-0" role="menuitem" tabindex="-1" href="/path-${i}-0">Link A</a>
-            <a class="theme-item" id="it-${i}-1" role="menuitem" tabindex="-1" href="/path-${i}-1"${i === 0 ? ' aria-current="page" data-selected="true"' : ''}>Link B</a>
+            <a class="cremona-item" id="it-${i}-0" role="menuitem" tabindex="-1" href="/path-${i}-0">Link A</a>
+            <a class="cremona-item" id="it-${i}-1" role="menuitem" tabindex="-1" href="/path-${i}-1"${i === 0 ? ' aria-current="page" data-selected="true"' : ''}>Link B</a>
           </div>
         </div>`;
       })
       .join('');
     document.body.innerHTML = `
-      <nav id="nav-shell" class="theme-navigation-menu" aria-label="Main">
-        <div id="nm-wrap" class="theme-menubar"
+      <nav id="nav-shell" class="cremona-navigation-menu" aria-label="Main">
+        <div id="nm-wrap" class="cremona-menubar"
           data-controller="navigation-menu"
           data-action="keydown->navigation-menu#keydown"
           aria-label="Main">${menusHtml}</div>

@@ -8,7 +8,7 @@
 
   Architecture:
     CSS Grid 2-pane layout with `grid-template-{columns,rows}` deriving
-    from `--theme-resizable-size` (set by the controller). The handle
+    from `--cremona-resizable-size` (set by the controller). The handle
     is a focusable element with role="separator". Keyboard: Arrow keys
     + Home / End. Pointer: drag with pointer capture.
 
@@ -40,7 +40,7 @@
 
   Usage:
 
-    {% embed '@theme/components/resizable/resizable.html.twig' with {
+    {% embed '@cremona/components/resizable/resizable.html.twig' with {
       orientation: 'horizontal',
       size: 40,
       minSize: 20,
@@ -59,7 +59,7 @@
     resizable:change — detail.{size, orientation}
 -#}
 
-{%- set htmlId          = htmlId          | default('theme-resizable-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-resizable-' ~ random()) -%}
 {%- set orientation     = orientation     | default('horizontal') -%}
 {%- set size            = size            | default(50) -%}
 {%- set minSize         = minSize         | default(10) -%}
@@ -68,7 +68,7 @@
 {%- set handleAriaLabel = handleAriaLabel | default('Redimensionner') -%}
 {%- set className       = className       | default('') -%}
 
-{%- set _classes = ['theme-resizable'] -%}
+{%- set _classes = ['cremona-resizable'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -81,18 +81,18 @@
   data-resizable-min-size-value="{{ minSize }}"
   data-resizable-max-size-value="{{ maxSize }}"
   data-resizable-step-value="{{ step }}"
-  style="--theme-resizable-size: {{ size }}%;"
+  style="--cremona-resizable-size: {{ size }}%;"
 >
   <div
     id="{{ htmlId }}-start"
-    class="theme-resizable__pane theme-resizable__pane--start"
+    class="cremona-resizable__pane cremona-resizable__pane--start"
     data-resizable-target="startPane"
   >
     {%- block start -%}{%- endblock -%}
   </div>
 
   <div
-    class="theme-resizable__handle"
+    class="cremona-resizable__handle"
     data-resizable-target="handle"
     role="separator"
     aria-orientation="{{ orientation }}"
@@ -100,10 +100,10 @@
     aria-label="{{ handleAriaLabel }}"
     tabindex="0"
   >
-    <span class="theme-resizable__grip" aria-hidden="true"></span>
+    <span class="cremona-resizable__grip" aria-hidden="true"></span>
   </div>
 
-  <div class="theme-resizable__pane theme-resizable__pane--end">
+  <div class="cremona-resizable__pane cremona-resizable__pane--end">
     {%- block end -%}{%- endblock -%}
   </div>
 </div>

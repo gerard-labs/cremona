@@ -10,37 +10,37 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderIcon(name) {
-  return `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
+  return `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
 }
 
 function renderItem({ href, label, icon = null }) {
-  return `<li role="none"><a href="${href}" role="menuitem" class="theme-nav-mega-menu__item">${icon ? renderIcon(icon) : ''}<span>${label}</span></a></li>`;
+  return `<li role="none"><a href="${href}" role="menuitem" class="cremona-nav-mega-menu__item">${icon ? renderIcon(icon) : ''}<span>${label}</span></a></li>`;
 }
 
 function renderColumn({ heading, items }) {
   return `
-    <section class="theme-nav-mega-menu__column">
-      <h3 class="theme-typography theme-nav-mega-menu__column-heading" data-variant="overline">${heading}</h3>
-      <ul class="theme-nav-mega-menu__column-items" role="none">${items.map(renderItem).join('')}</ul>
+    <section class="cremona-nav-mega-menu__column">
+      <h3 class="cremona-typography cremona-nav-mega-menu__column-heading" data-variant="overline">${heading}</h3>
+      <ul class="cremona-nav-mega-menu__column-items" role="none">${items.map(renderItem).join('')}</ul>
     </section>
   `;
 }
 
 function renderMegaMenu({ id = 'story-mega-menu', width = 'contained', columns = [], featured = null, open = true }) {
-  const wrapClasses = ['theme-nav-mega-menu', width === 'full' ? 'theme-nav-mega-menu--full' : ''].filter(Boolean).join(' ');
+  const wrapClasses = ['cremona-nav-mega-menu', width === 'full' ? 'cremona-nav-mega-menu--full' : ''].filter(Boolean).join(' ');
   return `
     <div class="${wrapClasses}" id="${id}">
-      <button type="button" class="theme-button theme-button--ghost theme-nav-mega-menu__trigger" aria-haspopup="true" aria-expanded="${open}" aria-controls="${id}-panel">
+      <button type="button" class="cremona-button cremona-button--ghost cremona-nav-mega-menu__trigger" aria-haspopup="true" aria-expanded="${open}" aria-controls="${id}-panel">
         ${t('theme.nav.mega-menu.story.trigger.products')}
         ${renderIcon('chevron-down')}
       </button>
-      <div class="theme-nav-mega-menu__panel" id="${id}-panel" role="menu" data-state="${open ? 'open' : 'closed'}"${!open ? ' hidden' : ''}>
-        <div class="theme-nav-mega-menu__columns">${columns.map(renderColumn).join('')}</div>
+      <div class="cremona-nav-mega-menu__panel" id="${id}-panel" role="menu" data-state="${open ? 'open' : 'closed'}"${!open ? ' hidden' : ''}>
+        <div class="cremona-nav-mega-menu__columns">${columns.map(renderColumn).join('')}</div>
         ${featured ? `
-          <aside class="theme-nav-mega-menu__featured">
-            <h3 class="theme-typography theme-nav-mega-menu__featured-heading" data-variant="h3">${featured.heading}</h3>
-            <p class="theme-nav-mega-menu__featured-body">${featured.body}</p>
-            <a href="${featured.href}" class="theme-button theme-button--primary theme-nav-mega-menu__featured-cta" role="menuitem">${featured.cta}</a>
+          <aside class="cremona-nav-mega-menu__featured">
+            <h3 class="cremona-typography cremona-nav-mega-menu__featured-heading" data-variant="h3">${featured.heading}</h3>
+            <p class="cremona-nav-mega-menu__featured-body">${featured.body}</p>
+            <a href="${featured.href}" class="cremona-button cremona-button--primary cremona-nav-mega-menu__featured-cta" role="menuitem">${featured.cta}</a>
           </aside>
         ` : ''}
       </div>
@@ -74,14 +74,14 @@ const bodyHtml = `
     </header>
 
     <section class="nav-mega-menu-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mega-menu.story.section.default')}</h2>
-      <p class="nav-mega-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.mega-menu.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mega-menu.story.section.default')}</h2>
+      <p class="nav-mega-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.mega-menu.story.explainer.default')}</p>
       <div class="nav-mega-menu-story__frame">${renderMegaMenu({ id: 'story-default', columns: defaultColumns })}</div>
     </section>
 
     <section class="nav-mega-menu-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mega-menu.story.section.with-featured')}</h2>
-      <p class="nav-mega-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.mega-menu.story.explainer.with-featured')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mega-menu.story.section.with-featured')}</h2>
+      <p class="nav-mega-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.mega-menu.story.explainer.with-featured')}</p>
       <div class="nav-mega-menu-story__frame">${renderMegaMenu({
         id: 'story-featured',
         columns: defaultColumns,
@@ -95,8 +95,8 @@ const bodyHtml = `
     </section>
 
     <section class="nav-mega-menu-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mega-menu.story.section.full-viewport')}</h2>
-      <p class="nav-mega-menu-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.mega-menu.story.explainer.full-viewport')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mega-menu.story.section.full-viewport')}</h2>
+      <p class="nav-mega-menu-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.nav.mega-menu.story.explainer.full-viewport')}</p>
       <div class="nav-mega-menu-story__frame">${renderMegaMenu({ id: 'story-full', width: 'full', columns: defaultColumns })}</div>
     </section>
   </section>

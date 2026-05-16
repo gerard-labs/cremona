@@ -14,21 +14,21 @@ function renderFormColorPicker({ id, label, help, error, defaultColor = '#6366F1
   if (help) describedByIds.push(`${id}-help`);
   if (error) describedByIds.push(`${id}-error`);
   const describedBy = describedByIds.length ? ` aria-describedby="${describedByIds.join(' ')}"` : '';
-  const invalid = error ? ' theme-field--invalid' : '';
+  const invalid = error ? ' cremona-field--invalid' : '';
   const swatchesAttr = swatches.length ? ` data-color-picker-swatches-value='${JSON.stringify(swatches)}'` : '';
 
   return `
-    <div class="theme-field theme-form-color-picker${invalid}" data-controller="popover color-picker" data-popover-placement-value="bottom-start" data-popover-offset-value="4" data-color-picker-alpha-value="${alpha}" data-color-picker-default-color-value="${defaultColor}" data-color-picker-format-value="hex"${swatchesAttr}>
-      <label class="theme-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
-      <div class="theme-popover theme-form-color-picker__wrap">
-        <button type="button" class="theme-button theme-form-color-picker__trigger" data-popover-target="trigger" data-color-picker-target="trigger" data-variant="outline" aria-label="${t('theme.form.color-picker.aria.trigger')}" aria-haspopup="dialog">
-          <span class="theme-form-color-picker__preview" data-color-picker-target="preview" style="background-color: ${defaultColor};" aria-hidden="true"></span>
-          <input type="text" class="theme-input theme-form-color-picker__hex" id="${id}-input" name="${id}" value="${defaultColor}" data-color-picker-target="input" placeholder="${t('theme.form.color-picker.placeholder.hex')}"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy} />
+    <div class="cremona-field cremona-form-color-picker${invalid}" data-controller="popover color-picker" data-popover-placement-value="bottom-start" data-popover-offset-value="4" data-color-picker-alpha-value="${alpha}" data-color-picker-default-color-value="${defaultColor}" data-color-picker-format-value="hex"${swatchesAttr}>
+      <label class="cremona-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
+      <div class="cremona-popover cremona-form-color-picker__wrap">
+        <button type="button" class="cremona-button cremona-form-color-picker__trigger" data-popover-target="trigger" data-color-picker-target="trigger" data-variant="outline" aria-label="${t('theme.form.color-picker.aria.trigger')}" aria-haspopup="dialog">
+          <span class="cremona-form-color-picker__preview" data-color-picker-target="preview" style="background-color: ${defaultColor};" aria-hidden="true"></span>
+          <input type="text" class="cremona-input cremona-form-color-picker__hex" id="${id}-input" name="${id}" value="${defaultColor}" data-color-picker-target="input" placeholder="${t('theme.form.color-picker.placeholder.hex')}"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy} />
         </button>
-        <div class="theme-popover__content theme-form-color-picker__panel" data-popover-target="content" role="dialog" aria-label="${t('theme.form.color-picker.aria.trigger')}"></div>
+        <div class="cremona-popover__content cremona-form-color-picker__panel" data-popover-target="content" role="dialog" aria-label="${t('theme.form.color-picker.aria.trigger')}"></div>
       </div>
-      ${help ? `<p class="theme-field__help" id="${id}-help">${help}</p>` : ''}
-      ${error ? `<p class="theme-field__error" id="${id}-error">${error}</p>` : ''}
+      ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
+      ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
     </div>
   `;
 }
@@ -41,22 +41,22 @@ const bodyHtml = `
     </header>
 
     <section class="form-color-picker-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.default')}</h2>
       <div class="form-color-picker-story__frame">${renderFormColorPicker({ id: 'story-default', label: t('theme.form.color-picker.label.brand'), help: t('theme.form.color-picker.help.format') })}</div>
     </section>
 
     <section class="form-color-picker-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.with-swatches')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.with-swatches')}</h2>
       <div class="form-color-picker-story__frame">${renderFormColorPicker({ id: 'story-swatches', label: t('theme.form.color-picker.label.brand'), help: t('theme.form.color-picker.help.format'), defaultColor: '#10B981', swatches: ['#000000', '#FFFFFF', '#EF4444', '#10B981', '#3B82F6', '#F59E0B', '#8B5CF6', '#EC4899'] })}</div>
     </section>
 
     <section class="form-color-picker-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.with-alpha')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.with-alpha')}</h2>
       <div class="form-color-picker-story__frame">${renderFormColorPicker({ id: 'story-alpha', label: t('theme.form.color-picker.label.overlay'), help: t('theme.form.color-picker.help.alpha'), defaultColor: '#3B82F680', alpha: true })}</div>
     </section>
 
     <section class="form-color-picker-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.validation-error')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.color-picker.story.section.validation-error')}</h2>
       <div class="form-color-picker-story__frame">${renderFormColorPicker({ id: 'story-error', label: t('theme.form.color-picker.label.brand'), help: t('theme.form.color-picker.help.format'), error: t('theme.form.color-picker.error.required'), required: true })}</div>
     </section>
   </section>

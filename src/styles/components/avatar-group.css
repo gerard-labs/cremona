@@ -7,7 +7,7 @@
  * the consumer's container is too narrow).
  *
  * The overlap distance is 25 % of the avatar size (a fraction of the
- * --theme-avatar-size custom prop owned by Avatar). At 40 px (md) that's
+ * --cremona-avatar-size custom prop owned by Avatar). At 40 px (md) that's
  * 10 px — enough overlap to stack-read while keeping each avatar's edge
  * visible. The trailing `+N` indicator uses the same layout, plus a
  * bg-sunken background + tertiary text to read as "rest" (not a person).
@@ -22,14 +22,14 @@
  * No new tokens.
  */
 
-.theme-avatar-group {
+.cremona-avatar-group {
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
   isolation: isolate;
 }
 
-.theme-avatar-group > .theme-avatar {
+.cremona-avatar-group > .cremona-avatar {
   border: 2px solid var(--color-bg-base);
   box-sizing: content-box;
   /* `relative` establishes the stacking context for the overlap below. */
@@ -40,19 +40,19 @@
    each subsequent child slides 25 % of its size on top of the previous.
    Later siblings overlap earlier ones via CSS source order — visually
    equivalent for the common case, no per-child z-index bookkeeping. */
-.theme-avatar-group > .theme-avatar + .theme-avatar {
-  margin-inline-start: calc(var(--theme-avatar-size) * -0.25);
+.cremona-avatar-group > .cremona-avatar + .cremona-avatar {
+  margin-inline-start: calc(var(--cremona-avatar-size) * -0.25);
 }
 
 /* --- Overflow indicator (+N) ----------------------------------------- */
-.theme-avatar-group__more {
+.cremona-avatar-group__more {
   background: var(--color-bg-sunken);
   color: var(--color-text-tertiary);
   border-color: var(--color-bg-base);
   font-weight: var(--font-weight-semibold);
 }
 
-.theme-avatar-group__more-label {
+.cremona-avatar-group__more-label {
   display: inline-flex;
   align-items: center;
   justify-content: center;

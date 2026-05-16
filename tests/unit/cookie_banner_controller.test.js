@@ -20,7 +20,7 @@ function template({
   initialOpen = true,
 } = {}) {
   return `
-    <div class="theme-dialog-wrap theme-rgpd-cookie-banner"
+    <div class="cremona-dialog-wrap cremona-rgpd-cookie-banner"
          data-controller="cookie-banner"
          data-cookie-banner-cookie-name-value="${cookieName}"
          data-cookie-banner-storage-key-value="${storageKey}"
@@ -29,7 +29,7 @@ function template({
          data-dialog-open-value="${initialOpen}">
       <dialog data-dialog-target="dialog">
         <header><h2>Consent</h2></header>
-        <div class="theme-dialog__body">
+        <div class="cremona-dialog__body">
           <p>Legal copy</p>
         </div>
         <footer>
@@ -67,7 +67,7 @@ describe('cookie-banner controller', () => {
   it('accept() writes consent=all to BOTH cookie AND localStorage', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-accept', storageKey: 'theme.consent.test-accept' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const acceptBtn = wrap.querySelector('[data-action*="cookie-banner#accept"]');
     acceptBtn.click();
     await tick();
@@ -85,7 +85,7 @@ describe('cookie-banner controller', () => {
   it('reject() writes consent=minimal to BOTH + dispatches cookie-banner:reject', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-reject', storageKey: 'theme.consent.test-reject' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const events = [];
     wrap.addEventListener('cookie-banner:reject', (e) => events.push(e.detail));
     const rejectBtn = wrap.querySelector('[data-action*="cookie-banner#reject"]');
@@ -100,7 +100,7 @@ describe('cookie-banner controller', () => {
   it('customize() dispatches cookie-banner:customize WITHOUT persistence', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-customize', storageKey: 'theme.consent.test-customize' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const events = [];
     wrap.addEventListener('cookie-banner:customize', (e) => events.push(e.detail));
     const customizeBtn = wrap.querySelector('[data-action*="cookie-banner#customize"]');
@@ -115,7 +115,7 @@ describe('cookie-banner controller', () => {
   it('saveCustom(obj) persists granular consent + dispatches save-custom event', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-savecustom', storageKey: 'theme.consent.test-savecustom' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'cookie-banner');
     const events = [];
     wrap.addEventListener('cookie-banner:save-custom', (e) => events.push(e.detail));
@@ -133,7 +133,7 @@ describe('cookie-banner controller', () => {
     window.localStorage.setItem('theme.consent.test-getpriority', JSON.stringify({ consent: 'minimal', persistedAt: 'storage-time' }));
     app = mount(template({ cookieName: 'theme.consent.test-getpriority', storageKey: 'theme.consent.test-getpriority' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'cookie-banner');
     const consent = ctrl.getConsent();
     // Cookie wins.
@@ -146,7 +146,7 @@ describe('cookie-banner controller', () => {
     window.localStorage.setItem('theme.consent.test-fallback', JSON.stringify({ consent: 'minimal', persistedAt: 'storage-fallback' }));
     app = mount(template({ cookieName: 'theme.consent.test-fallback', storageKey: 'theme.consent.test-fallback' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'cookie-banner');
     const consent = ctrl.getConsent();
     expect(consent.consent).toBe('minimal');
@@ -156,7 +156,7 @@ describe('cookie-banner controller', () => {
   it('getConsent() returns null when neither cookie nor localStorage has the key', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-nokey', storageKey: 'theme.consent.test-nokey' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'cookie-banner');
     expect(ctrl.getConsent()).toBeNull();
   });
@@ -164,7 +164,7 @@ describe('cookie-banner controller', () => {
   it('cookie write includes SameSite flag (default lax)', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-samesite', storageKey: 'theme.consent.test-samesite' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const acceptBtn = wrap.querySelector('[data-action*="cookie-banner#accept"]');
     acceptBtn.click();
     await tick();
@@ -179,7 +179,7 @@ describe('cookie-banner controller', () => {
   it('accept() dispatches cookie-banner:accept with consent + persistedAt', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-evt', storageKey: 'theme.consent.test-evt' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     const events = [];
     wrap.addEventListener('cookie-banner:accept', (e) => events.push(e.detail));
     const acceptBtn = wrap.querySelector('[data-action*="cookie-banner#accept"]');
@@ -193,7 +193,7 @@ describe('cookie-banner controller', () => {
   it('disconnect cleanup — no throw on subsequent input', async () => {
     app = mount(template({ cookieName: 'theme.consent.test-disconnect', storageKey: 'theme.consent.test-disconnect' }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-cookie-banner');
+    const wrap = document.querySelector('.cremona-rgpd-cookie-banner');
     wrap.remove();
     await tick();
     // No assertion needed — disconnect just shouldn't throw on subsequent state read.

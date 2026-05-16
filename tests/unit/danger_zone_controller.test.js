@@ -15,20 +15,20 @@ function mount(html) {
 
 function template({ expected = 'SUPPRIMER', matchMode = 'exact', initialInput = '' } = {}) {
   return `
-    <article class="theme-card theme-danger-zone"
+    <article class="cremona-card cremona-danger-zone"
              data-controller="danger-zone"
              data-danger-zone-expected-value="${expected}"
              data-danger-zone-match-mode-value="${matchMode}"
              data-danger-zone-state="idle">
-      <div class="theme-card__body">
+      <div class="cremona-card__body">
         <input type="text"
-               class="theme-input"
+               class="cremona-input"
                data-danger-zone-target="input"
                value="${initialInput}">
       </div>
-      <div class="theme-card__footer">
+      <div class="cremona-card__footer">
         <button type="button"
-                class="theme-button"
+                class="cremona-button"
                 data-variant="destructive"
                 data-danger-zone-target="button"
                 disabled
@@ -71,7 +71,7 @@ describe('danger-zone controller', () => {
     const button = document.querySelector('[data-danger-zone-target="button"]');
     expect(button.hasAttribute('disabled')).toBe(false);
     expect(button.getAttribute('aria-disabled')).toBe('false');
-    const wrap = document.querySelector('.theme-danger-zone');
+    const wrap = document.querySelector('.cremona-danger-zone');
     expect(wrap.getAttribute('data-danger-zone-state')).toBe('armed');
   });
 
@@ -121,7 +121,7 @@ describe('danger-zone controller', () => {
   it('dispatches danger-zone:match-change when transitioning idle → armed', async () => {
     app = mount(template({ expected: 'SUPPRIMER' }));
     await tick();
-    const wrap = document.querySelector('.theme-danger-zone');
+    const wrap = document.querySelector('.cremona-danger-zone');
     const events = [];
     wrap.addEventListener('danger-zone:match-change', (e) => events.push(e.detail));
     const input = document.querySelector('[data-danger-zone-target="input"]');
@@ -134,7 +134,7 @@ describe('danger-zone controller', () => {
   it('dispatches danger-zone:match-change when transitioning armed → idle', async () => {
     app = mount(template({ expected: 'SUPPRIMER' }));
     await tick();
-    const wrap = document.querySelector('.theme-danger-zone');
+    const wrap = document.querySelector('.cremona-danger-zone');
     const events = [];
     const input = document.querySelector('[data-danger-zone-target="input"]');
     fireInput(input, 'SUPPRIMER');
@@ -149,7 +149,7 @@ describe('danger-zone controller', () => {
   it('does NOT dispatch match-change for keystrokes within the same matches state', async () => {
     app = mount(template({ expected: 'SUPPRIMER' }));
     await tick();
-    const wrap = document.querySelector('.theme-danger-zone');
+    const wrap = document.querySelector('.cremona-danger-zone');
     const events = [];
     wrap.addEventListener('danger-zone:match-change', (e) => events.push(e.detail));
     const input = document.querySelector('[data-danger-zone-target="input"]');
@@ -176,7 +176,7 @@ describe('danger-zone controller', () => {
   it('handles paste (one input event with full pasted value) atomically', async () => {
     app = mount(template({ expected: 'DELETE' }));
     await tick();
-    const wrap = document.querySelector('.theme-danger-zone');
+    const wrap = document.querySelector('.cremona-danger-zone');
     const events = [];
     wrap.addEventListener('danger-zone:match-change', (e) => events.push(e.detail));
     const input = document.querySelector('[data-danger-zone-target="input"]');
@@ -192,7 +192,7 @@ describe('danger-zone controller', () => {
   it('cleans up input listener on disconnect', async () => {
     app = mount(template({ expected: 'SUPPRIMER' }));
     await tick();
-    const wrap = document.querySelector('.theme-danger-zone');
+    const wrap = document.querySelector('.cremona-danger-zone');
     wrap.remove();
     await tick();
     // No assertion needed — disconnect just shouldn't throw on re-input.

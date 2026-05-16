@@ -2,8 +2,8 @@
  * Chart — ApexCharts-wrapped data visualization (Ring 2 S2.9).
  *
  * Per [ADR-0012] : ApexCharts v4.x lazy-loaded via dynamic import mirror
- * [ADR-0011] verbatim. The chart paints inside `.theme-chart__container` ;
- * a sr-only <table> data-table fallback lives at `.theme-chart__sr-only`.
+ * [ADR-0011] verbatim. The chart paints inside `.cremona-chart__container` ;
+ * a sr-only <table> data-table fallback lives at `.cremona-chart__sr-only`.
  *
  * The `data-state` attribute drives the visual lifecycle :
  *   "loading"  → skeleton gradient (the container is still empty, ApexCharts
@@ -16,7 +16,7 @@
  * source-of-truth via the kit's CSS custom props.
  */
 
-.theme-chart {
+.cremona-chart {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
@@ -25,7 +25,7 @@
   position: relative;
 }
 
-.theme-chart__container {
+.cremona-chart__container {
   inline-size: 100%;
   min-block-size: 240px;
   position: relative;
@@ -33,7 +33,7 @@
      We don't impose padding/background — ApexCharts handles its own layout. */
 }
 
-.theme-chart[data-state="loading"] .theme-chart__container {
+.cremona-chart[data-state="loading"] .cremona-chart__container {
   /* Skeleton gradient — visible while the ApexCharts chunk fetches.
      Per [14-motion §7 Skeleton] : 1500 ms shimmer loop, reduced-motion
      → flat. */
@@ -45,10 +45,10 @@
   );
   background-size: 200% 100%;
   border-radius: var(--radius-md);
-  animation: theme-chart-shimmer 1500ms linear infinite;
+  animation: cremona-chart-shimmer 1500ms linear infinite;
 }
 
-[data-theme="dark"] .theme-chart[data-state="loading"] .theme-chart__container {
+[data-theme="dark"] .cremona-chart[data-state="loading"] .cremona-chart__container {
   /* Dark mode : the gradient lightness inverts ; rely on dark tokens. */
   background: linear-gradient(
     90deg,
@@ -59,19 +59,19 @@
   background-size: 200% 100%;
 }
 
-@keyframes theme-chart-shimmer {
+@keyframes cremona-chart-shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-chart[data-state="loading"] .theme-chart__container {
+  .cremona-chart[data-state="loading"] .cremona-chart__container {
     animation: none;
     background: var(--color-bg-sunken);
   }
 }
 
-.theme-chart__caption {
+.cremona-chart__caption {
   font: var(--typography-caption);
   color: var(--color-text-secondary);
   text-align: center;
@@ -83,7 +83,7 @@
    utility so SR users hear the data (canonical) regardless of SVG paint.
    Pattern matches src/styles/base/typography.css `.sr-only` if present ;
    re-declared here to avoid cross-file coupling. */
-.theme-chart__sr-only {
+.cremona-chart__sr-only {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -100,7 +100,7 @@
    typography to match the kit's typography tokens (via getComputedStyle on
    the wrap). */
 
-.theme-chart .apexcharts-tooltip {
+.cremona-chart .apexcharts-tooltip {
   font: var(--typography-caption);
   background: var(--color-bg-elevated) !important;
   border: 1px solid var(--color-border-default) !important;
@@ -109,27 +109,27 @@
   border-radius: var(--radius-md) !important;
 }
 
-.theme-chart .apexcharts-tooltip-title {
+.cremona-chart .apexcharts-tooltip-title {
   background: var(--color-bg-sunken) !important;
   border-block-end-color: var(--color-border-subtle) !important;
   font-weight: var(--font-weight-semibold);
 }
 
-.theme-chart .apexcharts-legend-text {
+.cremona-chart .apexcharts-legend-text {
   font: var(--typography-caption);
   color: var(--color-text-secondary) !important;
 }
 
-.theme-chart .apexcharts-xaxis-label,
-.theme-chart .apexcharts-yaxis-label {
+.cremona-chart .apexcharts-xaxis-label,
+.cremona-chart .apexcharts-yaxis-label {
   font-variant-numeric: tabular-nums;
 }
 
 /* Sparkline-specific : compact container, no caption padding. */
-.theme-chart[data-chart-variant-value="sparkline"] {
+.cremona-chart[data-chart-variant-value="sparkline"] {
   gap: 0;
 }
 
-.theme-chart[data-chart-variant-value="sparkline"] .theme-chart__container {
+.cremona-chart[data-chart-variant-value="sparkline"] .cremona-chart__container {
   min-block-size: 60px;
 }

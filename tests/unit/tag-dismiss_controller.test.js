@@ -16,7 +16,7 @@ import { setTranslations, setLocale, __reset } from '../../src/js/utils/i18n.js'
  *  2. transitionend (opacity) — removes the tag from the DOM.
  *  3. transitionend (non-opacity, e.g. background-color) — does NOT remove.
  *  4. dispatches `tag:dismissed` (bubbles, composed) with detail.label.
- *  5. announces the resolved (label-interpolated) message in #theme-announcer.
+ *  5. announces the resolved (label-interpolated) message in #cremona-announcer.
  *  6. multiple dismissable tags act independently (no cross-talk).
  */
 describe('TagDismissController', () => {
@@ -38,15 +38,15 @@ describe('TagDismissController', () => {
 
   async function mount(label = 'JavaScript') {
     document.body.innerHTML = `
-      <div id="theme-announcer" aria-live="polite" aria-atomic="true"></div>
+      <div id="cremona-announcer" aria-live="polite" aria-atomic="true"></div>
       <span id="tag"
-        class="theme-tag"
+        class="cremona-tag"
         data-variant="primary"
         data-soft="true"
         data-controller="tag-dismiss"
         data-tag-dismiss-label-value="${label}">
-        <span class="theme-tag__label">${label}</span>
-        <button id="dismiss" type="button" class="theme-tag__dismiss"
+        <span class="cremona-tag__label">${label}</span>
+        <button id="dismiss" type="button" class="cremona-tag__dismiss"
           aria-label="Retirer l'étiquette « ${label} »"
           data-action="click->tag-dismiss#dismiss"><span aria-hidden="true">×</span></button>
       </span>
@@ -57,7 +57,7 @@ describe('TagDismissController', () => {
     return {
       tag: document.getElementById('tag'),
       dismissBtn: document.getElementById('dismiss'),
-      announcer: document.getElementById('theme-announcer'),
+      announcer: document.getElementById('cremona-announcer'),
     };
   }
 
@@ -117,7 +117,7 @@ describe('TagDismissController', () => {
     expect(captured.detail).toEqual({ label: 'TypeScript' });
   });
 
-  it('announces the label-interpolated message in #theme-announcer', async () => {
+  it('announces the label-interpolated message in #cremona-announcer', async () => {
     const { tag, dismissBtn, announcer } = await mount('Python');
     dismissBtn.click();
     await new Promise((r) => setTimeout(r, 0));
@@ -128,11 +128,11 @@ describe('TagDismissController', () => {
 
   it('multiple dismissable tags act independently (no cross-talk)', async () => {
     document.body.innerHTML = `
-      <div id="theme-announcer" aria-live="polite" aria-atomic="true"></div>
-      <span id="tag-1" class="theme-tag" data-controller="tag-dismiss" data-tag-dismiss-label-value="One">
+      <div id="cremona-announcer" aria-live="polite" aria-atomic="true"></div>
+      <span id="tag-1" class="cremona-tag" data-controller="tag-dismiss" data-tag-dismiss-label-value="One">
         <button id="d1" type="button" data-action="click->tag-dismiss#dismiss">×</button>
       </span>
-      <span id="tag-2" class="theme-tag" data-controller="tag-dismiss" data-tag-dismiss-label-value="Two">
+      <span id="tag-2" class="cremona-tag" data-controller="tag-dismiss" data-tag-dismiss-label-value="Two">
         <button id="d2" type="button" data-action="click->tag-dismiss#dismiss">×</button>
       </span>
     `;

@@ -12,16 +12,16 @@
  * Prev/next use the curated `chevron-left` / `chevron-right` (also inlined
  * via mask-image for visual consistency with first/last). Both auto-flip
  * in RTL via `[dir="rtl"] transform: scaleX(-1)` — same approach as the
- * Icon primitive's `.theme-icon-bidi` whitelist.
+ * Icon primitive's `.cremona-icon-bidi` whitelist.
  *
- * The 4 nav buttons inherit `.theme-button[data-variant="ghost"][data-size="sm"]`
+ * The 4 nav buttons inherit `.cremona-button[data-variant="ghost"][data-size="sm"]`
  * styling from button.css, then this stylesheet overrides:
  *   - padding-inline (collapse to a square icon-only button)
  *   - min-inline-size + min-block-size to keep the visible tap area
- *   - the inner `.theme-pagination__icon` rendering
+ *   - the inner `.cremona-pagination__icon` rendering
  */
 
-.theme-pagination {
+.cremona-pagination {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -37,7 +37,7 @@
 
 /* Range label — flex-grows so the page-size + nav cluster pushes to the
    inline-end side. Tabular-nums for stable digit width across page changes. */
-.theme-pagination__range {
+.cremona-pagination__range {
   flex-grow: 1;
   min-inline-size: 0;
   font-feature-settings: var(--font-feature-tabular);
@@ -49,21 +49,21 @@
 }
 
 /* Page-size cluster — label inline with the NativeSelect. */
-.theme-pagination__page-size {
+.cremona-pagination__page-size {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
   flex-shrink: 0;
 }
 
-.theme-pagination__page-size-label {
+.cremona-pagination__page-size-label {
   font: var(--typography-caption);
   color: var(--color-text-secondary);
   white-space: nowrap;
 }
 
 /* Nav cluster — the 4 buttons grouped with small gap. */
-.theme-pagination__nav {
+.cremona-pagination__nav {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
@@ -71,19 +71,19 @@
 }
 
 /* Square icon-only button — collapse padding-inline, keep min-block-size. */
-.theme-pagination__btn {
+.cremona-pagination__btn {
   padding-inline: var(--spacing-2);
   min-inline-size: 32px;
 }
 
-.theme-pagination__btn[disabled] {
+.cremona-pagination__btn[disabled] {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
 /* --- Icons (CSS-only mask-image) ----------------------------------- */
 
-.theme-pagination__icon {
+.cremona-pagination__icon {
   display: inline-block;
   inline-size: 16px;
   block-size: 16px;
@@ -94,44 +94,44 @@
 }
 
 /* chevrons-left (first) — double chevron pointing inline-start */
-.theme-pagination__icon--first {
+.cremona-pagination__icon--first {
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>');
 }
 
 /* chevron-left (prev) — single chevron pointing inline-start */
-.theme-pagination__icon--prev {
+.cremona-pagination__icon--prev {
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>');
 }
 
 /* chevron-right (next) — single chevron pointing inline-end */
-.theme-pagination__icon--next {
+.cremona-pagination__icon--next {
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>');
 }
 
 /* chevrons-right (last) — double chevron pointing inline-end */
-.theme-pagination__icon--last {
+.cremona-pagination__icon--last {
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>');
 }
 
 /* RTL flip — chevrons are direction-sensitive, mirror them. Same approach
-   as the Icon primitive's `.theme-icon-bidi` whitelist (icon.css). */
-[dir="rtl"] .theme-pagination__icon {
+   as the Icon primitive's `.cremona-icon-bidi` whitelist (icon.css). */
+[dir="rtl"] .cremona-pagination__icon {
   transform: scaleX(-1);
 }
 
 /* Responsive — on narrow screens, range label drops below the nav cluster. */
 @media (width <= 575.98px) {
-  .theme-pagination {
+  .cremona-pagination {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .theme-pagination__range {
+  .cremona-pagination__range {
     text-align: center;
   }
 
-  .theme-pagination__page-size,
-  .theme-pagination__nav {
+  .cremona-pagination__page-size,
+  .cremona-pagination__nav {
     justify-content: center;
   }
 }

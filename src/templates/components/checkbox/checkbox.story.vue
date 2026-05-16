@@ -30,17 +30,17 @@ function renderCheckbox(props = {}) {
     required, disabled, invalid, describedBy, ariaLabel, className,
   } = props;
 
-  const rootClass = label ? 'theme-checkbox-row' : 'theme-checkbox-wrap';
+  const rootClass = label ? 'cremona-checkbox-row' : 'cremona-checkbox-wrap';
   const stateClasses = [];
-  if (disabled) stateClasses.push('theme-checkbox-row--disabled');
-  if (invalid) stateClasses.push('theme-checkbox-row--invalid');
+  if (disabled) stateClasses.push('cremona-checkbox-row--disabled');
+  if (invalid) stateClasses.push('cremona-checkbox-row--invalid');
   if (className) stateClasses.push(className);
   const rootClasses = [rootClass, ...stateClasses].join(' ');
   const tag = label ? 'label' : 'span';
 
   const inputAttrs = [
     `type="checkbox"`,
-    `class="theme-checkbox__input"`,
+    `class="cremona-checkbox__input"`,
     htmlId ? `id="${htmlId}"` : '',
     name ? `name="${name}"` : '',
     value != null ? `value="${value}"` : '',
@@ -54,13 +54,13 @@ function renderCheckbox(props = {}) {
   ].filter(Boolean).join(' ');
 
   const box = `
-    <span class="theme-checkbox" data-size="${size}">
+    <span class="cremona-checkbox" data-size="${size}">
       <input ${inputAttrs}>
-      <span class="theme-checkbox__box" aria-hidden="true">
-        <svg class="theme-checkbox__glyph theme-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
+      <span class="cremona-checkbox__box" aria-hidden="true">
+        <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
           <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <svg class="theme-checkbox__glyph theme-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none">
+        <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none">
           <path d="M4 8L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </span>
@@ -71,10 +71,10 @@ function renderCheckbox(props = {}) {
   }
 
   const labelInner = `
-    <span class="theme-checkbox-row__text">
-      <span class="theme-checkbox-row__label">${label}</span>
-      ${required ? '<span class="theme-checkbox-row__required" aria-hidden="true">*</span>' : ''}
-      ${description ? `<span class="theme-checkbox-row__description">${description}</span>` : ''}
+    <span class="cremona-checkbox-row__text">
+      <span class="cremona-checkbox-row__label">${label}</span>
+      ${required ? '<span class="cremona-checkbox-row__required" aria-hidden="true">*</span>' : ''}
+      ${description ? `<span class="cremona-checkbox-row__description">${description}</span>` : ''}
     </span>`;
 
   return `<${tag} class="${rootClasses}" data-size="${size}"${disabled ? ' data-state="disabled"' : ''}>${box}${labelInner}</${tag}>`;
@@ -117,7 +117,7 @@ const bodyHtml = `
     </header>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-default">
-      <h2 id="checkbox-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.default')}</h2>
+      <h2 id="checkbox-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.default')}</h2>
       <div class="checkbox-story__stack">
         ${row(renderCheckbox({ htmlId: 'demo-default-terms', label: SAMPLES.terms }),               'unchecked')}
         ${row(renderCheckbox({ htmlId: 'demo-default-news',  label: SAMPLES.newsletter, checked: true }), 'checked')}
@@ -126,7 +126,7 @@ const bodyHtml = `
     </section>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-states">
-      <h2 id="checkbox-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.states')}</h2>
+      <h2 id="checkbox-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.states')}</h2>
       <div class="checkbox-story__stack">
         ${row(renderCheckbox({ htmlId: 'demo-state-default',           label: SAMPLES.rememberMe }),                          'default unchecked')}
         ${row(renderCheckbox({ htmlId: 'demo-state-checked',           label: SAMPLES.rememberMe, checked: true }),           'checked')}
@@ -136,11 +136,11 @@ const bodyHtml = `
         ${row(renderCheckbox({ htmlId: 'demo-state-required',          label: SAMPLES.terms, required: true }),               'required')}
         ${row(renderCheckbox({ htmlId: 'demo-state-invalid',           label: SAMPLES.terms, invalid: true, required: true, describedBy: 'demo-state-invalid-error' }), 'invalid + required')}
       </div>
-      <p class="checkbox-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.checkbox.story.explainer.invalid')}</p>
+      <p class="checkbox-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.checkbox.story.explainer.invalid')}</p>
     </section>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-sizes">
-      <h2 id="checkbox-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.sizes')}</h2>
+      <h2 id="checkbox-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.sizes')}</h2>
       <div class="checkbox-story__stack">
         ${row(renderCheckbox({ htmlId: 'demo-size-sm-uncheck', label: SAMPLES.rememberMe, size: 'sm' }),                'sm (16 px) unchecked')}
         ${row(renderCheckbox({ htmlId: 'demo-size-sm-check',   label: SAMPLES.rememberMe, size: 'sm', checked: true }), 'sm (16 px) checked')}
@@ -150,8 +150,8 @@ const bodyHtml = `
     </section>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-indeterminate">
-      <h2 id="checkbox-section-indeterminate" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.indeterminate')}</h2>
-      <p class="checkbox-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.checkbox.story.explainer.indeterminate')}</p>
+      <h2 id="checkbox-section-indeterminate" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.indeterminate')}</h2>
+      <p class="checkbox-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.checkbox.story.explainer.indeterminate')}</p>
       <div class="checkbox-story__stack">
         ${row(renderCheckbox({ htmlId: 'demo-indet-all',     label: SAMPLES.selectAll, indeterminate: true }), 'select-all indeterminate')}
         ${row(renderCheckbox({ htmlId: 'demo-indet-disabled', label: SAMPLES.selectAll, indeterminate: true, disabled: true }), 'indeterminate + disabled')}
@@ -159,8 +159,8 @@ const bodyHtml = `
     </section>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-bare">
-      <h2 id="checkbox-section-bare" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.bare')}</h2>
-      <p class="checkbox-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.checkbox.story.explainer.bare')}</p>
+      <h2 id="checkbox-section-bare" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.bare')}</h2>
+      <p class="checkbox-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.checkbox.story.explainer.bare')}</p>
       <div class="checkbox-story__stack">
         ${row(renderCheckbox({ htmlId: 'demo-bare-row',      ariaLabel: ARIA.rowSelect }),                                       'bare, unchecked, aria-label="Sélectionner la ligne"')}
         ${row(renderCheckbox({ htmlId: 'demo-bare-checked',  ariaLabel: ARIA.rowSelect, checked: true }),                        'bare, checked')}
@@ -169,7 +169,7 @@ const bodyHtml = `
     </section>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-long-label">
-      <h2 id="checkbox-section-long-label" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.long-label')}</h2>
+      <h2 id="checkbox-section-long-label" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.long-label')}</h2>
       <div class="checkbox-story__stack">
         ${row(renderCheckbox({ htmlId: 'demo-long-label',  label: SAMPLES.longLabel, required: true }),                       'label long + required')}
         ${row(renderCheckbox({ htmlId: 'demo-newsletter',  label: SAMPLES.newsletter, description: DESCS.newsletter, checked: true }), 'with description (checked)')}
@@ -178,25 +178,25 @@ const bodyHtml = `
     </section>
 
     <section class="checkbox-story__section" aria-labelledby="checkbox-section-in-field">
-      <h2 id="checkbox-section-in-field" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.in-field')}</h2>
+      <h2 id="checkbox-section-in-field" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.checkbox.story.section.in-field')}</h2>
       <div class="checkbox-story__stack">
-        <div class="theme-field">
-          <label class="theme-label" data-size="sm" for="demo-field-gdpr">
-            <span class="theme-label__text">${t('theme.checkbox.field.label.gdpr')}</span>
-            <span class="theme-label__required" aria-hidden="true">*</span>
-            <span class="theme-sr-only">${t('theme.label.required-aria')}</span>
+        <div class="cremona-field">
+          <label class="cremona-label" data-size="sm" for="demo-field-gdpr">
+            <span class="cremona-label__text">${t('theme.checkbox.field.label.gdpr')}</span>
+            <span class="cremona-label__required" aria-hidden="true">*</span>
+            <span class="cremona-sr-only">${t('theme.label.required-aria')}</span>
           </label>
           ${renderCheckbox({ htmlId: 'demo-field-gdpr', ariaLabel: t('theme.checkbox.field.label.gdpr'), required: true, describedBy: 'demo-field-gdpr-help' })}
-          <p id="demo-field-gdpr-help" class="theme-field__help">${t('theme.checkbox.field.help.gdpr')}</p>
+          <p id="demo-field-gdpr-help" class="cremona-field__help">${t('theme.checkbox.field.help.gdpr')}</p>
         </div>
-        <div class="theme-field theme-field--invalid">
-          <label class="theme-label" data-size="sm" for="demo-field-gdpr-err">
-            <span class="theme-label__text">${t('theme.checkbox.field.label.gdpr')}</span>
-            <span class="theme-label__required" aria-hidden="true">*</span>
-            <span class="theme-sr-only">${t('theme.label.required-aria')}</span>
+        <div class="cremona-field cremona-field--invalid">
+          <label class="cremona-label" data-size="sm" for="demo-field-gdpr-err">
+            <span class="cremona-label__text">${t('theme.checkbox.field.label.gdpr')}</span>
+            <span class="cremona-label__required" aria-hidden="true">*</span>
+            <span class="cremona-sr-only">${t('theme.label.required-aria')}</span>
           </label>
           ${renderCheckbox({ htmlId: 'demo-field-gdpr-err', ariaLabel: t('theme.checkbox.field.label.gdpr'), required: true, invalid: true, describedBy: 'demo-field-gdpr-err-error' })}
-          <p id="demo-field-gdpr-err-error" class="theme-field__error" role="alert" aria-live="polite">${t('theme.checkbox.field.error.gdpr')}</p>
+          <p id="demo-field-gdpr-err-error" class="cremona-field__error" role="alert" aria-live="polite">${t('theme.checkbox.field.error.gdpr')}</p>
         </div>
       </div>
     </section>

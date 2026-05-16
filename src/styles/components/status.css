@@ -24,7 +24,7 @@
  *                                          from any UI transition cadence)
  */
 
-.theme-status {
+.cremona-status {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1_5);
@@ -39,7 +39,7 @@
   margin: 0;
 }
 
-.theme-status[data-size="sm"] {
+.cremona-status[data-size="sm"] {
   padding-inline: var(--spacing-1_5);
   padding-block: 1px;
   font-size: var(--font-size-2xs);
@@ -47,28 +47,28 @@
 }
 
 /* --- Variant tones (compose Badge soft vocabulary) ---------------------- */
-.theme-status[data-variant="success"] {
+.cremona-status[data-variant="success"] {
   background: var(--color-success-soft);
   color: var(--color-success-soft-foreground);
 }
 
-.theme-status[data-variant="info"] {
+.cremona-status[data-variant="info"] {
   background: var(--color-info-soft);
   color: var(--color-info-soft-foreground);
 }
 
-.theme-status[data-variant="warning"] {
+.cremona-status[data-variant="warning"] {
   background: var(--color-warning-soft);
   color: var(--color-warning-soft-foreground);
 }
 
-.theme-status[data-variant="danger"] {
+.cremona-status[data-variant="danger"] {
   background: var(--color-danger-soft);
   color: var(--color-danger-soft-foreground);
 }
 
 /* --- Dot --------------------------------------------------------------- */
-.theme-status__dot {
+.cremona-status__dot {
   position: relative;
   display: inline-block;
   inline-size: 8px;
@@ -77,36 +77,36 @@
   flex-shrink: 0;
 }
 
-.theme-status[data-size="sm"] .theme-status__dot {
+.cremona-status[data-size="sm"] .cremona-status__dot {
   inline-size: 6px;
   block-size: 6px;
 }
 
-.theme-status[data-variant="success"] .theme-status__dot { background: var(--color-success); }
-.theme-status[data-variant="info"]    .theme-status__dot { background: var(--color-info); }
-.theme-status[data-variant="warning"] .theme-status__dot { background: var(--color-warning); }
-.theme-status[data-variant="danger"]  .theme-status__dot { background: var(--color-danger); }
+.cremona-status[data-variant="success"] .cremona-status__dot { background: var(--color-success); }
+.cremona-status[data-variant="info"]    .cremona-status__dot { background: var(--color-info); }
+.cremona-status[data-variant="warning"] .cremona-status__dot { background: var(--color-warning); }
+.cremona-status[data-variant="danger"]  .cremona-status__dot { background: var(--color-danger); }
 
 /* --- Pulse animation (opt-in) ----------------------------------------- */
-.theme-status[data-pulse="true"] .theme-status__dot::after {
+.cremona-status[data-pulse="true"] .cremona-status__dot::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
   background: currentColor;
-  animation: theme-status-pulse 1500ms ease-out infinite;
+  animation: cremona-status-pulse 1500ms ease-out infinite;
   pointer-events: none;
   z-index: -1;
 }
 
 /* The pulse ring's colour is set explicitly per variant — `currentColor`
    above is only the default fallback. */
-.theme-status[data-pulse="true"][data-variant="success"] .theme-status__dot::after { background: var(--color-success); }
-.theme-status[data-pulse="true"][data-variant="info"]    .theme-status__dot::after { background: var(--color-info); }
-.theme-status[data-pulse="true"][data-variant="warning"] .theme-status__dot::after { background: var(--color-warning); }
-.theme-status[data-pulse="true"][data-variant="danger"]  .theme-status__dot::after { background: var(--color-danger); }
+.cremona-status[data-pulse="true"][data-variant="success"] .cremona-status__dot::after { background: var(--color-success); }
+.cremona-status[data-pulse="true"][data-variant="info"]    .cremona-status__dot::after { background: var(--color-info); }
+.cremona-status[data-pulse="true"][data-variant="warning"] .cremona-status__dot::after { background: var(--color-warning); }
+.cremona-status[data-pulse="true"][data-variant="danger"]  .cremona-status__dot::after { background: var(--color-danger); }
 
-@keyframes theme-status-pulse {
+@keyframes cremona-status-pulse {
   0% {
     transform: scale(1);
     opacity: 0.6;
@@ -124,7 +124,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-status[data-pulse="true"] .theme-status__dot::after {
+  .cremona-status[data-pulse="true"] .cremona-status__dot::after {
     animation: none;
     opacity: 0;
   }

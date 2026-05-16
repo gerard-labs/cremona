@@ -23,7 +23,7 @@
   See `docs/specs/ring3/Auth-SessionTimeoutModal.md` for full spec.
 -#}
 
-{%- set htmlId                   = htmlId                   | default('theme-auth-session-timeout-modal') -%}
+{%- set htmlId                   = htmlId                   | default('cremona-auth-session-timeout-modal') -%}
 {%- set title                    = title                    | default('theme.auth.session-timeout-modal.title'|trans) -%}
 {%- set bodyBefore               = bodyBefore               | default('theme.auth.session-timeout-modal.body-before'|trans) -%}
 {%- set bodyAfter                = bodyAfter                | default('theme.auth.session-timeout-modal.body-after'|trans) -%}
@@ -56,11 +56,11 @@
 
 {%- set _countdownId = htmlId ~ '-countdown' -%}
 
-{% embed '@theme/components/dialog/dialog.html.twig' with {
+{% embed '@cremona/components/dialog/dialog.html.twig' with {
   wrapId: htmlId,
   htmlId: htmlId ~ '-dialog',
   size: 'md',
-  className: ('theme-auth-session-timeout-modal ' ~ className) | trim,
+  className: ('cremona-auth-session-timeout-modal ' ~ className) | trim,
   closeButton: false,
   closeOnEscape: false,
   closeOnBackdropClick: false,
@@ -74,10 +74,10 @@
   {% block title %}{{ title }}{% endblock %}
 
   {% block body %}
-    <p class="theme-auth-session-timeout-modal__body">
+    <p class="cremona-auth-session-timeout-modal__body">
       {{- bodyBefore -}}
       <span
-        class="theme-auth-session-timeout-modal__countdown"
+        class="cremona-auth-session-timeout-modal__countdown"
         data-session-timeout-countdown-target="countdown"
         id="{{ _countdownId }}"
         aria-live="polite"
@@ -87,14 +87,14 @@
   {% endblock %}
 
   {% block footer %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: extendLabel,
       variant: 'primary',
       size: 'md',
       href: extendHref,
       type: extendHref ? null : 'button',
     } %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: logoutLabel,
       variant: 'destructive',
       size: 'md',

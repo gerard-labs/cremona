@@ -11,7 +11,7 @@
  * See `docs/specs/ring3/Auth-OTP.md` for the full spec.
  */
 
-.theme-auth-otp {
+.cremona-auth-otp {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
@@ -19,7 +19,7 @@
 
 /* ----- Resend row (question + Resend link + optional email-fallback) -- */
 
-.theme-auth-otp__resend-row {
+.cremona-auth-otp__resend-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -30,7 +30,7 @@
      a footnote to the cluster, not a separate form section. */
 }
 
-.theme-auth-otp__resend-question {
+.cremona-auth-otp__resend-question {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }

@@ -9,7 +9,7 @@
 
   Canonical usage:
 
-    {% embed '@theme/components/field/field.html.twig' with {
+    {% embed '@cremona/components/field/field.html.twig' with {
       label: 'Adresse email'|trans,
       htmlId: 'login-email',
       required: true,
@@ -17,7 +17,7 @@
       error: errorMessage,
     } %}
       {% block control %}
-        {% include '@theme/components/input/input.html.twig' with {
+        {% include '@cremona/components/input/input.html.twig' with {
           htmlId: fieldHtmlId,
           describedBy: fieldDescribedBy,
           invalid: fieldInvalid,
@@ -86,13 +86,13 @@
 {%- set fieldRequired    = required -%}
 {%- set fieldDisabled    = disabled -%}
 
-{%- set _classes = ['theme-field'] -%}
-{%- if _hasError -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
-{%- if disabled -%}{%- set _classes = _classes | merge(['theme-field--disabled']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field'] -%}
+{%- if _hasError -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['cremona-field--disabled']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div class="{{ _classes | join(' ') }}">
-  {% include '@theme/components/label/label.html.twig' with {
+  {% include '@cremona/components/label/label.html.twig' with {
     content: label,
     htmlFor: htmlId,
     required: required,
@@ -106,10 +106,10 @@
   {% block control %}{% endblock %}
 
   {% if help %}
-    <p id="{{ _helpId }}" class="theme-field__help">{{ help }}</p>
+    <p id="{{ _helpId }}" class="cremona-field__help">{{ help }}</p>
   {% endif %}
 
   {% if _hasError %}
-    <p id="{{ _errorId }}" class="theme-field__error" role="alert" aria-live="polite">{{ error }}</p>
+    <p id="{{ _errorId }}" class="cremona-field__error" role="alert" aria-live="polite">{{ error }}</p>
   {% endif %}
 </div>

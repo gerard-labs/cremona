@@ -38,13 +38,13 @@
 
   Usage example (3 nav menus):
 
-    {% embed '@theme/components/navigation-menu/navigation-menu.html.twig' with {
+    {% embed '@cremona/components/navigation-menu/navigation-menu.html.twig' with {
       label: 'Navigation principale'|trans,
     } %}
       {% block menus %}
-        {% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' %}
+        {% embed '@cremona/components/dropdown-menu/dropdown-menu.html.twig' %}
           {% block trigger %}
-            <button type="button" class="theme-menubar__trigger"
+            <button type="button" class="cremona-menubar__trigger"
                     data-popover-target="trigger"
                     data-navigation-menu-target="trigger"
                     aria-haspopup="menu" aria-expanded="false">
@@ -52,7 +52,7 @@
             </button>
           {% endblock %}
           {% block items %}
-            {% include '@theme/components/item/item.html.twig' with {
+            {% include '@cremona/components/item/item.html.twig' with {
               label: 'Pour les startups'|trans,
               as: 'a',
               href: '/solutions/startups',
@@ -66,16 +66,16 @@
     {% endembed %}
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-nav-menu-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-nav-menu-' ~ random()) -%}
 {%- set label        = label        | default(null) -%}
 {%- set labelledBy   = labelledBy   | default(null) -%}
 {%- set className    = className    | default('') -%}
 {%- set menubarLabel = menubarLabel | default(label) -%}
 
-{%- set _navClasses = ['theme-navigation-menu'] -%}
+{%- set _navClasses = ['cremona-navigation-menu'] -%}
 {%- if className -%}{%- set _navClasses = _navClasses | merge([className]) -%}{%- endif -%}
 
-{%- set _menubarClasses = ['theme-menubar'] -%}
+{%- set _menubarClasses = ['cremona-menubar'] -%}
 
 <nav
   id="{{ htmlId }}"

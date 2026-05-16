@@ -24,7 +24,7 @@
  * the same visual envelope as long as they emit the same attribute shape.
  */
 
-.theme-button {
+.cremona-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -54,20 +54,20 @@
 
 /* ----- sizes (block-size + padding-inline + font-size) -------------- */
 
-.theme-button[data-size="sm"] {
+.cremona-button[data-size="sm"] {
   block-size: 32px;
   padding-inline: var(--spacing-3);
   font-size: var(--font-size-xs);
   gap: var(--spacing-1_5);
 }
 
-.theme-button[data-size="md"] {
+.cremona-button[data-size="md"] {
   block-size: 40px;
   padding-inline: var(--spacing-4);
   font-size: var(--font-size-sm);
 }
 
-.theme-button[data-size="lg"] {
+.cremona-button[data-size="lg"] {
   block-size: 48px;
   padding-inline: var(--spacing-5);
   font-size: var(--font-size-base);
@@ -75,89 +75,89 @@
 
 /* ----- full-width modifier ----------------------------------------- */
 
-.theme-button--full-width {
+.cremona-button--full-width {
   inline-size: 100%;
 }
 
 /* ----- focus ring (outer, like Toggle / InputGroup) ---------------- */
 
-.theme-button:focus-visible {
+.cremona-button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
 /* ----- active press (scale-down — matches Toggle pattern) ---------- */
 
-.theme-button:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-button:active:not(:disabled, [aria-disabled="true"]) {
   transform: scale(0.97);
   transition-duration: var(--motion-duration-instant);
 }
 
 /* ----- variant: primary (filled brand) ----------------------------- */
 
-.theme-button[data-variant="primary"] {
+.cremona-button[data-variant="primary"] {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
   border-color: var(--color-primary);
 }
 
-.theme-button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
 }
 
-.theme-button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-primary-active);
   border-color: var(--color-primary-active);
 }
 
 /* ----- variant: secondary (outlined neutral) ----------------------- */
 
-.theme-button[data-variant="secondary"] {
+.cremona-button[data-variant="secondary"] {
   background-color: var(--color-bg-elevated);
   color: var(--color-text-primary);
   border-color: var(--color-border-default);
 }
 
-.theme-button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-strong);
 }
 
-.theme-button[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-active-overlay);
 }
 
 /* ----- variant: ghost (transparent, no border) --------------------- */
 
-.theme-button[data-variant="ghost"] {
+.cremona-button[data-variant="ghost"] {
   background-color: transparent;
   color: var(--color-text-primary);
   border-color: transparent;
 }
 
-.theme-button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-bg-sunken);
 }
 
-.theme-button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-active-overlay);
 }
 
 /* ----- variant: destructive (filled danger) ------------------------ */
 
-.theme-button[data-variant="destructive"] {
+.cremona-button[data-variant="destructive"] {
   background-color: var(--color-danger);
   color: var(--color-danger-foreground);
   border-color: var(--color-danger);
 }
 
-.theme-button[data-variant="destructive"]:hover:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="destructive"]:hover:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-danger-hover);
   border-color: var(--color-danger-hover);
 }
 
-.theme-button[data-variant="destructive"]:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="destructive"]:active:not(:disabled, [aria-disabled="true"]) {
   /* No -active token for danger in the kit; fall back to the hover ramp.
      If a brand preset needs a deeper press, declare --color-danger-active
      and override here. */
@@ -166,7 +166,7 @@
 
 /* ----- variant: link (text-only, underline on hover) --------------- */
 
-.theme-button[data-variant="link"] {
+.cremona-button[data-variant="link"] {
   /* The link variant breaks the fixed-height envelope — it's prose
      decoration, not a chip. Padding-inline collapses; the visual is
      just a text-color + underline-on-hover. */
@@ -184,12 +184,12 @@
     text-decoration-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-button[data-variant="link"]:hover:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="link"]:hover:not(:disabled, [aria-disabled="true"]) {
   color: var(--color-text-link-hover);
   text-decoration-color: currentColor;
 }
 
-.theme-button[data-variant="link"]:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-button[data-variant="link"]:active:not(:disabled, [aria-disabled="true"]) {
   /* Link variant skips the scale-down press feedback — feels wrong on a
      prose element; the underline-on-hover is the affordance. */
   transform: none;
@@ -197,7 +197,7 @@
 
 /* ----- disabled (HTML <button>) ------------------------------------ */
 
-.theme-button:disabled {
+.cremona-button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
   transform: none;
@@ -207,7 +207,7 @@
 
 /* ----- disabled link branch (aria-disabled on <a>) ----------------- */
 
-.theme-button[aria-disabled="true"] {
+.cremona-button[aria-disabled="true"] {
   cursor: not-allowed;
   opacity: 0.5;
   transform: none;
@@ -221,7 +221,7 @@
 
 /* ----- loading state ----------------------------------------------- */
 
-.theme-button[aria-busy="true"] {
+.cremona-button[aria-busy="true"] {
   cursor: progress;
   /* `disabled` is also set by the Twig template when loading=true, so the
      opacity + no-pointer rules above kick in. We don't dim further. */
@@ -229,13 +229,13 @@
 
 /* ----- icon slots --------------------------------------------------- */
 
-.theme-button__icon,
-.theme-button__spinner {
+.cremona-button__icon,
+.cremona-button__spinner {
   flex-shrink: 0;
 }
 
-.theme-button__label {
-  /* Inherits font-family / size / weight from .theme-button. */
+.cremona-button__label {
+  /* Inherits font-family / size / weight from .cremona-button. */
   min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -244,16 +244,16 @@
 /* ----- touch target hardening (WCAG 2.5.5) ------------------------- */
 
 @media (pointer: coarse) {
-  .theme-button[data-size="sm"],
-  .theme-button[data-size="md"],
-  .theme-button[data-size="lg"] {
+  .cremona-button[data-size="sm"],
+  .cremona-button[data-size="md"],
+  .cremona-button[data-size="lg"] {
     min-block-size: 44px;
     min-inline-size: 44px;
   }
 
   /* Link variant is prose decoration, not a tap target — exempt. The
      surrounding context owns the tap area when it matters. */
-  .theme-button[data-variant="link"] {
+  .cremona-button[data-variant="link"] {
     min-block-size: auto;
     min-inline-size: auto;
   }

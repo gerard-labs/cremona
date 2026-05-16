@@ -10,6 +10,6 @@
  * see [STATE.md §"Trade-offs documented in S3.1"](../STATE.md).
  */
 
-.theme-error-rate-limited {
+.cremona-error-rate-limited {
   /* Marker class — Empty + shell composition does the heavy lifting. */
 }

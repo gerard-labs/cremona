@@ -18,7 +18,7 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderLabel({ content, htmlFor, required, optionalText, hint, size, disabled, className }) {
-  const classes = ['theme-label'];
+  const classes = ['cremona-label'];
   if (className) classes.push(className);
   const attrs = [
     `class="${classes.join(' ')}"`,
@@ -29,15 +29,15 @@ function renderLabel({ content, htmlFor, required, optionalText, hint, size, dis
 
   let suffix = '';
   if (required) {
-    suffix = `<span class="theme-label__required" aria-hidden="true">*</span><span class="theme-sr-only">${t('theme.label.required-aria')}</span>`;
+    suffix = `<span class="cremona-label__required" aria-hidden="true">*</span><span class="cremona-sr-only">${t('theme.label.required-aria')}</span>`;
   } else if (optionalText) {
-    suffix = `<span class="theme-label__optional">${optionalText}</span>`;
+    suffix = `<span class="cremona-label__optional">${optionalText}</span>`;
   }
-  const hintHtml = hint ? `<span class="theme-label__hint">${hint}</span>` : '';
+  const hintHtml = hint ? `<span class="cremona-label__hint">${hint}</span>` : '';
 
   return `
     <label ${attrs}>
-      <span class="theme-label__text">${content}</span>
+      <span class="cremona-label__text">${content}</span>
       ${suffix}
       ${hintHtml}
     </label>
@@ -68,14 +68,14 @@ const bodyHtml = `
     </header>
 
     <section class="label-story__section" aria-labelledby="label-section-default">
-      <h2 id="label-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.default')}</h2>
+      <h2 id="label-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.default')}</h2>
       <div class="label-story__stack">
         ${SAMPLES.map(([key, id]) => row(renderLabel({ content: t(key), htmlFor: id }))).join('')}
       </div>
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-required">
-      <h2 id="label-section-required" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.required')}</h2>
+      <h2 id="label-section-required" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.required')}</h2>
       <div class="label-story__stack">
         ${SAMPLES.slice(0, 3).map(([key, id]) =>
           row(renderLabel({ content: t(key), htmlFor: id + '-req', required: true })),
@@ -84,7 +84,7 @@ const bodyHtml = `
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-optional">
-      <h2 id="label-section-optional" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.optional')}</h2>
+      <h2 id="label-section-optional" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.optional')}</h2>
       <div class="label-story__stack">
         ${SAMPLES.slice(2, 5).map(([key, id]) =>
           row(renderLabel({ content: t(key), htmlFor: id + '-opt', optionalText: OPTIONAL_SUFFIX })),
@@ -93,7 +93,7 @@ const bodyHtml = `
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-with-hint">
-      <h2 id="label-section-with-hint" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.with-hint')}</h2>
+      <h2 id="label-section-with-hint" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.with-hint')}</h2>
       <div class="label-story__stack">
         ${row(renderLabel({ content: t('theme.label.sample.email'),    htmlFor: 'demo-email-hint',   hint: HINT_EMAIL }))}
         ${row(renderLabel({ content: t('theme.label.sample.message'),  htmlFor: 'demo-message-hint', hint: HINT_50 }))}
@@ -101,7 +101,7 @@ const bodyHtml = `
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-disabled">
-      <h2 id="label-section-disabled" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.disabled')}</h2>
+      <h2 id="label-section-disabled" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.disabled')}</h2>
       <div class="label-story__stack">
         ${row(renderLabel({ content: t('theme.label.sample.email'),    htmlFor: 'demo-email-dis',    disabled: true }))}
         ${row(renderLabel({ content: t('theme.label.sample.password'), htmlFor: 'demo-password-dis', disabled: true, required: true }))}
@@ -109,7 +109,7 @@ const bodyHtml = `
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-sizes">
-      <h2 id="label-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.sizes')}</h2>
+      <h2 id="label-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.sizes')}</h2>
       <div class="label-story__stack">
         ${row(renderLabel({ content: t('theme.label.sample.email'), htmlFor: 'demo-email-sm', size: 'sm' }))}
         ${row(renderLabel({ content: t('theme.label.sample.email'), htmlFor: 'demo-email-md', size: 'md' }))}
@@ -117,7 +117,7 @@ const bodyHtml = `
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-combinations">
-      <h2 id="label-section-combinations" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.combinations')}</h2>
+      <h2 id="label-section-combinations" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.combinations')}</h2>
       <div class="label-story__stack">
         ${row(renderLabel({ content: t('theme.label.sample.email'),    htmlFor: 'demo-email-combo',    required: true, hint: HINT_EMAIL }))}
         ${row(renderLabel({ content: t('theme.label.sample.password'), htmlFor: 'demo-password-combo', required: true, hint: HINT_50 }))}
@@ -125,7 +125,7 @@ const bodyHtml = `
     </section>
 
     <section class="label-story__section" aria-labelledby="label-section-long">
-      <h2 id="label-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.long-label')}</h2>
+      <h2 id="label-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.label.story.section.long-label')}</h2>
       <div class="label-story__stack">
         ${row(renderLabel({ content: t('theme.label.sample.long'), htmlFor: 'demo-long', required: true, hint: HINT_50 }))}
       </div>

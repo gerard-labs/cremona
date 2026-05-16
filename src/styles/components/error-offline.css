@@ -5,11 +5,11 @@
  * Marker class + hero size override.
  */
 
-.theme-error-offline {
+.cremona-error-offline {
   /* Marker class — Empty + shell composition does the heavy lifting. */
 }
 
-.theme-error-offline__hero {
+.cremona-error-offline__hero {
   inline-size: 100%;
   max-inline-size: 200px;
   block-size: auto;

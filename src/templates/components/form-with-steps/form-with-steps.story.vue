@@ -16,32 +16,32 @@ setLocale('fr');
 function renderStepperItem({ idx, currentStep, label, description }) {
   const state = idx < currentStep ? 'completed' : (idx === currentStep ? 'current' : 'upcoming');
   return `
-    <li class="theme-stepper__step" data-stepper-target="step" data-step-index="${idx + 1}" data-state="${state}"${idx === currentStep ? ' aria-current="step"' : ''}>
-      <span class="theme-stepper__indicator" aria-hidden="true">
-        <span class="theme-stepper__indicator-number">${idx + 1}</span>
-        <span class="theme-stepper__indicator-check"></span>
+    <li class="cremona-stepper__step" data-stepper-target="step" data-step-index="${idx + 1}" data-state="${state}"${idx === currentStep ? ' aria-current="step"' : ''}>
+      <span class="cremona-stepper__indicator" aria-hidden="true">
+        <span class="cremona-stepper__indicator-number">${idx + 1}</span>
+        <span class="cremona-stepper__indicator-check"></span>
       </span>
-      <div class="theme-stepper__text">
-        <span class="theme-stepper__label">${label}</span>
-        ${description ? `<span class="theme-stepper__description">${description}</span>` : ''}
+      <div class="cremona-stepper__text">
+        <span class="cremona-stepper__label">${label}</span>
+        ${description ? `<span class="cremona-stepper__description">${description}</span>` : ''}
       </div>
     </li>
   `;
 }
 
 function renderField({ id, label, type = 'text', autocomplete, required = false, invalid = false, errorText, helpText, value = '' }) {
-  const fieldClasses = ['theme-field'];
-  if (invalid) fieldClasses.push('theme-field--invalid');
+  const fieldClasses = ['cremona-field'];
+  if (invalid) fieldClasses.push('cremona-field--invalid');
   const describedByIds = [];
   if (helpText) describedByIds.push(`${id}-help`);
   if (errorText) describedByIds.push(`${id}-error`);
   const describedBy = describedByIds.length ? ` aria-describedby="${describedByIds.join(' ')}"` : '';
   return `
     <div class="${fieldClasses.join(' ')}">
-      <label class="theme-label" for="${id}">${label}${required ? ' <span aria-hidden="true">*</span><span class="sr-only">obligatoire</span>' : ''}</label>
-      <input type="${type}" id="${id}" name="${id}" class="theme-input" data-size="md"${autocomplete ? ` autocomplete="${autocomplete}"` : ''}${required ? ' required aria-required="true"' : ''}${invalid ? ' aria-invalid="true"' : ''}${describedBy} value="${value}">
-      ${helpText ? `<p class="theme-field__help" id="${id}-help">${helpText}</p>` : ''}
-      ${errorText ? `<p class="theme-field__error" id="${id}-error">${errorText}</p>` : ''}
+      <label class="cremona-label" for="${id}">${label}${required ? ' <span aria-hidden="true">*</span><span class="sr-only">obligatoire</span>' : ''}</label>
+      <input type="${type}" id="${id}" name="${id}" class="cremona-input" data-size="md"${autocomplete ? ` autocomplete="${autocomplete}"` : ''}${required ? ' required aria-required="true"' : ''}${invalid ? ' aria-invalid="true"' : ''}${describedBy} value="${value}">
+      ${helpText ? `<p class="cremona-field__help" id="${id}-help">${helpText}</p>` : ''}
+      ${errorText ? `<p class="cremona-field__error" id="${id}-error">${errorText}</p>` : ''}
     </div>
   `;
 }
@@ -69,7 +69,7 @@ function renderWithSteps({ id = 'story-form', title, steps, currentStep = 1, all
     if (idx === 3) {
       return `
         <p style="font: var(--typography-body); color: var(--color-text-secondary); margin-block-end: var(--spacing-4);">${t('theme.form.with-steps.story.step-3.confirm-summary')}</p>
-        <dl class="theme-description-list" data-layout="side-by-side">
+        <dl class="cremona-description-list" data-layout="side-by-side">
           <dt>${t('theme.form.with-steps.story.field.email-label')}</dt><dd>${t('theme.form.with-steps.story.demo-data.email', { id })}</dd>
           <dt>${t('theme.form.with-steps.story.field.name-label')}</dt><dd>${t('theme.form.with-steps.story.demo-data.name')}</dd>
           <dt>${t('theme.form.with-steps.story.field.org-label')}</dt><dd>${t('theme.form.with-steps.story.demo-data.org')}</dd>
@@ -81,32 +81,32 @@ function renderWithSteps({ id = 'story-form', title, steps, currentStep = 1, all
 
   return `
     <form action="/register" method="post" class="form-with-steps-story__form">
-      <div class="theme-form-with-steps" id="${id}" data-controller="stepper form-with-steps" data-stepper-current-step-value="${currentStep}" data-stepper-total-steps-value="${totalSteps}" data-form-with-steps-current-step-value="${currentStep}" data-form-with-steps-total-steps-value="${totalSteps}" data-form-with-steps-allow-skip-value="${allowSkip}" aria-labelledby="${id}-title">
-        <h2 id="${id}-title" class="theme-typography theme-form-with-steps__title" data-variant="h2">${title}</h2>
-        <ol class="theme-stepper theme-form-with-steps__indicator" data-orientation="${orientation}" data-size="md" aria-label="${t('theme.form.with-steps.aria.indicator', { currentStep, totalSteps })}">
+      <div class="cremona-form-with-steps" id="${id}" data-controller="stepper form-with-steps" data-stepper-current-step-value="${currentStep}" data-stepper-total-steps-value="${totalSteps}" data-form-with-steps-current-step-value="${currentStep}" data-form-with-steps-total-steps-value="${totalSteps}" data-form-with-steps-allow-skip-value="${allowSkip}" aria-labelledby="${id}-title">
+        <h2 id="${id}-title" class="cremona-typography cremona-form-with-steps__title" data-variant="h2">${title}</h2>
+        <ol class="cremona-stepper cremona-form-with-steps__indicator" data-orientation="${orientation}" data-size="md" aria-label="${t('theme.form.with-steps.aria.indicator', { currentStep, totalSteps })}">
           ${stepperHtml}
         </ol>
-        <div class="theme-form-with-steps__steps">
+        <div class="cremona-form-with-steps__steps">
           ${steps.map((s, idx) => {
             const stepIdx = idx + 1;
             const hidden = stepIdx !== currentStep;
             return `
-              <fieldset class="theme-form-with-steps__step" data-form-with-steps-target="step" data-step-index="${stepIdx}"${hidden ? ' hidden' : ''} aria-labelledby="${id}-legend-${stepIdx}">
+              <fieldset class="cremona-form-with-steps__step" data-form-with-steps-target="step" data-step-index="${stepIdx}"${hidden ? ' hidden' : ''} aria-labelledby="${id}-legend-${stepIdx}">
                 <legend id="${id}-legend-${stepIdx}" class="sr-only">${t('theme.form.with-steps.aria.fieldset-label', { n: stepIdx, label: s.label })}</legend>
                 ${stepBody(stepIdx)}
               </fieldset>
             `;
           }).join('')}
         </div>
-        <div class="theme-form-with-steps__announcer" data-form-with-steps-target="announcer" aria-live="polite" aria-atomic="true">
+        <div class="cremona-form-with-steps__announcer" data-form-with-steps-target="announcer" aria-live="polite" aria-atomic="true">
           ${t('theme.form.with-steps.aria.step-of', { currentStep, totalSteps })}
         </div>
-        <div class="theme-form-with-steps__footer">
-          <button type="button" class="theme-button theme-button--ghost theme-form-with-steps__skip" data-form-with-steps-target="skipBtn" data-action="click->form-with-steps#skip"${allowSkip ? '' : ' hidden'}>${t('theme.form.with-steps.actions.skip')}</button>
-          <div class="theme-form-with-steps__nav">
-            <button type="button" class="theme-button theme-button--outline" data-form-with-steps-target="prevBtn" data-action="click->form-with-steps#previous"${isFirst ? ' hidden' : ''}>${t('theme.form.with-steps.actions.previous')}</button>
-            <button type="button" class="theme-button theme-button--primary" data-form-with-steps-target="nextBtn" data-action="click->form-with-steps#next"${isLast ? ' hidden' : ''}>${t('theme.form.with-steps.actions.next')}</button>
-            <button type="submit" class="theme-button theme-button--primary" data-form-with-steps-target="submitBtn"${isLast ? '' : ' hidden'}>${t('theme.form.with-steps.actions.submit')}</button>
+        <div class="cremona-form-with-steps__footer">
+          <button type="button" class="cremona-button cremona-button--ghost cremona-form-with-steps__skip" data-form-with-steps-target="skipBtn" data-action="click->form-with-steps#skip"${allowSkip ? '' : ' hidden'}>${t('theme.form.with-steps.actions.skip')}</button>
+          <div class="cremona-form-with-steps__nav">
+            <button type="button" class="cremona-button cremona-button--outline" data-form-with-steps-target="prevBtn" data-action="click->form-with-steps#previous"${isFirst ? ' hidden' : ''}>${t('theme.form.with-steps.actions.previous')}</button>
+            <button type="button" class="cremona-button cremona-button--primary" data-form-with-steps-target="nextBtn" data-action="click->form-with-steps#next"${isLast ? ' hidden' : ''}>${t('theme.form.with-steps.actions.next')}</button>
+            <button type="submit" class="cremona-button cremona-button--primary" data-form-with-steps-target="submitBtn"${isLast ? '' : ' hidden'}>${t('theme.form.with-steps.actions.submit')}</button>
           </div>
         </div>
       </div>
@@ -129,32 +129,32 @@ const bodyHtml = `
     </header>
 
     <section class="form-with-steps-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.default-step-1')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.default-step-1')}</h2>
       <div class="form-with-steps-story__frame">${renderWithSteps({ id: 'story-step-1', title, steps, currentStep: 1 })}</div>
     </section>
 
     <section class="form-with-steps-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.step-2-middle')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.step-2-middle')}</h2>
       <div class="form-with-steps-story__frame">${renderWithSteps({ id: 'story-step-2', title, steps, currentStep: 2 })}</div>
     </section>
 
     <section class="form-with-steps-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.step-3-submit')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.step-3-submit')}</h2>
       <div class="form-with-steps-story__frame">${renderWithSteps({ id: 'story-step-3', title, steps, currentStep: 3 })}</div>
     </section>
 
     <section class="form-with-steps-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.with-skip')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.with-skip')}</h2>
       <div class="form-with-steps-story__frame">${renderWithSteps({ id: 'story-skip', title, steps, currentStep: 1, allowSkip: true })}</div>
     </section>
 
     <section class="form-with-steps-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.with-validation-error')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.with-validation-error')}</h2>
       <div class="form-with-steps-story__frame">${renderWithSteps({ id: 'story-error', title, steps, currentStep: 1, validationError: true })}</div>
     </section>
 
     <section class="form-with-steps-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.vertical-stepper')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.with-steps.story.section.vertical-stepper')}</h2>
       <div class="form-with-steps-story__frame">${renderWithSteps({ id: 'story-vertical', title, steps, currentStep: 2, orientation: 'vertical' })}</div>
     </section>
   </section>

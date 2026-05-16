@@ -42,7 +42,7 @@
 
   Usage:
 
-    {% include '@theme/components/form-with-steps/form-with-steps.html.twig' with {
+    {% include '@cremona/components/form-with-steps/form-with-steps.html.twig' with {
       title: 'Création de compte'|trans,
       steps: [
         { label: 'Compte'|trans,        description: 'Email + mot de passe'|trans },
@@ -52,7 +52,7 @@
       submitLabel: 'Créer le compte'|trans,
     } %}
 
-  Events (dispatched on the <div.theme-form-with-steps>) :
+  Events (dispatched on the <div.cremona-form-with-steps>) :
     form-with-steps:mount           — detail.{ stepCount, currentStep }
     form-with-steps:step-change     — detail.{ currentStep, previousStep, totalSteps, direction }
     form-with-steps:before-next     — detail.{ currentStep, nextStep, totalSteps } — cancellable
@@ -61,7 +61,7 @@
     form-with-steps:skip            — detail.{ currentStep, totalSteps }
 -#}
 
-{%- set htmlId             = htmlId             | default('theme-form-with-steps-' ~ random()) -%}
+{%- set htmlId             = htmlId             | default('cremona-form-with-steps-' ~ random()) -%}
 {%- set steps              = steps              | default([]) -%}
 {%- set currentStep        = currentStep        | default(1) -%}
 {%- set totalSteps         = steps | length -%}
@@ -75,7 +75,7 @@
 {%- set stepperSize        = stepperSize        | default('md') -%}
 {%- set className          = className          | default('') -%}
 
-{%- set _classes = ['theme-form-with-steps'] -%}
+{%- set _classes = ['cremona-form-with-steps'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -89,11 +89,11 @@
   data-form-with-steps-allow-skip-value="{{ allowSkip ? 'true' : 'false' }}"
   aria-labelledby="{{ htmlId }}-title"
 >
-  {% include '@theme/components/typography/typography.html.twig' with { as: 'h2', variant: 'h2', content: title, htmlId: htmlId ~ '-title', className: 'theme-form-with-steps__title' } only %}
+  {% include '@cremona/components/typography/typography.html.twig' with { as: 'h2', variant: 'h2', content: title, htmlId: htmlId ~ '-title', className: 'cremona-form-with-steps__title' } only %}
 
   {# Stepper Ring 2 compose — visual step indicator. Cross-controller compose : Stepper observes
      the same `currentStepValue` Stimulus value via shared data attribute. #}
-  {% include '@theme/components/stepper/stepper.html.twig' with {
+  {% include '@cremona/components/stepper/stepper.html.twig' with {
     htmlId: htmlId ~ '-stepper',
     steps: steps,
     currentStep: currentStep,
@@ -101,17 +101,17 @@
     orientation: stepperOrientation,
     size: stepperSize,
     label: 'theme.form.with-steps.aria.indicator'|trans({ '{currentStep}': currentStep, '{totalSteps}': totalSteps }),
-    className: 'theme-form-with-steps__indicator',
+    className: 'cremona-form-with-steps__indicator',
     controllerless: true,
   } only %}
 
   {# N step bodies — only the current step is visible. The form-with-steps controller stamps the
      `hidden` attribute on all but the current step on connect + on step transitions. #}
-  <div class="theme-form-with-steps__steps">
+  <div class="cremona-form-with-steps__steps">
     {%- for step in steps -%}
       {%- set idx = loop.index -%}
       <fieldset
-        class="theme-form-with-steps__step"
+        class="cremona-form-with-steps__step"
         data-form-with-steps-target="step"
         data-step-index="{{ idx }}"
         {%- if idx != currentStep %} hidden{% endif -%}
@@ -137,7 +137,7 @@
     {# Live region for step transition announcements ("Étape 2 sur 4"). Polite to avoid
        interrupting screen reader narration of the new step's first input label. #}
     <div
-      class="theme-form-with-steps__announcer sr-only"
+      class="cremona-form-with-steps__announcer sr-only"
       data-form-with-steps-target="announcer"
       aria-live="polite"
       aria-atomic="true"
@@ -158,25 +158,25 @@
   {%- if currentStep == totalSteps -%}{%- set _nextAttrs = _nextAttrs | merge({ hidden: 'hidden' }) -%}{%- endif -%}
   {%- set _submitAttrs = { 'data-form-with-steps-target': 'submitBtn' } -%}
   {%- if currentStep != totalSteps -%}{%- set _submitAttrs = _submitAttrs | merge({ hidden: 'hidden' }) -%}{%- endif -%}
-  <div class="theme-form-with-steps__footer">
-    {% include '@theme/components/button/button.html.twig' with {
+  <div class="cremona-form-with-steps__footer">
+    {% include '@cremona/components/button/button.html.twig' with {
       label: skipLabel,
       variant: 'ghost',
-      className: 'theme-form-with-steps__skip',
+      className: 'cremona-form-with-steps__skip',
       attrs: _skipAttrs,
     } only %}
-    <div class="theme-form-with-steps__nav">
-      {% include '@theme/components/button/button.html.twig' with {
+    <div class="cremona-form-with-steps__nav">
+      {% include '@cremona/components/button/button.html.twig' with {
         label: previousLabel,
         variant: 'outline',
         attrs: _prevAttrs,
       } only %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: nextLabel,
         variant: 'primary',
         attrs: _nextAttrs,
       } only %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: submitLabel,
         variant: 'primary',
         type: 'submit',

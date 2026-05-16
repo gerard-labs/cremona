@@ -25,7 +25,7 @@
  * handled by the OS). The kit doesn't add custom scroll animations.
  */
 
-.theme-scroll-area {
+.cremona-scroll-area {
   position: relative;
   inline-size: 100%;
   /* Default — overflow on both axes. */
@@ -37,54 +37,54 @@
 }
 
 /* Orientation variants — clamp the non-active axis. */
-.theme-scroll-area[data-orientation="vertical"] {
+.cremona-scroll-area[data-orientation="vertical"] {
   overflow-inline: hidden;
   overflow-block: auto;
 }
 
-.theme-scroll-area[data-orientation="horizontal"] {
+.cremona-scroll-area[data-orientation="horizontal"] {
   overflow-inline: auto;
   overflow-block: hidden;
 }
 
 /* --- Scrollbar size variants -------------------------------------- */
 
-.theme-scroll-area[data-size="sm"] {
+.cremona-scroll-area[data-size="sm"] {
   scrollbar-width: thin; /* Firefox: ~6 px */
 }
 
-.theme-scroll-area[data-size="md"] {
+.cremona-scroll-area[data-size="md"] {
   /* Default. Firefox `scrollbar-width: thin` ≈ 10 px on most platforms. */
   scrollbar-width: thin;
 }
 
-.theme-scroll-area[data-size="lg"] {
+.cremona-scroll-area[data-size="lg"] {
   /* Firefox 'auto' ≈ 14-17 px (platform default). */
   scrollbar-width: auto;
 }
 
 /* --- Chromium / WebKit / Safari scrollbar styling ----------------- */
 
-.theme-scroll-area::-webkit-scrollbar {
+.cremona-scroll-area::-webkit-scrollbar {
   inline-size: 10px;
   block-size: 10px;
 }
 
-.theme-scroll-area[data-size="sm"]::-webkit-scrollbar {
+.cremona-scroll-area[data-size="sm"]::-webkit-scrollbar {
   inline-size: 6px;
   block-size: 6px;
 }
 
-.theme-scroll-area[data-size="lg"]::-webkit-scrollbar {
+.cremona-scroll-area[data-size="lg"]::-webkit-scrollbar {
   inline-size: 14px;
   block-size: 14px;
 }
 
-.theme-scroll-area::-webkit-scrollbar-track {
+.cremona-scroll-area::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-.theme-scroll-area::-webkit-scrollbar-thumb {
+.cremona-scroll-area::-webkit-scrollbar-thumb {
   background-color: var(--color-border-default);
   border-radius: var(--radius-pill);
   border: 2px solid transparent;
@@ -92,22 +92,22 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-scroll-area::-webkit-scrollbar-thumb:hover {
+.cremona-scroll-area::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-border-strong);
 }
 
-.theme-scroll-area::-webkit-scrollbar-thumb:active {
+.cremona-scroll-area::-webkit-scrollbar-thumb:active {
   background-color: var(--color-text-tertiary);
 }
 
-.theme-scroll-area::-webkit-scrollbar-corner {
+.cremona-scroll-area::-webkit-scrollbar-corner {
   background-color: transparent;
 }
 
 /* --- Reduced motion ----------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-scroll-area::-webkit-scrollbar-thumb {
+  .cremona-scroll-area::-webkit-scrollbar-thumb {
     transition: none;
   }
 }

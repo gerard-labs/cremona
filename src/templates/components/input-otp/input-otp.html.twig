@@ -22,7 +22,7 @@
   browser distributes the auto-filled code across the cluster).
 
   Parameters:
-    htmlId      (string, optional)  auto-generated 'theme-input-otp-<rand>'
+    htmlId      (string, optional)  auto-generated 'cremona-input-otp-<rand>'
     name        (string, optional)  hidden-input form field name
     length      (int,    optional)  number of digits (4-8 ; default 6)
     value       (string, optional)  pre-fill (4-8 digits ; padded with empty
@@ -38,7 +38,7 @@
     className   (string, optional)
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-input-otp-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-input-otp-' ~ random()) -%}
 {%- set name         = name         | default(null) -%}
 {%- set length       = length       | default(6) -%}
 {%- set value        = value        | default('') -%}
@@ -49,7 +49,7 @@
 {%- set autocomplete = autocomplete | default('one-time-code') -%}
 {%- set className    = className    | default('') -%}
 
-{%- set _classes = ['theme-input-otp'] -%}
+{%- set _classes = ['cremona-input-otp'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _legendId = htmlId ~ '-legend' -%}
@@ -63,13 +63,13 @@
   {%- if disabled %} disabled{% endif -%}
 >
   <legend
-    class="theme-input-otp__legend"
+    class="cremona-input-otp__legend"
     id="{{ _legendId }}"
   >{{ label }}</legend>
-  <div class="theme-input-otp__cells">
+  <div class="cremona-input-otp__cells">
     {%- for i in 0..(length - 1) -%}
       {%- set cellValue = (value|length > i) ? value[i] : '' -%}
-      {% include '@theme/components/input/input.html.twig' with {
+      {% include '@cremona/components/input/input.html.twig' with {
         type: 'text',
         value: (cellValue != '' ? cellValue : null),
         required: required,
@@ -78,7 +78,7 @@
         maxlength: 1,
         pattern: '[0-9]*',
         inputmode: 'numeric',
-        className: 'theme-input-otp__cell',
+        className: 'cremona-input-otp__cell',
         attrs: {
           'data-input-otp-target': 'input',
           'data-input-otp-index': i,

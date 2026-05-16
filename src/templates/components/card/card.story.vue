@@ -18,15 +18,15 @@ setLocale('fr');
 
 function renderCard({ variant = 'surface', hoverable = false, divider = false }, slots = {}) {
   const { header = '', body = '', footer = '' } = slots;
-  const classes = ['theme-card'];
-  if (variant === 'elevated') classes.push('theme-card--elevated');
-  if (variant === 'subtle') classes.push('theme-card--subtle');
-  if (hoverable) classes.push('theme-card--hoverable');
+  const classes = ['cremona-card'];
+  if (variant === 'elevated') classes.push('cremona-card--elevated');
+  if (variant === 'subtle') classes.push('cremona-card--subtle');
+  if (hoverable) classes.push('cremona-card--hoverable');
 
-  const styleAttr = divider ? `style="--theme-card-divider: 1px;"` : '';
-  const headerHtml = header ? `<header class="theme-card__header">${header}</header>` : '';
-  const bodyHtml = body ? `<div class="theme-card__body">${body}</div>` : '';
-  const footerHtml = footer ? `<footer class="theme-card__footer">${footer}</footer>` : '';
+  const styleAttr = divider ? `style="--cremona-card-divider: 1px;"` : '';
+  const headerHtml = header ? `<header class="cremona-card__header">${header}</header>` : '';
+  const bodyHtml = body ? `<div class="cremona-card__body">${body}</div>` : '';
+  const footerHtml = footer ? `<footer class="cremona-card__footer">${footer}</footer>` : '';
 
   return `<article class="${classes.join(' ')}" data-variant="${variant}" ${styleAttr}>${headerHtml}${bodyHtml}${footerHtml}</article>`;
 }
@@ -77,79 +77,79 @@ const bodyHtml = `
     </header>
 
     <section class="card-story__section" aria-labelledby="card-section-default">
-      <h2 id="card-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.default')}</h2>
+      <h2 id="card-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.default')}</h2>
       <div class="card-story__grid">
         ${block(renderCard({}, { body: `<p>${SAMPLES.articleBody}</p>` }), 'body-only')}
       </div>
     </section>
 
     <section class="card-story__section" aria-labelledby="card-section-with-slots">
-      <h2 id="card-section-with-slots" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.with-slots')}</h2>
+      <h2 id="card-section-with-slots" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.with-slots')}</h2>
       <div class="card-story__grid">
         ${block(renderCard({}, {
-          header: `<h3 class="theme-typography" data-variant="overline" data-color="tertiary">${SAMPLES.kpiTitle}</h3>`,
-          body: `<p class="theme-typography" data-variant="display">${SAMPLES.kpiValue}</p><p class="theme-typography" data-variant="caption" data-color="tertiary">${SAMPLES.kpiTrend}</p>`,
+          header: `<h3 class="cremona-typography" data-variant="overline" data-color="tertiary">${SAMPLES.kpiTitle}</h3>`,
+          body: `<p class="cremona-typography" data-variant="display">${SAMPLES.kpiValue}</p><p class="cremona-typography" data-variant="caption" data-color="tertiary">${SAMPLES.kpiTrend}</p>`,
         }), 'header + body (KPI)')}
         ${block(renderCard({}, {
-          header: `<h3 class="theme-typography" data-variant="h3">${SAMPLES.articleTitle}</h3>`,
+          header: `<h3 class="cremona-typography" data-variant="h3">${SAMPLES.articleTitle}</h3>`,
           body: `<p>${SAMPLES.articleBody}</p>`,
-          footer: `<a href="#" class="theme-button" data-variant="link" data-size="md"><span class="theme-button__label">${SAMPLES.articleReadMore}</span></a>`,
+          footer: `<a href="#" class="cremona-button" data-variant="link" data-size="md"><span class="cremona-button__label">${SAMPLES.articleReadMore}</span></a>`,
         }), 'header + body + footer (article)')}
       </div>
     </section>
 
     <section class="card-story__section" aria-labelledby="card-section-variants">
-      <h2 id="card-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.variants')}</h2>
-      <p class="card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.variants')}</p>
+      <h2 id="card-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.variants')}</h2>
+      <p class="card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.variants')}</p>
       <div class="card-story__grid">
-        ${block(renderCard({ variant: 'surface' }, { header: `<h3 class="theme-typography" data-variant="h3">surface</h3>`, body: `<p>${SAMPLES.articleBody}</p>` }), 'surface (défaut)')}
-        ${block(renderCard({ variant: 'elevated' }, { header: `<h3 class="theme-typography" data-variant="h3">elevated</h3>`, body: `<p>${SAMPLES.articleBody}</p>` }), 'elevated')}
-        ${block(renderCard({ variant: 'subtle' }, { header: `<h3 class="theme-typography" data-variant="h3">subtle</h3>`, body: `<p>${SAMPLES.settingBody}</p>` }), 'subtle')}
+        ${block(renderCard({ variant: 'surface' }, { header: `<h3 class="cremona-typography" data-variant="h3">surface</h3>`, body: `<p>${SAMPLES.articleBody}</p>` }), 'surface (défaut)')}
+        ${block(renderCard({ variant: 'elevated' }, { header: `<h3 class="cremona-typography" data-variant="h3">elevated</h3>`, body: `<p>${SAMPLES.articleBody}</p>` }), 'elevated')}
+        ${block(renderCard({ variant: 'subtle' }, { header: `<h3 class="cremona-typography" data-variant="h3">subtle</h3>`, body: `<p>${SAMPLES.settingBody}</p>` }), 'subtle')}
       </div>
     </section>
 
     <section class="card-story__section" aria-labelledby="card-section-hoverable">
-      <h2 id="card-section-hoverable" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.hoverable')}</h2>
-      <p class="card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.hoverable')}</p>
+      <h2 id="card-section-hoverable" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.hoverable')}</h2>
+      <p class="card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.hoverable')}</p>
       <div class="card-story__grid">
         ${block(renderCard({ hoverable: true }, {
-          header: `<h3 class="theme-typography" data-variant="h3">${SAMPLES.hoverableTitle}</h3>`,
+          header: `<h3 class="cremona-typography" data-variant="h3">${SAMPLES.hoverableTitle}</h3>`,
           body: `<p>${SAMPLES.hoverableBody}</p>`,
         }), 'hoverable surface (passe la souris)')}
       </div>
     </section>
 
     <section class="card-story__section" aria-labelledby="card-section-divider">
-      <h2 id="card-section-divider" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.divider')}</h2>
-      <p class="card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.divider')}</p>
+      <h2 id="card-section-divider" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.divider')}</h2>
+      <p class="card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.divider')}</p>
       <div class="card-story__grid">
         ${block(renderCard({ divider: true }, {
-          header: `<h3 class="theme-typography" data-variant="h3">${SAMPLES.settingTitle}</h3>`,
+          header: `<h3 class="cremona-typography" data-variant="h3">${SAMPLES.settingTitle}</h3>`,
           body: `<p>${SAMPLES.settingBody}</p>`,
-          footer: `<button class="theme-button" data-variant="secondary" data-size="sm" type="button"><span class="theme-button__label">${t('theme.common.actions.save')}</span></button>`,
-        }), 'avec divider (--theme-card-divider: 1px)')}
+          footer: `<button class="cremona-button" data-variant="secondary" data-size="sm" type="button"><span class="cremona-button__label">${t('theme.common.actions.save')}</span></button>`,
+        }), 'avec divider (--cremona-card-divider: 1px)')}
       </div>
     </section>
 
     <section class="card-story__section" aria-labelledby="card-section-composition">
-      <h2 id="card-section-composition" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.composition')}</h2>
-      <p class="card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.composition')}</p>
+      <h2 id="card-section-composition" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.composition')}</h2>
+      <p class="card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.card.story.explainer.composition')}</p>
       <div class="card-story__grid">
         ${block(renderCard({}, {
-          body: `<div class="theme-aspect-ratio" style="--theme-aspect-ratio: 16/9;">${PLACEHOLDER_SVG}</div><h3 class="theme-typography" data-variant="h3">${SAMPLES.coverArticleTitle}</h3><p>${SAMPLES.coverArticleBody}</p>`,
+          body: `<div class="cremona-aspect-ratio" style="--cremona-aspect-ratio: 16/9;">${PLACEHOLDER_SVG}</div><h3 class="cremona-typography" data-variant="h3">${SAMPLES.coverArticleTitle}</h3><p>${SAMPLES.coverArticleBody}</p>`,
         }), 'Card + AspectRatio (cover-image card)')}
         ${block(renderCard({}, {
-          header: `<div class="card-story__header-row"><h3 class="theme-typography" data-variant="h3">${SAMPLES.kpiTitle}</h3><span class="theme-badge" data-variant="success" data-size="sm"><span>${SAMPLES.statusActive}</span></span></div>`,
-          body: `<p class="theme-typography" data-variant="display">${SAMPLES.kpiValue}</p>`,
+          header: `<div class="card-story__header-row"><h3 class="cremona-typography" data-variant="h3">${SAMPLES.kpiTitle}</h3><span class="cremona-badge" data-variant="success" data-size="sm"><span>${SAMPLES.statusActive}</span></span></div>`,
+          body: `<p class="cremona-typography" data-variant="display">${SAMPLES.kpiValue}</p>`,
         }), 'Card + Badge (status card)')}
       </div>
     </section>
 
     <section class="card-story__section" aria-labelledby="card-section-long-content">
-      <h2 id="card-section-long-content" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.long-content')}</h2>
+      <h2 id="card-section-long-content" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.card.story.section.long-content')}</h2>
       <div class="card-story__grid">
         ${block(renderCard({}, {
-          header: `<h3 class="theme-typography" data-variant="h3">${SAMPLES.longTitle}</h3>`,
+          header: `<h3 class="cremona-typography" data-variant="h3">${SAMPLES.longTitle}</h3>`,
           body: `<p>${SAMPLES.longBody}</p>`,
         }), 'long title + long body (test +30% FR)')}
       </div>

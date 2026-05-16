@@ -33,10 +33,10 @@
 {%- set className   = className   | default('') -%}
 
 {%- set _hasCenter = label or icon -%}
-{%- set _classes = ['theme-divider'] -%}
-{%- if _hasCenter -%}{%- set _classes = _classes | merge(['theme-divider--with-content']) -%}{%- endif -%}
-{%- if variant == 'dashed' -%}{%- set _classes = _classes | merge(['theme-divider--dashed']) -%}{%- endif -%}
-{%- if variant == 'dotted' -%}{%- set _classes = _classes | merge(['theme-divider--dotted']) -%}{%- endif -%}
+{%- set _classes = ['cremona-divider'] -%}
+{%- if _hasCenter -%}{%- set _classes = _classes | merge(['cremona-divider--with-content']) -%}{%- endif -%}
+{%- if variant == 'dashed' -%}{%- set _classes = _classes | merge(['cremona-divider--dashed']) -%}{%- endif -%}
+{%- if variant == 'dotted' -%}{%- set _classes = _classes | merge(['cremona-divider--dotted']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -46,18 +46,18 @@
   {%- else %} role="separator" aria-orientation="{{ orientation }}"{% endif -%}
 >
   {%- if _hasCenter -%}
-    <span class="theme-divider__line" aria-hidden="true"></span>
-    <span class="theme-divider__content">
+    <span class="cremona-divider__line" aria-hidden="true"></span>
+    <span class="cremona-divider__content">
       {%- if icon -%}
-        {% include '@theme/components/icon/icon.html.twig' with {
+        {% include '@cremona/components/icon/icon.html.twig' with {
           name: icon,
           decorative: true,
           size: 'sm',
-          className: 'theme-divider__icon',
+          className: 'cremona-divider__icon',
         } %}
       {%- endif -%}
-      {%- if label -%}<span class="theme-divider__label">{{ label }}</span>{%- endif -%}
+      {%- if label -%}<span class="cremona-divider__label">{{ label }}</span>{%- endif -%}
     </span>
-    <span class="theme-divider__line" aria-hidden="true"></span>
+    <span class="cremona-divider__line" aria-hidden="true"></span>
   {%- endif -%}
 </div>

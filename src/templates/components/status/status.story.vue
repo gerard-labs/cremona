@@ -18,12 +18,12 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderStatus({ variant = 'success', label, pulse = false, size = 'md', className }) {
-  const classes = ['theme-status'];
+  const classes = ['cremona-status'];
   if (className) classes.push(className);
   const tag = variant === 'danger' ? 'div' : 'output';
   const roleAttr = variant === 'danger' ? ' role="alert"' : '';
   const pulseAttr = pulse ? ' data-pulse="true"' : '';
-  return `<${tag} class="${classes.join(' ')}" data-variant="${variant}" data-size="${size}"${pulseAttr}${roleAttr}><span class="theme-status__dot" aria-hidden="true"></span><span class="theme-status__label">${label}</span></${tag}>`;
+  return `<${tag} class="${classes.join(' ')}" data-variant="${variant}" data-size="${size}"${pulseAttr}${roleAttr}><span class="cremona-status__dot" aria-hidden="true"></span><span class="cremona-status__label">${label}</span></${tag}>`;
 }
 
 const VARIANTS = [
@@ -41,24 +41,24 @@ const bodyHtml = `
     </header>
 
     <section class="status-story__section" aria-labelledby="status-section-variants">
-      <h2 id="status-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.variants')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.variants-explainer')}</p>
+      <h2 id="status-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.variants')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.variants-explainer')}</p>
       <div class="status-story__row">
         ${VARIANTS.map((v) => renderStatus({ variant: v.id, label: v.label })).join('')}
       </div>
     </section>
 
     <section class="status-story__section" aria-labelledby="status-section-pulse">
-      <h2 id="status-section-pulse" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.pulse')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.pulse-explainer')}</p>
+      <h2 id="status-section-pulse" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.pulse')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.pulse-explainer')}</p>
       <div class="status-story__row">
         ${VARIANTS.map((v) => renderStatus({ variant: v.id, label: v.label, pulse: true })).join('')}
       </div>
     </section>
 
     <section class="status-story__section" aria-labelledby="status-section-sizes">
-      <h2 id="status-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.sizes')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.sizes-explainer')}</p>
+      <h2 id="status-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.sizes')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.sizes-explainer')}</p>
       <div class="status-story__row">
         ${renderStatus({ variant: 'success', size: 'sm', label: t('theme.status.story.label.operational') })}
         ${renderStatus({ variant: 'success', size: 'md', label: t('theme.status.story.label.operational') })}
@@ -68,14 +68,14 @@ const bodyHtml = `
     </section>
 
     <section class="status-story__section" aria-labelledby="status-section-inline">
-      <h2 id="status-section-inline" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.inline')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.inline-explainer')}</p>
-      <p class="theme-typography" data-variant="body">
+      <h2 id="status-section-inline" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.inline')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.inline-explainer')}</p>
+      <p class="cremona-typography" data-variant="body">
         <span>${t('theme.status.story.inline.api')}</span>
         ${renderStatus({ variant: 'success', size: 'sm', label: t('theme.status.story.label.operational') })}
         <span>${t('theme.status.story.inline.api-tail')}</span>
       </p>
-      <p class="theme-typography" data-variant="body">
+      <p class="cremona-typography" data-variant="body">
         <span>${t('theme.status.story.inline.db')}</span>
         ${renderStatus({ variant: 'warning', size: 'sm', label: t('theme.status.story.label.degraded'), pulse: true })}
         <span>${t('theme.status.story.inline.db-tail')}</span>
@@ -83,9 +83,9 @@ const bodyHtml = `
     </section>
 
     <section class="status-story__section" aria-labelledby="status-section-reduced">
-      <h2 id="status-section-reduced" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.reduced')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.reduced-explainer')}</p>
-      <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.status.story.section.reduced-os-tip')}</p>
+      <h2 id="status-section-reduced" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.status.story.section.reduced')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.status.story.section.reduced-explainer')}</p>
+      <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.status.story.section.reduced-os-tip')}</p>
     </section>
   </section>
 `;

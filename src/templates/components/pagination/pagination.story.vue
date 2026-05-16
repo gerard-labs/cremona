@@ -54,9 +54,9 @@ function nativeSelect({ htmlId, value, options, size = 'sm' }) {
     const sel = String(o.value) === String(value) ? ' selected' : '';
     return `<option value="${o.value}"${sel}>${o.label}</option>`;
   }).join('');
-  return `<div class="theme-native-select-wrap" data-size="${size}">
-    <select class="theme-native-select" data-size="${size}" id="${htmlId}">${optsHtml}</select>
-    <span class="theme-icon theme-native-select__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${chevronDownSvg}</span>
+  return `<div class="cremona-native-select-wrap" data-size="${size}">
+    <select class="cremona-native-select" data-size="${size}" id="${htmlId}">${optsHtml}</select>
+    <span class="cremona-icon cremona-native-select__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${chevronDownSvg}</span>
   </div>`;
 }
 
@@ -66,7 +66,7 @@ function pagination({ id, page = 1, pageSize = 25, totalItems = 142, pageSizes =
   return `
     <nav
       id="${navId}"
-      class="theme-pagination"
+      class="cremona-pagination"
       role="navigation"
       aria-label="${S('aria.label')}"
       data-controller="pagination"
@@ -76,32 +76,32 @@ function pagination({ id, page = 1, pageSize = 25, totalItems = 142, pageSizes =
       data-pagination-total-items-value="${totalItems}"
     >
       <span
-        class="theme-pagination__range"
+        class="cremona-pagination__range"
         data-pagination-target="rangeLabel"
         aria-live="polite"
         aria-atomic="true"
       ></span>
-      <span class="theme-pagination__page-size">
-        <label class="theme-pagination__page-size-label" for="${navId}-size">${S('page-size-label')}</label>
+      <span class="cremona-pagination__page-size">
+        <label class="cremona-pagination__page-size-label" for="${navId}-size">${S('page-size-label')}</label>
         ${nativeSelect({ htmlId: `${navId}-size`, value: pageSize, options: selectOptions, size: 'sm' })}
       </span>
-      <span class="theme-pagination__nav" role="group">
-        <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm"
+      <span class="cremona-pagination__nav" role="group">
+        <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm"
           data-pagination-target="firstButton"
           data-action="click->pagination#first"
-          aria-label="${S('aria.first')}"><span class="theme-pagination__icon theme-pagination__icon--first" aria-hidden="true"></span></button>
-        <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm"
+          aria-label="${S('aria.first')}"><span class="cremona-pagination__icon cremona-pagination__icon--first" aria-hidden="true"></span></button>
+        <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm"
           data-pagination-target="prevButton"
           data-action="click->pagination#prev"
-          aria-label="${S('aria.prev')}"><span class="theme-pagination__icon theme-pagination__icon--prev" aria-hidden="true"></span></button>
-        <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm"
+          aria-label="${S('aria.prev')}"><span class="cremona-pagination__icon cremona-pagination__icon--prev" aria-hidden="true"></span></button>
+        <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm"
           data-pagination-target="nextButton"
           data-action="click->pagination#next"
-          aria-label="${S('aria.next')}"><span class="theme-pagination__icon theme-pagination__icon--next" aria-hidden="true"></span></button>
-        <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm"
+          aria-label="${S('aria.next')}"><span class="cremona-pagination__icon cremona-pagination__icon--next" aria-hidden="true"></span></button>
+        <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm"
           data-pagination-target="lastButton"
           data-action="click->pagination#last"
-          aria-label="${S('aria.last')}"><span class="theme-pagination__icon theme-pagination__icon--last" aria-hidden="true"></span></button>
+          aria-label="${S('aria.last')}"><span class="cremona-pagination__icon cremona-pagination__icon--last" aria-hidden="true"></span></button>
       </span>
     </nav>
   `;
@@ -115,41 +115,41 @@ const bodyHtml = `
     </header>
 
     <section class="pg-story__section" aria-labelledby="pg-section-default">
-      <h2 id="pg-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="pg-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="pg-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="pg-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${pagination({ page: 1, pageSize: 25, totalItems: 142 })}
     </section>
 
     <section class="pg-story__section" aria-labelledby="pg-section-mid">
-      <h2 id="pg-section-mid" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.mid')}</h2>
-      <p class="pg-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.mid')}</p>
+      <h2 id="pg-section-mid" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.mid')}</h2>
+      <p class="pg-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.mid')}</p>
       ${pagination({ page: 3, pageSize: 25, totalItems: 142 })}
     </section>
 
     <section class="pg-story__section" aria-labelledby="pg-section-page-sizes">
-      <h2 id="pg-section-page-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.page-sizes')}</h2>
-      <p class="pg-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.page-sizes')}</p>
+      <h2 id="pg-section-page-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.page-sizes')}</h2>
+      <p class="pg-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.page-sizes')}</p>
       ${pagination({ page: 2, pageSize: 10, totalItems: 142, pageSizes: [10, 25, 50, 100] })}
     </section>
 
     <section class="pg-story__section" aria-labelledby="pg-section-empty">
-      <h2 id="pg-section-empty" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.empty')}</h2>
-      <p class="pg-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.empty')}</p>
+      <h2 id="pg-section-empty" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.empty')}</h2>
+      <p class="pg-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.empty')}</p>
       ${pagination({ page: 1, pageSize: 25, totalItems: 0 })}
     </section>
 
     <section class="pg-story__section" aria-labelledby="pg-section-single">
-      <h2 id="pg-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.single')}</h2>
-      <p class="pg-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.single')}</p>
+      <h2 id="pg-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.single')}</h2>
+      <p class="pg-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.single')}</p>
       ${pagination({ page: 1, pageSize: 25, totalItems: 8 })}
     </section>
 
     <section class="pg-story__section" aria-labelledby="pg-section-events">
-      <h2 id="pg-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="pg-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="pg-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="pg-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       ${pagination({ id: 'pg-events-demo', page: 1, pageSize: 25, totalItems: 87 })}
       <div class="pg-story__log" data-events-log="pg-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="pg-story__log-out"></div>
       </div>
     </section>

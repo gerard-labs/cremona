@@ -185,15 +185,15 @@ const SEP = '\n      ';
 
 function btn(label, demoKey, opts = {}) {
   const variant = opts.variant || 'primary';
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-sonner-demo="${demoKey}"><span class="theme-button__label">${label}</span></button>`;
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-sonner-demo="${demoKey}"><span class="cremona-button__label">${label}</span></button>`;
 }
 
 function section(id, sectionKey, explainerKey, inner) {
   const label = t(sectionKey);
   const explain = t(explainerKey);
   return `<section class="sonner-story__section" aria-labelledby="sonner-section-${id}">
-      <h2 id="sonner-section-${id}" class="theme-typography" data-variant="overline" data-color="tertiary">${label}</h2>
-      <p class="sonner-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${explain}</p>
+      <h2 id="sonner-section-${id}" class="cremona-typography" data-variant="overline" data-color="tertiary">${label}</h2>
+      <p class="sonner-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${explain}</p>
       ${inner}
     </section>`;
 }
@@ -211,12 +211,12 @@ const stackRow = btn(t('theme.sonner.story.sample.stack-trigger'), 'stack-8', { 
 
 const pauseRow = [
   btn(t('theme.sonner.story.sample.pause-trigger'), 'pause-success', { variant: 'primary' }),
-  `<span class="sonner-story__hint theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sonner.story.sample.pause-hint')}</span>`,
+  `<span class="sonner-story__hint cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sonner.story.sample.pause-hint')}</span>`,
 ].join(SEP);
 
 const escRow = [
   btn(t('theme.sonner.story.sample.esc-trigger'), 'esc-burst', { variant: 'secondary' }),
-  `<span class="sonner-story__hint theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sonner.story.sample.esc-hint')}</span>`,
+  `<span class="sonner-story__hint cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sonner.story.sample.esc-hint')}</span>`,
 ].join(SEP);
 
 const eventsRow = [
@@ -225,7 +225,7 @@ const eventsRow = [
 ].join(SEP);
 
 const eventsLog = `<div class="sonner-story__events-log">
-      <span class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sonner.story.sample.events-log-label')}</span>
+      <span class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sonner.story.sample.events-log-label')}</span>
       <pre class="sonner-story__events-log-output" data-sonner-events-log data-empty="1">${t('theme.sonner.story.sample.events-log-empty')}</pre>
     </div>`;
 

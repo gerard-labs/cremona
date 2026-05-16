@@ -7,14 +7,14 @@
  *
  * Heavy lifting :
  *   - flex row layout with brand → nav → utility ordering
- *   - sticky variant (`.theme-nav-header--sticky`) sets position:sticky + shadow
+ *   - sticky variant (`.cremona-nav-header--sticky`) sets position:sticky + shadow
  *     appearance on scroll
  *   - mobile breakpoint < 768 px hides the primary nav + reveals hamburger
  *
  * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
-.theme-nav-header {
+.cremona-nav-header {
   background-color: var(--color-bg-elevated);
   border-block-end: 1px solid var(--color-border-default);
   padding-block: var(--spacing-2);
@@ -23,7 +23,7 @@
 
 /* Sticky variant gets a subtle shadow for visual continuity — a sentinel
  * element + IntersectionObserver could promote it to only-when-scrolled. */
-.theme-nav-header--sticky {
+.cremona-nav-header--sticky {
   position: sticky;
   inset-block-start: 0;
   z-index: var(--z-sticky);
@@ -31,7 +31,7 @@
   box-shadow: var(--shadow-1);
 }
 
-.theme-nav-header__inner {
+.cremona-nav-header__inner {
   display: flex;
   align-items: center;
   gap: var(--spacing-4);
@@ -39,25 +39,25 @@
   margin-inline: auto;
 }
 
-.theme-nav-header__brand {
+.cremona-nav-header__brand {
   flex-shrink: 0;
 }
 
-.theme-nav-header__brand-link {
+.cremona-nav-header__brand-link {
   display: inline-flex;
   align-items: center;
   color: var(--color-text-primary);
   text-decoration: none;
 }
 
-.theme-nav-header__nav {
+.cremona-nav-header__nav {
   flex-grow: 1;
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
 }
 
-.theme-nav-header__utility {
+.cremona-nav-header__utility {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@
 }
 
 /* Mobile trigger — only visible below 768 px. */
-.theme-nav-header__mobile-trigger {
+.cremona-nav-header__mobile-trigger {
   display: none;
   min-block-size: 44px;
   min-inline-size: 44px;
@@ -73,18 +73,18 @@
 
 /* Responsive pivot at 768 px (Tailwind md) — OQ-26 doctrine carry. */
 @media (width <= 767.98px) {
-  .theme-nav-header__nav {
+  .cremona-nav-header__nav {
     display: none;
   }
 
-  .theme-nav-header__mobile-trigger {
+  .cremona-nav-header__mobile-trigger {
     display: inline-flex;
   }
 }
 
 /* iOS safe-area-inset on top (notch) — sticky variant pads through. */
 @supports (padding: env(safe-area-inset-top)) {
-  .theme-nav-header--sticky {
+  .cremona-nav-header--sticky {
     padding-block-start: max(var(--spacing-2), env(safe-area-inset-top));
   }
 }

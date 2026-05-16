@@ -103,7 +103,7 @@ export default class DatePickerController extends Controller {
     // the focus call lands after the cells are rendered + visible.
     Promise.resolve().then(() => {
       const focusable = this.element.querySelector(
-        '.theme-calendar__day[tabindex="0"]',
+        '.cremona-calendar__day[tabindex="0"]',
       );
       if (focusable) {
         try { focusable.focus(); } catch { /* happy-dom ignore */ }

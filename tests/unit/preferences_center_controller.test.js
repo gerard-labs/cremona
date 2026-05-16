@@ -20,18 +20,18 @@ function template({
   functionalChecked = true,
 } = {}) {
   return `
-    <div class="theme-rgpd-preferences-center" data-controller="preferences-center">
-      <div class="theme-rgpd-preferences-center__categories">
-        <div class="theme-rgpd-preferences-center__category">
+    <div class="cremona-rgpd-preferences-center" data-controller="preferences-center">
+      <div class="cremona-rgpd-preferences-center__categories">
+        <div class="cremona-rgpd-preferences-center__category">
           <input type="checkbox" name="essential" ${essentialChecked ? 'checked' : ''} disabled>
         </div>
-        <div class="theme-rgpd-preferences-center__category">
+        <div class="cremona-rgpd-preferences-center__category">
           <input type="checkbox" name="analytics" ${analyticsChecked ? 'checked' : ''}>
         </div>
-        <div class="theme-rgpd-preferences-center__category">
+        <div class="cremona-rgpd-preferences-center__category">
           <input type="checkbox" name="marketing" ${marketingChecked ? 'checked' : ''}>
         </div>
-        <div class="theme-rgpd-preferences-center__category">
+        <div class="cremona-rgpd-preferences-center__category">
           <input type="checkbox" name="functional" ${functionalChecked ? 'checked' : ''}>
         </div>
       </div>
@@ -59,7 +59,7 @@ describe('preferences-center controller', () => {
   it('captures initial state on connect (4 categories)', async () => {
     app = mount(template({ essentialChecked: true, analyticsChecked: false, marketingChecked: false, functionalChecked: true }));
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'preferences-center');
     const state = ctrl.getState();
     expect(state.essential).toBe(true);
@@ -71,7 +71,7 @@ describe('preferences-center controller', () => {
   it('isDirty() returns false initially (no changes)', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'preferences-center');
     expect(ctrl.isDirty()).toBe(false);
   });
@@ -79,7 +79,7 @@ describe('preferences-center controller', () => {
   it('dispatches preferences-center:dirty when user toggles a category', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const events = [];
     wrap.addEventListener('preferences-center:dirty', (e) => events.push(e.detail));
     const analytics = wrap.querySelector('input[name="analytics"]');
@@ -93,7 +93,7 @@ describe('preferences-center controller', () => {
   it('save() dispatches preferences-center:save with full state object', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const events = [];
     wrap.addEventListener('preferences-center:save', (e) => events.push(e.detail));
     const analytics = wrap.querySelector('input[name="analytics"]');
@@ -114,7 +114,7 @@ describe('preferences-center controller', () => {
   it('cancel() resets all toggles to initial state + dispatches cancel', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const events = [];
     wrap.addEventListener('preferences-center:cancel', (e) => events.push(e.detail));
     const analytics = wrap.querySelector('input[name="analytics"]');
@@ -132,7 +132,7 @@ describe('preferences-center controller', () => {
   it('required (disabled) category cannot be toggled off — defensive revert', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const essential = wrap.querySelector('input[name="essential"]');
     // Even if forced unchecked + change fired, controller reverts.
     essential.checked = false;
@@ -144,7 +144,7 @@ describe('preferences-center controller', () => {
   it('save() resets the initial baseline (subsequent toggles dirty against new baseline)', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'preferences-center');
     const analytics = wrap.querySelector('input[name="analytics"]');
     analytics.checked = true;
@@ -160,7 +160,7 @@ describe('preferences-center controller', () => {
   it('dirty event NOT dispatched when toggling back to initial state', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const events = [];
     const analytics = wrap.querySelector('input[name="analytics"]');
     // Become dirty (analytics OFF → ON).
@@ -180,7 +180,7 @@ describe('preferences-center controller', () => {
   it('getState() returns snapshot at call time (post-toggle)', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const ctrl = app.getControllerForElementAndIdentifier(wrap, 'preferences-center');
     const marketing = wrap.querySelector('input[name="marketing"]');
     marketing.checked = true;
@@ -193,7 +193,7 @@ describe('preferences-center controller', () => {
   it('multiple toggles aggregate correctly in the same save', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     const events = [];
     wrap.addEventListener('preferences-center:save', (e) => events.push(e.detail));
     const analytics = wrap.querySelector('input[name="analytics"]');
@@ -214,7 +214,7 @@ describe('preferences-center controller', () => {
   it('disconnect cleanup — no throw', async () => {
     app = mount(template());
     await tick();
-    const wrap = document.querySelector('.theme-rgpd-preferences-center');
+    const wrap = document.querySelector('.cremona-rgpd-preferences-center');
     wrap.remove();
     await tick();
     expect(true).toBe(true);

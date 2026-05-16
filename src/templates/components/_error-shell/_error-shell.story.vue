@@ -22,16 +22,16 @@ function renderShell({
   htmlId = 'story-error-shell',
   footer = '',
 }, content) {
-  const classes = ['theme-error-shell'];
-  if (variant === 'hero') classes.push('theme-error-shell--hero');
+  const classes = ['cremona-error-shell'];
+  if (variant === 'hero') classes.push('cremona-error-shell--hero');
 
   const footerHtml = footer
-    ? `<footer class="theme-error-shell__footer">${footer}</footer>`
+    ? `<footer class="cremona-error-shell__footer">${footer}</footer>`
     : '';
 
   return `
     <main class="${classes.join(' ')}" data-variant="${variant}" id="${htmlId}">
-      <section class="theme-error-shell__panel">
+      <section class="cremona-error-shell__panel">
         ${content}
         ${footerHtml}
       </section>
@@ -54,18 +54,18 @@ function renderEmpty({
 
   let illustrationBlock = '';
   if (illustration) {
-    illustrationBlock = `<div class="theme-empty__illustration" aria-hidden="true">${illustration}</div>`;
+    illustrationBlock = `<div class="cremona-empty__illustration" aria-hidden="true">${illustration}</div>`;
   } else if (icon) {
-    illustrationBlock = `<div class="theme-empty__illustration" aria-hidden="true"><span class="theme-icon theme-empty__icon" data-icon="${icon}" data-size="${iconSize}" aria-hidden="true" role="presentation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg></span></div>`;
+    illustrationBlock = `<div class="cremona-empty__illustration" aria-hidden="true"><span class="cremona-icon cremona-empty__icon" data-icon="${icon}" data-size="${iconSize}" aria-hidden="true" role="presentation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg></span></div>`;
   }
 
   return `
-    <div class="theme-empty" data-size="${size}" role="region" aria-labelledby="${titleId}">
+    <div class="cremona-empty" data-size="${size}" role="region" aria-labelledby="${titleId}">
       ${illustrationBlock}
-      <div class="theme-empty__content">
-        <${titleTag} id="${titleId}" class="theme-empty__title">${title}</${titleTag}>
-        ${bodyHtml ? `<div class="theme-empty__body">${bodyHtml}</div>` : ''}
-        ${actionsHtml ? `<div class="theme-empty__actions">${actionsHtml}</div>` : ''}
+      <div class="cremona-empty__content">
+        <${titleTag} id="${titleId}" class="cremona-empty__title">${title}</${titleTag}>
+        ${bodyHtml ? `<div class="cremona-empty__body">${bodyHtml}</div>` : ''}
+        ${actionsHtml ? `<div class="cremona-empty__actions">${actionsHtml}</div>` : ''}
       </div>
     </div>
   `;
@@ -87,11 +87,11 @@ const sampleHeroSvg = `
 `;
 
 const sampleActions = `
-  <a href="#" class="theme-button" data-variant="primary" data-size="md"><span class="theme-button__label">${t('theme.error-shell.story.sample.primary-cta')}</span></a>
-  <a href="#" class="theme-button" data-variant="ghost" data-size="md"><span class="theme-button__label">${t('theme.error-shell.story.sample.secondary-cta')}</span></a>
+  <a href="#" class="cremona-button" data-variant="primary" data-size="md"><span class="cremona-button__label">${t('theme.error-shell.story.sample.primary-cta')}</span></a>
+  <a href="#" class="cremona-button" data-variant="ghost" data-size="md"><span class="cremona-button__label">${t('theme.error-shell.story.sample.secondary-cta')}</span></a>
 `;
 
-const sampleFooterLink = `<a href="#" class="theme-button" data-variant="link" data-size="sm"><span class="theme-button__label">${t('theme.error-shell.story.sample.footer-link')}</span></a>`;
+const sampleFooterLink = `<a href="#" class="cremona-button" data-variant="link" data-size="sm"><span class="cremona-button__label">${t('theme.error-shell.story.sample.footer-link')}</span></a>`;
 
 const bodyHtml = `
   <section class="error-shell-story" data-testid="error-shell-root">
@@ -101,8 +101,8 @@ const bodyHtml = `
     </header>
 
     <section class="error-shell-story__section" aria-labelledby="error-shell-section-default">
-      <h2 id="error-shell-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.error-shell.story.section.default')}</h2>
-      <p class="error-shell-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.error-shell.story.explainer.default')}</p>
+      <h2 id="error-shell-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.error-shell.story.section.default')}</h2>
+      <p class="error-shell-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.error-shell.story.explainer.default')}</p>
       <div class="error-shell-story__frame">
         ${renderShell({
           variant: 'default',
@@ -119,8 +119,8 @@ const bodyHtml = `
     </section>
 
     <section class="error-shell-story__section" aria-labelledby="error-shell-section-hero">
-      <h2 id="error-shell-section-hero" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.error-shell.story.section.hero')}</h2>
-      <p class="error-shell-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.error-shell.story.explainer.hero')}</p>
+      <h2 id="error-shell-section-hero" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.error-shell.story.section.hero')}</h2>
+      <p class="error-shell-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.error-shell.story.explainer.hero')}</p>
       <div class="error-shell-story__frame">
         ${renderShell({
           variant: 'hero',
@@ -137,8 +137,8 @@ const bodyHtml = `
     </section>
 
     <section class="error-shell-story__section" aria-labelledby="error-shell-section-with-footer">
-      <h2 id="error-shell-section-with-footer" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.error-shell.story.section.with-footer')}</h2>
-      <p class="error-shell-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.error-shell.story.explainer.with-footer')}</p>
+      <h2 id="error-shell-section-with-footer" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.error-shell.story.section.with-footer')}</h2>
+      <p class="error-shell-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.error-shell.story.explainer.with-footer')}</p>
       <div class="error-shell-story__frame">
         ${renderShell({
           variant: 'default',
@@ -176,6 +176,6 @@ const bodyHtml = `
 /* Frame the shell preview so each section caps at a reasonable height and
    we don't get 100vh-per-section pushing the page to 3×100vh tall. */
 .error-shell-story__frame { min-block-size: 32rem; max-block-size: 48rem; overflow: hidden; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.error-shell-story__frame .theme-error-shell { min-block-size: 100%; }
+.error-shell-story__frame .cremona-error-shell { min-block-size: 100%; }
 .error-shell-dark-wrap { background: var(--color-bg-base); }
 </style>

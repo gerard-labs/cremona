@@ -37,18 +37,18 @@ let _ttCounter = 0;
 function nextId() { return `tt-${++_ttCounter}`; }
 
 function icon(name, size = 'md') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderTooltip({ label, placement = 'top', triggerHtml }) {
   const id = nextId();
   return `
-    <span class="theme-tooltip-wrap"
+    <span class="cremona-tooltip-wrap"
       data-controller="tooltip"
       data-action="keydown.esc->tooltip#dismiss focusout->tooltip#reset"
       data-placement="${placement}">
       ${triggerHtml(id)}
-      <span class="theme-tooltip" id="${id}" role="tooltip" data-placement="${placement}">${label}</span>
+      <span class="cremona-tooltip" id="${id}" role="tooltip" data-placement="${placement}">${label}</span>
     </span>
   `;
 }
@@ -82,7 +82,7 @@ const SAMPLES = {
 };
 
 function iconButton(name, ariaLabel, ttId) {
-  return `<button type="button" class="theme-button" data-variant="ghost" data-size="md" aria-label="${ariaLabel}" aria-describedby="${ttId}">${icon(name)}</button>`;
+  return `<button type="button" class="cremona-button" data-variant="ghost" data-size="md" aria-label="${ariaLabel}" aria-describedby="${ttId}">${icon(name)}</button>`;
 }
 
 const bodyHtml = `
@@ -93,16 +93,16 @@ const bodyHtml = `
     </header>
 
     <section class="tooltip-story__section" aria-labelledby="tt-section-default">
-      <h2 id="tt-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.default')}</h2>
-      <p class="tooltip-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.default')}</p>
+      <h2 id="tt-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.default')}</h2>
+      <p class="tooltip-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.default')}</p>
       <div class="tooltip-story__stack">
         ${row(renderTooltip({ label: SAMPLES.copyAction, triggerHtml: (id) => iconButton('copy', SAMPLES.ariaCopy, id) }), 'icon-only ghost button + tooltip top')}
       </div>
     </section>
 
     <section class="tooltip-story__section" aria-labelledby="tt-section-placements">
-      <h2 id="tt-section-placements" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.placements')}</h2>
-      <p class="tooltip-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.placements')}</p>
+      <h2 id="tt-section-placements" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.placements')}</h2>
+      <p class="tooltip-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.placements')}</p>
       <div class="tooltip-story__placements-grid">
         ${renderTooltip({ label: SAMPLES.topLabel,    placement: 'top',    triggerHtml: (id) => iconButton('info', SAMPLES.infoHint, id) })}
         ${renderTooltip({ label: SAMPLES.bottomLabel, placement: 'bottom', triggerHtml: (id) => iconButton('info', SAMPLES.infoHint, id) })}
@@ -112,8 +112,8 @@ const bodyHtml = `
     </section>
 
     <section class="tooltip-story__section" aria-labelledby="tt-section-icon-button">
-      <h2 id="tt-section-icon-button" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.icon-button')}</h2>
-      <p class="tooltip-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.icon-button')}</p>
+      <h2 id="tt-section-icon-button" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.icon-button')}</h2>
+      <p class="tooltip-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.icon-button')}</p>
       <div class="tooltip-story__stack">
         ${row(`
           <div class="tooltip-story__toolbar">
@@ -127,19 +127,19 @@ const bodyHtml = `
     </section>
 
     <section class="tooltip-story__section" aria-labelledby="tt-section-text-link">
-      <h2 id="tt-section-text-link" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.text-link')}</h2>
+      <h2 id="tt-section-text-link" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.text-link')}</h2>
       <div class="tooltip-story__stack">
         ${row(renderTooltip({
           label: SAMPLES.linkHint,
           placement: 'bottom',
-          triggerHtml: (id) => `<a href="#" class="theme-button" data-variant="link" aria-describedby="${id}"><span class="theme-button__label">${t('theme.button.sample.learn-more')}</span></a>`,
+          triggerHtml: (id) => `<a href="#" class="cremona-button" data-variant="link" aria-describedby="${id}"><span class="cremona-button__label">${t('theme.button.sample.learn-more')}</span></a>`,
         }), 'link-variant Button + tooltip bottom')}
       </div>
     </section>
 
     <section class="tooltip-story__section" aria-labelledby="tt-section-long">
-      <h2 id="tt-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.long-content')}</h2>
-      <p class="tooltip-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.long-content')}</p>
+      <h2 id="tt-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.long-content')}</h2>
+      <p class="tooltip-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.long-content')}</p>
       <div class="tooltip-story__stack">
         ${row(renderTooltip({
           label: SAMPLES.longContent,
@@ -149,8 +149,8 @@ const bodyHtml = `
     </section>
 
     <section class="tooltip-story__section" aria-labelledby="tt-section-esc">
-      <h2 id="tt-section-esc" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.esc')}</h2>
-      <p class="tooltip-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.esc')}</p>
+      <h2 id="tt-section-esc" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.tooltip.story.section.esc')}</h2>
+      <p class="tooltip-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.tooltip.story.explainer.esc')}</p>
       <div class="tooltip-story__stack">
         ${row(renderTooltip({
           label: SAMPLES.escHint,

@@ -10,7 +10,7 @@ import { setTranslations, setLocale, __reset } from '../../src/js/utils/i18n.js'
  * Validates:
  *  - The static initials computer (pure function, edge cases).
  *  - The DOM swap when `<img>` errors.
- *  - The `#theme-announcer` message lands.
+ *  - The `#cremona-announcer` message lands.
  *  - Initials fall back from the explicit `initials` value to the
  *    `name`-computed pair.
  */
@@ -33,7 +33,7 @@ describe('AvatarFallbackController', () => {
 
   async function mount(innerHTML) {
     document.body.innerHTML = `
-      <div id="theme-announcer" aria-live="polite" aria-atomic="true"></div>
+      <div id="cremona-announcer" aria-live="polite" aria-atomic="true"></div>
       ${innerHTML}
     `;
     app = Application.start();
@@ -54,7 +54,7 @@ describe('AvatarFallbackController', () => {
 
   it('swaps <img> to fallback <span> with explicit initials on error', async () => {
     await mount(`
-      <span class="theme-avatar"
+      <span class="cremona-avatar"
             data-controller="avatar-fallback"
             data-avatar-fallback-name-value="Marie Dupont"
             data-avatar-fallback-initials-value="MD">
@@ -68,9 +68,9 @@ describe('AvatarFallbackController', () => {
     img.dispatchEvent(new Event('error'));
     await Promise.resolve();
 
-    const span = document.querySelector('.theme-avatar');
+    const span = document.querySelector('.cremona-avatar');
     expect(span.querySelector('img')).toBeNull();
-    const fallback = span.querySelector('.theme-avatar__fallback');
+    const fallback = span.querySelector('.cremona-avatar__fallback');
     expect(fallback).toBeTruthy();
     expect(fallback.textContent).toBe('MD');
     expect(fallback.getAttribute('aria-hidden')).toBe('true');
@@ -78,7 +78,7 @@ describe('AvatarFallbackController', () => {
 
   it('falls back to name-computed initials when no explicit initials value', async () => {
     await mount(`
-      <span class="theme-avatar"
+      <span class="cremona-avatar"
             data-controller="avatar-fallback"
             data-avatar-fallback-name-value="Jean Pierre Dupont">
         <img data-avatar-fallback-target="img"
@@ -90,12 +90,12 @@ describe('AvatarFallbackController', () => {
     document.querySelector('img').dispatchEvent(new Event('error'));
     await Promise.resolve();
 
-    expect(document.querySelector('.theme-avatar__fallback').textContent).toBe('JD');
+    expect(document.querySelector('.cremona-avatar__fallback').textContent).toBe('JD');
   });
 
-  it('announces the named fallback via #theme-announcer', async () => {
+  it('announces the named fallback via #cremona-announcer', async () => {
     await mount(`
-      <span class="theme-avatar"
+      <span class="cremona-avatar"
             data-controller="avatar-fallback"
             data-avatar-fallback-name-value="Marie Dupont"
             data-avatar-fallback-initials-value="MD">
@@ -107,14 +107,14 @@ describe('AvatarFallbackController', () => {
     document.querySelector('img').dispatchEvent(new Event('error'));
     await Promise.resolve();
 
-    expect(document.getElementById('theme-announcer').textContent).toBe(
+    expect(document.getElementById('cremona-announcer').textContent).toBe(
       "Image d'avatar non disponible pour Marie Dupont.",
     );
   });
 
   it('announces the anonymous fallback when no name value', async () => {
     await mount(`
-      <span class="theme-avatar"
+      <span class="cremona-avatar"
             data-controller="avatar-fallback"
             data-avatar-fallback-initials-value="MD">
         <img data-avatar-fallback-target="img"
@@ -125,7 +125,7 @@ describe('AvatarFallbackController', () => {
     document.querySelector('img').dispatchEvent(new Event('error'));
     await Promise.resolve();
 
-    expect(document.getElementById('theme-announcer').textContent).toBe(
+    expect(document.getElementById('cremona-announcer').textContent).toBe(
       "Image d'avatar non disponible.",
     );
   });

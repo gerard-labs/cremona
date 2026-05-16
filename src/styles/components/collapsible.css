@@ -17,7 +17,7 @@
  *   Custom `<button aria-expanded>` + content gives us the CSS-only path.
  */
 
-.theme-collapsible {
+.cremona-collapsible {
   display: flex;
   flex-direction: column;
   border-radius: var(--radius-md);
@@ -30,7 +30,7 @@
 
 /* ----- trigger button --------------------------------------------- */
 
-.theme-collapsible__trigger {
+.cremona-collapsible__trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -49,29 +49,29 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-collapsible__trigger:hover {
+.cremona-collapsible__trigger:hover {
   background-color: var(--color-bg-sunken);
 }
 
-.theme-collapsible__trigger:focus-visible {
+.cremona-collapsible__trigger:focus-visible {
   outline: none;
   box-shadow: inset 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
-.theme-collapsible__label {
+.cremona-collapsible__label {
   flex: 1 1 auto;
   min-inline-size: 0;
 }
 
 /* ----- chevron rotation on open ----------------------------------- */
 
-.theme-collapsible__chevron {
+.cremona-collapsible__chevron {
   flex-shrink: 0;
   transition: transform var(--motion-duration-base) var(--motion-easing-standard);
   /* Chevron points down by default; rotates 180° to point up when open. */
 }
 
-.theme-collapsible__trigger[aria-expanded="true"] .theme-collapsible__chevron {
+.cremona-collapsible__trigger[aria-expanded="true"] .cremona-collapsible__chevron {
   transform: rotate(180deg);
 }
 
@@ -81,17 +81,17 @@
 
 /* ----- content ---------------------------------------------------- */
 
-.theme-collapsible__content {
+.cremona-collapsible__content {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows var(--motion-duration-base) var(--motion-easing-standard);
 }
 
-.theme-collapsible__content[data-state="open"] {
+.cremona-collapsible__content[data-state="open"] {
   grid-template-rows: 1fr;
 }
 
-.theme-collapsible__content-inner {
+.cremona-collapsible__content-inner {
   /* `min-block-size: 0` allows the grid track to actually collapse to 0
      instead of staying at content's intrinsic height. */
   min-block-size: 0;
@@ -102,19 +102,19 @@
 
 /* Padding becomes visible only when open — otherwise the closed state would
    show a sliver of empty space at the top/bottom. */
-.theme-collapsible__content[data-state="open"] .theme-collapsible__content-inner {
+.cremona-collapsible__content[data-state="open"] .cremona-collapsible__content-inner {
   padding-block: var(--spacing-3);
   /* Border between trigger and content when open. */
   border-block-start: 1px solid var(--color-border-subtle);
 }
 
 /* Body content typography — paragraphs inside content inherit standard body
-   font + line-height; consumer can override with .theme-typography wrappers. */
-.theme-collapsible__content-inner > * + * {
+   font + line-height; consumer can override with .cremona-typography wrappers. */
+.cremona-collapsible__content-inner > * + * {
   margin-block-start: var(--spacing-2);
 }
 
-.theme-collapsible__content-inner p {
+.cremona-collapsible__content-inner p {
   margin: 0;
   font: var(--typography-body);
   color: var(--color-text-secondary);
@@ -123,7 +123,7 @@
 /* ----- touch hardening -------------------------------------------- */
 
 @media (pointer: coarse) {
-  .theme-collapsible__trigger {
+  .cremona-collapsible__trigger {
     min-block-size: 44px;
   }
 }

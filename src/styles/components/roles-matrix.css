@@ -5,33 +5,33 @@
  * Reusable across 5+ Ring 4 domains.
  */
 
-.theme-roles-matrix {
+.cremona-roles-matrix {
   display: grid;
   gap: var(--spacing-3);
 }
 
-.theme-roles-matrix__toolbar {
+.cremona-roles-matrix__toolbar {
   display: flex;
   justify-content: flex-end;
   gap: var(--spacing-2);
 }
 
-.theme-roles-matrix__scroll-wrap {
+.cremona-roles-matrix__scroll-wrap {
   overflow-inline: auto;
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-card);
 }
 
-.theme-roles-matrix__table {
+.cremona-roles-matrix__table {
   inline-size: 100%;
   border-collapse: collapse;
 }
 
-.theme-roles-matrix__corner {
+.cremona-roles-matrix__corner {
   background-color: var(--color-bg-elevated);
 }
 
-.theme-roles-matrix__col-header {
+.cremona-roles-matrix__col-header {
   text-align: start;
   padding: var(--spacing-2) var(--spacing-3);
   background-color: var(--color-bg-elevated);
@@ -39,7 +39,7 @@
   white-space: nowrap;
 }
 
-.theme-roles-matrix__row-header {
+.cremona-roles-matrix__row-header {
   text-align: start;
   padding: var(--spacing-2) var(--spacing-3);
   background-color: var(--color-bg-elevated);
@@ -47,12 +47,12 @@
   white-space: nowrap;
 }
 
-.theme-roles-matrix__member-name {
+.cremona-roles-matrix__member-name {
   font: var(--typography-label);
   color: var(--color-text-primary);
 }
 
-.theme-roles-matrix__cell {
+.cremona-roles-matrix__cell {
   padding: var(--spacing-2) var(--spacing-3);
   border-block-end: 1px solid var(--color-border-subtle);
   border-inline-end: 1px solid var(--color-border-subtle);
@@ -62,18 +62,18 @@
   transition: background-color var(--motion-fast) var(--easing-standard);
 }
 
-.theme-roles-matrix__cell:hover,
-.theme-roles-matrix__cell:focus-visible {
+.cremona-roles-matrix__cell:hover,
+.cremona-roles-matrix__cell:focus-visible {
   background-color: var(--color-bg-hover-overlay, rgb(0 0 0 / 0.04));
   outline: none;
 }
 
-.theme-roles-matrix__cell:focus-visible {
+.cremona-roles-matrix__cell:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: -2px;
 }
 
-.theme-roles-matrix__cell-select {
+.cremona-roles-matrix__cell-select {
   inline-size: 100%;
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2);
@@ -84,18 +84,18 @@
   font: var(--typography-body);
 }
 
-.theme-roles-matrix__cell-select:focus-visible {
+.cremona-roles-matrix__cell-select:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 /* Bulk-edit mode visual highlight */
-.theme-roles-matrix[data-roles-matrix-bulk-edit-value="true"] .theme-roles-matrix__cell {
+.cremona-roles-matrix[data-roles-matrix-bulk-edit-value="true"] .cremona-roles-matrix__cell {
   background-color: var(--color-primary-soft, rgb(0 0 0 / 0.02));
 }
 
 @media (width <= 1023px) {
-  .theme-roles-matrix__scroll-wrap {
+  .cremona-roles-matrix__scroll-wrap {
     overflow-inline: auto;
   }
 }

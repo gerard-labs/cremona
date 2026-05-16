@@ -20,7 +20,7 @@ describe('ToggleController', () => {
   async function mount({ pressed = 'false', disabled = false } = {}) {
     document.body.innerHTML = `
       <button type="button"
-        class="theme-toggle"
+        class="cremona-toggle"
         data-controller="toggle"
         data-action="click->toggle#toggle"
         aria-pressed="${pressed}"

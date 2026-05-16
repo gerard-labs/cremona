@@ -5,7 +5,7 @@ import { t } from '../utils/i18n.js';
  * avatar-fallback — listens for an `<img onerror>` event inside the
  * Avatar primitive and swaps the broken image for the initials block.
  *
- * Announces via the kit's shared `#theme-announcer` live region so SR
+ * Announces via the kit's shared `#cremona-announcer` live region so SR
  * users hear the substitution. The substitution is invisible to AT
  * (`aria-hidden="true"` on the fallback span) — the parent Avatar still
  * carries its accessible name via the surrounding context.
@@ -32,13 +32,13 @@ export default class AvatarFallbackController extends Controller {
   onError() {
     if (!this.hasImgTarget) return;
     const fallback = document.createElement('span');
-    fallback.className = 'theme-avatar__fallback';
+    fallback.className = 'cremona-avatar__fallback';
     fallback.setAttribute('aria-hidden', 'true');
     fallback.textContent = this.resolveInitials();
     this.imgTarget.replaceWith(fallback);
 
     const announcer = typeof document !== 'undefined'
-      ? document.getElementById('theme-announcer')
+      ? document.getElementById('cremona-announcer')
       : null;
     if (announcer) {
       announcer.textContent = this.nameValue

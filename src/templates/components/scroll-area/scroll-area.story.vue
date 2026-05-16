@@ -28,15 +28,15 @@ function loremLong() {
   return [
     S('lorem.1'), S('lorem.2'), S('lorem.3'), S('lorem.4'), S('lorem.5'),
     S('lorem.6'), S('lorem.7'), S('lorem.8'),
-  ].map((p) => `<p class="theme-typography" data-variant="body">${p}</p>`).join('');
+  ].map((p) => `<p class="cremona-typography" data-variant="body">${p}</p>`).join('');
 }
 
 function wideContent() {
   // 8 columns of 200 px = 1600 px content, will overflow inline.
   const cols = Array.from({ length: 8 }, (_, i) =>
     `<div class="sa-story__col">
-      <h3 class="theme-typography" data-variant="overline" data-color="tertiary">${S('col.label')} ${i + 1}</h3>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('lorem.short')}</p>
+      <h3 class="cremona-typography" data-variant="overline" data-color="tertiary">${S('col.label')} ${i + 1}</h3>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('lorem.short')}</p>
     </div>`
   );
   return `<div class="sa-story__wide">${cols.join('')}</div>`;
@@ -47,14 +47,14 @@ function scrollArea({ orientation = 'both', size = 'md', maxBlockSize = null, ma
   if (maxBlockSize) style.push(`max-block-size:${maxBlockSize}`);
   if (maxInlineSize) style.push(`max-inline-size:${maxInlineSize}`);
   const styleAttr = style.length ? ` style="${style.join(';')}"` : '';
-  return `<div class="theme-scroll-area ${className}" data-orientation="${orientation}" data-size="${size}"${styleAttr}>${content}</div>`;
+  return `<div class="cremona-scroll-area ${className}" data-orientation="${orientation}" data-size="${size}"${styleAttr}>${content}</div>`;
 }
 
 function itemList() {
   const items = [];
   for (let i = 1; i <= 25; i++) {
-    items.push(`<div class="theme-item">
-      <div class="theme-item__text"><span class="theme-item__label">${S('item.label')} #${i}</span></div>
+    items.push(`<div class="cremona-item">
+      <div class="cremona-item__text"><span class="cremona-item__label">${S('item.label')} #${i}</span></div>
     </div>`);
   }
   return items.join('');
@@ -68,8 +68,8 @@ const bodyHtml = `
     </header>
 
     <section class="sa-story__section" aria-labelledby="sa-section-vertical">
-      <h2 id="sa-section-vertical" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
-      <p class="sa-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
+      <h2 id="sa-section-vertical" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
+      <p class="sa-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
       ${scrollArea({
         orientation: 'vertical',
         maxBlockSize: '240px',
@@ -78,8 +78,8 @@ const bodyHtml = `
     </section>
 
     <section class="sa-story__section" aria-labelledby="sa-section-horizontal">
-      <h2 id="sa-section-horizontal" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.horizontal')}</h2>
-      <p class="sa-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.horizontal')}</p>
+      <h2 id="sa-section-horizontal" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.horizontal')}</h2>
+      <p class="sa-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.horizontal')}</p>
       ${scrollArea({
         orientation: 'horizontal',
         content: wideContent(),
@@ -87,8 +87,8 @@ const bodyHtml = `
     </section>
 
     <section class="sa-story__section" aria-labelledby="sa-section-both">
-      <h2 id="sa-section-both" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.both')}</h2>
-      <p class="sa-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.both')}</p>
+      <h2 id="sa-section-both" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.both')}</h2>
+      <p class="sa-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.both')}</p>
       ${scrollArea({
         orientation: 'both',
         maxBlockSize: '200px',
@@ -98,30 +98,30 @@ const bodyHtml = `
     </section>
 
     <section class="sa-story__section" aria-labelledby="sa-section-sizes">
-      <h2 id="sa-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
-      <p class="sa-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
+      <h2 id="sa-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
+      <p class="sa-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
       <div class="sa-story__sizes">
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('size.sm')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('size.sm')}</p>
           ${scrollArea({ orientation: 'vertical', size: 'sm', maxBlockSize: '180px', content: loremLong() })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('size.md')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('size.md')}</p>
           ${scrollArea({ orientation: 'vertical', size: 'md', maxBlockSize: '180px', content: loremLong() })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="tertiary">${S('size.lg')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="tertiary">${S('size.lg')}</p>
           ${scrollArea({ orientation: 'vertical', size: 'lg', maxBlockSize: '180px', content: loremLong() })}
         </div>
       </div>
     </section>
 
     <section class="sa-story__section" aria-labelledby="sa-section-in-card">
-      <h2 id="sa-section-in-card" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.in-card')}</h2>
-      <p class="sa-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.in-card')}</p>
-      <article class="theme-card">
-        <header class="theme-card__header"><h3 class="theme-typography" data-variant="h3">${S('card.title')}</h3></header>
-        <div class="theme-card__body" style="padding:0;">
+      <h2 id="sa-section-in-card" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.in-card')}</h2>
+      <p class="sa-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.in-card')}</p>
+      <article class="cremona-card">
+        <header class="cremona-card__header"><h3 class="cremona-typography" data-variant="h3">${S('card.title')}</h3></header>
+        <div class="cremona-card__body" style="padding:0;">
           ${scrollArea({ orientation: 'vertical', maxBlockSize: '280px', content: itemList() })}
         </div>
       </article>
@@ -150,5 +150,5 @@ const bodyHtml = `
 .sa-story__big { inline-size: 1200px; }
 .sa-story__sizes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-4); }
 .sa-dark-wrap { background: var(--color-bg-base); min-block-size: 100vh; }
-.theme-scroll-area p { padding-inline: var(--spacing-3); padding-block: var(--spacing-1); margin: 0; }
+.cremona-scroll-area p { padding-inline: var(--spacing-3); padding-block: var(--spacing-1); margin: 0; }
 </style>

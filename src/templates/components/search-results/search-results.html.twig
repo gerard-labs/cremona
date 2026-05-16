@@ -21,21 +21,21 @@
     className    (string, optional)
 -#}
 
-{%- set htmlId     = htmlId     | default('theme-search-results-' ~ random()) -%}
+{%- set htmlId     = htmlId     | default('cremona-search-results-' ~ random()) -%}
 {%- set query      = query      | default('') -%}
 {%- set results    = results    | default([]) -%}
 {%- set showCount  = showCount  ?? true -%}
 {%- set emptyTitle = emptyTitle | default('theme.search-results.empty.title'|trans) -%}
 {%- set emptyBody  = emptyBody  | default('theme.search-results.empty.body'|trans) -%}
 
-<section class="theme-search-results{{ className ? ' ' ~ className }}"
+<section class="cremona-search-results{{ className ? ' ' ~ className }}"
          id="{{ htmlId }}"
          aria-labelledby="{{ htmlId }}-title"
          data-query="{{ query }}">
 
   {% if showCount %}
-    <header class="theme-search-results__header">
-      <h2 id="{{ htmlId }}-title" class="theme-search-results__count">
+    <header class="cremona-search-results__header">
+      <h2 id="{{ htmlId }}-title" class="cremona-search-results__count">
         {%- if countLabel is defined and countLabel %}
           {{ countLabel }}
         {%- else %}
@@ -46,10 +46,10 @@
   {% endif %}
 
   {% if results|length > 0 %}
-    <ul class="theme-search-results__list" role="list">
+    <ul class="cremona-search-results__list" role="list">
       {% for result in results %}
-        <li class="theme-search-results__item">
-          {% include '@theme/components/item/item.html.twig' with {
+        <li class="cremona-search-results__item">
+          {% include '@cremona/components/item/item.html.twig' with {
             label:        result.label,
             description:  result.description ?? null,
             iconLeading:  result.iconLeading ?? null,
@@ -64,8 +64,8 @@
       {% endfor %}
     </ul>
   {% else %}
-    <div class="theme-search-results__empty">
-      {% include '@theme/components/empty/empty.html.twig' with {
+    <div class="cremona-search-results__empty">
+      {% include '@cremona/components/empty/empty.html.twig' with {
         icon: 'search',
         title: emptyTitle,
         body: emptyBody|format(query),

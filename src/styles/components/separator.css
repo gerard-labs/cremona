@@ -4,44 +4,44 @@
  * (vertical separator still occupies its inline-start anchor).
  */
 
-.theme-separator {
+.cremona-separator {
   background-color: var(--color-border-default);
   border: 0;
   margin: 0;
   flex-shrink: 0;
 }
 
-.theme-separator[data-orientation="horizontal"] {
+.cremona-separator[data-orientation="horizontal"] {
   inline-size: 100%;
   block-size: 1px;
 }
 
-.theme-separator[data-orientation="vertical"] {
+.cremona-separator[data-orientation="vertical"] {
   block-size: 100%;
   inline-size: 1px;
   min-block-size: 1em;
 }
 
 /* Variants — dashed/dotted use border so the dash pattern aligns correctly. */
-.theme-separator--dashed[data-orientation="horizontal"] {
+.cremona-separator--dashed[data-orientation="horizontal"] {
   background: none;
   border-block-start: 1px dashed var(--color-border-default);
   block-size: 0;
 }
 
-.theme-separator--dashed[data-orientation="vertical"] {
+.cremona-separator--dashed[data-orientation="vertical"] {
   background: none;
   border-inline-start: 1px dashed var(--color-border-default);
   inline-size: 0;
 }
 
-.theme-separator--dotted[data-orientation="horizontal"] {
+.cremona-separator--dotted[data-orientation="horizontal"] {
   background: none;
   border-block-start: 1px dotted var(--color-border-default);
   block-size: 0;
 }
 
-.theme-separator--dotted[data-orientation="vertical"] {
+.cremona-separator--dotted[data-orientation="vertical"] {
   background: none;
   border-inline-start: 1px dotted var(--color-border-default);
   inline-size: 0;

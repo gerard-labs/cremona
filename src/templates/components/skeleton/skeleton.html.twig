@@ -16,7 +16,7 @@
 {%- set count     = count     | default(1) -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-skeleton', 'theme-skeleton--' ~ shape] -%}
+{%- set _classes = ['cremona-skeleton', 'cremona-skeleton--' ~ shape] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _style = [] -%}
@@ -25,7 +25,7 @@
 {%- set _styleAttr = _style | join('; ') -%}
 
 {%- if shape == 'text' and count > 1 -%}
-<div class="theme-skeleton-group" aria-hidden="true">
+<div class="cremona-skeleton-group" aria-hidden="true">
   {%- for i in 1..count -%}
     <div class="{{ _classes | join(' ') }}" data-shape="{{ shape }}"{% if _styleAttr %} style="{{ _styleAttr }}"{% endif %}></div>
   {%- endfor -%}

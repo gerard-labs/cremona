@@ -19,7 +19,7 @@
 {%- set bulkEdit    = bulkEdit    | default(false) -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _classes = ['theme-roles-matrix'] -%}
+{%- set _classes = ['cremona-roles-matrix'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {# Build a role lookup for variant + label resolution #}
@@ -30,7 +30,7 @@
   {%- set _roleLabels   = _roleLabels   | merge({(role.value): role.label}) -%}
 {%- endfor -%}
 
-{%- set _tableClasses = ['theme-table', 'theme-roles-matrix__table'] -%}
+{%- set _tableClasses = ['cremona-table', 'cremona-roles-matrix__table'] -%}
 
 <div id="{{ htmlId }}"
      class="{{ _classes | join(' ') }}"
@@ -38,8 +38,8 @@
      data-roles-matrix-bulk-edit-value="{{ bulkEdit ? 'true' : 'false' }}"
      data-roles-matrix-roles-value="{{ roles | json_encode | e('html_attr') }}">
 
-  <div class="theme-roles-matrix__toolbar">
-    {% include '@theme/components/button/button.html.twig' with {
+  <div class="cremona-roles-matrix__toolbar">
+    {% include '@cremona/components/button/button.html.twig' with {
       label: 'theme.roles-matrix.bulk-edit.label'|trans,
       variant: bulkEdit ? 'primary' : 'secondary',
       size: 'sm',
@@ -51,28 +51,28 @@
     } only %}
   </div>
 
-  <div class="theme-roles-matrix__scroll-wrap">
+  <div class="cremona-roles-matrix__scroll-wrap">
     <table class="{{ _tableClasses | join(' ') }}" data-size="md">
       <caption class="sr-only">{{ caption }}</caption>
       <thead>
         <tr>
-          <th scope="col" class="theme-roles-matrix__corner"><span class="sr-only">{{ 'theme.roles-matrix.aria.corner'|trans }}</span></th>
+          <th scope="col" class="cremona-roles-matrix__corner"><span class="sr-only">{{ 'theme.roles-matrix.aria.corner'|trans }}</span></th>
           {%- for perm in permissions -%}
-            <th scope="col" class="theme-roles-matrix__col-header">{{ perm.label }}</th>
+            <th scope="col" class="cremona-roles-matrix__col-header">{{ perm.label }}</th>
           {%- endfor -%}
         </tr>
       </thead>
       <tbody>
         {%- for member in members -%}
           <tr>
-            <th scope="row" class="theme-roles-matrix__row-header">
-              <span class="theme-roles-matrix__member-name">{{ member.name }}</span>
+            <th scope="row" class="cremona-roles-matrix__row-header">
+              <span class="cremona-roles-matrix__member-name">{{ member.name }}</span>
             </th>
             {%- for perm in permissions -%}
               {%- set _cellRole = cells[member.id][perm.id] | default('none') -%}
               {%- set _variant  = _roleVariants[_cellRole] | default('muted') -%}
               {%- set _label    = _roleLabels[_cellRole]   | default(_cellRole) -%}
-              <td class="theme-roles-matrix__cell"
+              <td class="cremona-roles-matrix__cell"
                   data-roles-matrix-target="cell"
                   data-action="click->roles-matrix#openEditor keydown->roles-matrix#keyOpenEditor"
                   data-row="{{ member.id }}"
@@ -81,7 +81,7 @@
                   role="button"
                   tabindex="0"
                   aria-label="{{ 'theme.roles-matrix.aria.cell'|trans({'{member}': member.name, '{perm}': perm.label, '{role}': _label}) }}">
-                {% include '@theme/components/badge/badge.html.twig' with { variant: _variant, label: _label } only %}
+                {% include '@cremona/components/badge/badge.html.twig' with { variant: _variant, label: _label } only %}
               </td>
             {%- endfor -%}
           </tr>

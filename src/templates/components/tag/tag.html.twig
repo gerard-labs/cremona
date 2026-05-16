@@ -39,7 +39,7 @@
 {%- set dismissAria = dismissAria | default(null) -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _classes = ['theme-tag'] -%}
+{%- set _classes = ['cremona-tag'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _effectiveDismissAria = dismissAria ?? ('theme.tag.aria.dismiss'|trans({ '%label%': label })) -%}
@@ -52,13 +52,13 @@
   {%- if dismissable %} data-controller="tag-dismiss" data-tag-dismiss-label-value="{{ label }}"{% endif -%}
 >
   {%- if leadingIcon -%}
-    {% include '@theme/components/icon/icon.html.twig' with { name: leadingIcon, decorative: true, size: size == 'sm' ? 'xs' : (size == 'lg' ? 'sm' : 'xs') } %}
+    {% include '@cremona/components/icon/icon.html.twig' with { name: leadingIcon, decorative: true, size: size == 'sm' ? 'xs' : (size == 'lg' ? 'sm' : 'xs') } %}
   {%- endif -%}
-  <span class="theme-tag__label">{{ label }}</span>
+  <span class="cremona-tag__label">{{ label }}</span>
   {%- if dismissable -%}
     <button
       type="button"
-      class="theme-tag__dismiss"
+      class="cremona-tag__dismiss"
       aria-label="{{ _effectiveDismissAria }}"
       data-action="click->tag-dismiss#dismiss"
     >

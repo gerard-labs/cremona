@@ -34,7 +34,7 @@
 {%- set disabled         = disabled         | default(false) -%}
 {%- set className        = className        | default('') -%}
 
-{%- set _classes = ['theme-label'] -%}
+{%- set _classes = ['cremona-label'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <label
@@ -43,14 +43,14 @@
   {%- if htmlFor %} for="{{ htmlFor }}"{% endif -%}
   {%- if disabled %} data-state="disabled"{% endif -%}
 >
-  <span class="theme-label__text">{{ content }}</span>
+  <span class="cremona-label__text">{{ content }}</span>
   {%- if required -%}
-    <span class="theme-label__required" aria-hidden="true">*</span>
-    <span class="theme-sr-only">{{ requiredAriaText }}</span>
+    <span class="cremona-label__required" aria-hidden="true">*</span>
+    <span class="cremona-sr-only">{{ requiredAriaText }}</span>
   {%- elseif optionalText -%}
-    <span class="theme-label__optional">{{ optionalText }}</span>
+    <span class="cremona-label__optional">{{ optionalText }}</span>
   {%- endif -%}
   {%- if hint -%}
-    <span class="theme-label__hint">{{ hint }}</span>
+    <span class="cremona-label__hint">{{ hint }}</span>
   {%- endif -%}
 </label>

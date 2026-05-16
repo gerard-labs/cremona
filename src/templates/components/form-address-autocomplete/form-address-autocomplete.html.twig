@@ -36,7 +36,7 @@
 
   Usage:
 
-    {% include '@theme/components/form-address-autocomplete/form-address-autocomplete.html.twig' with {
+    {% include '@cremona/components/form-address-autocomplete/form-address-autocomplete.html.twig' with {
       label: 'theme.form.address-autocomplete.label.shipping'|trans,
       name: 'shipping_address',
       endpoint: '/api/addresses',
@@ -44,7 +44,7 @@
     } %}
 -#}
 
-{%- set htmlId         = htmlId         | default('theme-form-address-' ~ random()) -%}
+{%- set htmlId         = htmlId         | default('cremona-form-address-' ~ random()) -%}
 {%- set required       = required       | default(false) -%}
 {%- set placeholder    = placeholder    | default('') -%}
 {%- set endpoint       = endpoint       | default('') -%}
@@ -54,18 +54,18 @@
 {%- set className      = className      | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-field', 'theme-form-address-autocomplete'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field', 'cremona-form-address-autocomplete'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-{%- set _wrapClasses = ['theme-popover', 'theme-form-address-autocomplete__wrap'] -%}
+{%- set _wrapClasses = ['cremona-popover', 'cremona-form-address-autocomplete__wrap'] -%}
 
 {%- set describedByIds = [] -%}
 {%- if help -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-help']) -%}{%- endif -%}
 {%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
 
 <div class="{{ _classes | join(' ') }}">
-  {% include '@theme/components/label/label.html.twig' with {
+  {% include '@cremona/components/label/label.html.twig' with {
     content: label,
     htmlFor: htmlId ~ '-input',
     required: required,
@@ -81,7 +81,7 @@
     data-address-autocomplete-debounce-ms-value="{{ debounceMs }}"
     data-address-autocomplete-consumer-endpoint-value="{{ endpoint }}"
   >
-    {% include '@theme/components/input/input.html.twig' with {
+    {% include '@cremona/components/input/input.html.twig' with {
       type: 'text',
       htmlId: htmlId ~ '-input',
       name: htmlId ~ '-display',
@@ -90,7 +90,7 @@
       invalid: isInvalid,
       describedBy: describedByIds | length ? describedByIds | join(' ') : null,
       placeholder: placeholder,
-      className: 'theme-form-address-autocomplete__input',
+      className: 'cremona-form-address-autocomplete__input',
       attrs: {
         role: 'combobox',
         'aria-autocomplete': 'list',
@@ -107,13 +107,13 @@
     />
 
     <div
-      class="theme-popover__content theme-form-address-autocomplete__panel"
+      class="cremona-popover__content cremona-form-address-autocomplete__panel"
       data-popover-target="content"
       role="listbox"
       id="{{ htmlId }}-suggestions"
     >
       <ul
-        class="theme-form-address-autocomplete__suggestions"
+        class="cremona-form-address-autocomplete__suggestions"
         data-address-autocomplete-target="suggestionsList"
         hidden
       ></ul>
@@ -121,9 +121,9 @@
   </div>
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

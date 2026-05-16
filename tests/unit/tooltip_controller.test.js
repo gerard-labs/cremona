@@ -22,11 +22,11 @@ describe('TooltipController', () => {
 
   async function mount() {
     document.body.innerHTML = `
-      <span class="theme-tooltip-wrap" id="wrap"
+      <span class="cremona-tooltip-wrap" id="wrap"
         data-controller="tooltip"
         data-action="keydown.esc->tooltip#dismiss focusout->tooltip#reset">
         <button id="trigger" type="button" aria-describedby="tt">Trigger</button>
-        <span id="tt" class="theme-tooltip" role="tooltip">Tooltip text</span>
+        <span id="tt" class="cremona-tooltip" role="tooltip">Tooltip text</span>
       </span>
       <button id="outside" type="button">Outside</button>
     `;

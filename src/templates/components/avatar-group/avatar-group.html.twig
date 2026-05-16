@@ -48,7 +48,7 @@
 {%- set groupAria = groupAria | default(null) -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-avatar-group'] -%}
+{%- set _classes = ['cremona-avatar-group'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _total       = avatars | length -%}
@@ -65,13 +65,13 @@
   {%- if groupAria %} role="group" aria-label="{{ groupAria }}"{% endif -%}
 >
   {%- for avatar in avatars | slice(0, _visibleCount) -%}
-    {% include '@theme/components/avatar/avatar.html.twig' with avatar | merge({ size: size }) %}
+    {% include '@cremona/components/avatar/avatar.html.twig' with avatar | merge({ size: size }) %}
   {%- endfor -%}
   {%- if _hasOverflow -%}
-    {% include '@theme/components/avatar/avatar.html.twig' with {
+    {% include '@cremona/components/avatar/avatar.html.twig' with {
       initials: _effectiveMoreLabel,
       size: size,
-      className: 'theme-avatar-group__more',
+      className: 'cremona-avatar-group__more',
       attrs: { role: 'img', 'aria-label': _effectiveMoreAria },
     } only %}
   {%- endif -%}

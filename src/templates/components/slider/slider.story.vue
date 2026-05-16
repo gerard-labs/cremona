@@ -26,17 +26,17 @@ function renderSlider(props = {}) {
     required, disabled, invalid, describedBy, ariaLabel, className,
   } = props;
 
-  const rootClass = label ? 'theme-slider-row' : 'theme-slider-wrap';
+  const rootClass = label ? 'cremona-slider-row' : 'cremona-slider-wrap';
   const stateClasses = [];
-  if (disabled) stateClasses.push('theme-slider-row--disabled');
-  if (invalid) stateClasses.push('theme-slider-row--invalid');
+  if (disabled) stateClasses.push('cremona-slider-row--disabled');
+  if (invalid) stateClasses.push('cremona-slider-row--invalid');
   if (className) stateClasses.push(className);
   const rootClasses = [rootClass, ...stateClasses].join(' ');
   const tag = label ? 'label' : 'span';
 
   const inputAttrs = [
     `type="range"`,
-    `class="theme-slider"`,
+    `class="cremona-slider"`,
     `data-size="${size}"`,
     `min="${min}"`,
     `max="${max}"`,
@@ -58,10 +58,10 @@ function renderSlider(props = {}) {
   }
 
   const header = `
-    <span class="theme-slider-row__header">
-      <span class="theme-slider-row__label">${label}</span>
-      ${required ? '<span class="theme-slider-row__required" aria-hidden="true">*</span>' : ''}
-      ${valueDisplay ? `<output class="theme-slider-row__value"${htmlId ? ` for="${htmlId}"` : ''}>${initial}${valueSuffix}</output>` : ''}
+    <span class="cremona-slider-row__header">
+      <span class="cremona-slider-row__label">${label}</span>
+      ${required ? '<span class="cremona-slider-row__required" aria-hidden="true">*</span>' : ''}
+      ${valueDisplay ? `<output class="cremona-slider-row__value"${htmlId ? ` for="${htmlId}"` : ''}>${initial}${valueSuffix}</output>` : ''}
     </span>`;
 
   return `<${tag} class="${rootClasses}" data-size="${size}"${disabled ? ' data-state="disabled"' : ''}>${header}<input ${inputAttrs}></${tag}>`;
@@ -84,15 +84,15 @@ const bodyHtml = `
     </header>
 
     <section class="slider-story__section" aria-labelledby="slider-section-default">
-      <h2 id="slider-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.default')}</h2>
+      <h2 id="slider-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.default')}</h2>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-default', label: t('theme.slider.label.volume'), value: 50 }), '0 → 100, value=50')}
       </div>
     </section>
 
     <section class="slider-story__section" aria-labelledby="slider-section-with-value">
-      <h2 id="slider-section-with-value" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.with-value')}</h2>
-      <p class="slider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.value-display')}</p>
+      <h2 id="slider-section-with-value" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.with-value')}</h2>
+      <p class="slider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.value-display')}</p>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-value-pct',  label: t('theme.slider.label.opacity'),      value: 80,  valueDisplay: true, valueSuffix: ' %' }), 'percent')}
         ${row(renderSlider({ htmlId: 'demo-value-px',   label: t('theme.slider.label.font-size'),    value: 14, min: 10, max: 32, valueDisplay: true, valueSuffix: ' px' }), 'px')}
@@ -101,19 +101,19 @@ const bodyHtml = `
     </section>
 
     <section class="slider-story__section" aria-labelledby="slider-section-states">
-      <h2 id="slider-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.states')}</h2>
+      <h2 id="slider-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.states')}</h2>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-state-default',  label: t('theme.slider.label.volume'), value: 50, valueDisplay: true, valueSuffix: ' %' }),                                                              'default')}
         ${row(renderSlider({ htmlId: 'demo-state-disabled', label: t('theme.slider.label.volume'), value: 30, valueDisplay: true, valueSuffix: ' %', disabled: true }),                                              'disabled')}
         ${row(renderSlider({ htmlId: 'demo-state-required', label: t('theme.slider.label.volume'), value: 50, valueDisplay: true, valueSuffix: ' %', required: true }),                                              'required')}
         ${row(renderSlider({ htmlId: 'demo-state-invalid',  label: t('theme.slider.label.volume'), value: 95, valueDisplay: true, valueSuffix: ' %', invalid: true, describedBy: 'demo-state-invalid-error' }),      'invalid')}
       </div>
-      <p class="slider-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.slider.story.explainer.invalid')}</p>
+      <p class="slider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.slider.story.explainer.invalid')}</p>
     </section>
 
     <section class="slider-story__section" aria-labelledby="slider-section-sizes">
-      <h2 id="slider-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.sizes')}</h2>
-      <p class="slider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.sizes')}</p>
+      <h2 id="slider-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.sizes')}</h2>
+      <p class="slider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.sizes')}</p>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-sz-sm', label: t('theme.slider.label.volume'), value: 50, valueDisplay: true, valueSuffix: ' %', size: 'sm' }), 'sm (4 / 14)')}
         ${row(renderSlider({ htmlId: 'demo-sz-md', label: t('theme.slider.label.volume'), value: 50, valueDisplay: true, valueSuffix: ' %', size: 'md' }), 'md (6 / 18)')}
@@ -122,8 +122,8 @@ const bodyHtml = `
     </section>
 
     <section class="slider-story__section" aria-labelledby="slider-section-range">
-      <h2 id="slider-section-range" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.range')}</h2>
-      <p class="slider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.range')}</p>
+      <h2 id="slider-section-range" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.range')}</h2>
+      <p class="slider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.range')}</p>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-rg-min',  label: t('theme.slider.label.volume'), value: 0,   min: 0, max: 100, valueDisplay: true, valueSuffix: ' %' }), 'at min (thumb left)')}
         ${row(renderSlider({ htmlId: 'demo-rg-mid',  label: t('theme.slider.label.volume'), value: 50,  min: 0, max: 100, valueDisplay: true, valueSuffix: ' %' }), 'at mid')}
@@ -133,15 +133,15 @@ const bodyHtml = `
     </section>
 
     <section class="slider-story__section" aria-labelledby="slider-section-bare">
-      <h2 id="slider-section-bare" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.bare')}</h2>
-      <p class="slider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.bare')}</p>
+      <h2 id="slider-section-bare" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.bare')}</h2>
+      <p class="slider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.slider.story.explainer.bare')}</p>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-bare',   value: 50, ariaLabel: t('theme.slider.aria.bare-volume') }), 'bare with aria-label')}
       </div>
     </section>
 
     <section class="slider-story__section" aria-labelledby="slider-section-long-label">
-      <h2 id="slider-section-long-label" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.long-label')}</h2>
+      <h2 id="slider-section-long-label" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.slider.story.section.long-label')}</h2>
       <div class="slider-story__stack">
         ${row(renderSlider({ htmlId: 'demo-long', label: t('theme.slider.label.long'), value: 65, valueDisplay: true, valueSuffix: ' %' }), '+30 % FR expansion')}
       </div>

@@ -11,9 +11,9 @@
   see manifest thirdPartyLibs.slider:noUiSlider candidate).
 
   Two rendering modes:
-    1. `label` set        → <label class="theme-slider-row"> with header
+    1. `label` set        → <label class="cremona-slider-row"> with header
                             (label + optional value display via <output>).
-    2. `label` not set    → <span class="theme-slider-wrap"> bare layout
+    2. `label` not set    → <span class="cremona-slider-wrap"> bare layout
                             (Field / DataTable composition).
 
   Parameters (enumerated):
@@ -52,9 +52,9 @@
 {%- set ariaLabel    = ariaLabel    | default(null) -%}
 {%- set className    = className    | default('') -%}
 
-{%- set _rootClasses = [label ? 'theme-slider-row' : 'theme-slider-wrap'] -%}
-{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['theme-slider-row--disabled']) -%}{%- endif -%}
-{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['theme-slider-row--invalid']) -%}{%- endif -%}
+{%- set _rootClasses = [label ? 'cremona-slider-row' : 'cremona-slider-wrap'] -%}
+{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['cremona-slider-row--disabled']) -%}{%- endif -%}
+{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['cremona-slider-row--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _rootClasses = _rootClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _tag = label ? 'label' : 'span' -%}
@@ -65,19 +65,19 @@
   {%- if disabled %} data-state="disabled"{% endif -%}
 >
   {%- if label -%}
-    <span class="theme-slider-row__header">
-      <span class="theme-slider-row__label">{{ label }}</span>
+    <span class="cremona-slider-row__header">
+      <span class="cremona-slider-row__label">{{ label }}</span>
       {%- if required -%}
-        <span class="theme-slider-row__required" aria-hidden="true">*</span>
+        <span class="cremona-slider-row__required" aria-hidden="true">*</span>
       {%- endif -%}
       {%- if valueDisplay -%}
-        <output class="theme-slider-row__value"{% if htmlId %} for="{{ htmlId }}"{% endif %}>{{ value is not null ? value : ((min + max) / 2) }}{{ valueSuffix }}</output>
+        <output class="cremona-slider-row__value"{% if htmlId %} for="{{ htmlId }}"{% endif %}>{{ value is not null ? value : ((min + max) / 2) }}{{ valueSuffix }}</output>
       {%- endif -%}
     </span>
   {%- endif -%}
   <input
     type="range"
-    class="theme-slider"
+    class="cremona-slider"
     data-size="{{ size }}"
     min="{{ min }}"
     max="{{ max }}"

@@ -10,7 +10,7 @@ import { setTranslations, setLocale, __reset } from '../../src/js/utils/i18n.js'
  *   1. dismiss() stamps data-state="dismissing" on the alert root.
  *   2. After the opacity transitionend, the alert is removed from the DOM.
  *   3. The `alert:dismissed` custom event fires (bubbles, composed).
- *   4. The #theme-announcer live region receives the (i18n-resolved) message.
+ *   4. The #cremona-announcer live region receives the (i18n-resolved) message.
  *   5. transitionend on a non-opacity property does NOT trigger the cleanup.
  */
 describe('AlertDismissController', () => {
@@ -32,16 +32,16 @@ describe('AlertDismissController', () => {
 
   async function mount({ message } = {}) {
     document.body.innerHTML = `
-      <div id="theme-announcer" aria-live="polite" aria-atomic="true"></div>
+      <div id="cremona-announcer" aria-live="polite" aria-atomic="true"></div>
       <div id="alert"
-        class="theme-alert"
+        class="cremona-alert"
         data-variant="info"
         data-tone="soft"
         role="status"
         data-controller="alert-dismiss"
         ${message ? `data-alert-dismiss-message-value="${message}"` : ''}>
-        <p class="theme-alert__title">Titre</p>
-        <button id="dismiss" type="button" class="theme-alert__dismiss"
+        <p class="cremona-alert__title">Titre</p>
+        <button id="dismiss" type="button" class="cremona-alert__dismiss"
           aria-label="Fermer"
           data-action="click->alert-dismiss#dismiss">x</button>
       </div>
@@ -52,7 +52,7 @@ describe('AlertDismissController', () => {
     return {
       alert: document.getElementById('alert'),
       dismissBtn: document.getElementById('dismiss'),
-      announcer: document.getElementById('theme-announcer'),
+      announcer: document.getElementById('cremona-announcer'),
     };
   }
 
@@ -104,7 +104,7 @@ describe('AlertDismissController', () => {
     expect(captured.bubbles).toBe(true);
   });
 
-  it('announces the resolved message into #theme-announcer (default key)', async () => {
+  it('announces the resolved message into #cremona-announcer (default key)', async () => {
     const { alert, dismissBtn, announcer } = await mount();
     dismissBtn.click();
     await new Promise((r) => setTimeout(r, 0));

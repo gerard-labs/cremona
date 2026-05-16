@@ -18,19 +18,19 @@
     placement       (string, optional, default 'bottom')
 -#}
 
-{%- set htmlId         = htmlId         | default('theme-lang-switcher-' ~ random()) -%}
+{%- set htmlId         = htmlId         | default('cremona-lang-switcher-' ~ random()) -%}
 {%- set currentLocale  = currentLocale  | default('fr') -%}
 {%- set storageKey     = storageKey     | default('theme.locale') -%}
 {%- set triggerVariant = triggerVariant | default('ghost') -%}
 {%- set triggerSize    = triggerSize    | default('sm') -%}
 {%- set placement      = placement      | default('bottom') -%}
 
-{% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' with {
+{% embed '@cremona/components/dropdown-menu/dropdown-menu.html.twig' with {
   htmlId: htmlId ~ '-content',
   placement: placement,
   offset: 8,
-  className: 'theme-lang-switcher',
-  contentClass: 'theme-lang-switcher__content',
+  className: 'cremona-lang-switcher',
+  contentClass: 'cremona-lang-switcher__content',
   controllerExtras: 'lang-switcher',
   attrs: {
     'data-lang-switcher-current-locale-value': currentLocale,
@@ -38,13 +38,13 @@
   },
 } %}
   {% block trigger %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: currentLocale | upper,
       variant: triggerVariant,
       size: triggerSize,
       iconTrailing: 'chevron-down',
       ariaLabel: 'theme.lang-switcher.aria.trigger'|trans,
-      className: 'theme-lang-switcher__trigger',
+      className: 'cremona-lang-switcher__trigger',
       labelAttrs: { 'data-lang-switcher-target': 'current' },
       attrs: {
         'data-popover-target': 'trigger',
@@ -57,9 +57,9 @@
 
   {% block items %}
     {% for locale in locales %}
-      {% embed '@theme/components/item/item.html.twig' with {
+      {% embed '@cremona/components/item/item.html.twig' with {
         as: 'div',
-        className: 'theme-lang-switcher__item',
+        className: 'cremona-lang-switcher__item',
         ariaCurrent: locale.code == currentLocale ? 'true' : null,
         attrs: {
           role: 'menuitem',
@@ -69,8 +69,8 @@
         },
       } %}
         {% block content %}
-          {%- if locale.flag %}<span class="theme-lang-switcher__flag" aria-hidden="true">{{ locale.flag }}</span>{% endif -%}
-          <span class="theme-lang-switcher__label">{{ locale.label }}</span>
+          {%- if locale.flag %}<span class="cremona-lang-switcher__flag" aria-hidden="true">{{ locale.flag }}</span>{% endif -%}
+          <span class="cremona-lang-switcher__label">{{ locale.label }}</span>
         {% endblock %}
       {% endembed %}
     {% endfor %}

@@ -30,7 +30,7 @@
     customizeLabel     (string, optional)
 -#}
 
-{%- set htmlId             = htmlId             | default('theme-rgpd-cookie-banner-' ~ random()) -%}
+{%- set htmlId             = htmlId             | default('cremona-rgpd-cookie-banner-' ~ random()) -%}
 {%- set title              = title              | default('theme.rgpd-cookie-banner.title'|trans) -%}
 {%- set legalSummary       = legalSummary       | default('theme.rgpd-cookie-banner.legal-summary'|trans) -%}
 {%- set legalDetail        = legalDetail        | default('theme.rgpd-cookie-banner.legal-detail'|trans) -%}
@@ -45,11 +45,11 @@
 {%- set rejectLabel        = rejectLabel        | default('theme.rgpd-cookie-banner.button.reject-all'|trans) -%}
 {%- set customizeLabel     = customizeLabel     | default('theme.rgpd-cookie-banner.button.customize'|trans) -%}
 
-{% embed '@theme/components/dialog/dialog.html.twig' with {
+{% embed '@cremona/components/dialog/dialog.html.twig' with {
   wrapId: htmlId,
   htmlId: htmlId ~ '-dialog',
   size: 'md',
-  className: 'theme-rgpd-cookie-banner',
+  className: 'cremona-rgpd-cookie-banner',
   closeButton: false,
   closeOnEscape: false,
   closeOnBackdropClick: false,
@@ -67,40 +67,40 @@
   {% block title %}{{ title }}{% endblock %}
 
   {% block body %}
-    <p class="theme-rgpd-cookie-banner__legal-summary">{{ legalSummary }}</p>
-    <p class="theme-rgpd-cookie-banner__legal-detail">{{ legalDetail|raw }}</p>
+    <p class="cremona-rgpd-cookie-banner__legal-summary">{{ legalSummary }}</p>
+    <p class="cremona-rgpd-cookie-banner__legal-detail">{{ legalDetail|raw }}</p>
 
     {% if showCategoriesSummary %}
-      <div class="theme-rgpd-cookie-banner__categories-summary">
-        <div class="theme-rgpd-cookie-banner__category">
-          <span class="theme-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.essential.name'|trans }}</span>
-          <span class="theme-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.essential.status'|trans }}</span>
+      <div class="cremona-rgpd-cookie-banner__categories-summary">
+        <div class="cremona-rgpd-cookie-banner__category">
+          <span class="cremona-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.essential.name'|trans }}</span>
+          <span class="cremona-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.essential.status'|trans }}</span>
         </div>
-        <div class="theme-rgpd-cookie-banner__category">
-          <span class="theme-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.analytics.name'|trans }}</span>
-          <span class="theme-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.optional.status'|trans }}</span>
+        <div class="cremona-rgpd-cookie-banner__category">
+          <span class="cremona-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.analytics.name'|trans }}</span>
+          <span class="cremona-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.optional.status'|trans }}</span>
         </div>
-        <div class="theme-rgpd-cookie-banner__category">
-          <span class="theme-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.marketing.name'|trans }}</span>
-          <span class="theme-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.optional.status'|trans }}</span>
+        <div class="cremona-rgpd-cookie-banner__category">
+          <span class="cremona-rgpd-cookie-banner__category-name">{{ 'theme.rgpd-cookie-banner.category.marketing.name'|trans }}</span>
+          <span class="cremona-rgpd-cookie-banner__category-status">{{ 'theme.rgpd-cookie-banner.category.optional.status'|trans }}</span>
         </div>
       </div>
     {% endif %}
   {% endblock %}
 
   {% block footer %}
-    <div class="theme-rgpd-cookie-banner__actions">
-      {% include '@theme/components/button/button.html.twig' with {
+    <div class="cremona-rgpd-cookie-banner__actions">
+      {% include '@cremona/components/button/button.html.twig' with {
         label: rejectLabel,
         variant: 'secondary',
         attrs: { 'data-action': 'click->cookie-banner#reject' },
       } only %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: customizeLabel,
         variant: 'ghost',
         attrs: { 'data-action': 'click->cookie-banner#customize' },
       } only %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: acceptLabel,
         variant: 'primary',
         attrs: { 'data-action': 'click->cookie-banner#accept' },

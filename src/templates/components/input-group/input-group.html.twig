@@ -6,18 +6,18 @@
   1. {% embed %} block — the canonical Twig way, lets the consumer pass the
      <input> via the `input` block:
 
-       {% embed '@theme/components/input-group/input-group.html.twig' with { prefix: '€', size: 'md' } %}
+       {% embed '@cremona/components/input-group/input-group.html.twig' with { prefix: '€', size: 'md' } %}
          {% block input %}
-           {% include '@theme/components/input/input.html.twig' with { type: 'number', ... } %}
+           {% include '@cremona/components/input/input.html.twig' with { type: 'number', ... } %}
          {% endblock %}
        {% endembed %}
 
   2. Raw HTML — write the markup directly. The CSS contract works on any
-     `<input class="theme-input">` placed inside `<div class="theme-input-group">`:
+     `<input class="cremona-input">` placed inside `<div class="cremona-input-group">`:
 
-       <div class="theme-input-group" data-size="md" data-controller="input-group">
-         <span class="theme-input-group__prefix" data-input-group-target="prefix">€</span>
-         <input class="theme-input" ...>
+       <div class="cremona-input-group" data-size="md" data-controller="input-group">
+         <span class="cremona-input-group__prefix" data-input-group-target="prefix">€</span>
+         <input class="cremona-input" ...>
        </div>
 
   Parameters:
@@ -26,12 +26,12 @@
     suffix      (string, optional) — short text affix (unit, domain, …)
     suffixIcon  (string, optional) — Lucide icon name for an icon suffix
     size        (string, optional) — sm | md (default) | lg — matches Input's data-size
-    disabled    (bool,   optional) — adds .theme-input-group--disabled (consumer's <input> must ALSO carry disabled)
-    invalid     (bool,   optional) — adds .theme-input-group--invalid (consumer's <input> must ALSO carry aria-invalid="true")
+    disabled    (bool,   optional) — adds .cremona-input-group--disabled (consumer's <input> must ALSO carry disabled)
+    invalid     (bool,   optional) — adds .cremona-input-group--invalid (consumer's <input> must ALSO carry aria-invalid="true")
     className   (string, optional)
 
   Block `input` (required when embedding):
-    The <input class="theme-input"> markup. The CSS handles border-radius +
+    The <input class="cremona-input"> markup. The CSS handles border-radius +
     border-collapse + focus-within ring on the group, so no extra attributes
     are needed on the input itself.
 -#}
@@ -45,22 +45,22 @@
 {%- set invalid    = invalid    | default(false) -%}
 {%- set className  = className  | default('') -%}
 
-{%- set _classes = ['theme-input-group'] -%}
-{%- if disabled -%}{%- set _classes = _classes | merge(['theme-input-group--disabled']) -%}{%- endif -%}
-{%- if invalid -%}{%- set _classes = _classes | merge(['theme-input-group--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-input-group'] -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['cremona-input-group--disabled']) -%}{%- endif -%}
+{%- if invalid -%}{%- set _classes = _classes | merge(['cremona-input-group--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div class="{{ _classes | join(' ') }}" data-size="{{ size }}" data-controller="input-group" data-action="click->input-group#delegateClick">
   {%- if prefix or prefixIcon -%}
-    <span class="theme-input-group__prefix" data-input-group-target="prefix">
-      {%- if prefixIcon -%}{% include '@theme/components/icon/icon.html.twig' with { name: prefixIcon, decorative: true, size: 'sm' } %}{%- endif -%}
+    <span class="cremona-input-group__prefix" data-input-group-target="prefix">
+      {%- if prefixIcon -%}{% include '@cremona/components/icon/icon.html.twig' with { name: prefixIcon, decorative: true, size: 'sm' } %}{%- endif -%}
       {%- if prefix -%}{{ prefix }}{%- endif -%}
     </span>
   {%- endif -%}
   {%- block input -%}{%- endblock -%}
   {%- if suffix or suffixIcon -%}
-    <span class="theme-input-group__suffix" data-input-group-target="suffix">
-      {%- if suffixIcon -%}{% include '@theme/components/icon/icon.html.twig' with { name: suffixIcon, decorative: true, size: 'sm' } %}{%- endif -%}
+    <span class="cremona-input-group__suffix" data-input-group-target="suffix">
+      {%- if suffixIcon -%}{% include '@cremona/components/icon/icon.html.twig' with { name: suffixIcon, decorative: true, size: 'sm' } %}{%- endif -%}
       {%- if suffix -%}{{ suffix }}{%- endif -%}
     </span>
   {%- endif -%}

@@ -36,7 +36,7 @@
 {%- set separator = separator | default('chevron-right') -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-breadcrumb'] -%}
+{%- set _classes = ['cremona-breadcrumb'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- if items|length > 0 -%}
@@ -44,39 +44,39 @@
   class="{{ _classes | join(' ') }}"
   {%- if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif %}
 >
-  <ol class="theme-breadcrumb__list">
+  <ol class="cremona-breadcrumb__list">
     {%- for item in items -%}
       {%- set isLast = loop.last -%}
-      <li class="theme-breadcrumb__item">
+      <li class="cremona-breadcrumb__item">
         {%- if isLast -%}
-          <span class="theme-breadcrumb__current" aria-current="page">
+          <span class="cremona-breadcrumb__current" aria-current="page">
             {%- if item.icon -%}
-              {% include '@theme/components/icon/icon.html.twig' with {
+              {% include '@cremona/components/icon/icon.html.twig' with {
                 name: item.icon,
                 decorative: true,
                 size: 'sm',
-                className: 'theme-breadcrumb__icon',
+                className: 'cremona-breadcrumb__icon',
               } %}
             {%- endif -%}
             <span>{{ item.label }}</span>
           </span>
         {%- else -%}
-          <a class="theme-breadcrumb__link" href="{{ item.href }}">
+          <a class="cremona-breadcrumb__link" href="{{ item.href }}">
             {%- if item.icon -%}
-              {% include '@theme/components/icon/icon.html.twig' with {
+              {% include '@cremona/components/icon/icon.html.twig' with {
                 name: item.icon,
                 decorative: true,
                 size: 'sm',
-                className: 'theme-breadcrumb__icon',
+                className: 'cremona-breadcrumb__icon',
               } %}
             {%- endif -%}
             <span>{{ item.label }}</span>
           </a>
-          {% include '@theme/components/icon/icon.html.twig' with {
+          {% include '@cremona/components/icon/icon.html.twig' with {
             name: separator,
             decorative: true,
             size: 'sm',
-            className: 'theme-breadcrumb__separator',
+            className: 'cremona-breadcrumb__separator',
           } %}
         {%- endif -%}
       </li>

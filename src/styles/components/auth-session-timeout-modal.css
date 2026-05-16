@@ -10,12 +10,12 @@
  * See `docs/specs/ring3/Auth-SessionTimeoutModal.md` for the full spec.
  */
 
-.theme-auth-session-timeout-modal__body {
+.cremona-auth-session-timeout-modal__body {
   /* Inherit Dialog body's typography — no override here. */
   margin: 0;
 }
 
-.theme-auth-session-timeout-modal__countdown {
+.cremona-auth-session-timeout-modal__countdown {
   /* Emphasize the live countdown — tabular-nums prevents layout shift
      when the digit width changes (1 → 10 → 60). */
   font-weight: var(--font-weight-semibold);

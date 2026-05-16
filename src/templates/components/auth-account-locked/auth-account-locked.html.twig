@@ -30,17 +30,17 @@
 {%- set supportHref       = supportHref       | default('#') -%}
 {%- set backToLoginLabel  = backToLoginLabel  | default('theme.auth.account-locked.back-to-login-cta'|trans) -%}
 {%- set backToLoginHref   = backToLoginHref   | default(null) -%}
-{%- set htmlId            = htmlId            | default('theme-auth-account-locked') -%}
+{%- set htmlId            = htmlId            | default('cremona-auth-account-locked') -%}
 {%- set className         = className         | default('') -%}
 
-{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+{% embed '@cremona/components/_auth-shell/_auth-shell.html.twig' with {
   title: null,
   htmlId: htmlId,
   variant: 'default',
-  className: ('theme-auth-account-locked ' ~ className)|trim,
+  className: ('cremona-auth-account-locked ' ~ className)|trim,
 } %}
   {% block content %}
-    {% embed '@theme/components/empty/empty.html.twig' with {
+    {% embed '@cremona/components/empty/empty.html.twig' with {
       title: title,
       body: body,
       icon: 'alert-triangle',
@@ -49,14 +49,14 @@
       htmlId: htmlId ~ '-empty',
     } %}
       {% block actions %}
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           label: supportLabel,
           variant: 'primary',
           size: 'md',
           href: supportHref,
         } %}
         {% if backToLoginHref %}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: backToLoginLabel,
             variant: 'ghost',
             size: 'md',

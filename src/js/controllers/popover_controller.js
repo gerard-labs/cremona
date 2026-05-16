@@ -226,7 +226,7 @@ export default class PopoverController extends Controller {
    * Computes position via Floating UI. Called by `_beginPositioning` and on
    * every autoUpdate tick (scroll, resize, ancestor scroll). Sets inline
    * `left` / `top` (physical — Floating UI handles RTL internally),
-   * `data-placement` (resolved after flip), and `--theme-popover-origin`
+   * `data-placement` (resolved after flip), and `--cremona-popover-origin`
    * (for transform-origin so the scale animation grows from the trigger
    * direction).
    */
@@ -245,7 +245,7 @@ export default class PopoverController extends Controller {
       content.style.left = `${x}px`;
       content.style.top = `${y}px`;
       content.dataset.placement = placement;
-      content.style.setProperty('--theme-popover-origin', this._originFor(placement));
+      content.style.setProperty('--cremona-popover-origin', this._originFor(placement));
     });
   }
 

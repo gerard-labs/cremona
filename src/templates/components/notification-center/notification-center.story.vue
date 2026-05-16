@@ -14,21 +14,21 @@ setDayjsLocale('fr');
 const now = new Date('2026-05-14T12:00:00Z');
 
 function renderAvatar(initial, color = '%236366f1') {
-  return `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='20' fill='${color}'/><text x='20' y='26' font-family='sans-serif' font-size='18' fill='white' text-anchor='middle'>${initial}</text></svg>" alt="" class="theme-avatar" data-size="md">`;
+  return `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='20' fill='${color}'/><text x='20' y='26' font-family='sans-serif' font-size='18' fill='white' text-anchor='middle'>${initial}</text></svg>" alt="" class="cremona-avatar" data-size="md">`;
 }
 
 function renderItem({ id, avatarHtml, title, body, timestamp, unread, href }) {
   const relativeTime = formatRelative(timestamp, { baseDate: now });
   return `
-    <li class="theme-notification-center__item"${unread ? ' data-unread="true"' : ''}>
-      <a href="${href}" class="theme-notification-center__item-link" data-notification-id="${id}">
+    <li class="cremona-notification-center__item"${unread ? ' data-unread="true"' : ''}>
+      <a href="${href}" class="cremona-notification-center__item-link" data-notification-id="${id}">
         ${avatarHtml}
-        <div class="theme-notification-center__item-body">
-          <p class="theme-notification-center__item-title">${title}</p>
-          <p class="theme-notification-center__item-text">${body}</p>
-          <time class="theme-notification-center__item-time" datetime="${timestamp}">${relativeTime}</time>
+        <div class="cremona-notification-center__item-body">
+          <p class="cremona-notification-center__item-title">${title}</p>
+          <p class="cremona-notification-center__item-text">${body}</p>
+          <time class="cremona-notification-center__item-time" datetime="${timestamp}">${relativeTime}</time>
         </div>
-        ${unread ? `<span class="theme-notification-center__unread-dot" aria-label="${t('theme.notification-center.unread')}"></span>` : ''}
+        ${unread ? `<span class="cremona-notification-center__unread-dot" aria-label="${t('theme.notification-center.unread')}"></span>` : ''}
       </a>
     </li>
   `;
@@ -38,25 +38,25 @@ function renderCenter({ id = 'story-notification-center', notifications, showMar
   const unreadCount = notifications.filter(n => n.unread).length;
   const isEmpty = notifications.length === 0;
   return `
-    <dialog class="theme-sheet theme-notification-center" id="${id}" aria-labelledby="${id}-title" open>
-      <header class="theme-notification-center__header">
-        <h2 id="${id}-title" class="theme-typography theme-notification-center__title" data-variant="h2">${t('theme.notification-center.title')}</h2>
-        ${unreadCount > 0 ? `<span class="theme-badge theme-notification-center__badge" data-variant="primary" data-size="sm">${unreadCount}</span>` : ''}
-        <button type="button" class="theme-button theme-button--ghost theme-notification-center__close" aria-label="${t('theme.notification-center.close')}"><svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-x"/></svg></button>
+    <dialog class="cremona-sheet cremona-notification-center" id="${id}" aria-labelledby="${id}-title" open>
+      <header class="cremona-notification-center__header">
+        <h2 id="${id}-title" class="cremona-typography cremona-notification-center__title" data-variant="h2">${t('theme.notification-center.title')}</h2>
+        ${unreadCount > 0 ? `<span class="cremona-badge cremona-notification-center__badge" data-variant="primary" data-size="sm">${unreadCount}</span>` : ''}
+        <button type="button" class="cremona-button cremona-button--ghost cremona-notification-center__close" aria-label="${t('theme.notification-center.close')}"><svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-x"/></svg></button>
       </header>
       ${isEmpty ? `
-        <div class="theme-notification-center__empty">
-          <div class="theme-empty" data-size="md">
-            <div class="theme-empty__illustration" aria-hidden="true"><svg class="theme-icon" data-size="lg"><use href="#icon-bell"/></svg></div>
-            <h3 class="theme-empty__title">${t('theme.notification-center.empty.title')}</h3>
-            <p class="theme-empty__body">${t('theme.notification-center.empty.body')}</p>
+        <div class="cremona-notification-center__empty">
+          <div class="cremona-empty" data-size="md">
+            <div class="cremona-empty__illustration" aria-hidden="true"><svg class="cremona-icon" data-size="lg"><use href="#icon-bell"/></svg></div>
+            <h3 class="cremona-empty__title">${t('theme.notification-center.empty.title')}</h3>
+            <p class="cremona-empty__body">${t('theme.notification-center.empty.body')}</p>
           </div>
         </div>
       ` : `
-        <ul class="theme-notification-center__list">${notifications.map(renderItem).join('')}</ul>
+        <ul class="cremona-notification-center__list">${notifications.map(renderItem).join('')}</ul>
         ${showMarkAll && unreadCount > 0 ? `
-          <footer class="theme-notification-center__footer">
-            <button type="button" class="theme-button theme-button--ghost">${t('theme.notification-center.mark-all-read')}</button>
+          <footer class="cremona-notification-center__footer">
+            <button type="button" class="cremona-button cremona-button--ghost">${t('theme.notification-center.mark-all-read')}</button>
           </footer>
         ` : ''}
       `}
@@ -79,17 +79,17 @@ const bodyHtml = `
     </header>
 
     <section class="notification-center-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.notification-center.story.section.unread')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.notification-center.story.section.unread')}</h2>
       <div class="notification-center-story__frame">${renderCenter({ id: 'story-unread', notifications: notifsMixed })}</div>
     </section>
 
     <section class="notification-center-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.notification-center.story.section.all-read')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.notification-center.story.section.all-read')}</h2>
       <div class="notification-center-story__frame">${renderCenter({ id: 'story-all-read', notifications: notifsAllRead, showMarkAll: false })}</div>
     </section>
 
     <section class="notification-center-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.notification-center.story.section.empty')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.notification-center.story.section.empty')}</h2>
       <div class="notification-center-story__frame">${renderCenter({ id: 'story-empty', notifications: [] })}</div>
     </section>
   </section>
@@ -111,6 +111,6 @@ const bodyHtml = `
 .notification-center-story__header p { font: var(--typography-body); color: var(--color-text-secondary); max-inline-size: 70ch; }
 .notification-center-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .notification-center-story__frame { display: flex; justify-content: flex-end; min-block-size: 480px; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); overflow: hidden; }
-.notification-center-story__frame .theme-notification-center { position: static; transform: none; box-shadow: var(--shadow-3); }
+.notification-center-story__frame .cremona-notification-center { position: static; transform: none; box-shadow: var(--shadow-3); }
 .notification-center-dark-wrap { background: var(--color-bg-base); padding: var(--spacing-4); }
 </style>

@@ -8,17 +8,17 @@
  *
  * Detection model:
  *  - Each component dir <c> under src/templates/components/ owns the
- *    root class `theme-<c>` / `theme-page-<c>` (+ modifier `--x`).
- *  - A ROOT class token (`theme-<c>` or `theme-<c>--mod`) of component A
+ *    root class `cremona-<c>` / `cremona-page-<c>` (+ modifier `--x`).
+ *  - A ROOT class token (`cremona-<c>` or `cremona-<c>--mod`) of component A
  *    found in a `class="…"` attribute of component B (A !== B) is an
  *    inline reproduction → violation.
- *  - BEM CHILD tokens (`theme-<c>__child`) are NOT flagged: reusing a
+ *  - BEM CHILD tokens (`cremona-<c>__child`) are NOT flagged: reusing a
  *    child class is CSS-contract reuse (e.g. a shared controller's DOM
- *    hook `theme-popover__content`), not reproduction of the component.
+ *    hook `cremona-popover__content`), not reproduction of the component.
  *  - Twig `{# #}` and HTML `<!-- -->` comments are stripped before scan
  *    (doc-comment usage examples are not code).
- *  - Whole-token matching: `theme-button-group` is its own token, never
- *    confused with `theme-button`.
+ *  - Whole-token matching: `cremona-button-group` is its own token, never
+ *    confused with `cremona-button`.
  *
  * Transitional baseline (ADR-0058 §2): tools/check-composition.allow.txt
  *  - one repo-relative path per line (`#` comments allowed);
@@ -50,7 +50,7 @@ const componentDirs = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
 const rootToComponent = new Map();
 for (const c of componentDirs) {
   const slug = c.replace(/^_/, ''); // `_auth-shell` → `auth-shell`
-  for (const root of [`theme-${c}`, `theme-${slug}`, `theme-page-${slug}`]) {
+  for (const root of [`cremona-${c}`, `cremona-${slug}`, `cremona-page-${slug}`]) {
     rootToComponent.set(root, c);
   }
 }
@@ -82,7 +82,7 @@ function componentOf(token) {
 
 const CLASS_ATTR = /class\s*=\s*("([^"]*)"|'([^']*)')/g;
 const CLASS_TOKEN =
-  /theme-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?/g;
+  /cremona-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?/g;
 
 // --- baseline --------------------------------------------------------------
 const baseline =
@@ -119,7 +119,7 @@ for (const file of twigFiles) {
       } else {
         if (!line) line = src.slice(0, attr.index).split('\n').length;
         hard.push(
-          `${relPath}:${line} — inline '${token}' reproduces '${comp}' — use {% include '@theme/components/${comp}/${comp}.html.twig' %}`,
+          `${relPath}:${line} — inline '${token}' reproduces '${comp}' — use {% include '@cremona/components/${comp}/${comp}.html.twig' %}`,
         );
       }
     }

@@ -15,19 +15,19 @@ function mount(html) {
 
 function template({ currentLocale = 'fr', storageKey = 'theme.locale', locales = ['fr', 'en', 'de'] } = {}) {
   const items = locales.map((code) => `
-    <div class="theme-item theme-lang-switcher__item" role="menuitem" tabindex="-1"
+    <div class="cremona-item cremona-lang-switcher__item" role="menuitem" tabindex="-1"
          data-action="click->lang-switcher#select"
          data-locale="${code}"></div>
   `).join('');
   return `
-    <div class="theme-lang-switcher"
+    <div class="cremona-lang-switcher"
          data-controller="lang-switcher"
          data-lang-switcher-current-locale-value="${currentLocale}"
          data-lang-switcher-storage-key-value="${storageKey}">
-      <button class="theme-lang-switcher__trigger">
+      <button class="cremona-lang-switcher__trigger">
         <span data-lang-switcher-target="current">${currentLocale.toUpperCase()}</span>
       </button>
-      <div class="theme-lang-switcher__content" role="menu">
+      <div class="cremona-lang-switcher__content" role="menu">
         ${items}
       </div>
     </div>
@@ -64,14 +64,14 @@ describe('lang-switcher controller', () => {
     await tick();
     const trigger = document.querySelector('[data-lang-switcher-target="current"]');
     expect(trigger.textContent).toBe('EN');
-    const wrap = document.querySelector('.theme-lang-switcher');
+    const wrap = document.querySelector('.cremona-lang-switcher');
     expect(wrap.getAttribute('data-lang-switcher-current-locale-value')).toBe('en');
   });
 
   it('dispatches lang-switcher:change with locale + previousLocale on select', async () => {
     app = mount(template({ currentLocale: 'fr' }));
     await tick();
-    const wrap = document.querySelector('.theme-lang-switcher');
+    const wrap = document.querySelector('.cremona-lang-switcher');
     const changeEvents = [];
     wrap.addEventListener('lang-switcher:change', (e) => changeEvents.push(e.detail));
     const enItem = document.querySelector('[data-locale="en"]');
@@ -103,7 +103,7 @@ describe('lang-switcher controller', () => {
   it('does not dispatch when selecting the already-current locale', async () => {
     app = mount(template({ currentLocale: 'fr' }));
     await tick();
-    const wrap = document.querySelector('.theme-lang-switcher');
+    const wrap = document.querySelector('.cremona-lang-switcher');
     const changeEvents = [];
     wrap.addEventListener('lang-switcher:change', (e) => changeEvents.push(e.detail));
     const frItem = document.querySelector('[data-locale="fr"]');
@@ -133,7 +133,7 @@ describe('lang-switcher controller', () => {
     try {
       app = mount(template({ currentLocale: 'fr' }));
       await tick();
-      const wrap = document.querySelector('.theme-lang-switcher');
+      const wrap = document.querySelector('.cremona-lang-switcher');
       const changeEvents = [];
       wrap.addEventListener('lang-switcher:change', (e) => changeEvents.push(e.detail));
       const enItem = document.querySelector('[data-locale="en"]');
@@ -149,13 +149,13 @@ describe('lang-switcher controller', () => {
 
   it('ignores select when data-locale is missing', async () => {
     app = mount(`
-      <div class="theme-lang-switcher" data-controller="lang-switcher" data-lang-switcher-current-locale-value="fr">
+      <div class="cremona-lang-switcher" data-controller="lang-switcher" data-lang-switcher-current-locale-value="fr">
         <span data-lang-switcher-target="current">FR</span>
         <div data-action="click->lang-switcher#select"></div>
       </div>
     `);
     await tick();
-    const wrap = document.querySelector('.theme-lang-switcher');
+    const wrap = document.querySelector('.cremona-lang-switcher');
     const changeEvents = [];
     wrap.addEventListener('lang-switcher:change', (e) => changeEvents.push(e.detail));
     const item = wrap.querySelector('[data-action]');
@@ -167,7 +167,7 @@ describe('lang-switcher controller', () => {
   it('does not dispatch after disconnect', async () => {
     app = mount(template({ currentLocale: 'fr' }));
     await tick();
-    const wrap = document.querySelector('.theme-lang-switcher');
+    const wrap = document.querySelector('.cremona-lang-switcher');
     const changeEvents = [];
     wrap.addEventListener('lang-switcher:change', (e) => changeEvents.push(e.detail));
     // Disconnect by removing the element.
@@ -181,7 +181,7 @@ describe('lang-switcher controller', () => {
     // The kit's `lang-switcher` controller does NOT mutate aria-current on items —
     // consumer's Twig stamps it at SSR time. This test documents that contract.
     app = mount(`
-      <div class="theme-lang-switcher" data-controller="lang-switcher" data-lang-switcher-current-locale-value="fr">
+      <div class="cremona-lang-switcher" data-controller="lang-switcher" data-lang-switcher-current-locale-value="fr">
         <span data-lang-switcher-target="current">FR</span>
         <div data-action="click->lang-switcher#select" data-locale="fr" aria-current="true"></div>
         <div data-action="click->lang-switcher#select" data-locale="en"></div>

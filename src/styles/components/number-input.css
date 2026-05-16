@@ -6,7 +6,7 @@
  * input's height (via --density-input-height + size variants) so the
  * group reads as a single horizontal control.
  *
- * The input itself uses the standard .theme-input visual envelope (same
+ * The input itself uses the standard .cremona-input visual envelope (same
  * height/border/radius/focus-ring) — we just remove the native browser
  * spinner pseudo-elements (those are inconsistent across engines and
  * conflict visually with our explicit +/- buttons).
@@ -14,7 +14,7 @@
  * 0 new tokens — all from Ring 0 + density.
  */
 
-.theme-number-input {
+.cremona-number-input {
   display: inline-flex;
   align-items: stretch;
   inline-size: fit-content;
@@ -24,13 +24,13 @@
   overflow: hidden;
 }
 
-.theme-number-input:focus-within {
+.cremona-number-input:focus-within {
   border-color: var(--color-border-focus);
   box-shadow: 0 0 0 var(--ring-width) var(--ring-color);
 }
 
 /* --- Stepper buttons -------------------------------------------------- */
-.theme-number-input__btn {
+.cremona-number-input__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -52,41 +52,41 @@
      the @media coarse override pushes both axes to 44. */
 }
 
-.theme-number-input[data-size="sm"] .theme-number-input__btn {
+.cremona-number-input[data-size="sm"] .cremona-number-input__btn {
   inline-size: 32px;
   font-size: var(--font-size-base);
 }
 
-.theme-number-input[data-size="md"] .theme-number-input__btn {
+.cremona-number-input[data-size="md"] .cremona-number-input__btn {
   inline-size: var(--density-input-height, 40px);
 }
 
-.theme-number-input[data-size="lg"] .theme-number-input__btn {
+.cremona-number-input[data-size="lg"] .cremona-number-input__btn {
   inline-size: 48px;
   font-size: var(--font-size-xl);
 }
 
-.theme-number-input__btn:hover:not(:disabled) {
+.cremona-number-input__btn:hover:not(:disabled) {
   background: var(--color-hover-overlay);
 }
 
-.theme-number-input__btn:active:not(:disabled) {
+.cremona-number-input__btn:active:not(:disabled) {
   background: var(--color-active-overlay);
 }
 
-.theme-number-input__btn:focus-visible {
+.cremona-number-input__btn:focus-visible {
   outline: var(--ring-width) solid var(--ring-color);
   outline-offset: -2px;
 }
 
-.theme-number-input__btn:disabled {
+.cremona-number-input__btn:disabled {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
 /* --- Inner input ----------------------------------------------------- */
-.theme-number-input__input {
-  /* Override .theme-input border + bg — the wrap owns those. */
+.cremona-number-input__input {
+  /* Override .cremona-input border + bg — the wrap owns those. */
   border: 0 !important;
   background: transparent !important;
   border-radius: 0 !important;
@@ -97,23 +97,23 @@
   inline-size: 6em;
 }
 
-.theme-number-input__input:focus,
-.theme-number-input__input:focus-visible {
+.cremona-number-input__input:focus,
+.cremona-number-input__input:focus-visible {
   /* The wrap shows the focus ring. Suppress the native input ring to
      avoid double-ring. */
   outline: none !important;
   box-shadow: none !important;
 }
 
-.theme-number-input__input::-webkit-outer-spin-button,
-.theme-number-input__input::-webkit-inner-spin-button {
+.cremona-number-input__input::-webkit-outer-spin-button,
+.cremona-number-input__input::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
 }
 
 /* --- Touch target compliance ------------------------------------------ */
 @media (pointer: coarse) {
-  .theme-number-input__btn {
+  .cremona-number-input__btn {
     min-inline-size: 44px;
     min-block-size: 44px;
   }

@@ -34,8 +34,8 @@ const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 function renderIcon({ name, label, size, decorative, className }) {
   const isBidi = BIDI_ICONS.includes(name);
-  const classes = ['theme-icon'];
-  if (isBidi) classes.push('theme-icon-bidi');
+  const classes = ['cremona-icon'];
+  if (isBidi) classes.push('cremona-icon-bidi');
   if (className) classes.push(className);
   const effectivelyDecorative = decorative || !label;
   const ariaAttrs = effectivelyDecorative
@@ -62,14 +62,14 @@ const bodyHtml = `
     </header>
 
     <section class="icon-story__section" aria-labelledby="icon-section-inventory">
-      <h2 id="icon-section-inventory" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.inventory')}</h2>
+      <h2 id="icon-section-inventory" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.inventory')}</h2>
       <div class="icon-story__grid">
         ${ICON_NAMES.map((n) => cell(n)).join('')}
       </div>
     </section>
 
     <section class="icon-story__section" aria-labelledby="icon-section-sizes">
-      <h2 id="icon-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.sizes')}</h2>
+      <h2 id="icon-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.sizes')}</h2>
       <div class="icon-story__row">
         ${SIZES.map((s) => `
           <div class="icon-story__cell">
@@ -81,7 +81,7 @@ const bodyHtml = `
     </section>
 
     <section class="icon-story__section" aria-labelledby="icon-section-labeled">
-      <h2 id="icon-section-labeled" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.labeled')}</h2>
+      <h2 id="icon-section-labeled" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.labeled')}</h2>
       <div class="icon-story__row">
         ${renderIcon({ name: 'user', size: 'lg', label: t('theme.icon.story.label.profile') })}
         ${renderIcon({ name: 'search', size: 'lg', label: t('theme.icon.story.label.search') })}
@@ -91,26 +91,26 @@ const bodyHtml = `
     </section>
 
     <section class="icon-story__section" aria-labelledby="icon-section-decorative">
-      <h2 id="icon-section-decorative" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.decorative')}</h2>
-      <p class="theme-typography" data-variant="body">
+      <h2 id="icon-section-decorative" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.decorative')}</h2>
+      <p class="cremona-typography" data-variant="body">
         ${renderIcon({ name: 'check', decorative: true, size: 'sm', className: 'icon-story__inline' })}<span>${t('theme.icon.story.demo-decorative')}</span>
       </p>
     </section>
 
     <section class="icon-story__section" aria-labelledby="icon-section-rtl">
-      <h2 id="icon-section-rtl" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.rtl-flip')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.icon.story.rtl-explainer')}</p>
+      <h2 id="icon-section-rtl" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.rtl-flip')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.icon.story.rtl-explainer')}</p>
       <div class="icon-story__row">
         ${BIDI_ICONS.map((n) => cell(n)).join('')}
       </div>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.icon.story.rtl-non-bidi')}</p>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.icon.story.rtl-non-bidi')}</p>
       <div class="icon-story__row">
         ${NON_BIDI_DEMO.map((n) => cell(n)).join('')}
       </div>
     </section>
 
     <section class="icon-story__section" aria-labelledby="icon-section-color">
-      <h2 id="icon-section-color" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.color')}</h2>
+      <h2 id="icon-section-color" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.icon.story.section.color')}</h2>
       <div class="icon-story__row">
         <span class="icon-story__color-swatch" style="color: var(--color-primary);">${renderIcon({ name: 'heart', decorative: true, size: 'lg' })}</span>
         <span class="icon-story__color-swatch" style="color: var(--color-success);">${renderIcon({ name: 'check', decorative: true, size: 'lg' })}</span>

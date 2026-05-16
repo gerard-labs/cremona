@@ -43,12 +43,12 @@ onMounted(() => boot(document.documentElement));
 
 function renderToggle(option, { size, variant }) {
   const iconHtml = option.iconLeading
-    ? `<span class="theme-icon theme-toggle__icon" data-icon="${option.iconLeading}" data-size="${size === 'sm' ? 'sm' : 'md'}" aria-hidden="true" role="presentation">${ICONS[option.iconLeading] || ''}</span>`
+    ? `<span class="cremona-icon cremona-toggle__icon" data-icon="${option.iconLeading}" data-size="${size === 'sm' ? 'sm' : 'md'}" aria-hidden="true" role="presentation">${ICONS[option.iconLeading] || ''}</span>`
     : '';
-  const labelHtml = option.label ? `<span class="theme-toggle__label">${option.label}</span>` : '';
+  const labelHtml = option.label ? `<span class="cremona-toggle__label">${option.label}</span>` : '';
   const attrs = [
     `type="button"`,
-    `class="theme-toggle theme-toggle-group__item"`,
+    `class="cremona-toggle cremona-toggle-group__item"`,
     `data-size="${size}"`,
     `data-variant="${variant}"`,
     `data-controller="toggle"`,
@@ -67,10 +67,10 @@ function renderToggleGroup(props = {}) {
   } = props;
   const id = htmlId || ('tg-' + Math.random().toString(36).slice(2, 9));
   const labelId = id + '-label';
-  const classes = ['theme-toggle-group'];
+  const classes = ['cremona-toggle-group'];
   if (className) classes.push(className);
-  const labelClasses = ['theme-toggle-group__label'];
-  if (hideLabel) labelClasses.push('theme-sr-only');
+  const labelClasses = ['cremona-toggle-group__label'];
+  if (hideLabel) labelClasses.push('cremona-sr-only');
 
   const items = options.map((opt) => renderToggle({
     ...opt,
@@ -78,7 +78,7 @@ function renderToggleGroup(props = {}) {
   }, { size, variant })).join('');
 
   return `
-    <div class="theme-toggle-group-wrap" data-orientation="${orientation}">
+    <div class="cremona-toggle-group-wrap" data-orientation="${orientation}">
       <span id="${labelId}" class="${labelClasses.join(' ')}">${label}</span>
       <div class="${classes.join(' ')}"
         role="group"
@@ -134,8 +134,8 @@ const bodyHtml = `
     </header>
 
     <section class="togglegroup-story__section" aria-labelledby="tg-section-single">
-      <h2 id="tg-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.single')}</h2>
-      <p class="togglegroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle-group.story.explainer.single')}</p>
+      <h2 id="tg-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.single')}</h2>
+      <p class="togglegroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle-group.story.explainer.single')}</p>
       <div class="togglegroup-story__stack">
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.view'), htmlId: 'tg-view', options: VIEW_OPTIONS, mode: 'single', variant: 'accent' }), 'view switcher (icon-only, accent)')}
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-density', options: DENSITY_OPTIONS, mode: 'single' }), 'density (text, default)')}
@@ -143,15 +143,15 @@ const bodyHtml = `
     </section>
 
     <section class="togglegroup-story__section" aria-labelledby="tg-section-multi">
-      <h2 id="tg-section-multi" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.multi')}</h2>
-      <p class="togglegroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle-group.story.explainer.multi')}</p>
+      <h2 id="tg-section-multi" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.multi')}</h2>
+      <p class="togglegroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle-group.story.explainer.multi')}</p>
       <div class="togglegroup-story__stack">
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.format'), htmlId: 'tg-format', options: FORMAT_OPTIONS, mode: 'multi' }), 'text format (bold + italic pressed, multi)')}
       </div>
     </section>
 
     <section class="togglegroup-story__section" aria-labelledby="tg-section-variants">
-      <h2 id="tg-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.variants')}</h2>
+      <h2 id="tg-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.variants')}</h2>
       <div class="togglegroup-story__stack">
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-var-def', options: DENSITY_OPTIONS, mode: 'single', variant: 'default' }), 'default variant')}
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-var-acc', options: DENSITY_OPTIONS, mode: 'single', variant: 'accent' }),  'accent variant')}
@@ -159,7 +159,7 @@ const bodyHtml = `
     </section>
 
     <section class="togglegroup-story__section" aria-labelledby="tg-section-sizes">
-      <h2 id="tg-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.sizes')}</h2>
+      <h2 id="tg-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.sizes')}</h2>
       <div class="togglegroup-story__stack">
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-sz-sm', options: DENSITY_OPTIONS, mode: 'single', size: 'sm' }), 'sm')}
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-sz-md', options: DENSITY_OPTIONS, mode: 'single', size: 'md' }), 'md')}
@@ -168,15 +168,15 @@ const bodyHtml = `
     </section>
 
     <section class="togglegroup-story__section" aria-labelledby="tg-section-orientation">
-      <h2 id="tg-section-orientation" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.orientation')}</h2>
-      <p class="togglegroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle-group.story.explainer.orientation')}</p>
+      <h2 id="tg-section-orientation" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.orientation')}</h2>
+      <p class="togglegroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toggle-group.story.explainer.orientation')}</p>
       <div class="togglegroup-story__stack">
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.tabs'), htmlId: 'tg-vertical', options: VERTICAL_OPTIONS, mode: 'single', orientation: 'vertical', variant: 'accent' }), 'vertical (sidebar tabs)')}
       </div>
     </section>
 
     <section class="togglegroup-story__section" aria-labelledby="tg-section-disabled">
-      <h2 id="tg-section-disabled" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.disabled')}</h2>
+      <h2 id="tg-section-disabled" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toggle-group.story.section.disabled')}</h2>
       <div class="togglegroup-story__stack">
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-dis-all',  options: DENSITY_OPTIONS, mode: 'single', disabled: true }), 'all disabled')}
         ${row(renderToggleGroup({ label: t('theme.toggle-group.label.density'), htmlId: 'tg-dis-some', options: DENSITY_OPTIONS.map((o, i) => ({ ...o, disabled: i === 2 })), mode: 'single' }), 'compact disabled only')}

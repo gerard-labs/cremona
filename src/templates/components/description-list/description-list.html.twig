@@ -23,7 +23,7 @@
 {%- set layout    = layout    | default('stacked') -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-description-list'] -%}
+{%- set _classes = ['cremona-description-list'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <dl
@@ -31,7 +31,7 @@
   data-layout="{{ layout }}"
 >
   {%- for item in items -%}
-    <dt class="theme-description-list__term">{{ item.term }}</dt>
-    <dd class="theme-description-list__definition">{{ item.definition | raw }}</dd>
+    <dt class="cremona-description-list__term">{{ item.term }}</dt>
+    <dd class="cremona-description-list__definition">{{ item.definition | raw }}</dd>
   {%- endfor -%}
 </dl>

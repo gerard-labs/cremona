@@ -15,7 +15,7 @@
   Composition pattern — Twig {% include %} with blocks (mirror
   `_auth-shell` precedent verbatim):
 
-    {% include '@theme/components/nav-header/nav-header.html.twig' with {
+    {% include '@cremona/components/nav-header/nav-header.html.twig' with {
       htmlId: 'app-header',
       ariaLabel: 'Principale'|trans,
       sticky: true,
@@ -46,39 +46,39 @@
     - aria-controls + aria-expanded on the hamburger trigger
 -#}
 
-{%- set htmlId                = htmlId                | default('theme-nav-header-' ~ random()) -%}
+{%- set htmlId                = htmlId                | default('cremona-nav-header-' ~ random()) -%}
 {%- set ariaLabel             = ariaLabel             | default('theme.nav.header.aria.label'|trans) -%}
 {%- set sticky                = sticky                | default(false) -%}
 {%- set mobileTrigger         = mobileTrigger         | default(true) -%}
 {%- set mobileTriggerControls = mobileTriggerControls | default(null) -%}
 {%- set className             = className             | default('') -%}
 
-{%- set _classes = ['theme-nav-header'] -%}
-{%- if sticky -%}{%- set _classes = _classes | merge(['theme-nav-header--sticky']) -%}{%- endif -%}
+{%- set _classes = ['cremona-nav-header'] -%}
+{%- if sticky -%}{%- set _classes = _classes | merge(['cremona-nav-header--sticky']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <header class="{{ _classes | join(' ') }}" id="{{ htmlId }}"{% if sticky %} data-sticky="true"{% endif %}>
-  <div class="theme-nav-header__inner">
+  <div class="cremona-nav-header__inner">
     {%- if block('brand') is defined and block('brand') is not empty -%}
-      <div class="theme-nav-header__brand">{%- block brand -%}{%- endblock -%}</div>
+      <div class="cremona-nav-header__brand">{%- block brand -%}{%- endblock -%}</div>
     {%- endif -%}
 
     {%- if block('nav') is defined and block('nav') is not empty -%}
-      <nav class="theme-nav-header__nav" aria-label="{{ ariaLabel }}">
+      <nav class="cremona-nav-header__nav" aria-label="{{ ariaLabel }}">
         {%- block nav -%}{%- endblock -%}
       </nav>
     {%- endif -%}
 
     {%- if block('utility') is defined and block('utility') is not empty -%}
-      <div class="theme-nav-header__utility">{%- block utility -%}{%- endblock -%}</div>
+      <div class="cremona-nav-header__utility">{%- block utility -%}{%- endblock -%}</div>
     {%- endif -%}
 
     {%- if mobileTrigger and mobileTriggerControls -%}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         variant: 'ghost',
         iconLeading: 'menu',
         ariaLabel: 'theme.nav.header.mobile-trigger.open'|trans,
-        className: 'theme-nav-header__mobile-trigger',
+        className: 'cremona-nav-header__mobile-trigger',
         attrs: {
           'aria-controls': mobileTriggerControls,
           'aria-expanded': 'false',

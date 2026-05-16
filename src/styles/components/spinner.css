@@ -10,40 +10,40 @@
  * "loading" affordance while respecting vestibular sensitivity.
  */
 
-@keyframes theme-spinner-rotate {
+@keyframes cremona-spinner-rotate {
   to { transform: rotate(360deg); }
 }
 
-.theme-spinner {
+.cremona-spinner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  inline-size: var(--theme-spinner-size, 20px);
-  block-size: var(--theme-spinner-size, 20px);
+  inline-size: var(--cremona-spinner-size, 20px);
+  block-size: var(--cremona-spinner-size, 20px);
   color: var(--color-primary);
   vertical-align: middle;
 }
 
-.theme-spinner[data-size="xs"] { --theme-spinner-size: 12px; }
-.theme-spinner[data-size="sm"] { --theme-spinner-size: 16px; }
-.theme-spinner[data-size="md"] { --theme-spinner-size: 20px; }
-.theme-spinner[data-size="lg"] { --theme-spinner-size: 24px; }
-.theme-spinner[data-size="xl"] { --theme-spinner-size: 32px; }
+.cremona-spinner[data-size="xs"] { --cremona-spinner-size: 12px; }
+.cremona-spinner[data-size="sm"] { --cremona-spinner-size: 16px; }
+.cremona-spinner[data-size="md"] { --cremona-spinner-size: 20px; }
+.cremona-spinner[data-size="lg"] { --cremona-spinner-size: 24px; }
+.cremona-spinner[data-size="xl"] { --cremona-spinner-size: 32px; }
 
-.theme-spinner--inverted {
+.cremona-spinner--inverted {
   color: var(--color-primary-foreground);
 }
 
-.theme-spinner > svg {
+.cremona-spinner > svg {
   inline-size: 100%;
   block-size: 100%;
-  animation: theme-spinner-rotate 800ms linear infinite;
+  animation: cremona-spinner-rotate 800ms linear infinite;
   transform-origin: 50% 50%;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-spinner > svg {
+  .cremona-spinner > svg {
     animation-duration: 3s;
   }
 }

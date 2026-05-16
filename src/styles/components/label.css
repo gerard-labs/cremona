@@ -2,19 +2,19 @@
  * Label — visible <label> for a form input.
  *
  * Anatomy:
- *   .theme-label                     — root (inline-flex)
- *     .theme-label__text             — the name itself
- *     .theme-label__required         — red asterisk (aria-hidden)
- *     .theme-sr-only                 — "obligatoire" SR-only marker (from base/reset.css)
- *     .theme-label__optional         — muted "(facultatif)" suffix
- *     .theme-label__hint             — inline muted caption (e.g. "max. 50 caractères")
+ *   .cremona-label                     — root (inline-flex)
+ *     .cremona-label__text             — the name itself
+ *     .cremona-label__required         — red asterisk (aria-hidden)
+ *     .cremona-sr-only                 — "obligatoire" SR-only marker (from base/reset.css)
+ *     .cremona-label__optional         — muted "(facultatif)" suffix
+ *     .cremona-label__hint             — inline muted caption (e.g. "max. 50 caractères")
  *
  * Attributes:
  *   [data-size="sm|md"]     — sm matches input 14px (default), md = 16px denser forms
  *   [data-state="disabled"] — dims the whole label when its input is disabled
  */
 
-.theme-label {
+.cremona-label {
   display: inline-flex;
   align-items: baseline;
   flex-wrap: wrap;
@@ -24,20 +24,20 @@
   user-select: none;
 }
 
-.theme-label[data-size="md"] {
+.cremona-label[data-size="md"] {
   font-size: var(--font-size-base);
 }
 
-.theme-label[data-state="disabled"] {
+.cremona-label[data-state="disabled"] {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.theme-label__text {
+.cremona-label__text {
   font: inherit;
 }
 
-.theme-label__required {
+.cremona-label__required {
   color: var(--color-danger);
   font-weight: var(--font-weight-bold);
   line-height: 1;
@@ -46,15 +46,15 @@
   margin-inline-start: calc(var(--spacing-0_5) * -1);
 }
 
-.theme-label__optional,
-.theme-label__hint {
+.cremona-label__optional,
+.cremona-label__hint {
   color: var(--color-text-tertiary);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-snug);
 }
 
-.theme-label__hint::before {
+.cremona-label__hint::before {
   content: "·";
   margin-inline-end: var(--spacing-1);
   color: var(--color-text-disabled);

@@ -40,7 +40,7 @@
 {%- set triggerLabel     = triggerLabel     | default(null) -%}
 {%- set iconChevron      = iconChevron      | default(true) -%}
 {%- set open             = open             | default(false) -%}
-{%- set htmlId           = htmlId           | default('theme-collapsible-' ~ random()) -%}
+{%- set htmlId           = htmlId           | default('cremona-collapsible-' ~ random()) -%}
 {%- set triggerClassName = triggerClassName | default('') -%}
 {%- set contentClassName = contentClassName | default('') -%}
 {%- set className        = className        | default('') -%}
@@ -48,13 +48,13 @@
 {%- set _triggerId = htmlId ~ '-trigger' -%}
 {%- set _contentId = htmlId ~ '-content' -%}
 
-{%- set _classes = ['theme-collapsible'] -%}
+{%- set _classes = ['cremona-collapsible'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-{%- set _triggerClasses = ['theme-collapsible__trigger'] -%}
+{%- set _triggerClasses = ['cremona-collapsible__trigger'] -%}
 {%- if triggerClassName -%}{%- set _triggerClasses = _triggerClasses | merge([triggerClassName]) -%}{%- endif -%}
 
-{%- set _contentClasses = ['theme-collapsible__content'] -%}
+{%- set _contentClasses = ['cremona-collapsible__content'] -%}
 {%- if contentClassName -%}{%- set _contentClasses = _contentClasses | merge([contentClassName]) -%}{%- endif -%}
 
 <div
@@ -72,14 +72,14 @@
     {%- if block('trigger') is defined and block('trigger') is not empty -%}
       {%- block trigger -%}{%- endblock -%}
     {%- else -%}
-      <span class="theme-collapsible__label">{{ triggerLabel }}</span>
+      <span class="cremona-collapsible__label">{{ triggerLabel }}</span>
     {%- endif -%}
     {%- if iconChevron -%}
-      {% include '@theme/components/icon/icon.html.twig' with {
+      {% include '@cremona/components/icon/icon.html.twig' with {
         name: 'chevron-down',
         decorative: true,
         size: 'sm',
-        className: 'theme-collapsible__chevron',
+        className: 'cremona-collapsible__chevron',
       } %}
     {%- endif -%}
   </button>
@@ -90,7 +90,7 @@
     aria-labelledby="{{ _triggerId }}"
     data-state="{{ open ? 'open' : 'closed' }}"
   >
-    <div class="theme-collapsible__content-inner">
+    <div class="cremona-collapsible__content-inner">
       {%- block content -%}{%- endblock -%}
     </div>
   </div>

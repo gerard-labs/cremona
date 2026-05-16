@@ -6,7 +6,7 @@
   Stimulus, zero polyfill — every browser the kit supports has it.
 
   The wrapper applies `inline-size: 100%` (fills its parent's inline-axis)
-  and `aspect-ratio: var(--theme-aspect-ratio)` so the block-size derives
+  and `aspect-ratio: var(--cremona-aspect-ratio)` so the block-size derives
   from the inline-size. Inner `<img>` / `<video>` / `<iframe>` are sized
   to fill the box with `object-fit: cover` by default.
 
@@ -14,17 +14,17 @@
 
   1. {% embed %} block — the canonical Twig way:
 
-       {% embed '@theme/components/aspect-ratio/aspect-ratio.html.twig'
+       {% embed '@cremona/components/aspect-ratio/aspect-ratio.html.twig'
                 with { ratio: '16/9' } %}
          {% block content %}
            <img src="/cover.jpg" alt="…">
          {% endblock %}
        {% endembed %}
 
-  2. Raw HTML — the CSS contract works on `<div class="theme-aspect-ratio"
-     style="--theme-aspect-ratio: 16/9">`:
+  2. Raw HTML — the CSS contract works on `<div class="cremona-aspect-ratio"
+     style="--cremona-aspect-ratio: 16/9">`:
 
-       <div class="theme-aspect-ratio" style="--theme-aspect-ratio: 16/9">
+       <div class="cremona-aspect-ratio" style="--cremona-aspect-ratio: 16/9">
          <img src="/cover.jpg" alt="…">
        </div>
 
@@ -46,10 +46,10 @@
 {%- set fit       = fit       | default('cover') -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-aspect-ratio'] -%}
-{%- if fit != 'cover' -%}{%- set _classes = _classes | merge(['theme-aspect-ratio--fit-' ~ fit]) -%}{%- endif -%}
+{%- set _classes = ['cremona-aspect-ratio'] -%}
+{%- if fit != 'cover' -%}{%- set _classes = _classes | merge(['cremona-aspect-ratio--fit-' ~ fit]) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-<div class="{{ _classes | join(' ') }}" style="--theme-aspect-ratio: {{ ratio }};">
+<div class="{{ _classes | join(' ') }}" style="--cremona-aspect-ratio: {{ ratio }};">
   {%- block content -%}{%- endblock -%}
 </div>

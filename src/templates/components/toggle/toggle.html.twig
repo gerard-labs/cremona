@@ -37,7 +37,7 @@
 {%- set className   = className   | default('') -%}
 {%- set attrs       = attrs       | default({}) -%}
 
-{%- set _classes = ['theme-toggle'] -%}
+{%- set _classes = ['cremona-toggle'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <button
@@ -55,14 +55,14 @@
   {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
 >
   {%- if iconLeading -%}
-    {% include '@theme/components/icon/icon.html.twig' with {
+    {% include '@cremona/components/icon/icon.html.twig' with {
       name: iconLeading,
       decorative: true,
       size: size == 'sm' ? 'sm' : 'md',
-      className: 'theme-toggle__icon',
+      className: 'cremona-toggle__icon',
     } %}
   {%- endif -%}
   {%- if label -%}
-    <span class="theme-toggle__label">{{ label }}</span>
+    <span class="cremona-toggle__label">{{ label }}</span>
   {%- endif -%}
 </button>

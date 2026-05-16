@@ -35,7 +35,7 @@
     footer  (optional) — button cluster.
 -#}
 
-{%- set htmlId               = htmlId               | default('theme-sheet-' ~ random()) -%}
+{%- set htmlId               = htmlId               | default('cremona-sheet-' ~ random()) -%}
 {%- set edge                 = edge                 | default('end') -%}
 {%- set open                 = open                 | default(false) -%}
 {%- set closeButton          = closeButton          ?? true -%}
@@ -46,10 +46,10 @@
 {%- set className            = className            | default('') -%}
 {%- set sheetClassName       = sheetClassName       | default('') -%}
 
-{%- set _wrapClasses = ['theme-sheet-wrap'] -%}
+{%- set _wrapClasses = ['cremona-sheet-wrap'] -%}
 {%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
 
-{%- set _sheetClasses = ['theme-sheet'] -%}
+{%- set _sheetClasses = ['cremona-sheet'] -%}
 {%- if sheetClassName -%}{%- set _sheetClasses = _sheetClasses | merge([sheetClassName]) -%}{%- endif -%}
 
 {%- set _titleId = htmlId ~ '-title' -%}
@@ -77,31 +77,31 @@
     aria-labelledby="{{ _titleId }}"
   >
     {%- if showHandle -%}
-      <span class="theme-sheet__handle" aria-hidden="true"></span>
+      <span class="cremona-sheet__handle" aria-hidden="true"></span>
     {%- endif -%}
 
-    <header class="theme-sheet__header">
-      <h2 id="{{ _titleId }}" class="theme-sheet__title">
+    <header class="cremona-sheet__header">
+      <h2 id="{{ _titleId }}" class="cremona-sheet__title">
         {%- block title -%}{%- endblock -%}
       </h2>
       {%- if closeButton and closeAriaLabel -%}
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           variant: 'ghost',
           size: 'sm',
           iconLeading: 'x',
           ariaLabel: closeAriaLabel,
-          className: 'theme-sheet__close',
+          className: 'cremona-sheet__close',
           attrs: { 'data-action': 'click->sheet#close' },
         } only %}
       {%- endif -%}
     </header>
 
-    <div class="theme-sheet__body">
+    <div class="cremona-sheet__body">
       {%- block body -%}{%- endblock -%}
     </div>
 
     {%- if block('footer') is defined and block('footer') is not empty -%}
-      <footer class="theme-sheet__footer">
+      <footer class="cremona-sheet__footer">
         {%- block footer -%}{%- endblock -%}
       </footer>
     {%- endif -%}

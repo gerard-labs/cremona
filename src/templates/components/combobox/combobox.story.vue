@@ -4,12 +4,12 @@
   Sections (5):
     1. Default (empty input) — placeholder visible, focus opens the listbox.
     2. With SSR value — pre-selected option's label appears in the input.
-    3. Filter live — type to filter; results count announced via #theme-announcer.
+    3. Filter live — type to filter; results count announced via #cremona-announcer.
     4. Empty state — type a query that matches no option to reveal "Aucun résultat pour « X »".
     5. In a Field with label + help.
 
   Stimulus controllers `popover` + `combobox` co-mounted (combobox extends
-  select per OQ-32). Per OQ-31: shared #theme-announcer (declared in
+  select per OQ-32). Per OQ-31: shared #cremona-announcer (declared in
   base/reset.css). Per OQ-28: vanilla implementation, no Tom Select adapter.
 
   Helpers used (per S2.3a story doctrine — nested template literal
@@ -38,28 +38,28 @@ let _cbxCounter = 0;
 function nextId() { return `cbx-${++_cbxCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderOption({ id, value, label, selected = false, disabled = false }) {
   const dis = disabled ? ' aria-disabled="true" data-state="disabled"' : '';
   const checkHtml = selected
-    ? `<span class="theme-item__icon theme-item__icon--trailing theme-combobox__option-check" aria-hidden="true">${icon('check')}</span>`
+    ? `<span class="cremona-item__icon cremona-item__icon--trailing cremona-combobox__option-check" aria-hidden="true">${icon('check')}</span>`
     : '';
-  return `<div class="theme-item theme-combobox__option"
+  return `<div class="cremona-item cremona-combobox__option"
     id="${id}"
     data-combobox-target="option"
     data-value="${value}"
     data-hidden="false"
     role="option"
     aria-selected="${selected ? 'true' : 'false'}"${dis}>
-    <span class="theme-item__text"><span class="theme-item__label">${label}</span></span>
+    <span class="cremona-item__text"><span class="cremona-item__label">${label}</span></span>
     ${checkHtml}
   </div>`;
 }
 
 function renderEmpty({ headText, tailText }) {
-  return `<div class="theme-combobox__empty" data-combobox-target="empty" hidden>${headText}<strong data-combobox-target="emptyQuery"></strong>${tailText}</div>`;
+  return `<div class="cremona-combobox__empty" data-combobox-target="empty" hidden>${headText}<strong data-combobox-target="emptyQuery"></strong>${tailText}</div>`;
 }
 
 function renderCombobox({ name, value = '', placeholder = '', size = 'md', disabled = false, invalid = false, options, labelledBy = null, describedBy = null, emptyHead, emptyTail }) {
@@ -74,7 +74,7 @@ function renderCombobox({ name, value = '', placeholder = '', size = 'md', disab
     disabled: !!o.disabled,
   })).join('');
   return `
-    <div class="theme-popover theme-combobox"
+    <div class="cremona-popover cremona-combobox"
       data-controller="popover combobox"
       data-action="keydown.esc@window->popover#close keydown->combobox#keydown input->combobox#filter focus->combobox#openOnFocus click->combobox#onOptionClick"
       data-popover-placement-value="bottom-start"
@@ -83,8 +83,8 @@ function renderCombobox({ name, value = '', placeholder = '', size = 'md', disab
       data-combobox-value-value="${value}"
       data-combobox-placeholder-value="${placeholder}"
       data-combobox-query-value="">
-      <div class="theme-combobox__wrap">
-        <input type="text" class="theme-combobox__input"
+      <div class="cremona-combobox__wrap">
+        <input type="text" class="cremona-combobox__input"
           data-popover-target="trigger"
           data-combobox-target="input"
           data-size="${size}"
@@ -101,18 +101,18 @@ function renderCombobox({ name, value = '', placeholder = '', size = 'md', disab
           aria-controls="${id}-listbox"
           ${labelledBy ? `aria-labelledby="${labelledBy}"` : ''}
           ${describedBy ? `aria-describedby="${describedBy}"` : ''}>
-        <span class="theme-combobox__chevron" aria-hidden="true">${icon('chevron-down', 'sm')}</span>
+        <span class="cremona-combobox__chevron" aria-hidden="true">${icon('chevron-down', 'sm')}</span>
       </div>
       <input type="hidden" name="${name}" value="${value}" data-combobox-target="hiddenInput">
       <div id="${id}-listbox"
-        class="theme-popover__content theme-combobox__listbox"
+        class="cremona-popover__content cremona-combobox__listbox"
         data-popover-target="content"
         data-state="closed"
         data-placement="bottom-start"
         role="listbox"
         ${labelledBy ? `aria-labelledby="${labelledBy}"` : ''}
         hidden>
-        <div class="theme-combobox__options" data-combobox-target="optionsContainer">${optionsHtml}</div>
+        <div class="cremona-combobox__options" data-combobox-target="optionsContainer">${optionsHtml}</div>
         ${renderEmpty({ headText: emptyHead, tailText: emptyTail })}
       </div>
     </div>
@@ -147,32 +147,32 @@ const bodyHtml = `
     </header>
 
     <section class="cbx-story__section" aria-labelledby="cbx-section-default">
-      <h2 id="cbx-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.default')}</h2>
-      <p class="cbx-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.default')}</p>
+      <h2 id="cbx-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.default')}</h2>
+      <p class="cbx-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.default')}</p>
       <div class="cbx-story__row">
         ${renderCombobox({ name: 'lang-default', placeholder: S('sample.placeholder'), options: langOptions, emptyHead, emptyTail })}
       </div>
     </section>
 
     <section class="cbx-story__section" aria-labelledby="cbx-section-ssr">
-      <h2 id="cbx-section-ssr" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.ssr')}</h2>
-      <p class="cbx-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.ssr')}</p>
+      <h2 id="cbx-section-ssr" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.ssr')}</h2>
+      <p class="cbx-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.ssr')}</p>
       <div class="cbx-story__row">
         ${renderCombobox({ name: 'lang-ssr', value: 'en', placeholder: S('sample.placeholder'), options: langOptions, emptyHead, emptyTail })}
       </div>
     </section>
 
     <section class="cbx-story__section" aria-labelledby="cbx-section-filter">
-      <h2 id="cbx-section-filter" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.filter')}</h2>
-      <p class="cbx-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.filter')}</p>
+      <h2 id="cbx-section-filter" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.filter')}</h2>
+      <p class="cbx-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.filter')}</p>
       <div class="cbx-story__row">
         ${renderCombobox({ name: 'lang-filter', placeholder: S('sample.placeholder-filter'), options: langOptions, emptyHead, emptyTail })}
       </div>
     </section>
 
     <section class="cbx-story__section" aria-labelledby="cbx-section-sizes">
-      <h2 id="cbx-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.sizes')}</h2>
-      <p class="cbx-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.sizes')}</p>
+      <h2 id="cbx-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.sizes')}</h2>
+      <p class="cbx-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.sizes')}</p>
       <div class="cbx-story__row cbx-story__row--gap">
         ${renderCombobox({ name: 'sz-sm', size: 'sm', placeholder: S('sample.sz-sm'), options: langOptions, emptyHead, emptyTail })}
         ${renderCombobox({ name: 'sz-md', size: 'md', placeholder: S('sample.sz-md'), options: langOptions, emptyHead, emptyTail })}
@@ -181,12 +181,12 @@ const bodyHtml = `
     </section>
 
     <section class="cbx-story__section" aria-labelledby="cbx-section-field">
-      <h2 id="cbx-section-field" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.field')}</h2>
-      <p class="cbx-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.field')}</p>
+      <h2 id="cbx-section-field" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.combobox.story.section.field')}</h2>
+      <p class="cbx-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.combobox.story.explainer.field')}</p>
       <div class="cbx-story__row cbx-story__row--field">
-        <label id="field-cbx-label" class="theme-label" for="field-cbx-trigger">
+        <label id="field-cbx-label" class="cremona-label" for="field-cbx-trigger">
           ${S('sample.field-label')}
-          <span class="theme-label__required" aria-hidden="true">*</span>
+          <span class="cremona-label__required" aria-hidden="true">*</span>
           <span class="sr-only">(${S('sample.field-required')})</span>
         </label>
         ${renderCombobox({
@@ -198,7 +198,7 @@ const bodyHtml = `
           emptyHead,
           emptyTail,
         })}
-        <span id="field-cbx-help" class="cbx-story__help theme-typography" data-variant="caption" data-color="tertiary">${S('sample.field-help')}</span>
+        <span id="field-cbx-help" class="cbx-story__help cremona-typography" data-variant="caption" data-color="tertiary">${S('sample.field-help')}</span>
       </div>
     </section>
   </section>

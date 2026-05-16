@@ -10,7 +10,7 @@
  * for thin pattern + slight overhead for facet group layout).
  */
 
-.theme-search-faceted-filters {
+.cremona-search-faceted-filters {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
@@ -21,7 +21,7 @@
   inline-size: 100%;
 }
 
-.theme-search-faceted-filters__header {
+.cremona-search-faceted-filters__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,23 +30,23 @@
   border-block-end: 1px solid var(--color-border-subtle);
 }
 
-.theme-search-faceted-filters__title {
+.cremona-search-faceted-filters__title {
   font: var(--typography-h3);
   color: var(--color-text-primary);
   margin: 0;
 }
 
-.theme-search-faceted-filters__clear {
+.cremona-search-faceted-filters__clear {
   /* Consumer-provided button (typically Button Ring 1 variant=ghost size=sm) */
 }
 
-.theme-search-faceted-filters__group {
+.cremona-search-faceted-filters__group {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
 }
 
-.theme-search-faceted-filters__group-title {
+.cremona-search-faceted-filters__group-title {
   font: var(--typography-overline);
   color: var(--color-text-tertiary);
   letter-spacing: var(--letter-spacing-wide);
@@ -54,7 +54,7 @@
   margin: 0;
 }
 
-.theme-search-faceted-filters__options {
+.cremona-search-faceted-filters__options {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1_5);
@@ -63,32 +63,32 @@
   list-style: none;
 }
 
-.theme-search-faceted-filters__option {
+.cremona-search-faceted-filters__option {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
 }
 
-.theme-search-faceted-filters__option-label {
+.cremona-search-faceted-filters__option-label {
   font: var(--typography-body);
   color: var(--color-text-primary);
   cursor: pointer;
 }
 
-.theme-search-faceted-filters__option-count {
+.cremona-search-faceted-filters__option-count {
   margin-inline-start: auto;
   font: var(--typography-caption);
   color: var(--color-text-tertiary);
   font-variant-numeric: tabular-nums;
 }
 
-.theme-search-faceted-filters__range {
+.cremona-search-faceted-filters__range {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
 }
 
-.theme-search-faceted-filters__range-values {
+.cremona-search-faceted-filters__range-values {
   display: flex;
   align-items: baseline;
   justify-content: space-between;

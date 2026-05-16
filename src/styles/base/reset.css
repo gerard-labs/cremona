@@ -77,7 +77,7 @@
 }
 
 /* Visually hidden but accessible to screen readers. */
-.theme-sr-only {
+.cremona-sr-only {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -90,7 +90,7 @@
 }
 
 /* Shared aria-live announcer region — single instance per page. */
-#theme-announcer {
+#cremona-announcer {
   position: absolute;
   inset-inline-start: -10000px;
   inline-size: 1px;

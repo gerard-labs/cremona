@@ -8,7 +8,7 @@
  *
  * Symfony consumers can ignore this util entirely and let the Symfony
  * Translator resolve the same JSON keys server-side via the (future)
- * ThemeBundle bridge.
+ * CremonaBundle bridge.
  */
 
 let _translations = Object.create(null);

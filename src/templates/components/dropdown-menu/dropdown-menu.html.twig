@@ -32,13 +32,13 @@
                          and `data-popover-target="trigger"`. The variable
                          `popoverHtmlId` is exposed inside the block.
     items   (required) — the N Item.html.twig embeds (with `as: 'div'`) and
-                         optional `<hr class="theme-dropdown-menu__separator">`
-                         dividers + `<div class="theme-dropdown-menu__group-label">`
+                         optional `<hr class="cremona-dropdown-menu__separator">`
+                         dividers + `<div class="cremona-dropdown-menu__group-label">`
                          labels. The controller stamps role="menuitem" + tabindex
-                         on each `.theme-item` automatically.
+                         on each `.cremona-item` automatically.
 -#}
 
-{%- set htmlId    = htmlId    | default('theme-dropdown-menu-' ~ random()) -%}
+{%- set htmlId    = htmlId    | default('cremona-dropdown-menu-' ~ random()) -%}
 {%- set placement = placement | default('bottom') -%}
 {%- set offset    = offset    | default(8) -%}
 {%- set className = className | default('') -%}
@@ -47,7 +47,7 @@
 {%- set controllerExtras = controllerExtras | default('') -%}
 {%- set contentClass     = contentClass     | default('') -%}
 
-{%- set _classes = ['theme-popover', 'theme-dropdown-menu'] -%}
+{%- set _classes = ['cremona-popover', 'cremona-dropdown-menu'] -%}
 {%- if className %}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set popoverHtmlId = htmlId -%}
@@ -65,7 +65,7 @@
 
   <div
     id="{{ htmlId }}"
-    class="theme-popover__content theme-dropdown-menu__content{% if contentClass %} {{ contentClass }}{% endif %}"
+    class="cremona-popover__content cremona-dropdown-menu__content{% if contentClass %} {{ contentClass }}{% endif %}"
     data-popover-target="content"
     data-state="closed"
     data-placement="{{ placement }}"

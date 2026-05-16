@@ -22,7 +22,7 @@
     hideLabel    (bool,   optional, default false)
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-theme-switcher-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-theme-switcher-' ~ random()) -%}
 {%- set currentMode  = currentMode  | default('system') -%}
 {%- set storageKey   = storageKey   | default('theme.mode') -%}
 {%- set target       = target       | default('documentElement') -%}
@@ -42,12 +42,12 @@
     label: option.labelKey | trans,
     ariaLabel: option.labelKey | trans,
     pressed: option.mode == currentMode,
-    className: 'theme-theme-switcher__item',
+    className: 'cremona-theme-switcher__item',
     attrs: { 'data-theme-mode': option.mode },
   }]) -%}
 {%- endfor -%}
 
-{% include '@theme/components/toggle-group/toggle-group.html.twig' with {
+{% include '@cremona/components/toggle-group/toggle-group.html.twig' with {
   label: 'theme.theme-switcher.label.group'|trans,
   htmlId: htmlId,
   options: _tgOptions,
@@ -56,8 +56,8 @@
   size: size,
   variant: variant,
   hideLabel: hideLabel,
-  className: 'theme-theme-switcher__group',
-  wrapClass: 'theme-theme-switcher',
+  className: 'cremona-theme-switcher__group',
+  wrapClass: 'cremona-theme-switcher',
   controllerExtras: 'theme-switcher',
   actionExtras: 'toggle->theme-switcher#onToggle',
   attrs: {

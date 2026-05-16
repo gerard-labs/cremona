@@ -5,7 +5,7 @@
  * INTO Auth-Login / Auth-Register / Auth-SSO form bodies, OR is wrapped by
  * the consumer in `_auth-shell` for a standalone "Sign in with…" page.
  *
- * Composes Button (Ring 1) via compose-by-class (`theme-button` styling
+ * Composes Button (Ring 1) via compose-by-class (`cremona-button` styling
  * envelope inherited). Per-provider raw SVG injected via Twig's `|raw`.
  *
  * Two orientations :
@@ -19,7 +19,7 @@
  * See `docs/specs/ring3/Auth-SocialButtons.md` for the full spec.
  */
 
-.theme-auth-social-buttons {
+.cremona-auth-social-buttons {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
@@ -28,7 +28,7 @@
 
 /* ----- Heading divider --------------------------------------------- */
 
-.theme-auth-social-buttons__heading {
+.cremona-auth-social-buttons__heading {
   /* Centered text + two horizontal lines (one inline-start, one inline-end). */
   display: flex;
   align-items: center;
@@ -40,8 +40,8 @@
   text-align: center;
 }
 
-.theme-auth-social-buttons__heading::before,
-.theme-auth-social-buttons__heading::after {
+.cremona-auth-social-buttons__heading::before,
+.cremona-auth-social-buttons__heading::after {
   content: "";
   flex: 1 1 0;
   block-size: 1px;
@@ -50,29 +50,29 @@
 
 /* ----- List container ---------------------------------------------- */
 
-.theme-auth-social-buttons__list {
+.cremona-auth-social-buttons__list {
   display: flex;
   gap: var(--spacing-2);
 }
 
 /* Vertical orientation (default) — stacked column ; every button stretches
    to 100 % inline-size of the list. */
-.theme-auth-social-buttons[data-orientation="vertical"] .theme-auth-social-buttons__list {
+.cremona-auth-social-buttons[data-orientation="vertical"] .cremona-auth-social-buttons__list {
   flex-direction: column;
 }
 
-.theme-auth-social-buttons[data-orientation="vertical"] .theme-auth-social-button {
+.cremona-auth-social-buttons[data-orientation="vertical"] .cremona-auth-social-button {
   inline-size: 100%;
   /* Center label + icon as a group inside the button. */
   justify-content: center;
 }
 
 /* Horizontal orientation — row, wraps to multi-row on narrow viewport. */
-.theme-auth-social-buttons[data-orientation="horizontal"] .theme-auth-social-buttons__list {
+.cremona-auth-social-buttons[data-orientation="horizontal"] .cremona-auth-social-buttons__list {
   flex-flow: row wrap;
 }
 
-.theme-auth-social-buttons[data-orientation="horizontal"] .theme-auth-social-button {
+.cremona-auth-social-buttons[data-orientation="horizontal"] .cremona-auth-social-button {
   /* Allow individual buttons to grow with their label but cap content width. */
   flex: 1 1 auto;
   min-inline-size: 12rem;
@@ -81,13 +81,13 @@
 
 /* ----- Per-provider button modifier -------------------------------- */
 
-.theme-auth-social-button {
-  /* Inherit `theme-button` styling envelope via the parent class.
+.cremona-auth-social-button {
+  /* Inherit `cremona-button` styling envelope via the parent class.
      This modifier only adds the icon-label gap + icon block sizing. */
   gap: var(--spacing-2);
 }
 
-.theme-auth-social-button__icon {
+.cremona-auth-social-button__icon {
   /* The container holding the consumer's raw SVG. Sized to match Button's
      icon slot ; `currentColor` inheritance lets the consumer ship a
      monochrome SVG that picks up the button's label color. */
@@ -100,7 +100,7 @@
   color: currentcolor;
 }
 
-.theme-auth-social-button__icon > svg {
+.cremona-auth-social-button__icon > svg {
   /* The consumer's SVG fills the icon container. inline-size + block-size
      instead of width/height for logical-CSS consistency. */
   inline-size: 100%;
@@ -111,12 +111,12 @@
 }
 
 /* Size variants — pair the icon size with Button's size tokens. */
-.theme-auth-social-button[data-size="sm"] .theme-auth-social-button__icon {
+.cremona-auth-social-button[data-size="sm"] .cremona-auth-social-button__icon {
   inline-size: 1rem;     /* 16 px */
   block-size: 1rem;
 }
 
-.theme-auth-social-button[data-size="lg"] .theme-auth-social-button__icon {
+.cremona-auth-social-button[data-size="lg"] .cremona-auth-social-button__icon {
   inline-size: 1.5rem;   /* 24 px */
   block-size: 1.5rem;
 }

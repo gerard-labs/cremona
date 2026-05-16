@@ -6,11 +6,11 @@
  * override via {% block illustration %} of {% embed %}).
  */
 
-.theme-error-maintenance {
+.cremona-error-maintenance {
   /* Marker class — Empty + shell composition does the heavy lifting. */
 }
 
-.theme-error-maintenance__hero {
+.cremona-error-maintenance__hero {
   inline-size: 100%;
   max-inline-size: 200px;
   block-size: auto;

@@ -13,6 +13,6 @@
  * See `docs/specs/ring3/Auth-AccountLocked.md` for the full spec.
  */
 
-.theme-auth-account-locked .theme-empty__illustration {
+.cremona-auth-account-locked .cremona-empty__illustration {
   color: var(--color-warning);
 }

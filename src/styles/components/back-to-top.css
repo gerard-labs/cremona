@@ -6,7 +6,7 @@
  * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
-.theme-back-to-top {
+.cremona-back-to-top {
   position: fixed;
   inset-block-end: var(--spacing-6);
   inset-inline-end: var(--spacing-6);
@@ -25,36 +25,36 @@
     background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-back-to-top[data-visible="true"] {
+.cremona-back-to-top[data-visible="true"] {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
 
-.theme-back-to-top:hover {
+.cremona-back-to-top:hover {
   transform: translateY(0) scale(1.05);
 }
 
-.theme-back-to-top:active {
+.cremona-back-to-top:active {
   transform: translateY(0) scale(0.95);
 }
 
 /* Mobile : safe-area-inset bottom (above iOS home indicator). */
 @supports (padding: env(safe-area-inset-bottom)) {
-  .theme-back-to-top {
+  .cremona-back-to-top {
     inset-block-end: max(var(--spacing-6), calc(env(safe-area-inset-bottom) + var(--spacing-3)));
   }
 }
 
 /* Reduced motion — instant appearance. */
 @media (prefers-reduced-motion: reduce) {
-  .theme-back-to-top {
+  .cremona-back-to-top {
     transition: none;
     transform: none;
   }
 
-  .theme-back-to-top:hover,
-  .theme-back-to-top:active {
+  .cremona-back-to-top:hover,
+  .cremona-back-to-top:active {
     transform: none;
   }
 }

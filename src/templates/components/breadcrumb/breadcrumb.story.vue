@@ -28,7 +28,7 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function icon(name, sizeAttr = 'sm', extraClass = '') {
-  return `<span class="theme-icon theme-icon-bidi ${extraClass}" data-icon="${name}" data-size="${sizeAttr}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon cremona-icon-bidi ${extraClass}" data-icon="${name}" data-size="${sizeAttr}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderBreadcrumb({ items, ariaLabel, separator = 'chevron-right' }) {
@@ -36,21 +36,21 @@ function renderBreadcrumb({ items, ariaLabel, separator = 'chevron-right' }) {
   const listInner = items.map((item, i) => {
     const isLast = i === items.length - 1;
     const iconHtml = item.icon
-      ? `<span class="theme-icon theme-breadcrumb__icon" data-icon="${item.icon}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[item.icon] || ''}</span>`
+      ? `<span class="cremona-icon cremona-breadcrumb__icon" data-icon="${item.icon}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[item.icon] || ''}</span>`
       : '';
     if (isLast) {
       return `
-        <li class="theme-breadcrumb__item">
-          <span class="theme-breadcrumb__current" aria-current="page">
+        <li class="cremona-breadcrumb__item">
+          <span class="cremona-breadcrumb__current" aria-current="page">
             ${iconHtml}<span>${item.label}</span>
           </span>
         </li>
       `;
     }
-    const sepIcon = `<span class="theme-icon theme-icon-bidi theme-breadcrumb__separator" data-icon="${separator}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[separator] || ''}</span>`;
+    const sepIcon = `<span class="cremona-icon cremona-icon-bidi cremona-breadcrumb__separator" data-icon="${separator}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[separator] || ''}</span>`;
     return `
-      <li class="theme-breadcrumb__item">
-        <a class="theme-breadcrumb__link" href="${item.href}">
+      <li class="cremona-breadcrumb__item">
+        <a class="cremona-breadcrumb__link" href="${item.href}">
           ${iconHtml}<span>${item.label}</span>
         </a>
         ${sepIcon}
@@ -58,8 +58,8 @@ function renderBreadcrumb({ items, ariaLabel, separator = 'chevron-right' }) {
     `;
   }).join('');
   return `
-    <nav class="theme-breadcrumb" aria-label="${ariaLabel}">
-      <ol class="theme-breadcrumb__list">${listInner}</ol>
+    <nav class="cremona-breadcrumb" aria-label="${ariaLabel}">
+      <ol class="cremona-breadcrumb__list">${listInner}</ol>
     </nav>
   `;
 }
@@ -96,8 +96,8 @@ const bodyHtml = `
     </header>
 
     <section class="breadcrumb-story__section" aria-labelledby="bc-section-default">
-      <h2 id="bc-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.default')}</h2>
-      <p class="breadcrumb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.default')}</p>
+      <h2 id="bc-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.default')}</h2>
+      <p class="breadcrumb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.default')}</p>
       <div class="breadcrumb-story__stack">
         ${block(renderBreadcrumb({
           ariaLabel: SAMPLES.ariaNav,
@@ -111,7 +111,7 @@ const bodyHtml = `
     </section>
 
     <section class="breadcrumb-story__section" aria-labelledby="bc-section-2-levels">
-      <h2 id="bc-section-2-levels" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.two-levels')}</h2>
+      <h2 id="bc-section-2-levels" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.two-levels')}</h2>
       <div class="breadcrumb-story__stack">
         ${block(renderBreadcrumb({
           ariaLabel: SAMPLES.ariaNav,
@@ -124,8 +124,8 @@ const bodyHtml = `
     </section>
 
     <section class="breadcrumb-story__section" aria-labelledby="bc-section-4-levels">
-      <h2 id="bc-section-4-levels" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.four-levels')}</h2>
-      <p class="breadcrumb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.four-levels')}</p>
+      <h2 id="bc-section-4-levels" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.four-levels')}</h2>
+      <p class="breadcrumb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.four-levels')}</p>
       <div class="breadcrumb-story__stack">
         ${block(renderBreadcrumb({
           ariaLabel: SAMPLES.ariaNav,
@@ -141,8 +141,8 @@ const bodyHtml = `
     </section>
 
     <section class="breadcrumb-story__section" aria-labelledby="bc-section-icon">
-      <h2 id="bc-section-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.with-icon')}</h2>
-      <p class="breadcrumb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.with-icon')}</p>
+      <h2 id="bc-section-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.with-icon')}</h2>
+      <p class="breadcrumb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.with-icon')}</p>
       <div class="breadcrumb-story__stack">
         ${block(renderBreadcrumb({
           ariaLabel: SAMPLES.ariaNav,
@@ -156,8 +156,8 @@ const bodyHtml = `
     </section>
 
     <section class="breadcrumb-story__section" aria-labelledby="bc-section-current-only">
-      <h2 id="bc-section-current-only" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.current-only')}</h2>
-      <p class="breadcrumb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.current-only')}</p>
+      <h2 id="bc-section-current-only" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.current-only')}</h2>
+      <p class="breadcrumb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.breadcrumb.story.explainer.current-only')}</p>
       <div class="breadcrumb-story__stack">
         ${block(renderBreadcrumb({
           ariaLabel: SAMPLES.ariaNav,
@@ -169,7 +169,7 @@ const bodyHtml = `
     </section>
 
     <section class="breadcrumb-story__section" aria-labelledby="bc-section-long">
-      <h2 id="bc-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.long-trail')}</h2>
+      <h2 id="bc-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.breadcrumb.story.section.long-trail')}</h2>
       <div class="breadcrumb-story__stack">
         ${block(renderBreadcrumb({
           ariaLabel: SAMPLES.ariaNav,

@@ -58,31 +58,31 @@ function renderCalendar({
   if (max) attrs.push(`data-calendar-max-value="${max}"`);
   if (disabledWeekdays) attrs.push(`data-calendar-disabled-weekdays-value="${disabledWeekdays}"`);
   return `
-    <div id="${id}" class="theme-calendar" ${attrs.join(' ')}>
-      <header class="theme-calendar__header">
-        <button type="button" class="theme-button theme-calendar__nav" data-variant="ghost" data-size="sm"
+    <div id="${id}" class="cremona-calendar" ${attrs.join(' ')}>
+      <header class="cremona-calendar__header">
+        <button type="button" class="cremona-button cremona-calendar__nav" data-variant="ghost" data-size="sm"
           data-calendar-target="prevButton"
           data-action="click->calendar#prevMonth"
           aria-label="${prevAria}">
-          <svg class="theme-icon theme-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          <svg class="cremona-icon cremona-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <h2 class="theme-calendar__month-label" id="${id}-month" data-calendar-target="monthLabel" aria-live="polite" aria-atomic="true"></h2>
-        <button type="button" class="theme-button theme-calendar__nav" data-variant="ghost" data-size="sm"
+        <h2 class="cremona-calendar__month-label" id="${id}-month" data-calendar-target="monthLabel" aria-live="polite" aria-atomic="true"></h2>
+        <button type="button" class="cremona-button cremona-calendar__nav" data-variant="ghost" data-size="sm"
           data-calendar-target="nextButton"
           data-action="click->calendar#nextMonth"
           aria-label="${nextAria}">
-          <svg class="theme-icon theme-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          <svg class="cremona-icon cremona-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </button>
       </header>
-      <div class="theme-calendar__weekdays" data-calendar-target="weekdays" aria-hidden="true"></div>
-      <div class="theme-calendar__grid" id="${id}-grid" role="grid" aria-labelledby="${id}-month" aria-label="${calAria}" data-calendar-target="grid"></div>
+      <div class="cremona-calendar__weekdays" data-calendar-target="weekdays" aria-hidden="true"></div>
+      <div class="cremona-calendar__grid" id="${id}-grid" role="grid" aria-labelledby="${id}-month" aria-label="${calAria}" data-calendar-target="grid"></div>
     </div>
   `;
 }
 
 const eventsLogId = 'cal-events-log';
-const sectionTitle = (id, key) => `<h2 id="${id}" class="theme-typography" data-variant="overline" data-color="tertiary">${t(key)}</h2>`;
-const sectionExplainer = (key) => `<p class="theme-typography" data-variant="caption" data-color="tertiary">${t(key)}</p>`;
+const sectionTitle = (id, key) => `<h2 id="${id}" class="cremona-typography" data-variant="overline" data-color="tertiary">${t(key)}</h2>`;
+const sectionExplainer = (key) => `<p class="cremona-typography" data-variant="caption" data-color="tertiary">${t(key)}</p>`;
 
 onMounted(() => {
   if (!document.body.dataset.calendarStoryBooted) {
@@ -95,7 +95,7 @@ onMounted(() => {
     if (log) {
       const append = (text) => {
         const entry = document.createElement('li');
-        entry.className = 'theme-typography';
+        entry.className = 'cremona-typography';
         entry.dataset.variant = 'body';
         entry.dataset.color = 'secondary';
         entry.textContent = text;
@@ -164,7 +164,7 @@ const bodyHtml = `
       ${sectionTitle('cal-section-events', 'theme.calendar.story.section.events')}
       ${sectionExplainer('theme.calendar.story.section.events-explainer')}
       <div class="cal-story__events">
-        <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.calendar.story.sample.events-log-label')}</p>
+        <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.calendar.story.sample.events-log-label')}</p>
         <ol id="${eventsLogId}" class="cal-story__log" aria-live="polite"></ol>
       </div>
     </section>

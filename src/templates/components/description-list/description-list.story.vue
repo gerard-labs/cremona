@@ -17,13 +17,13 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderDL({ items, layout = 'stacked', className }) {
-  const classes = ['theme-description-list'];
+  const classes = ['cremona-description-list'];
   if (className) classes.push(className);
   const rows = items
     .map(
       (item) =>
-        `<dt class="theme-description-list__term">${item.term}</dt>` +
-        `<dd class="theme-description-list__definition">${item.definition}</dd>`,
+        `<dt class="cremona-description-list__term">${item.term}</dt>` +
+        `<dd class="cremona-description-list__definition">${item.definition}</dd>`,
     )
     .join('');
   return `<dl class="${classes.join(' ')}" data-layout="${layout}">${rows}</dl>`;
@@ -31,7 +31,7 @@ function renderDL({ items, layout = 'stacked', className }) {
 
 function renderBadge({ variant, label, soft = false }) {
   const softAttr = soft ? ' data-soft="true"' : '';
-  return `<span class="theme-badge" data-variant="${variant}" data-size="sm"${softAttr}><span>${label}</span></span>`;
+  return `<span class="cremona-badge" data-variant="${variant}" data-size="sm"${softAttr}><span>${label}</span></span>`;
 }
 
 const PROFILE_ITEMS = [
@@ -62,45 +62,45 @@ const bodyHtml = `
     </header>
 
     <section class="dl-story__section" aria-labelledby="dl-section-stacked">
-      <h2 id="dl-section-stacked" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.stacked')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.stacked-explainer')}</p>
+      <h2 id="dl-section-stacked" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.stacked')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.stacked-explainer')}</p>
       <div class="dl-story__panel">
         ${renderDL({ items: PROFILE_ITEMS, layout: 'stacked' })}
       </div>
     </section>
 
     <section class="dl-story__section" aria-labelledby="dl-section-side-by-side">
-      <h2 id="dl-section-side-by-side" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.side-by-side')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.side-by-side-explainer')}</p>
+      <h2 id="dl-section-side-by-side" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.side-by-side')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.side-by-side-explainer')}</p>
       <div class="dl-story__panel">
         ${renderDL({ items: PROFILE_ITEMS, layout: 'side-by-side' })}
       </div>
     </section>
 
     <section class="dl-story__section" aria-labelledby="dl-section-rich">
-      <h2 id="dl-section-rich" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.rich')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.rich-explainer')}</p>
+      <h2 id="dl-section-rich" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.rich')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.rich-explainer')}</p>
       <div class="dl-story__panel">
         ${renderDL({ items: RICH_ITEMS, layout: 'side-by-side' })}
       </div>
     </section>
 
     <section class="dl-story__section" aria-labelledby="dl-section-long-terms">
-      <h2 id="dl-section-long-terms" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.long-terms')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.long-terms-explainer')}</p>
+      <h2 id="dl-section-long-terms" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.long-terms')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.long-terms-explainer')}</p>
       <div class="dl-story__panel dl-story__panel--narrow">
         ${renderDL({ items: LONG_TERMS, layout: 'side-by-side' })}
       </div>
     </section>
 
     <section class="dl-story__section" aria-labelledby="dl-section-card">
-      <h2 id="dl-section-card" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.card')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.card-explainer')}</p>
-      <article class="theme-card">
-        <header class="theme-card__header">
-          <h3 class="theme-typography" data-variant="h3">${t('theme.description-list.story.card.title')}</h3>
+      <h2 id="dl-section-card" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.description-list.story.section.card')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.description-list.story.section.card-explainer')}</p>
+      <article class="cremona-card">
+        <header class="cremona-card__header">
+          <h3 class="cremona-typography" data-variant="h3">${t('theme.description-list.story.card.title')}</h3>
         </header>
-        <div class="theme-card__body">
+        <div class="cremona-card__body">
           ${renderDL({ items: PROFILE_ITEMS, layout: 'side-by-side' })}
         </div>
       </article>

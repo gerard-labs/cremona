@@ -15,20 +15,20 @@ function renderChecklist({ id, title, items }) {
   const pct = total > 0 ? Math.round((done * 100) / total) : 0;
   const allDone = done === total && total > 0;
   return `
-    <article class="theme-card theme-onboarding-checklist ${allDone ? 'theme-onboarding-checklist--complete' : ''}" id="${id}" aria-labelledby="${id}-title">
-      <header class="theme-card__header theme-onboarding-checklist__header">
-        <h2 id="${id}-title" class="theme-typography theme-onboarding-checklist__title" data-variant="h2">${title}</h2>
-        <p class="theme-onboarding-checklist__progress-text" aria-live="polite">
+    <article class="cremona-card cremona-onboarding-checklist ${allDone ? 'cremona-onboarding-checklist--complete' : ''}" id="${id}" aria-labelledby="${id}-title">
+      <header class="cremona-card__header cremona-onboarding-checklist__header">
+        <h2 id="${id}-title" class="cremona-typography cremona-onboarding-checklist__title" data-variant="h2">${title}</h2>
+        <p class="cremona-onboarding-checklist__progress-text" aria-live="polite">
           ${allDone ? t('theme.onboarding.checklist.all-done') : t('theme.onboarding.checklist.progress').replace('{done}', done).replace('{total}', total)}
         </p>
-        <progress class="theme-progress theme-onboarding-checklist__progress" value="${pct}" max="100" aria-label="${t('theme.onboarding.checklist.progress-aria')}">${pct}%</progress>
+        <progress class="cremona-progress cremona-onboarding-checklist__progress" value="${pct}" max="100" aria-label="${t('theme.onboarding.checklist.progress-aria')}">${pct}%</progress>
       </header>
-      <ul class="theme-onboarding-checklist__items">
+      <ul class="cremona-onboarding-checklist__items">
         ${items.map(item => `
-          <li class="theme-onboarding-checklist__item"${item.completed ? ' data-completed="true"' : ''}>
-            <label class="theme-onboarding-checklist__label">
-              <input type="checkbox" class="theme-checkbox" ${item.completed ? 'checked' : ''} ${item.disabled ? 'disabled' : ''} aria-readonly="true" onclick="return false;">
-              <span class="theme-onboarding-checklist__item-label">${item.label}</span>
+          <li class="cremona-onboarding-checklist__item"${item.completed ? ' data-completed="true"' : ''}>
+            <label class="cremona-onboarding-checklist__label">
+              <input type="checkbox" class="cremona-checkbox" ${item.completed ? 'checked' : ''} ${item.disabled ? 'disabled' : ''} aria-readonly="true" onclick="return false;">
+              <span class="cremona-onboarding-checklist__item-label">${item.label}</span>
             </label>
           </li>
         `).join('')}
@@ -55,17 +55,17 @@ const bodyHtml = `
     </header>
 
     <section class="onboarding-checklist-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.checklist.story.section.empty')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.checklist.story.section.empty')}</h2>
       <div class="onboarding-checklist-story__frame">${renderChecklist({ id: 'story-empty', title, items: itemsEmpty })}</div>
     </section>
 
     <section class="onboarding-checklist-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.checklist.story.section.partial')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.checklist.story.section.partial')}</h2>
       <div class="onboarding-checklist-story__frame">${renderChecklist({ id: 'story-partial', title, items: itemsPartial })}</div>
     </section>
 
     <section class="onboarding-checklist-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.checklist.story.section.complete')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.checklist.story.section.complete')}</h2>
       <div class="onboarding-checklist-story__frame">${renderChecklist({ id: 'story-complete', title, items: itemsAll })}</div>
     </section>
   </section>

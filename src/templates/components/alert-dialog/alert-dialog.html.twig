@@ -53,17 +53,17 @@
                          then closes, hence both close).
 -#}
 
-{%- set htmlId          = htmlId          | default('theme-alert-dialog-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-alert-dialog-' ~ random()) -%}
 {%- set tone            = tone            | default('danger') -%}
 {%- set size            = size            | default('sm') -%}
 {%- set open            = open            | default(false) -%}
 {%- set className       = className       | default('') -%}
 {%- set dialogClassName = dialogClassName | default('') -%}
 
-{%- set _wrapClasses = ['theme-dialog-wrap', 'theme-alert-dialog-wrap'] -%}
+{%- set _wrapClasses = ['cremona-dialog-wrap', 'cremona-alert-dialog-wrap'] -%}
 {%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
 
-{%- set _dialogClasses = ['theme-dialog', 'theme-alert-dialog'] -%}
+{%- set _dialogClasses = ['cremona-dialog', 'cremona-alert-dialog'] -%}
 {%- if dialogClassName -%}{%- set _dialogClasses = _dialogClasses | merge([dialogClassName]) -%}{%- endif -%}
 
 {%- set _titleId = htmlId ~ '-title' -%}
@@ -96,20 +96,20 @@
     data-tone="{{ tone }}"
     aria-labelledby="{{ _titleId }}"
   >
-    <header class="theme-dialog__header theme-alert-dialog__header">
-      <span class="theme-alert-dialog__icon-wrap" aria-hidden="true">
-        {% include '@theme/components/icon/icon.html.twig' with { name: _iconName, size: 'md', decorative: true } %}
+    <header class="cremona-dialog__header cremona-alert-dialog__header">
+      <span class="cremona-alert-dialog__icon-wrap" aria-hidden="true">
+        {% include '@cremona/components/icon/icon.html.twig' with { name: _iconName, size: 'md', decorative: true } %}
       </span>
-      <h2 id="{{ _titleId }}" class="theme-dialog__title theme-alert-dialog__title">
+      <h2 id="{{ _titleId }}" class="cremona-dialog__title cremona-alert-dialog__title">
         {%- block title -%}{%- endblock -%}
       </h2>
     </header>
 
-    <div class="theme-dialog__body theme-alert-dialog__body">
+    <div class="cremona-dialog__body cremona-alert-dialog__body">
       {%- block body -%}{%- endblock -%}
     </div>
 
-    <footer class="theme-dialog__footer theme-alert-dialog__footer">
+    <footer class="cremona-dialog__footer cremona-alert-dialog__footer">
       {%- block footer -%}{%- endblock -%}
     </footer>
   </dialog>

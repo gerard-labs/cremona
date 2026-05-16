@@ -4,7 +4,7 @@
  * Per OQ-36 (sealed S2.4 opening): event-only persistence — the kit
  * dispatches resizable:change ; the consumer persists.
  *
- * Architecture: CSS Grid 2-pane layout. The `--theme-resizable-size` custom
+ * Architecture: CSS Grid 2-pane layout. The `--cremona-resizable-size` custom
  * property (set by the controller) drives the start pane's main-axis size.
  * Horizontal: grid-template-columns. Vertical: grid-template-rows.
  *
@@ -21,25 +21,25 @@
  * end pane on the inline-end side, the handle in between).
  */
 
-.theme-resizable {
+.cremona-resizable {
   display: grid;
   inline-size: 100%;
   block-size: 100%;
   min-block-size: 200px;
   background-color: var(--color-bg-base);
-  /* Default fallback if no controller is mounted (--theme-resizable-size will
+  /* Default fallback if no controller is mounted (--cremona-resizable-size will
      be set by the controller in connect()). */
-  --theme-resizable-size: 50%;
+  --cremona-resizable-size: 50%;
 }
 
 /* --- Orientation = horizontal ------------------------------------- */
 
-.theme-resizable[data-orientation="horizontal"] {
-  grid-template-columns: var(--theme-resizable-size) auto 1fr;
+.cremona-resizable[data-orientation="horizontal"] {
+  grid-template-columns: var(--cremona-resizable-size) auto 1fr;
   grid-template-rows: 1fr;
 }
 
-.theme-resizable[data-orientation="horizontal"] .theme-resizable__handle {
+.cremona-resizable[data-orientation="horizontal"] .cremona-resizable__handle {
   cursor: col-resize;
   inline-size: 8px;
   min-block-size: 100%;
@@ -47,12 +47,12 @@
 
 /* --- Orientation = vertical --------------------------------------- */
 
-.theme-resizable[data-orientation="vertical"] {
+.cremona-resizable[data-orientation="vertical"] {
   grid-template-columns: 1fr;
-  grid-template-rows: var(--theme-resizable-size) auto 1fr;
+  grid-template-rows: var(--cremona-resizable-size) auto 1fr;
 }
 
-.theme-resizable[data-orientation="vertical"] .theme-resizable__handle {
+.cremona-resizable[data-orientation="vertical"] .cremona-resizable__handle {
   cursor: row-resize;
   block-size: 8px;
   min-inline-size: 100%;
@@ -60,7 +60,7 @@
 
 /* --- Panes -------------------------------------------------------- */
 
-.theme-resizable__pane {
+.cremona-resizable__pane {
   background-color: var(--color-bg-elevated);
   overflow: auto;
   min-inline-size: 0;
@@ -69,7 +69,7 @@
 
 /* --- Handle ------------------------------------------------------- */
 
-.theme-resizable__handle {
+.cremona-resizable__handle {
   position: relative;
   display: flex;
   align-items: center;
@@ -78,24 +78,24 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-resizable__handle:hover {
+.cremona-resizable__handle:hover {
   background-color: var(--color-border-default);
 }
 
-.theme-resizable__handle:focus-visible {
+.cremona-resizable__handle:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: calc(var(--ring-offset-width) * -1);
   background-color: var(--color-border-default);
 }
 
-.theme-resizable[data-dragging="true"] .theme-resizable__handle {
+.cremona-resizable[data-dragging="true"] .cremona-resizable__handle {
   background-color: var(--color-primary);
 }
 
 /* Touch target hardening — 44 px hit-area via expanded transparent zone.
    The visible 8 px track is preserved ; ::before extends pointer events. */
 @media (pointer: coarse) {
-  .theme-resizable__handle::before {
+  .cremona-resizable__handle::before {
     content: '';
     position: absolute;
     inset-block: 0;
@@ -103,7 +103,7 @@
     background: transparent;
   }
 
-  .theme-resizable[data-orientation="vertical"] .theme-resizable__handle::before {
+  .cremona-resizable[data-orientation="vertical"] .cremona-resizable__handle::before {
     inset-block: -18px;
     inset-inline: 0;
   }
@@ -111,21 +111,21 @@
 
 /* --- Grip visual (3-dot vertical, CSS-only mask-image) ------------ */
 
-.theme-resizable__grip {
+.cremona-resizable__grip {
   display: block;
   background-color: var(--color-text-tertiary);
   mask-repeat: no-repeat;
   mask-position: center;
 }
 
-.theme-resizable[data-orientation="horizontal"] .theme-resizable__grip {
+.cremona-resizable[data-orientation="horizontal"] .cremona-resizable__grip {
   inline-size: 4px;
   block-size: 24px;
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 24" fill="currentColor"><circle cx="2" cy="4" r="1.5"/><circle cx="2" cy="12" r="1.5"/><circle cx="2" cy="20" r="1.5"/></svg>');
   mask-size: 4px 24px;
 }
 
-.theme-resizable[data-orientation="vertical"] .theme-resizable__grip {
+.cremona-resizable[data-orientation="vertical"] .cremona-resizable__grip {
   inline-size: 24px;
   block-size: 4px;
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 4" fill="currentColor"><circle cx="4" cy="2" r="1.5"/><circle cx="12" cy="2" r="1.5"/><circle cx="20" cy="2" r="1.5"/></svg>');
@@ -135,7 +135,7 @@
 /* --- Reduced motion ----------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-resizable__handle {
+  .cremona-resizable__handle {
     transition: none;
   }
 }

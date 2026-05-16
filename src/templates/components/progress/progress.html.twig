@@ -40,18 +40,18 @@
 {%- set attrs        = attrs        | default({}) -%}
 
 {%- set _isIndeterminate = value is null -%}
-{%- set _classes = ['theme-progress'] -%}
-{%- if _isIndeterminate -%}{%- set _classes = _classes | merge(['theme-progress--indeterminate']) -%}{%- endif -%}
+{%- set _classes = ['cremona-progress'] -%}
+{%- if _isIndeterminate -%}{%- set _classes = _classes | merge(['cremona-progress--indeterminate']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _wantsRow = label or (valueDisplay and not _isIndeterminate) -%}
 
 {%- if _wantsRow -%}
-<div class="theme-progress-row" data-size="{{ size }}" data-variant="{{ variant }}">
-  <div class="theme-progress-row__header">
-    {%- if label -%}<span class="theme-progress-row__label">{{ label }}</span>{%- endif -%}
+<div class="cremona-progress-row" data-size="{{ size }}" data-variant="{{ variant }}">
+  <div class="cremona-progress-row__header">
+    {%- if label -%}<span class="cremona-progress-row__label">{{ label }}</span>{%- endif -%}
     {%- if valueDisplay and not _isIndeterminate -%}
-      <output class="theme-progress-row__value">{{ value }}{{ valueSuffix }}</output>
+      <output class="cremona-progress-row__value">{{ value }}{{ valueSuffix }}</output>
     {%- endif -%}
   </div>
   {%- if _isIndeterminate -%}

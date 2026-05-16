@@ -6,7 +6,7 @@
   controller — Command Ring 2 already ships its own (dialog+combobox+command).
 
   The wrapper is value-add :
-    - Provides the marker class `.theme-search-command-palette` for
+    - Provides the marker class `.cremona-search-command-palette` for
       consumer styling differentiation.
     - Defaults placeholder + hotkey to search-focused values.
     - Documents the launcher button pattern (header button + ⌘K hint
@@ -29,18 +29,18 @@
   consumer in the app header) — example template :
 
       <button type="button"
-              class="theme-button theme-search-command-palette__launcher"
+              class="cremona-button cremona-search-command-palette__launcher"
               data-variant="ghost"
               onclick="window.themeCommand.open()">
-        <svg class="theme-icon" data-size="sm" aria-hidden="true">
+        <svg class="cremona-icon" data-size="sm" aria-hidden="true">
           <use href="#icon-search"/>
         </svg>
         <span>{{ 'Rechercher…'|trans }}</span>
-        <kbd class="theme-kbd theme-search-command-palette__launcher-kbd">⌘K</kbd>
+        <kbd class="cremona-kbd cremona-search-command-palette__launcher-kbd">⌘K</kbd>
       </button>
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-search-command-palette-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-search-command-palette-' ~ random()) -%}
 {%- set label       = label       | default('theme.search-command-palette.label'|trans) -%}
 {%- set placeholder = placeholder | default('theme.search-command-palette.placeholder'|trans) -%}
 {%- set hotkey      = hotkey      | default('k') -%}
@@ -52,8 +52,8 @@
 ]) -%}
 
 {# Defer to Command Ring 2 with search-themed defaults + marker class. #}
-<div class="theme-search-command-palette">
-  {% include '@theme/components/command/command.html.twig' with {
+<div class="cremona-search-command-palette">
+  {% include '@cremona/components/command/command.html.twig' with {
     htmlId:      htmlId,
     label:       label,
     placeholder: placeholder,

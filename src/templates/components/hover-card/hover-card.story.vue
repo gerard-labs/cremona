@@ -33,17 +33,17 @@ let _hcCounter = 0;
 function nextId() { return `hc-${++_hcCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function avatarPreview(initials, color = 'primary') {
-  return `<span class="theme-avatar" data-size="md" style="background:var(--color-${color}-soft);color:var(--color-${color}-soft-foreground)" aria-hidden="true">${initials}</span>`;
+  return `<span class="cremona-avatar" data-size="md" style="background:var(--color-${color}-soft);color:var(--color-${color}-soft-foreground)" aria-hidden="true">${initials}</span>`;
 }
 
 function renderHoverCard({ placement = 'top', openDelay = 400, closeDelay = 200, triggerHtml, contentHtml }) {
   const id = nextId();
   return `
-    <span class="theme-popover theme-hover-card"
+    <span class="cremona-popover cremona-hover-card"
       data-controller="popover hover-card"
       data-action="mouseenter->hover-card#enter mouseleave->hover-card#leave keydown.esc@window->popover#close"
       data-popover-placement-value="${placement}"
@@ -53,7 +53,7 @@ function renderHoverCard({ placement = 'top', openDelay = 400, closeDelay = 200,
       data-hover-card-close-delay-value="${closeDelay}">
       ${triggerHtml(id)}
       <div id="${id}"
-        class="theme-popover__content theme-hover-card__content"
+        class="cremona-popover__content cremona-hover-card__content"
         data-popover-target="content"
         data-state="closed"
         data-placement="${placement}"
@@ -72,64 +72,64 @@ function mentionTrigger(label) {
 function S(key) { return t('theme.hover-card.story.' + key); }
 
 const cardDefault = `
-  <div class="theme-hover-card__header">
+  <div class="cremona-hover-card__header">
     ${avatarPreview('MD')}
     <div>
-      <p class="theme-hover-card__title">${S('sample.default-name')}</p>
-      <p class="theme-hover-card__subtitle">${S('sample.default-role')}</p>
+      <p class="cremona-hover-card__title">${S('sample.default-name')}</p>
+      <p class="cremona-hover-card__subtitle">${S('sample.default-role')}</p>
     </div>
   </div>
-  <p class="theme-hover-card__body">${S('sample.default-bio')}</p>
+  <p class="cremona-hover-card__body">${S('sample.default-bio')}</p>
 `;
 
 const cardWithBio = `
-  <div class="theme-hover-card__header">
+  <div class="cremona-hover-card__header">
     ${avatarPreview('LD', 'success')}
     <div>
-      <p class="theme-hover-card__title">${S('sample.bio-name')}</p>
-      <p class="theme-hover-card__subtitle">${S('sample.bio-role')}</p>
+      <p class="cremona-hover-card__title">${S('sample.bio-name')}</p>
+      <p class="cremona-hover-card__subtitle">${S('sample.bio-role')}</p>
     </div>
   </div>
-  <p class="theme-hover-card__body">${S('sample.bio-body')}</p>
+  <p class="cremona-hover-card__body">${S('sample.bio-body')}</p>
 `;
 
 const cardWithActions = `
-  <div class="theme-hover-card__header">
+  <div class="cremona-hover-card__header">
     ${avatarPreview('AB', 'accent')}
     <div>
-      <p class="theme-hover-card__title">${S('sample.actions-name')}</p>
-      <p class="theme-hover-card__subtitle">${S('sample.actions-role')}</p>
+      <p class="cremona-hover-card__title">${S('sample.actions-name')}</p>
+      <p class="cremona-hover-card__subtitle">${S('sample.actions-role')}</p>
     </div>
   </div>
-  <p class="theme-hover-card__body">${S('sample.actions-body')}</p>
-  <div class="theme-hover-card__footer">
-    <button type="button" class="theme-button" data-variant="primary" data-size="sm">
-      <span class="theme-button__label">${S('sample.actions-follow')}</span>
+  <p class="cremona-hover-card__body">${S('sample.actions-body')}</p>
+  <div class="cremona-hover-card__footer">
+    <button type="button" class="cremona-button" data-variant="primary" data-size="sm">
+      <span class="cremona-button__label">${S('sample.actions-follow')}</span>
     </button>
-    <button type="button" class="theme-button" data-variant="secondary" data-size="sm">
-      <span class="theme-button__label">${S('sample.actions-message')}</span>
+    <button type="button" class="cremona-button" data-variant="secondary" data-size="sm">
+      <span class="cremona-button__label">${S('sample.actions-message')}</span>
     </button>
   </div>
 `;
 
 const cardLong = `
-  <div class="theme-hover-card__header">
+  <div class="cremona-hover-card__header">
     ${icon('star', 'md')}
-    <p class="theme-hover-card__title">${S('sample.long-title')}</p>
+    <p class="cremona-hover-card__title">${S('sample.long-title')}</p>
   </div>
-  <p class="theme-hover-card__body">${S('sample.long-body-1')}</p>
-  <p class="theme-hover-card__body">${S('sample.long-body-2')}</p>
+  <p class="cremona-hover-card__body">${S('sample.long-body-1')}</p>
+  <p class="cremona-hover-card__body">${S('sample.long-body-2')}</p>
 `;
 
 const cardSnappy = `
-  <div class="theme-hover-card__header">
+  <div class="cremona-hover-card__header">
     ${avatarPreview('SN', 'info')}
     <div>
-      <p class="theme-hover-card__title">${S('sample.snappy-name')}</p>
-      <p class="theme-hover-card__subtitle">${S('sample.snappy-role')}</p>
+      <p class="cremona-hover-card__title">${S('sample.snappy-name')}</p>
+      <p class="cremona-hover-card__subtitle">${S('sample.snappy-role')}</p>
     </div>
   </div>
-  <p class="theme-hover-card__body">${S('sample.snappy-body')}</p>
+  <p class="cremona-hover-card__body">${S('sample.snappy-body')}</p>
 `;
 
 const bodyHtml = `
@@ -140,8 +140,8 @@ const bodyHtml = `
     </header>
 
     <section class="hover-card-story__section" aria-labelledby="hc-section-default">
-      <h2 id="hc-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.default')}</h2>
-      <p class="hover-card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.default')}</p>
+      <h2 id="hc-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.default')}</h2>
+      <p class="hover-card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.default')}</p>
       <p class="hover-card-story__inline">
         ${t('theme.hover-card.story.sample.default-prefix')}
         ${renderHoverCard({ triggerHtml: mentionTrigger('marie-dupont'), contentHtml: cardDefault })}
@@ -150,8 +150,8 @@ const bodyHtml = `
     </section>
 
     <section class="hover-card-story__section" aria-labelledby="hc-section-bio">
-      <h2 id="hc-section-bio" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.bio')}</h2>
-      <p class="hover-card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.bio')}</p>
+      <h2 id="hc-section-bio" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.bio')}</h2>
+      <p class="hover-card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.bio')}</p>
       <p class="hover-card-story__inline">
         ${t('theme.hover-card.story.sample.bio-prefix')}
         ${renderHoverCard({ placement: 'bottom', triggerHtml: mentionTrigger('lucie-dubois'), contentHtml: cardWithBio })}
@@ -160,8 +160,8 @@ const bodyHtml = `
     </section>
 
     <section class="hover-card-story__section" aria-labelledby="hc-section-actions">
-      <h2 id="hc-section-actions" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.actions')}</h2>
-      <p class="hover-card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.actions')}</p>
+      <h2 id="hc-section-actions" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.actions')}</h2>
+      <p class="hover-card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.actions')}</p>
       <p class="hover-card-story__inline">
         ${t('theme.hover-card.story.sample.actions-prefix')}
         ${renderHoverCard({ triggerHtml: mentionTrigger('alex-bernard'), contentHtml: cardWithActions })}
@@ -170,8 +170,8 @@ const bodyHtml = `
     </section>
 
     <section class="hover-card-story__section" aria-labelledby="hc-section-long">
-      <h2 id="hc-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.long')}</h2>
-      <p class="hover-card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.long')}</p>
+      <h2 id="hc-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.long')}</h2>
+      <p class="hover-card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.long')}</p>
       <p class="hover-card-story__inline">
         ${t('theme.hover-card.story.sample.long-prefix')}
         ${renderHoverCard({ placement: 'right', triggerHtml: mentionTrigger('article-galaxie'), contentHtml: cardLong })}
@@ -180,8 +180,8 @@ const bodyHtml = `
     </section>
 
     <section class="hover-card-story__section" aria-labelledby="hc-section-snappy">
-      <h2 id="hc-section-snappy" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.snappy')}</h2>
-      <p class="hover-card-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.snappy')}</p>
+      <h2 id="hc-section-snappy" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.hover-card.story.section.snappy')}</h2>
+      <p class="hover-card-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.hover-card.story.explainer.snappy')}</p>
       <p class="hover-card-story__inline">
         ${t('theme.hover-card.story.sample.snappy-prefix')}
         ${renderHoverCard({ openDelay: 100, closeDelay: 50, triggerHtml: mentionTrigger('snappy-demo'), contentHtml: cardSnappy })}

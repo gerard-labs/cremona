@@ -2,12 +2,12 @@
  * Item — a selectable list row.
  *
  * Anatomy:
- *   .theme-item[ data-selected="true" | data-state="disabled" ]
- *     ├── [.theme-item__icon--leading]   (optional Lucide icon)
- *     ├── .theme-item__text
- *     │     ├── .theme-item__label
- *     │     └── [.theme-item__description]
- *     └── [.theme-item__icon--trailing | .theme-item__trailing > Kbd]
+ *   .cremona-item[ data-selected="true" | data-state="disabled" ]
+ *     ├── [.cremona-item__icon--leading]   (optional Lucide icon)
+ *     ├── .cremona-item__text
+ *     │     ├── .cremona-item__label
+ *     │     └── [.cremona-item__description]
+ *     └── [.cremona-item__icon--trailing | .cremona-item__trailing > Kbd]
  *
  * Three element forms:
  *   <div>     non-interactive (orchestrated by parent — DropdownMenu / DataTable)
@@ -15,11 +15,11 @@
  *   <button>  standalone action Item
  *
  * The CSS is identical across element forms — the hover / focus / selected
- * rules apply via the same `.theme-item` class. Interactive variants get
+ * rules apply via the same `.cremona-item` class. Interactive variants get
  * native `:focus-visible` + Enter / Space activation from the browser.
  */
 
-.theme-item {
+.cremona-item {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
@@ -42,21 +42,21 @@
 }
 
 /* Interactive variants get pointer cursor. */
-a.theme-item,
-button.theme-item {
+a.cremona-item,
+button.cremona-item {
   cursor: pointer;
   text-align: start;
 }
 
 /* Reset native button styling. */
-button.theme-item {
+button.cremona-item {
   font-family: inherit;
   font-size: inherit;
 }
 
 /* ----- hover (not disabled, not selected) ------------------------- */
 
-.theme-item:hover:not([data-state="disabled"], [data-selected="true"]) {
+.cremona-item:hover:not([data-state="disabled"], [data-selected="true"]) {
   background-color: var(--color-bg-sunken);
 }
 
@@ -64,51 +64,51 @@ button.theme-item {
    feedback only paints when the row is "active" (the orchestrating
    parent sets data-active="true" on Arrow nav). Otherwise hover would
    look interactive even when the row isn't clickable. */
-div.theme-item {
+div.cremona-item {
   /* divs don't fire hover by themselves in nav contexts — orchestrator decides. */
 }
 
 /* ----- focus-visible (interactive variants only) ----------------- */
 
-.theme-item:focus-visible {
+.cremona-item:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: -2px;
 }
 
 /* ----- selected (set by the orchestrating parent) ---------------- */
 
-.theme-item[data-selected="true"] {
+.cremona-item[data-selected="true"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-item[data-selected="true"]:hover:not([data-state="disabled"]) {
+.cremona-item[data-selected="true"]:hover:not([data-state="disabled"]) {
   background-color: var(--color-primary-soft);
 }
 
-.theme-item[data-selected="true"] .theme-item__description {
+.cremona-item[data-selected="true"] .cremona-item__description {
   color: var(--color-selected-foreground);
   opacity: 0.8;
 }
 
 /* ----- disabled ---------------------------------------------------- */
 
-.theme-item[data-state="disabled"],
-.theme-item:disabled {
+.cremona-item[data-state="disabled"],
+.cremona-item:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-.theme-item[data-state="disabled"] .theme-item__label,
-.theme-item[data-state="disabled"] .theme-item__description {
+.cremona-item[data-state="disabled"] .cremona-item__label,
+.cremona-item[data-state="disabled"] .cremona-item__description {
   color: var(--color-text-disabled);
 }
 
 /* ----- aria-current (nav-active state) --------------------------- */
 
-.theme-item[aria-current="page"],
-.theme-item[aria-current="true"],
-.theme-item[aria-current="step"] {
+.cremona-item[aria-current="page"],
+.cremona-item[aria-current="true"],
+.cremona-item[aria-current="step"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
   font-weight: var(--font-weight-semibold);
@@ -116,7 +116,7 @@ div.theme-item {
 
 /* ----- text slot --------------------------------------------------- */
 
-.theme-item__text {
+.cremona-item__text {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -124,7 +124,7 @@ div.theme-item {
   gap: 2px;
 }
 
-.theme-item__label {
+.cremona-item__label {
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-snug);
   overflow: hidden;
@@ -132,7 +132,7 @@ div.theme-item {
   white-space: nowrap;
 }
 
-.theme-item__description {
+.cremona-item__description {
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
   line-height: var(--line-height-snug);
@@ -141,33 +141,33 @@ div.theme-item {
 
 /* ----- icon slots --------------------------------------------------- */
 
-.theme-item__icon {
+.cremona-item__icon {
   flex-shrink: 0;
   color: var(--color-text-tertiary);
 }
 
-.theme-item__icon--leading {
+.cremona-item__icon--leading {
   /* Leading icon picks up the secondary text color for hierarchy. */
   color: var(--color-text-tertiary);
 }
 
-.theme-item__icon--trailing {
+.cremona-item__icon--trailing {
   /* Trailing icon dimmer (e.g. chevron-right indicator). */
   color: var(--color-text-tertiary);
 }
 
 /* When selected, all child icons inherit the selected-foreground color
    so the contrast stays consistent. */
-.theme-item[data-selected="true"] .theme-item__icon,
-.theme-item[aria-current="page"] .theme-item__icon,
-.theme-item[aria-current="true"] .theme-item__icon,
-.theme-item[aria-current="step"] .theme-item__icon {
+.cremona-item[data-selected="true"] .cremona-item__icon,
+.cremona-item[aria-current="page"] .cremona-item__icon,
+.cremona-item[aria-current="true"] .cremona-item__icon,
+.cremona-item[aria-current="step"] .cremona-item__icon {
   color: var(--color-selected-foreground);
 }
 
 /* ----- trailing slot (Kbd shortcut wrapper) ---------------------- */
 
-.theme-item__trailing {
+.cremona-item__trailing {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
@@ -177,7 +177,7 @@ div.theme-item {
 /* ----- touch target hardening ------------------------------------ */
 
 @media (pointer: coarse) {
-  .theme-item {
+  .cremona-item {
     min-block-size: 44px;
   }
 }

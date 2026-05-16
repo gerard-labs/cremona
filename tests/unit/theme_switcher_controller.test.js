@@ -16,13 +16,13 @@ function mount(html) {
 function template({ currentMode = 'system', storageKey = 'theme.mode', target = 'self' } = {}) {
   const opts = ['light', 'dark', 'system'];
   const toggles = opts.map((m) => `
-    <button class="theme-toggle theme-toggle-group__item theme-theme-switcher__item"
+    <button class="cremona-toggle cremona-toggle-group__item cremona-theme-switcher__item"
             data-theme-mode="${m}"
             aria-pressed="${m === currentMode ? 'true' : 'false'}"
             aria-label="${m}"></button>
   `).join('');
   return `
-    <div class="theme-toggle-group theme-theme-switcher__group"
+    <div class="cremona-toggle-group cremona-theme-switcher__group"
          role="group"
          data-controller="theme-switcher"
          data-theme-switcher-current-mode-value="${currentMode}"
@@ -82,14 +82,14 @@ describe('theme-switcher controller', () => {
   it('applies dark theme on connect when currentMode=dark + target=self', async () => {
     app = mount(template({ currentMode: 'dark', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme')).toBe('dark');
   });
 
   it('removes data-theme when currentMode=light + target=self', async () => {
     app = mount(template({ currentMode: 'light', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme')).toBeNull();
   });
 
@@ -97,7 +97,7 @@ describe('theme-switcher controller', () => {
     mockMatchMedia(true);
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme')).toBe('dark');
   });
 
@@ -105,7 +105,7 @@ describe('theme-switcher controller', () => {
     mockMatchMedia(false);
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme')).toBeNull();
   });
 
@@ -113,7 +113,7 @@ describe('theme-switcher controller', () => {
     mockMatchMedia(false);
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('theme-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.addEventListener('toggle', (e) => {
@@ -130,7 +130,7 @@ describe('theme-switcher controller', () => {
     mockMatchMedia(true);
     app = mount(template({ currentMode: 'light', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     wrap.addEventListener('toggle', (e) => {
       app.getControllerForElementAndIdentifier(wrap, 'theme-switcher').onToggle(e);
     });
@@ -145,7 +145,7 @@ describe('theme-switcher controller', () => {
     window.localStorage.setItem('theme.mode', 'dark');
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme')).toBe('dark');
     expect(wrap.getAttribute('data-theme-switcher-current-mode-value')).toBe('dark');
   });
@@ -155,7 +155,7 @@ describe('theme-switcher controller', () => {
     window.localStorage.setItem('theme.mode', 'rainbow');
     app = mount(template({ currentMode: 'light', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme-switcher-current-mode-value')).toBe('light');
   });
 
@@ -163,7 +163,7 @@ describe('theme-switcher controller', () => {
     const mql = mockMatchMedia(false);
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     expect(wrap.getAttribute('data-theme')).toBeNull();
     const changeEvents = [];
     wrap.addEventListener('theme-switcher:change', (e) => changeEvents.push(e.detail));
@@ -179,7 +179,7 @@ describe('theme-switcher controller', () => {
     const mql = mockMatchMedia(false);
     app = mount(template({ currentMode: 'light', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('theme-switcher:change', (e) => changeEvents.push(e.detail));
     mql.dispatchChange(true);
@@ -193,7 +193,7 @@ describe('theme-switcher controller', () => {
     const mql = mockMatchMedia(false);
     app = mount(template({ currentMode: 'light', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     wrap.addEventListener('toggle', (e) => {
       app.getControllerForElementAndIdentifier(wrap, 'theme-switcher').onToggle(e);
     });
@@ -221,7 +221,7 @@ describe('theme-switcher controller', () => {
     mockMatchMedia(false);
     app = mount(template({ currentMode: 'light', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('theme-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.addEventListener('toggle', (e) => {
@@ -237,7 +237,7 @@ describe('theme-switcher controller', () => {
     mockMatchMedia(false);
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('theme-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.remove();
@@ -249,7 +249,7 @@ describe('theme-switcher controller', () => {
     delete window.matchMedia;
     app = mount(template({ currentMode: 'system', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-theme-switcher__group');
+    const wrap = document.querySelector('.cremona-theme-switcher__group');
     // Falls back to 'light' resolution.
     expect(wrap.getAttribute('data-theme')).toBeNull();
   });

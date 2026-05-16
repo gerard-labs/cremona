@@ -2,11 +2,11 @@
   Checkbox — native HTML5 <input type="checkbox"> styled with kit tokens.
 
   Two rendering modes:
-    1. `label` set        → <label class="theme-checkbox-row"> wraps input + box
+    1. `label` set        → <label class="cremona-checkbox-row"> wraps input + box
                             + label text. Click anywhere on the row toggles the
                             checkbox. The visible <label> owns the association
                             (no `for` attr needed; the input is its descendant).
-    2. `label` not set    → <span class="theme-checkbox-wrap"> bare layout
+    2. `label` not set    → <span class="cremona-checkbox-wrap"> bare layout
                             (input + visual box only). Use this when:
                               - inside Field (Field renders its own <label> with
                                 for=fieldHtmlId pointing at the input id);
@@ -57,9 +57,9 @@
 {%- set className     = className     | default('') -%}
 {%- set attrs         = attrs         | default({}) -%}
 
-{%- set _rootClasses = [label ? 'theme-checkbox-row' : 'theme-checkbox-wrap'] -%}
-{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['theme-checkbox-row--disabled']) -%}{%- endif -%}
-{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['theme-checkbox-row--invalid']) -%}{%- endif -%}
+{%- set _rootClasses = [label ? 'cremona-checkbox-row' : 'cremona-checkbox-wrap'] -%}
+{%- if disabled -%}{%- set _rootClasses = _rootClasses | merge(['cremona-checkbox-row--disabled']) -%}{%- endif -%}
+{%- if invalid  -%}{%- set _rootClasses = _rootClasses | merge(['cremona-checkbox-row--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _rootClasses = _rootClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _tag = label ? 'label' : 'span' -%}
@@ -69,10 +69,10 @@
   data-size="{{ size }}"
   {%- if disabled %} data-state="disabled"{% endif -%}
 >
-  <span class="theme-checkbox" data-size="{{ size }}">
+  <span class="cremona-checkbox" data-size="{{ size }}">
     <input
       type="checkbox"
-      class="theme-checkbox__input"
+      class="cremona-checkbox__input"
       {%- if htmlId %} id="{{ htmlId }}"{% endif -%}
       {%- if name %} name="{{ name }}"{% endif -%}
       {%- if value is not null %} value="{{ value }}"{% endif -%}
@@ -85,25 +85,25 @@
       {%- if indeterminate %} data-controller="checkbox-indeterminate" data-action="change->checkbox-indeterminate#clear" data-indeterminate="true"{% endif -%}
       {%- for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor -%}
     >
-    <span class="theme-checkbox__box" aria-hidden="true">
+    <span class="cremona-checkbox__box" aria-hidden="true">
       {#- Check mark — shown when :checked AND not [data-indeterminate]. -#}
-      <svg class="theme-checkbox__glyph theme-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
+      <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--check" viewBox="0 0 16 16" fill="none">
         <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       {#- Dash — shown when [data-indeterminate="true"] (mini-controller flips el.indeterminate). -#}
-      <svg class="theme-checkbox__glyph theme-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none">
+      <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none">
         <path d="M4 8L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </span>
   </span>
   {%- if label -%}
-    <span class="theme-checkbox-row__text">
-      <span class="theme-checkbox-row__label">{{ label }}</span>
+    <span class="cremona-checkbox-row__text">
+      <span class="cremona-checkbox-row__label">{{ label }}</span>
       {%- if required -%}
-        <span class="theme-checkbox-row__required" aria-hidden="true">*</span>
+        <span class="cremona-checkbox-row__required" aria-hidden="true">*</span>
       {%- endif -%}
       {%- if description -%}
-        <span class="theme-checkbox-row__description">{{ description }}</span>
+        <span class="cremona-checkbox-row__description">{{ description }}</span>
       {%- endif -%}
     </span>
   {%- endif -%}

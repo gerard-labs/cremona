@@ -14,20 +14,20 @@ setDayjsLocale('fr');
 const now = new Date('2026-05-14T12:00:00Z');
 
 function renderAvatar(initial, color = '%236366f1') {
-  return `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='20' fill='${color}'/><text x='20' y='26' font-family='sans-serif' font-size='18' fill='white' text-anchor='middle'>${initial}</text></svg>" alt="" class="theme-avatar" data-size="md">`;
+  return `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='20' fill='${color}'/><text x='20' y='26' font-family='sans-serif' font-size='18' fill='white' text-anchor='middle'>${initial}</text></svg>" alt="" class="cremona-avatar" data-size="md">`;
 }
 
 function renderEntry(entry) {
   const relTime = formatRelative(entry.timestamp, { baseDate: now });
   return `
-    <li class="theme-activity-feed__entry">
+    <li class="cremona-activity-feed__entry">
       ${entry.avatarHtml}
-      <div class="theme-activity-feed__entry-body">
-        <p class="theme-activity-feed__entry-line">
+      <div class="cremona-activity-feed__entry-body">
+        <p class="cremona-activity-feed__entry-line">
           <strong>${entry.actor}</strong> ${entry.verb} <a href="${entry.targetHref || '#'}">${entry.target}</a>
         </p>
-        ${entry.body ? `<p class="theme-activity-feed__entry-text">${entry.body}</p>` : ''}
-        <time class="theme-activity-feed__entry-time" datetime="${entry.timestamp.toISOString()}">${relTime}</time>
+        ${entry.body ? `<p class="cremona-activity-feed__entry-text">${entry.body}</p>` : ''}
+        <time class="cremona-activity-feed__entry-time" datetime="${entry.timestamp.toISOString()}">${relTime}</time>
       </div>
     </li>
   `;
@@ -36,27 +36,27 @@ function renderEntry(entry) {
 function renderFeed({ id = 'story-activity-feed', title, entries }) {
   const buckets = ['today', 'yesterday', 'this-week', 'older'];
   return `
-    <section class="theme-activity-feed" id="${id}" aria-labelledby="${id}-title">
-      <header class="theme-activity-feed__header">
-        <h2 id="${id}-title" class="theme-typography theme-activity-feed__title" data-variant="h2">${title}</h2>
+    <section class="cremona-activity-feed" id="${id}" aria-labelledby="${id}-title">
+      <header class="cremona-activity-feed__header">
+        <h2 id="${id}-title" class="cremona-typography cremona-activity-feed__title" data-variant="h2">${title}</h2>
       </header>
       ${entries.length === 0 ? `
-        <div class="theme-activity-feed__empty">
-          <div class="theme-empty" data-size="md">
-            <div class="theme-empty__illustration" aria-hidden="true"><svg class="theme-icon" data-size="lg"><use href="#icon-star"/></svg></div>
-            <h3 class="theme-empty__title">${t('theme.activity-feed.empty.title')}</h3>
-            <p class="theme-empty__body">${t('theme.activity-feed.empty.body')}</p>
+        <div class="cremona-activity-feed__empty">
+          <div class="cremona-empty" data-size="md">
+            <div class="cremona-empty__illustration" aria-hidden="true"><svg class="cremona-icon" data-size="lg"><use href="#icon-star"/></svg></div>
+            <h3 class="cremona-empty__title">${t('theme.activity-feed.empty.title')}</h3>
+            <p class="cremona-empty__body">${t('theme.activity-feed.empty.body')}</p>
           </div>
         </div>
       ` : `
-        <div class="theme-activity-feed__buckets">
+        <div class="cremona-activity-feed__buckets">
           ${buckets.map(bk => {
             const bucketEntries = entries.filter(e => e.bucket === bk);
             if (bucketEntries.length === 0) return '';
             return `
-              <section class="theme-activity-feed__bucket">
-                <h3 class="theme-typography theme-activity-feed__bucket-heading" data-variant="overline">${t('theme.activity-feed.bucket.' + bk)}</h3>
-                <ul class="theme-activity-feed__entries">${bucketEntries.map(renderEntry).join('')}</ul>
+              <section class="cremona-activity-feed__bucket">
+                <h3 class="cremona-typography cremona-activity-feed__bucket-heading" data-variant="overline">${t('theme.activity-feed.bucket.' + bk)}</h3>
+                <ul class="cremona-activity-feed__entries">${bucketEntries.map(renderEntry).join('')}</ul>
               </section>
             `;
           }).join('')}
@@ -82,12 +82,12 @@ const bodyHtml = `
     </header>
 
     <section class="activity-feed-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.activity-feed.story.section.full')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.activity-feed.story.section.full')}</h2>
       <div class="activity-feed-story__frame">${renderFeed({ id: 'story-full', title, entries: entriesFull })}</div>
     </section>
 
     <section class="activity-feed-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.activity-feed.story.section.empty')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.activity-feed.story.section.empty')}</h2>
       <div class="activity-feed-story__frame">${renderFeed({ id: 'story-empty', title, entries: [] })}</div>
     </section>
   </section>

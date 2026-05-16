@@ -15,7 +15,7 @@
  *   - top    : slides in from top
  *   - bottom : slides in from bottom
  *
- * RTL handling: inline-axis drawers (start/end) use --theme-drawer-flip to
+ * RTL handling: inline-axis drawers (start/end) use --cremona-drawer-flip to
  * invert the transform direction in RTL. The inset-* properties are already
  * logical, so the pinning is correct in both directions. Top/bottom drawers
  * are unaffected by direction. Cohérent 15-i18n-and-rtl §"Animation
@@ -35,14 +35,14 @@
  */
 
 :root {
-  --theme-drawer-flip: 1;
+  --cremona-drawer-flip: 1;
 }
 
 [dir="rtl"] {
-  --theme-drawer-flip: -1;
+  --cremona-drawer-flip: -1;
 }
 
-.theme-drawer {
+.cremona-drawer {
   /* Override native <dialog> centering (margin: auto). */
   margin: 0;
   padding-block: var(--spacing-5);
@@ -67,7 +67,7 @@
 }
 
 /* Open state — translated to its target position (uniform across edges). */
-.theme-drawer[open] {
+.cremona-drawer[open] {
   transform: translate3d(0, 0, 0);
   transition-duration: var(--motion-duration-slow);
   transition-timing-function: var(--motion-easing-emphasized);
@@ -75,7 +75,7 @@
 
 /* ----- Backdrop ------------------------------------------------------ */
 
-.theme-drawer::backdrop {
+.cremona-drawer::backdrop {
   background-color: var(--color-bg-overlay);
   opacity: 0;
   transition:
@@ -84,20 +84,20 @@
     display var(--motion-duration-base) allow-discrete;
 }
 
-.theme-drawer[open]::backdrop {
+.cremona-drawer[open]::backdrop {
   opacity: 1;
   transition-timing-function: var(--motion-easing-standard);
 }
 
 @starting-style {
-  .theme-drawer[open]::backdrop {
+  .cremona-drawer[open]::backdrop {
     opacity: 0;
   }
 }
 
 /* ----- Edge: end (inline-end — right in LTR, left in RTL) ---------- */
 
-.theme-drawer[data-edge="end"] {
+.cremona-drawer[data-edge="end"] {
   inset-block: 0;
   inset-inline: auto 0;
   inline-size: min(420px, 100vw);
@@ -108,18 +108,18 @@
   border-end-start-radius: var(--radius-dialog);
   border-inline-end: none;
   /* Closed: off-screen at inline-end (flipped in RTL). */
-  transform: translate3d(calc(100% * var(--theme-drawer-flip)), 0, 0);
+  transform: translate3d(calc(100% * var(--cremona-drawer-flip)), 0, 0);
 }
 
 @starting-style {
-  .theme-drawer[open][data-edge="end"] {
-    transform: translate3d(calc(100% * var(--theme-drawer-flip)), 0, 0);
+  .cremona-drawer[open][data-edge="end"] {
+    transform: translate3d(calc(100% * var(--cremona-drawer-flip)), 0, 0);
   }
 }
 
 /* ----- Edge: start (inline-start — left in LTR, right in RTL) ------ */
 
-.theme-drawer[data-edge="start"] {
+.cremona-drawer[data-edge="start"] {
   inset-block: 0;
   inset-inline: 0 auto;
   inline-size: min(420px, 100vw);
@@ -130,18 +130,18 @@
   border-end-end-radius: var(--radius-dialog);
   border-inline-start: none;
   /* Closed: off-screen at inline-start (flipped in RTL). */
-  transform: translate3d(calc(-100% * var(--theme-drawer-flip)), 0, 0);
+  transform: translate3d(calc(-100% * var(--cremona-drawer-flip)), 0, 0);
 }
 
 @starting-style {
-  .theme-drawer[open][data-edge="start"] {
-    transform: translate3d(calc(-100% * var(--theme-drawer-flip)), 0, 0);
+  .cremona-drawer[open][data-edge="start"] {
+    transform: translate3d(calc(-100% * var(--cremona-drawer-flip)), 0, 0);
   }
 }
 
 /* ----- Edge: top --------------------------------------------------- */
 
-.theme-drawer[data-edge="top"] {
+.cremona-drawer[data-edge="top"] {
   inset-block: 0 auto;
   inset-inline: 0;
   inline-size: 100vw;
@@ -155,14 +155,14 @@
 }
 
 @starting-style {
-  .theme-drawer[open][data-edge="top"] {
+  .cremona-drawer[open][data-edge="top"] {
     transform: translate3d(0, -100%, 0);
   }
 }
 
 /* ----- Edge: bottom ----------------------------------------------- */
 
-.theme-drawer[data-edge="bottom"] {
+.cremona-drawer[data-edge="bottom"] {
   inset-block: auto 0;
   inset-inline: 0;
   inline-size: 100vw;
@@ -176,14 +176,14 @@
 }
 
 @starting-style {
-  .theme-drawer[open][data-edge="bottom"] {
+  .cremona-drawer[open][data-edge="bottom"] {
     transform: translate3d(0, 100%, 0);
   }
 }
 
 /* ----- Layout: header / body / footer ------------------------------ */
 
-.theme-drawer__header {
+.cremona-drawer__header {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-3);
@@ -191,7 +191,7 @@
   flex: 0 0 auto;
 }
 
-.theme-drawer__title {
+.cremona-drawer__title {
   font: var(--typography-h2);
   color: var(--color-text-primary);
   margin: 0;
@@ -199,11 +199,11 @@
   min-inline-size: 0;
 }
 
-.theme-drawer__close {
+.cremona-drawer__close {
   flex: 0 0 auto;
 }
 
-.theme-drawer__body {
+.cremona-drawer__body {
   font: var(--typography-body);
   color: var(--color-text-secondary);
   flex: 1 1 auto;
@@ -211,11 +211,11 @@
   min-block-size: 0;
 }
 
-.theme-drawer__body > * + * {
+.cremona-drawer__body > * + * {
   margin-block-start: var(--spacing-3);
 }
 
-.theme-drawer__footer {
+.cremona-drawer__footer {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
@@ -226,7 +226,7 @@
 
 /* ----- dark mode --------------------------------------------------- */
 
-[data-theme="dark"] .theme-drawer {
+[data-theme="dark"] .cremona-drawer {
   background-color: var(--color-bg-elevated);
   border-color: var(--color-border-default);
 }

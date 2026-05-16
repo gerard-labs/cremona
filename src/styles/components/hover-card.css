@@ -8,7 +8,7 @@
  *   - Padding bumped from spacing-3 to spacing-4 (matches Card body
  *     padding for the visual coherence with Card content inside)
  *
- * The wrap inherits .theme-popover's `display: inline-block` so the
+ * The wrap inherits .cremona-popover's `display: inline-block` so the
  * trigger sits inline with surrounding text (typical mention-link pattern).
  *
  * Per OQ-29: NO new motion token — the open/close delays (400 ms / 200 ms)
@@ -22,7 +22,7 @@
  * remain — that's the consumer's call.
  */
 
-.theme-hover-card__content {
+.cremona-hover-card__content {
   /* Larger envelope than Popover defaults — preview content is richer. */
   min-inline-size: 240px;
   max-inline-size: 320px;
@@ -31,32 +31,32 @@
 }
 
 /* HoverCard preview body — typical layout: avatar header + body + actions. */
-.theme-hover-card__header {
+.cremona-hover-card__header {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
   margin-block-end: var(--spacing-2);
 }
 
-.theme-hover-card__title {
+.cremona-hover-card__title {
   font: var(--typography-h3);
   color: var(--color-text-primary);
   margin: 0;
 }
 
-.theme-hover-card__subtitle {
+.cremona-hover-card__subtitle {
   font: var(--typography-caption);
   color: var(--color-text-tertiary);
   margin: 0;
 }
 
-.theme-hover-card__body {
+.cremona-hover-card__body {
   font: var(--typography-body);
   color: var(--color-text-secondary);
   line-height: var(--line-height-normal);
 }
 
-.theme-hover-card__footer {
+.cremona-hover-card__footer {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);

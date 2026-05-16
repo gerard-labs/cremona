@@ -10,7 +10,7 @@
  * See `_auth-shell.css` for the centered viewport-min-height layout.
  */
 
-.theme-auth-login {
+.cremona-auth-login {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
@@ -20,7 +20,7 @@
 
 /* ----- remember-me + forgot link row ------------------------------- */
 
-.theme-auth-login__row {
+.cremona-auth-login__row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -34,20 +34,20 @@
    rememberMe), justify-content: space-between still keeps it inline-end
    (sole flex child wraps left in `space-between`, so we promote via
    margin). */
-.theme-auth-login__row:has(> .theme-auth-login__forgot:only-child) > .theme-auth-login__forgot {
+.cremona-auth-login__row:has(> .cremona-auth-login__forgot:only-child) > .cremona-auth-login__forgot {
   margin-inline-start: auto;
 }
 
 /* The forgot link is a small "ghost" link visually; the Button link variant
    already paints it correctly. Just align its block-axis with the checkbox
    row so it doesn't sit on its own baseline. */
-.theme-auth-login__forgot {
+.cremona-auth-login__forgot {
   /* Inherit Button[data-variant="link"] surface — no overrides needed. */
 }
 
 /* ----- footer question text ---------------------------------------- */
 
-.theme-auth-login__footer-question {
+.cremona-auth-login__footer-question {
   /* The footer is centered text (per `_auth-shell.css` `__card-footer`);
      the question reads as plain body alongside the inline link. */
   margin-inline-end: var(--spacing-1);
@@ -58,7 +58,7 @@
 /*
  * Alerts have their own surface visuals (per Alert.md). When stacked
  * inside the form's flex column, they sit above the Fields with the
- * natural gap of var(--spacing-4) inherited from `.theme-auth-login`.
+ * natural gap of var(--spacing-4) inherited from `.cremona-auth-login`.
  *
  * No overrides needed.
  */

@@ -49,13 +49,13 @@ describe('NumberInputController', () => {
     const readonlyAttr = readonly ? ' readonly' : '';
 
     document.body.innerHTML = `
-      <div id="ni" class="theme-number-input" data-controller="number-input">
-        <button id="dec" type="button" class="theme-number-input__btn--decrement"
+      <div id="ni" class="cremona-number-input" data-controller="number-input">
+        <button id="dec" type="button" class="cremona-number-input__btn--decrement"
                 data-number-input-target="decrement"
                 data-action="click->number-input#decrement"${disabledAttr}>−</button>
-        <input id="inp" class="theme-number-input__input" type="number" inputmode="numeric"
+        <input id="inp" class="cremona-number-input__input" type="number" inputmode="numeric"
                data-number-input-target="input"${valueAttr}${minAttr}${maxAttr}${stepAttr}${disabledAttr}${readonlyAttr}>
-        <button id="inc" type="button" class="theme-number-input__btn--increment"
+        <button id="inc" type="button" class="cremona-number-input__btn--increment"
                 data-number-input-target="increment"
                 data-action="click->number-input#increment"${disabledAttr}>+</button>
       </div>

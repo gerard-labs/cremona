@@ -33,14 +33,14 @@ onMounted(() => {
 
 function renderCheckbox({ id, name, value, label, checked = false }) {
   return `
-    <label class="theme-checkbox-row" for="${id}">
-      <span class="theme-checkbox-wrap">
-        <input type="checkbox" id="${id}" name="${name}" value="${value}" class="theme-checkbox" ${checked ? 'checked' : ''} />
-        <span class="theme-checkbox__box" aria-hidden="true">
-          <svg class="theme-checkbox__check theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-check"/></svg>
+    <label class="cremona-checkbox-row" for="${id}">
+      <span class="cremona-checkbox-wrap">
+        <input type="checkbox" id="${id}" name="${name}" value="${value}" class="cremona-checkbox" ${checked ? 'checked' : ''} />
+        <span class="cremona-checkbox__box" aria-hidden="true">
+          <svg class="cremona-checkbox__check cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-check"/></svg>
         </span>
       </span>
-      <span class="theme-checkbox__label">${label}</span>
+      <span class="cremona-checkbox__label">${label}</span>
     </label>
   `;
 }
@@ -49,7 +49,7 @@ function renderFacetedFilters({ id, sections, withEventsLog = false }) {
   const groups = sections.map((section) => {
     if (section.kind === 'checkbox') {
       const options = section.options.map((opt) => `
-        <li class="theme-search-faceted-filters__option">
+        <li class="cremona-search-faceted-filters__option">
           ${renderCheckbox({
             id: `${id}-${section.key}-${opt.value}`,
             name: section.key,
@@ -57,23 +57,23 @@ function renderFacetedFilters({ id, sections, withEventsLog = false }) {
             label: opt.label,
             checked: opt.checked,
           })}
-          ${opt.count !== undefined ? `<span class="theme-search-faceted-filters__option-count" aria-hidden="true">${opt.count}</span>` : ''}
+          ${opt.count !== undefined ? `<span class="cremona-search-faceted-filters__option-count" aria-hidden="true">${opt.count}</span>` : ''}
         </li>
       `).join('');
       return `
-        <fieldset class="theme-search-faceted-filters__group" data-group-key="${section.key}">
-          <legend class="theme-search-faceted-filters__group-title">${section.label}</legend>
-          <ul class="theme-search-faceted-filters__options" role="list">${options}</ul>
+        <fieldset class="cremona-search-faceted-filters__group" data-group-key="${section.key}">
+          <legend class="cremona-search-faceted-filters__group-title">${section.label}</legend>
+          <ul class="cremona-search-faceted-filters__options" role="list">${options}</ul>
         </fieldset>
       `;
     }
     if (section.kind === 'range') {
       return `
-        <fieldset class="theme-search-faceted-filters__group" data-group-key="${section.key}">
-          <legend class="theme-search-faceted-filters__group-title">${section.label}</legend>
-          <div class="theme-search-faceted-filters__range">
-            <input type="range" name="${section.key}" min="${section.min}" max="${section.max}" step="${section.step || 1}" value="${section.value}" class="theme-slider" aria-label="${section.label}" />
-            <div class="theme-search-faceted-filters__range-values">
+        <fieldset class="cremona-search-faceted-filters__group" data-group-key="${section.key}">
+          <legend class="cremona-search-faceted-filters__group-title">${section.label}</legend>
+          <div class="cremona-search-faceted-filters__range">
+            <input type="range" name="${section.key}" min="${section.min}" max="${section.max}" step="${section.step || 1}" value="${section.value}" class="cremona-slider" aria-label="${section.label}" />
+            <div class="cremona-search-faceted-filters__range-values">
               <span>${section.min}</span>
               <span>${section.max}</span>
             </div>
@@ -85,14 +85,14 @@ function renderFacetedFilters({ id, sections, withEventsLog = false }) {
   }).join('');
 
   return `
-    <aside class="theme-search-faceted-filters"
+    <aside class="cremona-search-faceted-filters"
            id="${id}"
            data-controller="faceted-filters"
            data-faceted-filters-mode-value="multi"
            aria-labelledby="${id}-title">
-      <header class="theme-search-faceted-filters__header">
-        <h2 id="${id}-title" class="theme-search-faceted-filters__title">${t('theme.search-faceted-filters.title')}</h2>
-        <button type="button" class="theme-button theme-search-faceted-filters__clear" data-variant="ghost" data-size="sm" data-action="click->faceted-filters#clear">
+      <header class="cremona-search-faceted-filters__header">
+        <h2 id="${id}-title" class="cremona-search-faceted-filters__title">${t('theme.search-faceted-filters.title')}</h2>
+        <button type="button" class="cremona-button cremona-search-faceted-filters__clear" data-variant="ghost" data-size="sm" data-action="click->faceted-filters#clear">
           ${t('theme.search-faceted-filters.clear')}
         </button>
       </header>
@@ -148,20 +148,20 @@ const bodyHtml = `
     </header>
 
     <section class="search-faceted-filters-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-faceted-filters.story.section.default')}</h2>
-      <p class="search-faceted-filters-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-faceted-filters.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-faceted-filters.story.section.default')}</h2>
+      <p class="search-faceted-filters-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-faceted-filters.story.explainer.default')}</p>
       <div class="search-faceted-filters-story__frame">${renderFacetedFilters({ id: 'faceted-default', sections: defaultSections })}</div>
     </section>
 
     <section class="search-faceted-filters-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-faceted-filters.story.section.pre-selected')}</h2>
-      <p class="search-faceted-filters-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-faceted-filters.story.explainer.pre-selected')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-faceted-filters.story.section.pre-selected')}</h2>
+      <p class="search-faceted-filters-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-faceted-filters.story.explainer.pre-selected')}</p>
       <div class="search-faceted-filters-story__frame">${renderFacetedFilters({ id: 'faceted-pre-selected', sections: preSelectedSections })}</div>
     </section>
 
     <section class="search-faceted-filters-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-faceted-filters.story.section.events-log')}</h2>
-      <p class="search-faceted-filters-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-faceted-filters.story.explainer.events-log')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-faceted-filters.story.section.events-log')}</h2>
+      <p class="search-faceted-filters-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-faceted-filters.story.explainer.events-log')}</p>
       <div class="search-faceted-filters-story__frame">${renderFacetedFilters({ id: 'faceted-events', sections: defaultSections, withEventsLog: true })}</div>
       <div id="faceted-filters-events-log" class="search-faceted-filters-story__events-log" aria-live="polite"></div>
     </section>

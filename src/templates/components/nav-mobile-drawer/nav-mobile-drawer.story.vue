@@ -10,13 +10,13 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderIcon(name) {
-  return `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
+  return `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
 }
 
 function renderItem({ href, label, icon, current = false }) {
   return `
     <li>
-      <a href="${href}" class="theme-nav-mobile-drawer__item"${current ? ' aria-current="page"' : ''}>
+      <a href="${href}" class="cremona-nav-mobile-drawer__item"${current ? ' aria-current="page"' : ''}>
         ${icon ? renderIcon(icon) : ''}
         <span>${label}</span>
       </a>
@@ -26,32 +26,32 @@ function renderItem({ href, label, icon, current = false }) {
 
 function renderSection({ heading, items }) {
   return `
-    <section class="theme-nav-mobile-drawer__section">
-      <h3 class="theme-typography theme-nav-mobile-drawer__section-heading" data-variant="overline">${heading}</h3>
-      <ul class="theme-nav-mobile-drawer__section-items">${items.map(renderItem).join('')}</ul>
+    <section class="cremona-nav-mobile-drawer__section">
+      <h3 class="cremona-typography cremona-nav-mobile-drawer__section-heading" data-variant="overline">${heading}</h3>
+      <ul class="cremona-nav-mobile-drawer__section-items">${items.map(renderItem).join('')}</ul>
     </section>
   `;
 }
 
 function renderDrawer({ id = 'story-mobile-drawer', open = true, user = null, sections, edge = 'start' }) {
   return `
-    <dialog class="theme-drawer theme-nav-mobile-drawer" id="${id}"
+    <dialog class="cremona-drawer cremona-nav-mobile-drawer" id="${id}"
             data-drawer-edge-value="${edge}"
             aria-label="${t('theme.nav.mobile-drawer.aria.label')}"
             ${open ? 'open' : ''}>
-      <header class="theme-nav-mobile-drawer__header">
+      <header class="cremona-nav-mobile-drawer__header">
         ${user ? `
-          <div class="theme-nav-mobile-drawer__user">
-            <img src="${user.avatarUrl}" alt="" class="theme-avatar" data-size="md">
-            <div class="theme-nav-mobile-drawer__user-meta">
+          <div class="cremona-nav-mobile-drawer__user">
+            <img src="${user.avatarUrl}" alt="" class="cremona-avatar" data-size="md">
+            <div class="cremona-nav-mobile-drawer__user-meta">
               <strong>${user.name}</strong>
               <span>${user.role}</span>
             </div>
           </div>
         ` : '<div></div>'}
-        <button type="button" class="theme-button theme-button--ghost theme-nav-mobile-drawer__close" aria-label="${t('theme.nav.mobile-drawer.close')}">${renderIcon('x')}</button>
+        <button type="button" class="cremona-button cremona-button--ghost cremona-nav-mobile-drawer__close" aria-label="${t('theme.nav.mobile-drawer.close')}">${renderIcon('x')}</button>
       </header>
-      <nav class="theme-nav-mobile-drawer__sections" aria-label="${t('theme.nav.mobile-drawer.aria.label')}">
+      <nav class="cremona-nav-mobile-drawer__sections" aria-label="${t('theme.nav.mobile-drawer.aria.label')}">
         ${sections.map(renderSection).join('')}
       </nav>
     </dialog>
@@ -80,12 +80,12 @@ const bodyHtml = `
     </header>
 
     <section class="nav-mobile-drawer-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mobile-drawer.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mobile-drawer.story.section.default')}</h2>
       <div class="nav-mobile-drawer-story__frame">${renderDrawer({ id: 'story-default', user, sections })}</div>
     </section>
 
     <section class="nav-mobile-drawer-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mobile-drawer.story.section.no-user')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.mobile-drawer.story.section.no-user')}</h2>
       <div class="nav-mobile-drawer-story__frame">${renderDrawer({ id: 'story-no-user', sections })}</div>
     </section>
   </section>
@@ -107,6 +107,6 @@ const bodyHtml = `
 .nav-mobile-drawer-story__header p { font: var(--typography-body); color: var(--color-text-secondary); max-inline-size: 70ch; }
 .nav-mobile-drawer-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .nav-mobile-drawer-story__frame { display: flex; justify-content: flex-start; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); min-block-size: 480px; overflow: hidden; }
-.nav-mobile-drawer-story__frame .theme-nav-mobile-drawer { position: static; transform: none; box-shadow: var(--shadow-3); }
+.nav-mobile-drawer-story__frame .cremona-nav-mobile-drawer { position: static; transform: none; box-shadow: var(--shadow-3); }
 .nav-mobile-drawer-dark-wrap { background: var(--color-bg-base); padding: var(--spacing-4); }
 </style>

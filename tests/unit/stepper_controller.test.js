@@ -42,17 +42,17 @@ describe('StepperController', () => {
   async function mount({ currentStep = 1, totalSteps = 0, disabledIdx = null } = {}) {
     const steps = [1, 2, 3, 4].map((i) => {
       const dis = disabledIdx === i ? ' data-state="disabled"' : '';
-      return `<li id="s${i}" class="theme-stepper__step"
+      return `<li id="s${i}" class="cremona-stepper__step"
         data-stepper-target="step"
         data-step-index="${i}"${dis}>
-        <span class="theme-stepper__indicator">${i}</span>
-        <div class="theme-stepper__text">
-          <span class="theme-stepper__label">Step ${i}</span>
+        <span class="cremona-stepper__indicator">${i}</span>
+        <div class="cremona-stepper__text">
+          <span class="cremona-stepper__label">Step ${i}</span>
         </div>
       </li>`;
     }).join('');
     document.body.innerHTML = `
-      <ol id="stp" class="theme-stepper"
+      <ol id="stp" class="cremona-stepper"
         data-controller="stepper"
         data-stepper-current-step-value="${currentStep}"
         data-stepper-total-steps-value="${totalSteps}">${steps}</ol>
@@ -152,11 +152,11 @@ describe('StepperController', () => {
   // 9
   it('connect → _sync runs before initial dispatch (no spurious event on mount)', async () => {
     document.body.innerHTML = `
-      <ol id="stp" class="theme-stepper"
+      <ol id="stp" class="cremona-stepper"
         data-controller="stepper"
         data-stepper-current-step-value="2">
-        <li class="theme-stepper__step" data-stepper-target="step" data-step-index="1"></li>
-        <li class="theme-stepper__step" data-stepper-target="step" data-step-index="2"></li>
+        <li class="cremona-stepper__step" data-stepper-target="step" data-step-index="1"></li>
+        <li class="cremona-stepper__step" data-stepper-target="step" data-step-index="2"></li>
       </ol>
     `;
     const wrap = document.getElementById('stp');
@@ -172,11 +172,11 @@ describe('StepperController', () => {
   // 10
   it('step with non-numeric data-step-index → skipped silently', async () => {
     document.body.innerHTML = `
-      <ol id="stp" class="theme-stepper"
+      <ol id="stp" class="cremona-stepper"
         data-controller="stepper"
         data-stepper-current-step-value="1">
-        <li id="bad" class="theme-stepper__step" data-stepper-target="step" data-step-index="oops"></li>
-        <li id="ok"  class="theme-stepper__step" data-stepper-target="step" data-step-index="1"></li>
+        <li id="bad" class="cremona-stepper__step" data-stepper-target="step" data-step-index="oops"></li>
+        <li id="ok"  class="cremona-stepper__step" data-stepper-target="step" data-step-index="1"></li>
       </ol>
     `;
     app = Application.start();

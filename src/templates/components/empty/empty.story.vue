@@ -29,7 +29,7 @@ setLocale('fr');
 const ICON_SIZE_MAP = { sm: 'lg', md: 'xl', lg: 'xl' };
 
 function icon(name, size) {
-  return `<span class="theme-icon theme-empty__icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon cremona-empty__icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 let _emptyCounter = 0;
@@ -52,22 +52,22 @@ function renderEmpty({
   const titleTag = allowedTitles.includes(titleLevel) ? titleLevel : 'h2';
   const iconSize = ICON_SIZE_MAP[size] ?? 'xl';
   const illustration = illustrationHtml
-    ? `<div class="theme-empty__illustration" aria-hidden="true">${illustrationHtml}</div>`
+    ? `<div class="cremona-empty__illustration" aria-hidden="true">${illustrationHtml}</div>`
     : iconName
-      ? `<div class="theme-empty__illustration" aria-hidden="true">${icon(iconName, iconSize)}</div>`
+      ? `<div class="cremona-empty__illustration" aria-hidden="true">${icon(iconName, iconSize)}</div>`
       : '';
   const bodyBlock = bodyHtml
-    ? `<div class="theme-empty__body">${bodyHtml}</div>`
+    ? `<div class="cremona-empty__body">${bodyHtml}</div>`
     : body
-      ? `<div class="theme-empty__body"><p>${body}</p></div>`
+      ? `<div class="cremona-empty__body"><p>${body}</p></div>`
       : '';
-  const actionsBlock = actionsHtml ? `<div class="theme-empty__actions">${actionsHtml}</div>` : '';
-  const footerBlock = footerHtml ? `<div class="theme-empty__footer">${footerHtml}</div>` : '';
+  const actionsBlock = actionsHtml ? `<div class="cremona-empty__actions">${actionsHtml}</div>` : '';
+  const footerBlock = footerHtml ? `<div class="cremona-empty__footer">${footerHtml}</div>` : '';
   return `
-    <div class="theme-empty" data-size="${size}" role="region" aria-labelledby="${titleId}">
+    <div class="cremona-empty" data-size="${size}" role="region" aria-labelledby="${titleId}">
       ${illustration}
-      <div class="theme-empty__content">
-        <${titleTag} id="${titleId}" class="theme-empty__title">${title}</${titleTag}>
+      <div class="cremona-empty__content">
+        <${titleTag} id="${titleId}" class="cremona-empty__title">${title}</${titleTag}>
         ${bodyBlock}
         ${actionsBlock}
         ${footerBlock}
@@ -77,12 +77,12 @@ function renderEmpty({
 }
 
 function button(label, variant = 'primary', size = 'md') {
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-size="${size}"><span class="theme-button__label">${label}</span></button>`;
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-size="${size}"><span class="cremona-button__label">${label}</span></button>`;
 }
 
 function kbd(...keys) {
-  const inner = keys.map((k) => `<kbd class="theme-kbd__key">${k}</kbd>`).join('<span class="theme-kbd__sep" aria-hidden="true">+</span>');
-  return `<kbd class="theme-kbd" data-size="sm">${inner}</kbd>`;
+  const inner = keys.map((k) => `<kbd class="cremona-kbd__key">${k}</kbd>`).join('<span class="cremona-kbd__sep" aria-hidden="true">+</span>');
+  return `<kbd class="cremona-kbd" data-size="sm">${inner}</kbd>`;
 }
 
 function block(html, label) {
@@ -142,8 +142,8 @@ const bodyHtml = `
     </header>
 
     <section class="empty-story__section" aria-labelledby="empty-section-default">
-      <h2 id="empty-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.default')}</h2>
-      <p class="empty-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.default')}</p>
+      <h2 id="empty-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.default')}</h2>
+      <p class="empty-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.default')}</p>
       <div class="empty-story__stack">
         ${block(renderEmpty({
           title: SAMPLES.noResultsTitle,
@@ -155,8 +155,8 @@ const bodyHtml = `
     </section>
 
     <section class="empty-story__section" aria-labelledby="empty-section-sizes">
-      <h2 id="empty-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.sizes')}</h2>
-      <p class="empty-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.sizes')}</p>
+      <h2 id="empty-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.sizes')}</h2>
+      <p class="empty-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.sizes')}</p>
       <div class="empty-story__stack">
         ${block(renderEmpty({
           size: 'sm',
@@ -183,8 +183,8 @@ const bodyHtml = `
     </section>
 
     <section class="empty-story__section" aria-labelledby="empty-section-hero">
-      <h2 id="empty-section-hero" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.hero')}</h2>
-      <p class="empty-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.hero')}</p>
+      <h2 id="empty-section-hero" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.hero')}</h2>
+      <p class="empty-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.hero')}</p>
       <div class="empty-story__stack">
         ${block(renderEmpty({
           size: 'lg',
@@ -199,12 +199,12 @@ const bodyHtml = `
     </section>
 
     <section class="empty-story__section" aria-labelledby="empty-section-composition">
-      <h2 id="empty-section-composition" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.composition')}</h2>
-      <p class="empty-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.composition')}</p>
+      <h2 id="empty-section-composition" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.composition')}</h2>
+      <p class="empty-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.composition')}</p>
       <div class="empty-story__stack">
         ${block(`
-          <article class="theme-card" data-variant="surface">
-            <div class="theme-card__body">
+          <article class="cremona-card" data-variant="surface">
+            <div class="cremona-card__body">
               ${renderEmpty({
                 size: 'md',
                 title: SAMPLES.noTeamTitle,
@@ -219,8 +219,8 @@ const bodyHtml = `
     </section>
 
     <section class="empty-story__section" aria-labelledby="empty-section-full">
-      <h2 id="empty-section-full" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.full-anatomy')}</h2>
-      <p class="empty-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.full-anatomy')}</p>
+      <h2 id="empty-section-full" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.full-anatomy')}</h2>
+      <p class="empty-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.empty.story.explainer.full-anatomy')}</p>
       <div class="empty-story__stack">
         ${block(renderEmpty({
           title: SAMPLES.noProjectsTitle,
@@ -233,7 +233,7 @@ const bodyHtml = `
     </section>
 
     <section class="empty-story__section" aria-labelledby="empty-section-long">
-      <h2 id="empty-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.long-content')}</h2>
+      <h2 id="empty-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.empty.story.section.long-content')}</h2>
       <div class="empty-story__stack">
         ${block(renderEmpty({
           size: 'lg',

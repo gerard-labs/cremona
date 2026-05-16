@@ -108,7 +108,7 @@ describe('FileUploadController', () => {
     imagePreview = true,
   } = {}) {
     document.body.innerHTML = `
-      <div id="fu-wrap" class="theme-file-upload"
+      <div id="fu-wrap" class="cremona-file-upload"
         data-controller="file-upload"
         data-file-upload-accept-value="${accept}"
         data-file-upload-max-file-size-value="${maxFileSize}"

@@ -7,7 +7,7 @@
  * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
-.theme-nav-mobile-drawer {
+.cremona-nav-mobile-drawer {
   inline-size: min(85vw, 320px);
   block-size: 100dvh;
   display: flex;
@@ -15,7 +15,7 @@
   padding: 0;
 }
 
-.theme-nav-mobile-drawer__header {
+.cremona-nav-mobile-drawer__header {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
@@ -23,7 +23,7 @@
   border-block-end: 1px solid var(--color-border-subtle);
 }
 
-.theme-nav-mobile-drawer__user {
+.cremona-nav-mobile-drawer__user {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -31,30 +31,30 @@
   min-inline-size: 0;
 }
 
-.theme-nav-mobile-drawer__user-meta {
+.cremona-nav-mobile-drawer__user-meta {
   display: flex;
   flex-direction: column;
   min-inline-size: 0;
 }
 
-.theme-nav-mobile-drawer__user-meta strong {
+.cremona-nav-mobile-drawer__user-meta strong {
   font-weight: var(--font-weight-semibold);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.theme-nav-mobile-drawer__user-meta span {
+.cremona-nav-mobile-drawer__user-meta span {
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
 }
 
-.theme-nav-mobile-drawer__close {
+.cremona-nav-mobile-drawer__close {
   min-block-size: 44px;
   min-inline-size: 44px;
 }
 
-.theme-nav-mobile-drawer__sections {
+.cremona-nav-mobile-drawer__sections {
   flex-grow: 1;
   overflow-y: auto;
   padding-block: var(--spacing-2);
@@ -63,13 +63,13 @@
   gap: var(--spacing-4);
 }
 
-.theme-nav-mobile-drawer__section-heading {
+.cremona-nav-mobile-drawer__section-heading {
   color: var(--color-text-tertiary);
   padding-inline: var(--spacing-2);
   margin-block-end: var(--spacing-1);
 }
 
-.theme-nav-mobile-drawer__section-items {
+.cremona-nav-mobile-drawer__section-items {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -77,7 +77,7 @@
   gap: var(--spacing-px);
 }
 
-.theme-nav-mobile-drawer__item {
+.cremona-nav-mobile-drawer__item {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
@@ -90,23 +90,23 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-nav-mobile-drawer__item:hover {
+.cremona-nav-mobile-drawer__item:hover {
   background-color: var(--color-hover-overlay);
 }
 
-.theme-nav-mobile-drawer__item[aria-current="page"] {
+.cremona-nav-mobile-drawer__item[aria-current="page"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-nav-mobile-drawer__item:focus-visible {
+.cremona-nav-mobile-drawer__item:focus-visible {
   outline: var(--ring-width) solid var(--ring-color);
   outline-offset: -2px;
 }
 
 /* iOS safe-area-inset preserved. */
 @supports (padding: env(safe-area-inset-top)) {
-  .theme-nav-mobile-drawer__header {
+  .cremona-nav-mobile-drawer__header {
     padding-block-start: max(var(--spacing-3), env(safe-area-inset-top));
   }
 }

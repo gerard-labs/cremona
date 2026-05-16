@@ -2,7 +2,7 @@
   NumberInput — touch-friendly +/- stepper around a native <input type="number">.
 
   Composes Input visual envelope (same height/border/radius via reuse of
-  the .theme-input class on the inner input) + 2 unstyled `.theme-button`
+  the .cremona-input class on the inner input) + 2 unstyled `.cremona-button`
   ghost-style stepper buttons (decrement / increment). The buttons invoke
   the input's native stepUp() / stepDown() so the browser respects min /
   max / step (no JS reimplementation).
@@ -53,7 +53,7 @@
 {%- set incrementAria = incrementAria | default('theme.number-input.aria.increment'|trans) -%}
 {%- set className     = className     | default('') -%}
 
-{%- set _classes = ['theme-number-input'] -%}
+{%- set _classes = ['cremona-number-input'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -63,7 +63,7 @@
 >
   <button
     type="button"
-    class="theme-number-input__btn theme-number-input__btn--decrement"
+    class="cremona-number-input__btn cremona-number-input__btn--decrement"
     aria-label="{{ decrementAria }}"
     data-number-input-target="decrement"
     data-action="click->number-input#decrement"
@@ -75,7 +75,7 @@
   {%- if min is not null %}{%- set _inputAttrs = _inputAttrs | merge({ min: min }) -%}{%- endif -%}
   {%- if max is not null %}{%- set _inputAttrs = _inputAttrs | merge({ max: max }) -%}{%- endif -%}
   {%- if step is not null %}{%- set _inputAttrs = _inputAttrs | merge({ step: step }) -%}{%- endif -%}
-  {% include '@theme/components/input/input.html.twig' with {
+  {% include '@cremona/components/input/input.html.twig' with {
     type: 'number',
     inputmode: 'numeric',
     size: size,
@@ -88,12 +88,12 @@
     readonly: readonly,
     invalid: invalid,
     describedBy: describedBy,
-    className: 'theme-number-input__input',
+    className: 'cremona-number-input__input',
     attrs: _inputAttrs,
   } only %}
   <button
     type="button"
-    class="theme-number-input__btn theme-number-input__btn--increment"
+    class="cremona-number-input__btn cremona-number-input__btn--increment"
     aria-label="{{ incrementAria }}"
     data-number-input-target="increment"
     data-action="click->number-input#increment"

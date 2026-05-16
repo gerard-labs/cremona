@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
  */
 describe('theme/js/index.js — Stimulus boot', () => {
   beforeEach(() => {
-    document.documentElement.removeAttribute('data-theme-booted');
+    document.documentElement.removeAttribute('data-cremona-booted');
     document.documentElement.__themeApp = undefined;
   });
 

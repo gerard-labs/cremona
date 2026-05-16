@@ -8,7 +8,7 @@
  * Layout (default + hero variants):
  *
  *   ┌─────────────────────────────────────────────┐
- *   │  <main class="theme-error-shell">           │
+ *   │  <main class="cremona-error-shell">           │
  *   │  ┌───────────────────────────────────────┐  │
  *   │  │  <section class="…__panel">           │  │
  *   │  │   Empty primitive                     │  │
@@ -32,7 +32,7 @@
  * inherits this layout doctrine.
  */
 
-.theme-error-shell {
+.cremona-error-shell {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +48,7 @@
 
 /* ----- panel -------------------------------------------------------- */
 
-.theme-error-shell__panel {
+.cremona-error-shell__panel {
   inline-size: 100%;
   max-inline-size: 40rem; /* ~640 px — error-feel pages */
   display: flex;
@@ -58,13 +58,13 @@
   text-align: center;
 }
 
-.theme-error-shell--hero .theme-error-shell__panel {
+.cremona-error-shell--hero .cremona-error-shell__panel {
   max-inline-size: 50rem; /* ~800 px — accommodate hero SVG */
 }
 
 /* ----- footer ------------------------------------------------------- */
 
-.theme-error-shell__footer {
+.cremona-error-shell__footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;

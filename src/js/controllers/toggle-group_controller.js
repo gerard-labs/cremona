@@ -17,7 +17,7 @@ import { Controller } from '@hotwired/stimulus';
  * controller does NOT touch their toggle behavior, only listens for the
  * resulting custom event.
  *
- * The group queries inner toggles via .theme-toggle (CSS class selector)
+ * The group queries inner toggles via .cremona-toggle (CSS class selector)
  * rather than via a Stimulus target, to avoid stamping every option's
  * Twig partial with a parent-scoped data-target attribute.
  */
@@ -33,7 +33,7 @@ export default class ToggleGroupController extends Controller {
 
   /** Read the current set of Toggles (re-queried each call — supports dynamic DOM). */
   get toggles() {
-    return Array.from(this.element.querySelectorAll('.theme-toggle'));
+    return Array.from(this.element.querySelectorAll('.cremona-toggle'));
   }
 
   /**
@@ -65,7 +65,7 @@ export default class ToggleGroupController extends Controller {
   onToggle(event) {
     if (this.modeValue !== 'single') return;
     const origin = event.target;
-    if (!origin.classList.contains('theme-toggle')) return;
+    if (!origin.classList.contains('cremona-toggle')) return;
     // Only enforce mutex when the event is a "press" (detail.pressed === true).
     // A user-unpress in single mode is allowed (group can be fully empty).
     if (event.detail && event.detail.pressed !== true) return;

@@ -201,9 +201,9 @@ export default class CarouselController extends Controller {
     if (this.hasTrackTarget) {
       // Translate the track by -active * 100 % (logical inset-inline-start so
       // RTL flips naturally via CSS — actually transform translateX needs
-      // explicit handling : the kit's CSS uses `--theme-carousel-translate`
+      // explicit handling : the kit's CSS uses `--cremona-carousel-translate`
       // custom prop applied as `translateX(calc(var(...) * -100%))`).
-      this.trackTarget.style.setProperty('--theme-carousel-current', active);
+      this.trackTarget.style.setProperty('--cremona-carousel-current', active);
     }
     if (this.hasSlideTarget) {
       for (let i = 0; i < this.slideTargets.length; i++) {

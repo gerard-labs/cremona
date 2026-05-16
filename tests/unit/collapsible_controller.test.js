@@ -34,22 +34,22 @@ describe('CollapsibleController', () => {
 
   async function mount({ open = false, secondOpen = null } = {}) {
     const second = secondOpen != null ? `
-      <div class="theme-collapsible" id="c2" data-controller="collapsible" data-action="click->collapsible#toggle">
-        <button type="button" class="theme-collapsible__trigger"
+      <div class="cremona-collapsible" id="c2" data-controller="collapsible" data-action="click->collapsible#toggle">
+        <button type="button" class="cremona-collapsible__trigger"
           aria-expanded="${secondOpen ? 'true' : 'false'}"
           aria-controls="c2-content">Second</button>
-        <div id="c2-content" class="theme-collapsible__content" data-state="${secondOpen ? 'open' : 'closed'}">
-          <div class="theme-collapsible__content-inner"><p>Second content</p></div>
+        <div id="c2-content" class="cremona-collapsible__content" data-state="${secondOpen ? 'open' : 'closed'}">
+          <div class="cremona-collapsible__content-inner"><p>Second content</p></div>
         </div>
       </div>
     ` : '';
     document.body.innerHTML = `
-      <div class="theme-collapsible" id="c1" data-controller="collapsible" data-action="click->collapsible#toggle">
-        <button id="trigger" type="button" class="theme-collapsible__trigger"
+      <div class="cremona-collapsible" id="c1" data-controller="collapsible" data-action="click->collapsible#toggle">
+        <button id="trigger" type="button" class="cremona-collapsible__trigger"
           aria-expanded="${open ? 'true' : 'false'}"
           aria-controls="c1-content">First</button>
-        <div id="c1-content" class="theme-collapsible__content" data-state="${open ? 'open' : 'closed'}">
-          <div class="theme-collapsible__content-inner"><p>First content</p></div>
+        <div id="c1-content" class="cremona-collapsible__content" data-state="${open ? 'open' : 'closed'}">
+          <div class="cremona-collapsible__content-inner"><p>First content</p></div>
         </div>
       </div>
       ${second}
@@ -67,26 +67,26 @@ describe('CollapsibleController', () => {
 
   it('connect() — syncs data-state on the content from aria-expanded', async () => {
     const { first } = await mount({ open: true });
-    expect(first.querySelector('.theme-collapsible__content').dataset.state).toBe('open');
+    expect(first.querySelector('.cremona-collapsible__content').dataset.state).toBe('open');
   });
 
   it('connect() — defaults to closed when aria-expanded is false', async () => {
     const { first } = await mount({ open: false });
-    expect(first.querySelector('.theme-collapsible__content').dataset.state).toBe('closed');
+    expect(first.querySelector('.cremona-collapsible__content').dataset.state).toBe('closed');
   });
 
   it('toggle() — closed → open flips aria-expanded and data-state', async () => {
     const { first, firstCtrl } = await mount({ open: false });
     firstCtrl.toggle();
-    expect(first.querySelector('.theme-collapsible__trigger').getAttribute('aria-expanded')).toBe('true');
-    expect(first.querySelector('.theme-collapsible__content').dataset.state).toBe('open');
+    expect(first.querySelector('.cremona-collapsible__trigger').getAttribute('aria-expanded')).toBe('true');
+    expect(first.querySelector('.cremona-collapsible__content').dataset.state).toBe('open');
   });
 
   it('toggle() — open → closed flips back', async () => {
     const { first, firstCtrl } = await mount({ open: true });
     firstCtrl.toggle();
-    expect(first.querySelector('.theme-collapsible__trigger').getAttribute('aria-expanded')).toBe('false');
-    expect(first.querySelector('.theme-collapsible__content').dataset.state).toBe('closed');
+    expect(first.querySelector('.cremona-collapsible__trigger').getAttribute('aria-expanded')).toBe('false');
+    expect(first.querySelector('.cremona-collapsible__content').dataset.state).toBe('closed');
   });
 
   it('toggle() — dispatches collapsible:toggle (bubbles) with detail.open=true on open', async () => {
@@ -112,21 +112,21 @@ describe('CollapsibleController', () => {
 
   it('toggle() — filters out clicks outside the trigger (when called with an event)', async () => {
     const { first, firstCtrl } = await mount({ open: false });
-    const contentInner = first.querySelector('.theme-collapsible__content-inner');
+    const contentInner = first.querySelector('.cremona-collapsible__content-inner');
     // Simulate a click event whose target is the content-inner, NOT the trigger.
     firstCtrl.toggle({ target: contentInner });
-    expect(first.querySelector('.theme-collapsible__trigger').getAttribute('aria-expanded')).toBe('false');
+    expect(first.querySelector('.cremona-collapsible__trigger').getAttribute('aria-expanded')).toBe('false');
   });
 
   it('two Collapsibles are independent — toggling one does not affect the other', async () => {
     const { first, second, firstCtrl, secondCtrl } = await mount({ open: false, secondOpen: true });
     firstCtrl.toggle();
-    expect(first.querySelector('.theme-collapsible__content').dataset.state).toBe('open');
-    expect(second.querySelector('.theme-collapsible__trigger').getAttribute('aria-expanded')).toBe('true');
-    expect(second.querySelector('.theme-collapsible__content').dataset.state).toBe('open');
+    expect(first.querySelector('.cremona-collapsible__content').dataset.state).toBe('open');
+    expect(second.querySelector('.cremona-collapsible__trigger').getAttribute('aria-expanded')).toBe('true');
+    expect(second.querySelector('.cremona-collapsible__content').dataset.state).toBe('open');
     // And vice versa: toggling second doesn't affect first.
     secondCtrl.toggle();
-    expect(second.querySelector('.theme-collapsible__trigger').getAttribute('aria-expanded')).toBe('false');
-    expect(first.querySelector('.theme-collapsible__trigger').getAttribute('aria-expanded')).toBe('true');
+    expect(second.querySelector('.cremona-collapsible__trigger').getAttribute('aria-expanded')).toBe('false');
+    expect(first.querySelector('.cremona-collapsible__trigger').getAttribute('aria-expanded')).toBe('true');
   });
 });

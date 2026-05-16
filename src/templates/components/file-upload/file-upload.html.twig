@@ -31,7 +31,7 @@
 
   Usage:
 
-    {% include '@theme/components/file-upload/file-upload.html.twig' with {
+    {% include '@cremona/components/file-upload/file-upload.html.twig' with {
       name: 'documents',
       label: 'Téléverser des documents'|trans,
       accept: 'application/pdf,image/*',
@@ -51,7 +51,7 @@
     file-upload:upload-error      — detail.{ file, error }.
 -#}
 
-{%- set htmlId          = htmlId          | default('theme-fu-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-fu-' ~ random()) -%}
 {%- set name            = name            | default('files') -%}
 {%- set label           = label           | default('') -%}
 {%- set accept          = accept          | default('*/*') -%}
@@ -64,7 +64,7 @@
 {%- set roleDescription = roleDescription | default('zone de téléversement') -%}
 {%- set className       = className       | default('') -%}
 
-{%- set _classes = ['theme-file-upload'] -%}
+{%- set _classes = ['cremona-file-upload'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -92,8 +92,8 @@
     {%- if multiple %} multiple{% endif -%}
     aria-describedby="{{ htmlId }}-affordance"
   />
-  <label for="{{ htmlId }}-input" class="theme-file-upload__affordance" id="{{ htmlId }}-affordance">
-    <span class="theme-file-upload__icon" aria-hidden="true"></span>
-    <span class="theme-file-upload__affordance-text">{{ label }}</span>
+  <label for="{{ htmlId }}-input" class="cremona-file-upload__affordance" id="{{ htmlId }}-affordance">
+    <span class="cremona-file-upload__icon" aria-hidden="true"></span>
+    <span class="cremona-file-upload__affordance-text">{{ label }}</span>
   </label>
 </div>

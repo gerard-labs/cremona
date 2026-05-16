@@ -79,7 +79,7 @@ Twig templates through the Symfony bridge.
 ```bash
 pnpm install        # install dependencies
 pnpm dev            # open the Histoire catalog → http://localhost:6006
-pnpm build          # build the library → dist/theme.js + dist/theme.css
+pnpm build          # build the library → dist/cremona.js + dist/cremona.css
 pnpm test:run       # run the 673 unit tests
 pnpm lint           # stylelint · eslint · anti-drift checks
 ```
@@ -98,7 +98,7 @@ together (Twig for markup, the JS bundle for behaviour).
 
 ### Option A — Symfony (Twig templates + Composer bridge)
 
-The bridge registers the `@theme` Twig namespace and wires the translation
+The bridge registers the `@cremona` Twig namespace and wires the translation
 catalogs into the Symfony Translator.
 
 1. Add the package as a VCS repository in `composer.json` and require it:
@@ -120,14 +120,14 @@ catalogs into the Symfony Translator.
    ```php
    return [
        // …
-       Gerard\Theme\Bridge\Symfony\ThemeBundle::class => ['all' => true],
+       Gerard\Cremona\Bridge\Symfony\CremonaBundle::class => ['all' => true],
    ];
    ```
 
 3. Use any component from a template:
 
    ```twig
-   {% include '@theme/components/button/button.html.twig' with {
+   {% include '@cremona/components/button/button.html.twig' with {
        label: 'Enregistrer',
        variant: 'primary',
        iconLeading: 'check',
@@ -138,19 +138,19 @@ catalogs into the Symfony Translator.
 
    ```js
    // assets/app.js
-   import '@gerard/cremona/theme.css';
+   import '@gerard/cremona/cremona.css';
    import { start } from '@gerard/cremona';
 
    start(); // boots Stimulus + registers every kit controller
    ```
 
-The bridge has zero configuration — it only registers the `@theme` namespace and
+The bridge has zero configuration — it only registers the `@cremona` namespace and
 the `fr.json` / `en.json` translation catalogs.
 
 ### Option B — JavaScript bundler (Vite, Webpack, Rspack…)
 
 ```js
-import '@gerard/cremona/theme.css';
+import '@gerard/cremona/cremona.css';
 import { start } from '@gerard/cremona';
 
 start(); // auto-boots a Stimulus application on <html>
@@ -170,18 +170,18 @@ register(application); // adds all 58 kit controllers
 ### Option C — plain HTML / CDN
 
 ```bash
-pnpm build   # produces dist/theme.js (ESM) + dist/theme.css
+pnpm build   # produces dist/cremona.js (ESM) + dist/cremona.css
 ```
 
 ```html
-<link rel="stylesheet" href="/theme.css" />
+<link rel="stylesheet" href="/cremona.css" />
 <script type="module">
-  import { start } from '/theme.js';
+  import { start } from '/cremona.js';
   start();
 </script>
 ```
 
-> `dist/theme.js` lists `@hotwired/stimulus` and `dayjs` as externals — provide
+> `dist/cremona.js` lists `@hotwired/stimulus` and `dayjs` as externals — provide
 > them via an import map, or bundle them in for a fully standalone build.
 
 ---
@@ -233,7 +233,7 @@ The **Density Switcher** pattern offers a built-in control.
 ### Presets
 
 `src/styles/presets/default.css` is the shipped brand skin. To re-brand the kit,
-copy it, override the brand tokens, and import your preset after `theme.css` —
+copy it, override the brand tokens, and import your preset after `cremona.css` —
 every component re-skins for free.
 
 ---
@@ -308,16 +308,16 @@ theme/
 ├── manifest.json            # machine-readable status of every component
 ├── package.json             # NPM package (JS + CSS)
 ├── composer.json            # Composer package (Twig + Symfony bridge)
-├── vite.config.js            # library build (theme.js + theme.css)
+├── vite.config.js            # library build (cremona.js + cremona.css)
 ├── histoire.config.js        # component catalog config
-├── Bridge/Symfony/           # minimal Symfony bundle (@theme namespace)
+├── Bridge/Symfony/           # minimal Symfony bundle (@cremona namespace)
 ├── src/
 │   ├── styles/
 │   │   ├── tokens/           # the 8 token families
 │   │   ├── base/             # reset + base typography
 │   │   ├── components/       # one stylesheet per component
 │   │   ├── presets/          # brand skins
-│   │   └── theme.css         # main entry (tokens + base + components)
+│   │   └── cremona.css         # main entry (tokens + base + components)
 │   ├── js/
 │   │   ├── controllers/      # 58 Stimulus controllers
 │   │   ├── i18n/             # fr.json + en.json catalogs
@@ -338,7 +338,7 @@ theme/
 | Command                | What it does |
 | ---------------------- | ------------ |
 | `pnpm dev`             | Histoire catalog dev server (`localhost:6006`) |
-| `pnpm build`           | Library build → `dist/theme.js` + `dist/theme.css` |
+| `pnpm build`           | Library build → `dist/cremona.js` + `dist/cremona.css` |
 | `pnpm histoire:build`  | Static catalog → `.histoire/dist/` |
 | `pnpm test` / `test:run` | Vitest unit tests (watch / single run) |
 | `pnpm test:a11y`       | axe-core accessibility audit (Playwright) |
@@ -374,7 +374,7 @@ composer install
 composer test
 ```
 
-It exercises the bundle's DI extension — `@theme` Twig namespace registration
+It exercises the bundle's DI extension — `@cremona` Twig namespace registration
 and translation-catalog discovery.
 
 ### The ring methodology

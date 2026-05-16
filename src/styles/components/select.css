@@ -3,12 +3,12 @@
  * to look like an Input.
  *
  * Composes:
- *   - .theme-popover surface (radius, shadow, motion-driven open/close)
- *   - .theme-select__trigger styled to match Input visually (border,
+ *   - .cremona-popover surface (radius, shadow, motion-driven open/close)
+ *   - .cremona-select__trigger styled to match Input visually (border,
  *     radius-input, density-input-height, focus ring)
- *   - .theme-select__listbox extends popover content (slimmer padding,
+ *   - .cremona-select__listbox extends popover content (slimmer padding,
  *     min-inline-size matched to a comfortable single-select)
- *   - .theme-item rows for options (inherited from Item.css)
+ *   - .cremona-item rows for options (inherited from Item.css)
  *
  * The trigger is a `<button>` (not an Input). This is intentional:
  *   - Buttons can have aria-haspopup="listbox" + aria-expanded + aria-
@@ -28,7 +28,7 @@
 
 /* ----- trigger (looks like Input) ----------------------------------- */
 
-.theme-select__trigger {
+.cremona-select__trigger {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -49,46 +49,46 @@
     box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-select__trigger[data-size="sm"] {
+.cremona-select__trigger[data-size="sm"] {
   block-size: 32px;
   font-size: var(--font-size-sm);
 }
 
-.theme-select__trigger[data-size="lg"] {
+.cremona-select__trigger[data-size="lg"] {
   block-size: 48px;
   font-size: var(--font-size-base);
 }
 
-.theme-select__trigger:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-select__trigger:hover:not(:disabled, [aria-invalid="true"]) {
   border-color: var(--color-border-strong);
 }
 
-.theme-select__trigger:focus-visible {
+.cremona-select__trigger:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: var(--ring-offset-width);
   border-color: var(--color-border-focus);
 }
 
-.theme-select__trigger[aria-invalid="true"] {
+.cremona-select__trigger[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-.theme-select__trigger[aria-invalid="true"]:focus-visible {
+.cremona-select__trigger[aria-invalid="true"]:focus-visible {
   outline-color: var(--color-danger);
   border-color: var(--color-danger);
 }
 
-.theme-select__trigger:disabled {
+.cremona-select__trigger:disabled {
   background-color: var(--color-bg-sunken);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.theme-select__trigger[aria-expanded="true"] {
+.cremona-select__trigger[aria-expanded="true"] {
   border-color: var(--color-border-focus);
 }
 
-.theme-select__label {
+.cremona-select__label {
   flex: 1 1 auto;
   min-inline-size: 0;
   overflow: hidden;
@@ -96,30 +96,30 @@
   white-space: nowrap;
 }
 
-.theme-select__label[data-placeholder="true"] {
+.cremona-select__label[data-placeholder="true"] {
   color: var(--color-text-tertiary);
 }
 
-.theme-select__chevron {
+.cremona-select__chevron {
   flex-shrink: 0;
   color: var(--color-text-tertiary);
   transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-select__trigger[aria-expanded="true"] .theme-select__chevron {
+.cremona-select__trigger[aria-expanded="true"] .cremona-select__chevron {
   transform: rotate(180deg);
 }
 
 /* Touch target hardening for trigger (matches Input doctrine). */
 @media (pointer: coarse) {
-  .theme-select__trigger {
+  .cremona-select__trigger {
     min-block-size: 44px;
   }
 }
 
 /* ----- listbox (popover content) ------------------------------------ */
 
-.theme-select__listbox {
+.cremona-select__listbox {
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-1);
   min-inline-size: 200px;
@@ -129,7 +129,7 @@
   overflow-y: auto;
 }
 
-.theme-select__option {
+.cremona-select__option {
   inline-size: 100%;
   cursor: pointer;
 }
@@ -137,29 +137,29 @@
 /* aria-activedescendant pattern: the controller stamps data-active="true"
    on the currently-active option (NOT focused — focus stays on trigger).
    The CSS paints the active state visually. */
-.theme-select__option[data-active="true"]:not([aria-disabled="true"]) {
+.cremona-select__option[data-active="true"]:not([aria-disabled="true"]) {
   background-color: var(--color-bg-sunken);
 }
 
 /* Selected state — primary-soft bg + check icon trailing (Twig stamps
    the icon when aria-selected="true"). */
-.theme-select__option[aria-selected="true"] {
+.cremona-select__option[aria-selected="true"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-select__option[aria-selected="true"][data-active="true"] {
+.cremona-select__option[aria-selected="true"][data-active="true"] {
   background-color: var(--color-primary-soft);
 }
 
-.theme-select__option[aria-disabled="true"],
-.theme-select__option[data-state="disabled"] {
+.cremona-select__option[aria-disabled="true"],
+.cremona-select__option[data-state="disabled"] {
   opacity: 0.5;
   pointer-events: none;
 }
 
 /* The check icon (only rendered when aria-selected) — picks up the
-   selected-foreground color via .theme-item__icon currentColor inheritance. */
-.theme-select__option-check {
+   selected-foreground color via .cremona-item__icon currentColor inheritance. */
+.cremona-select__option-check {
   color: var(--color-selected-foreground);
 }

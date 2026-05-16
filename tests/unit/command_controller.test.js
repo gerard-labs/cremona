@@ -45,7 +45,7 @@ describe('CommandController', () => {
 
   async function mount({ hotkey = 'k', autoFocusInput = true } = {}) {
     document.body.innerHTML = `
-      <div id="cmd-wrap" class="theme-command"
+      <div id="cmd-wrap" class="cremona-command"
         data-controller="command"
         data-command-hotkey-value="${hotkey}"
         data-command-auto-focus-input-value="${autoFocusInput}">

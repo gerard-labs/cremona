@@ -10,7 +10,7 @@
   Composes the `sidebar` Stimulus controller (collapse toggle + DOM sync +
   dispatch). Items are [Item](../item/item.html.twig) primitives (Ring 1).
   Nested sections opt-in via [Collapsible](../collapsible/collapsible.html.twig)
-  (Ring 1) — consumer renders a Collapsible inside `.theme-sidebar__nav`.
+  (Ring 1) — consumer renders a Collapsible inside `.cremona-sidebar__nav`.
 
   Parameters:
     htmlId         (string,  optional) — auto-generated.
@@ -43,7 +43,7 @@
 
   Usage:
 
-    {% include '@theme/components/sidebar/sidebar.html.twig' with {
+    {% include '@cremona/components/sidebar/sidebar.html.twig' with {
       label: 'Navigation principale'|trans,
       brand: 'Samurai',
       brandHref: '/',
@@ -69,7 +69,7 @@
     sidebar:collapse-change — detail.{ collapsed: boolean }
 -#}
 
-{%- set htmlId             = htmlId             | default('theme-sidebar-' ~ random()) -%}
+{%- set htmlId             = htmlId             | default('cremona-sidebar-' ~ random()) -%}
 {%- set label              = label              | default('Navigation principale') -%}
 {%- set navLabel           = navLabel           | default('Sections') -%}
 {%- set brand              = brand              | default(null) -%}
@@ -82,7 +82,7 @@
 {%- set mobileSheet        = mobileSheet        | default(false) -%}
 {%- set className          = className          | default('') -%}
 
-{%- set _classes = ['theme-sidebar'] -%}
+{%- set _classes = ['cremona-sidebar'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <aside
@@ -95,43 +95,43 @@
   aria-label="{{ label }}"
 >
   {%- if brand or showCollapseToggle -%}
-    <div class="theme-sidebar__header">
+    <div class="cremona-sidebar__header">
       {%- if brand -%}
         {%- if brandHref -%}
-          <a href="{{ brandHref }}" class="theme-sidebar__brand">
-            <span class="theme-sidebar__brand-label">{{ brand }}</span>
+          <a href="{{ brandHref }}" class="cremona-sidebar__brand">
+            <span class="cremona-sidebar__brand-label">{{ brand }}</span>
           </a>
         {%- else -%}
-          <span class="theme-sidebar__brand">
-            <span class="theme-sidebar__brand-label">{{ brand }}</span>
+          <span class="cremona-sidebar__brand">
+            <span class="cremona-sidebar__brand-label">{{ brand }}</span>
           </span>
         {%- endif -%}
       {%- endif -%}
       {%- if showCollapseToggle -%}
         <button
           type="button"
-          class="theme-sidebar__collapse-toggle"
+          class="cremona-sidebar__collapse-toggle"
           data-sidebar-target="collapseToggle"
           data-action="click->sidebar#toggleCollapse"
           aria-controls="{{ htmlId }}"
           aria-expanded="{{ collapsed ? 'false' : 'true' }}"
           aria-label="{{ toggleAriaLabel }}"
         >
-          <span class="theme-sidebar__collapse-icon" aria-hidden="true"></span>
+          <span class="cremona-sidebar__collapse-icon" aria-hidden="true"></span>
         </button>
       {%- endif -%}
     </div>
   {%- endif -%}
 
-  <nav class="theme-sidebar__nav" aria-label="{{ navLabel }}">
+  <nav class="cremona-sidebar__nav" aria-label="{{ navLabel }}">
     {%- for section in sections -%}
       {%- if section.title is defined and section.title -%}
-        <h3 class="theme-sidebar__section-title">{{ section.title }}</h3>
+        <h3 class="cremona-sidebar__section-title">{{ section.title }}</h3>
       {%- endif -%}
-      <ul class="theme-sidebar__section">
+      <ul class="cremona-sidebar__section">
         {%- for item in section.items | default([]) -%}
           <li>
-            {% include '@theme/components/item/item.html.twig' with item | merge({ as: 'a' }) %}
+            {% include '@cremona/components/item/item.html.twig' with item | merge({ as: 'a' }) %}
           </li>
         {%- endfor -%}
       </ul>
@@ -139,6 +139,6 @@
   </nav>
 
   {%- if footerContent -%}
-    <div class="theme-sidebar__footer">{{ footerContent | raw }}</div>
+    <div class="cremona-sidebar__footer">{{ footerContent | raw }}</div>
   {%- endif -%}
 </aside>

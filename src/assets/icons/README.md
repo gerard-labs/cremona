@@ -15,7 +15,7 @@
 - **Twig (`.html.twig`)** — Symfony Twig's `source()` function inlines it:
 
   ```twig
-  {{ source('@theme/assets/icons/' ~ name ~ '.svg')|raw }}
+  {{ source('@cremona/assets/icons/' ~ name ~ '.svg')|raw }}
   ```
 
 The Icon primitive (`src/templates/components/icon/`) wraps both paths and

@@ -15,8 +15,8 @@ import { Controller } from '@hotwired/stimulus';
  *      both attributes consistently, but a server-side render that only
  *      knows one source of truth (aria-expanded) is still safe.
  *
- * No targets — the controller queries the trigger via `.theme-collapsible__trigger`
- * and the content via `.theme-collapsible__content` (CSS class selectors).
+ * No targets — the controller queries the trigger via `.cremona-collapsible__trigger`
+ * and the content via `.cremona-collapsible__content` (CSS class selectors).
  * This avoids polluting the Twig with data-target attributes when the wrapper
  * is the controller scope.
  *
@@ -61,10 +61,10 @@ export default class CollapsibleController extends Controller {
   }
 
   get trigger() {
-    return this.element.querySelector('.theme-collapsible__trigger');
+    return this.element.querySelector('.cremona-collapsible__trigger');
   }
 
   get content() {
-    return this.element.querySelector('.theme-collapsible__content');
+    return this.element.querySelector('.cremona-collapsible__content');
   }
 }

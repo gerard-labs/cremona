@@ -39,7 +39,7 @@
 
   Usage:
 
-    {% embed '@theme/components/scroll-area/scroll-area.html.twig' with {
+    {% embed '@cremona/components/scroll-area/scroll-area.html.twig' with {
       orientation: 'vertical',
       maxBlockSize: '320px',
       size: 'md',
@@ -51,14 +51,14 @@
     {% endembed %}
 -#}
 
-{%- set htmlId        = htmlId        | default('theme-scroll-area-' ~ random()) -%}
+{%- set htmlId        = htmlId        | default('cremona-scroll-area-' ~ random()) -%}
 {%- set orientation   = orientation   | default('both') -%}
 {%- set size          = size          | default('md') -%}
 {%- set maxBlockSize  = maxBlockSize  | default(null) -%}
 {%- set maxInlineSize = maxInlineSize | default(null) -%}
 {%- set className     = className     | default('') -%}
 
-{%- set _classes = ['theme-scroll-area'] -%}
+{%- set _classes = ['cremona-scroll-area'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _style = '' -%}

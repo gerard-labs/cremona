@@ -14,15 +14,15 @@ function renderFormPhoneInput({ id, label, help, error, placeholder, initialCoun
   if (help) describedByIds.push(`${id}-help`);
   if (error) describedByIds.push(`${id}-error`);
   const describedBy = describedByIds.length ? ` aria-describedby="${describedByIds.join(' ')}"` : '';
-  const invalid = error ? ' theme-field--invalid' : '';
+  const invalid = error ? ' cremona-field--invalid' : '';
 
   return `
-    <div class="theme-field theme-form-phone-input${invalid}" data-controller="phone-input" data-phone-input-initial-country-value="${initialCountry}" data-phone-input-preferred-countries-value='${JSON.stringify(preferredCountries)}' data-phone-input-separate-dial-code-value="${separateDialCode}" data-phone-input-national-mode-value="${nationalMode}">
-      <label class="theme-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
-      <input type="tel" class="theme-input theme-form-phone-input__input" id="${id}-input" name="${id}-display" autocomplete="tel" inputmode="tel" aria-label="${t('theme.form.phone-input.aria.label')}" data-phone-input-target="input"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy}${placeholder ? ` placeholder="${placeholder}"` : ''} />
+    <div class="cremona-field cremona-form-phone-input${invalid}" data-controller="phone-input" data-phone-input-initial-country-value="${initialCountry}" data-phone-input-preferred-countries-value='${JSON.stringify(preferredCountries)}' data-phone-input-separate-dial-code-value="${separateDialCode}" data-phone-input-national-mode-value="${nationalMode}">
+      <label class="cremona-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
+      <input type="tel" class="cremona-input cremona-form-phone-input__input" id="${id}-input" name="${id}-display" autocomplete="tel" inputmode="tel" aria-label="${t('theme.form.phone-input.aria.label')}" data-phone-input-target="input"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy}${placeholder ? ` placeholder="${placeholder}"` : ''} />
       <input type="hidden" name="${id}" data-phone-input-target="hiddenInput" />
-      ${help ? `<p class="theme-field__help" id="${id}-help">${help}</p>` : ''}
-      ${error ? `<p class="theme-field__error" id="${id}-error">${error}</p>` : ''}
+      ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
+      ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
     </div>
   `;
 }
@@ -35,22 +35,22 @@ const bodyHtml = `
     </header>
 
     <section class="form-phone-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.default-fr')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.default-fr')}</h2>
       <div class="form-phone-input-story__frame">${renderFormPhoneInput({ id: 'story-default-fr', label: t('theme.form.phone-input.label.contact'), help: t('theme.form.phone-input.help.format'), placeholder: t('theme.form.phone-input.placeholder'), required: true })}</div>
     </section>
 
     <section class="form-phone-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.preferred-countries')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.preferred-countries')}</h2>
       <div class="form-phone-input-story__frame">${renderFormPhoneInput({ id: 'story-preferred', label: t('theme.form.phone-input.label.support'), help: t('theme.form.phone-input.help.preferred'), placeholder: t('theme.form.phone-input.placeholder'), preferredCountries: ['fr', 'be', 'ch', 'lu', 'ca'] })}</div>
     </section>
 
     <section class="form-phone-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.separate-dial-code')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.separate-dial-code')}</h2>
       <div class="form-phone-input-story__frame">${renderFormPhoneInput({ id: 'story-separate', label: t('theme.form.phone-input.label.contact'), help: t('theme.form.phone-input.help.dial-code'), placeholder: t('theme.form.phone-input.placeholder.no-prefix'), separateDialCode: true, nationalMode: false })}</div>
     </section>
 
     <section class="form-phone-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.validation-error')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.phone-input.story.section.validation-error')}</h2>
       <div class="form-phone-input-story__frame">${renderFormPhoneInput({ id: 'story-error', label: t('theme.form.phone-input.label.contact'), help: t('theme.form.phone-input.help.format'), error: t('theme.form.phone-input.error.invalid'), placeholder: t('theme.form.phone-input.placeholder'), required: true })}</div>
     </section>
   </section>

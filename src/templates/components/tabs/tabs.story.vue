@@ -68,19 +68,19 @@ function tabs({
     const isActive = it.id === effectiveValue;
     const disAttr = it.disabled ? ' disabled aria-disabled="true"' : '';
     return `<button id="${wrapId}-trig-${it.id}" type="button" role="tab"
-      class="theme-tabs__trigger"
+      class="cremona-tabs__trigger"
       data-tabs-target="trigger"
       data-tab-id="${it.id}"
       data-action="click->tabs#activate keydown->tabs#onKeydown"
       aria-controls="${wrapId}-panel-${it.id}"
       aria-selected="${isActive ? 'true' : 'false'}"
       tabindex="${isActive ? '0' : '-1'}"
-      data-state="${isActive ? 'active' : 'inactive'}"${disAttr}><span class="theme-tabs__trigger-label">${it.label}</span></button>`;
+      data-state="${isActive ? 'active' : 'inactive'}"${disAttr}><span class="cremona-tabs__trigger-label">${it.label}</span></button>`;
   }).join('');
   const panels = items.map((it) => {
     const isActive = it.id === effectiveValue;
     return `<div id="${wrapId}-panel-${it.id}" role="tabpanel"
-      class="theme-tabs__panel"
+      class="cremona-tabs__panel"
       data-tabs-target="panel"
       data-tab-id="${it.id}"
       aria-labelledby="${wrapId}-trig-${it.id}"
@@ -90,7 +90,7 @@ function tabs({
   const ariaLabel = label || S('default-label');
   const ariaOrient = orientation === 'vertical' ? ' aria-orientation="vertical"' : '';
   return `
-    <div id="${wrapId}" class="theme-tabs"
+    <div id="${wrapId}" class="cremona-tabs"
       data-controller="tabs"
       data-tabs-value-value="${effectiveValue || ''}"
       data-tabs-orientation-value="${orientation}"
@@ -98,7 +98,7 @@ function tabs({
       data-variant="${variant}"
       data-orientation="${orientation}"
       data-size="${size}">
-      <div role="tablist" class="theme-tabs__list" data-tabs-target="list"
+      <div role="tablist" class="cremona-tabs__list" data-tabs-target="list"
         aria-label="${ariaLabel}"${ariaOrient}>${triggers}</div>
       ${panels}
     </div>
@@ -144,20 +144,20 @@ const bodyHtml = `
     </header>
 
     <section class="tabs-story__section" aria-labelledby="tabs-section-default">
-      <h2 id="tabs-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="tabs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="tabs-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="tabs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${tabs({ items: accountItems, label: S('aria.account') })}
     </section>
 
     <section class="tabs-story__section" aria-labelledby="tabs-section-pill">
-      <h2 id="tabs-section-pill" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.pill')}</h2>
-      <p class="tabs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.pill')}</p>
+      <h2 id="tabs-section-pill" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.pill')}</h2>
+      <p class="tabs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.pill')}</p>
       ${tabs({ items: accountItems.slice(0, 3), variant: 'pill', label: S('aria.account') })}
     </section>
 
     <section class="tabs-story__section" aria-labelledby="tabs-section-sizes">
-      <h2 id="tabs-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
-      <p class="tabs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
+      <h2 id="tabs-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
+      <p class="tabs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
       <div class="tabs-story__row">
         <div>
           <div class="tabs-story__size-label">${S('size.sm')}</div>
@@ -175,23 +175,23 @@ const bodyHtml = `
     </section>
 
     <section class="tabs-story__section" aria-labelledby="tabs-section-vertical">
-      <h2 id="tabs-section-vertical" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
-      <p class="tabs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
+      <h2 id="tabs-section-vertical" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
+      <p class="tabs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
       ${tabs({ items: verticalItems, orientation: 'vertical', label: S('aria.vertical') })}
     </section>
 
     <section class="tabs-story__section" aria-labelledby="tabs-section-manual">
-      <h2 id="tabs-section-manual" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.manual')}</h2>
-      <p class="tabs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.manual')}</p>
+      <h2 id="tabs-section-manual" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.manual')}</h2>
+      <p class="tabs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.manual')}</p>
       ${tabs({ items: manualItems, activation: 'manual', label: S('aria.manual') })}
     </section>
 
     <section class="tabs-story__section" aria-labelledby="tabs-section-events">
-      <h2 id="tabs-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="tabs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="tabs-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="tabs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       ${tabs({ id: 'tabs-events-demo', items: eventsItems, label: S('aria.events') })}
       <div class="tabs-story__log" data-events-log="tabs-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="tabs-story__log-out"></div>
       </div>
     </section>

@@ -9,7 +9,7 @@
  * (Typical bucket).
  */
 
-.theme-chatbot__dialog {
+.cremona-chatbot__dialog {
   /* Drawer at size that fits a chat panel comfortably on desktop while
      staying tactile on mobile (Drawer-default 320 px is too narrow for
      comfortable conversation reading). */
@@ -17,14 +17,14 @@
   block-size: 100dvh;
 }
 
-.theme-chatbot__body {
+.cremona-chatbot__body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
   overflow: hidden;
 }
 
-.theme-chatbot__messages {
+.cremona-chatbot__messages {
   flex: 1 1 auto;
   list-style: none;
   margin: 0;
@@ -35,15 +35,15 @@
   gap: var(--spacing-2);
 }
 
-.theme-chatbot__message {
+.cremona-chatbot__message {
   display: flex;
 }
 
-.theme-chatbot__message[data-role="user"] {
+.cremona-chatbot__message[data-role="user"] {
   justify-content: flex-end;
 }
 
-.theme-chatbot__message[data-role="user"] .theme-item {
+.cremona-chatbot__message[data-role="user"] .cremona-item {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
   max-inline-size: 80%;
@@ -51,7 +51,7 @@
   border-radius: var(--radius-md);
 }
 
-.theme-chatbot__message[data-role="bot"] .theme-item {
+.cremona-chatbot__message[data-role="bot"] .cremona-item {
   background-color: var(--color-bg-elevated);
   color: var(--color-text-primary);
   max-inline-size: 80%;
@@ -59,7 +59,7 @@
   border-radius: var(--radius-md);
 }
 
-.theme-chatbot__message[data-role="system"] .theme-item {
+.cremona-chatbot__message[data-role="system"] .cremona-item {
   background-color: var(--color-bg-sunken);
   color: var(--color-text-tertiary);
   font: var(--typography-caption);
@@ -67,7 +67,7 @@
   inline-size: 100%;
 }
 
-.theme-chatbot__typing {
+.cremona-chatbot__typing {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -77,32 +77,32 @@
   min-block-size: var(--spacing-5);
 }
 
-.theme-chatbot__typing[data-active="false"] {
+.cremona-chatbot__typing[data-active="false"] {
   visibility: hidden;
 }
 
-.theme-chatbot__typing-dots {
+.cremona-chatbot__typing-dots {
   display: inline-flex;
   gap: 2px;
 }
 
-.theme-chatbot__typing-dots span {
+.cremona-chatbot__typing-dots span {
   inline-size: 4px;
   block-size: 4px;
   background-color: var(--color-text-tertiary);
   border-radius: var(--radius-pill);
-  animation: theme-chatbot-typing 1.2s infinite ease-in-out;
+  animation: cremona-chatbot-typing 1.2s infinite ease-in-out;
 }
 
-.theme-chatbot__typing-dots span:nth-child(2) {
+.cremona-chatbot__typing-dots span:nth-child(2) {
   animation-delay: 0.15s;
 }
 
-.theme-chatbot__typing-dots span:nth-child(3) {
+.cremona-chatbot__typing-dots span:nth-child(3) {
   animation-delay: 0.3s;
 }
 
-@keyframes theme-chatbot-typing {
+@keyframes cremona-chatbot-typing {
   0%,
   60%,
   100% {
@@ -116,24 +116,24 @@
   }
 }
 
-.theme-chatbot__form {
+.cremona-chatbot__form {
   display: flex;
   gap: var(--spacing-2);
   align-items: center;
 }
 
-.theme-chatbot__input {
+.cremona-chatbot__input {
   flex: 1 1 auto;
 }
 
-.theme-chatbot__send {
+.cremona-chatbot__send {
   flex: 0 0 auto;
   inline-size: 40px;
   padding: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-chatbot__typing-dots span {
+  .cremona-chatbot__typing-dots span {
     animation: none;
     opacity: 0.6;
   }

@@ -55,8 +55,8 @@ const SAMPLES = {
 
 function renderTypo({ variant, content, color, weight, align, tabularNums, htmlId, className, as }) {
   const tag = as ?? VARIANT_TO_TAG[variant] ?? 'span';
-  const classes = ['theme-typography'];
-  if (tabularNums) classes.push('theme-tabular-nums');
+  const classes = ['cremona-typography'];
+  if (tabularNums) classes.push('cremona-tabular-nums');
   if (className) classes.push(className);
   const attrs = [
     `class="${classes.join(' ')}"`,
@@ -86,35 +86,35 @@ const bodyHtml = `
     </header>
 
     <section class="typography-story__section" aria-labelledby="typography-section-variants">
-      <h2 id="typography-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.variants')}</h2>
+      <h2 id="typography-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.variants')}</h2>
       <div class="typography-story__stack">
         ${VARIANTS.map((v) => renderRow(v, renderTypo({ variant: v, content: SAMPLES[v] }))).join('')}
       </div>
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-colors">
-      <h2 id="typography-section-colors" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.colors')}</h2>
+      <h2 id="typography-section-colors" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.colors')}</h2>
       <div class="typography-story__stack">
         ${COLORS.map((c) => renderRow(c, renderTypo({ variant: 'body', content: SAMPLES.body, color: c }))).join('')}
       </div>
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-weights">
-      <h2 id="typography-section-weights" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.weights')}</h2>
+      <h2 id="typography-section-weights" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.weights')}</h2>
       <div class="typography-story__stack">
         ${WEIGHTS.map((w) => renderRow(w, renderTypo({ variant: 'body', content: SAMPLES.body, weight: w }))).join('')}
       </div>
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-align">
-      <h2 id="typography-section-align" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.align')}</h2>
+      <h2 id="typography-section-align" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.align')}</h2>
       <div class="typography-story__stack">
         ${ALIGNS.map((a) => renderRow(a, renderTypo({ variant: 'body', content: SAMPLES.body, align: a }))).join('')}
       </div>
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-tabular">
-      <h2 id="typography-section-tabular" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.tabular')}</h2>
+      <h2 id="typography-section-tabular" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.tabular')}</h2>
       <div class="typography-story__stack">
         ${renderRow('tabular', renderTypo({ variant: 'body', content: '1 234,56 €', tabularNums: true }))}
         ${renderRow('tabular', renderTypo({ variant: 'body', content: '999,99 €', tabularNums: true }))}
@@ -123,21 +123,21 @@ const bodyHtml = `
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-wrap">
-      <h2 id="typography-section-wrap" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.wrap')}</h2>
+      <h2 id="typography-section-wrap" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.wrap')}</h2>
       <div class="typography-story__wrap">
         ${renderTypo({ variant: 'body', content: t('theme.typography.story.sample-long') })}
       </div>
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-empty">
-      <h2 id="typography-section-empty" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.empty')}</h2>
+      <h2 id="typography-section-empty" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.empty')}</h2>
       <div class="typography-story__stack">
         ${renderRow('empty', renderTypo({ variant: 'body', content: t('theme.typography.story.empty-placeholder'), color: 'disabled' }))}
       </div>
     </section>
 
     <section class="typography-story__section" aria-labelledby="typography-section-rich">
-      <h2 id="typography-section-rich" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.rich')}</h2>
+      <h2 id="typography-section-rich" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.typography.story.section.rich')}</h2>
       <div class="typography-story__stack">
         ${renderRow('rich', renderTypo({ variant: 'body', content: t('theme.typography.story.sample-rich') }))}
       </div>

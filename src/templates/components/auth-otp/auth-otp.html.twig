@@ -40,10 +40,10 @@
 {%- set emailFallbackLabel = emailFallbackLabel | default('theme.auth.otp.email-fallback-cta'|trans) -%}
 {%- set backToLoginHref    = backToLoginHref    | default(null) -%}
 {%- set backToLoginLabel   = backToLoginLabel   | default('theme.auth.otp.back-to-login-cta'|trans) -%}
-{%- set htmlId             = htmlId             | default('theme-auth-otp') -%}
+{%- set htmlId             = htmlId             | default('cremona-auth-otp') -%}
 {%- set className          = className          | default('') -%}
 
-{%- set _formClasses = ['theme-auth-otp'] -%}
+{%- set _formClasses = ['cremona-auth-otp'] -%}
 {%- if className -%}{%- set _formClasses = _formClasses | merge([className]) -%}{%- endif -%}
 
 {%- set _state = 'default' -%}
@@ -51,7 +51,7 @@
 {%- elseif globalError -%}{%- set _state = 'error' -%}
 {%- endif -%}
 
-{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+{% embed '@cremona/components/_auth-shell/_auth-shell.html.twig' with {
   title: title,
   subtitle: subtitle,
   htmlId: htmlId,
@@ -67,7 +67,7 @@
       {%- if loading %} data-loading="true"{% endif -%}
     >
       {% if globalError %}
-        {% include '@theme/components/alert/alert.html.twig' with {
+        {% include '@cremona/components/alert/alert.html.twig' with {
           variant: 'danger',
           tone: 'soft',
           body: globalError,
@@ -80,7 +80,7 @@
         <input type="hidden" name="{{ csrfFieldName }}" value="{{ csrfToken }}">
       {% endif %}
 
-      {% include '@theme/components/input-otp/input-otp.html.twig' with {
+      {% include '@cremona/components/input-otp/input-otp.html.twig' with {
         htmlId: htmlId ~ '-cluster',
         name: otpName,
         length: otpLength,
@@ -91,12 +91,12 @@
       } %}
 
       {% if resendHref or emailFallbackHref %}
-        <div class="theme-auth-otp__resend-row">
+        <div class="cremona-auth-otp__resend-row">
           {% if resendQuestion %}
-            <span class="theme-auth-otp__resend-question">{{ resendQuestion }}</span>
+            <span class="cremona-auth-otp__resend-question">{{ resendQuestion }}</span>
           {% endif %}
           {% if resendHref %}
-            {% include '@theme/components/button/button.html.twig' with {
+            {% include '@cremona/components/button/button.html.twig' with {
               label: resendLabel,
               variant: 'link',
               size: 'sm',
@@ -104,7 +104,7 @@
             } %}
           {% endif %}
           {% if emailFallbackHref %}
-            {% include '@theme/components/button/button.html.twig' with {
+            {% include '@cremona/components/button/button.html.twig' with {
               label: emailFallbackLabel,
               variant: 'link',
               size: 'sm',
@@ -114,7 +114,7 @@
         </div>
       {% endif %}
 
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: submitLabel,
         variant: 'primary',
         size: 'md',
@@ -127,7 +127,7 @@
 
   {% if backToLoginHref %}
     {% block footer %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: backToLoginLabel,
         variant: 'link',
         size: 'md',

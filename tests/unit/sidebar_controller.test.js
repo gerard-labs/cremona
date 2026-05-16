@@ -42,22 +42,22 @@ describe('SidebarController', () => {
 
   async function mount({ collapsed = false, withToggle = true } = {}) {
     const toggleHtml = withToggle ? `<button id="sb-toggle"
-        class="theme-sidebar__collapse-toggle"
+        class="cremona-sidebar__collapse-toggle"
         data-sidebar-target="collapseToggle"
         data-action="click->sidebar#toggleCollapse"
         aria-controls="sb"
         aria-expanded="true"
         aria-label="Toggle">☰</button>` : '';
     document.body.innerHTML = `
-      <aside id="sb" class="theme-sidebar"
+      <aside id="sb" class="cremona-sidebar"
         data-controller="sidebar"
         data-sidebar-collapsed-value="${collapsed}"
         aria-label="Navigation principale">
-        <div class="theme-sidebar__header">${toggleHtml}</div>
-        <nav class="theme-sidebar__nav" aria-label="Sections">
+        <div class="cremona-sidebar__header">${toggleHtml}</div>
+        <nav class="cremona-sidebar__nav" aria-label="Sections">
           <ul>
-            <li><a class="theme-item" href="/a">A</a></li>
-            <li><a class="theme-item" href="/b" aria-current="page">B</a></li>
+            <li><a class="cremona-item" href="/a">A</a></li>
+            <li><a class="cremona-item" href="/b" aria-current="page">B</a></li>
           </ul>
         </nav>
       </aside>
@@ -151,7 +151,7 @@ describe('SidebarController', () => {
   // 8
   it('no spurious dispatch on initial mount (class-field guard pattern)', async () => {
     document.body.innerHTML = `
-      <aside id="sb" class="theme-sidebar"
+      <aside id="sb" class="cremona-sidebar"
         data-controller="sidebar"
         data-sidebar-collapsed-value="true">
       </aside>

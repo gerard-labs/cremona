@@ -18,11 +18,11 @@ setLocale('fr');
 
 function renderAlert({ body = '', htmlId = '' }) {
   return `
-    <div class="theme-alert" data-variant="danger" data-tone="soft" role="alert" id="${htmlId}">
-      <span class="theme-alert__icon" aria-hidden="true">
-        <span class="theme-icon" data-size="md">${iconAlertCircleRaw}</span>
+    <div class="cremona-alert" data-variant="danger" data-tone="soft" role="alert" id="${htmlId}">
+      <span class="cremona-alert__icon" aria-hidden="true">
+        <span class="cremona-icon" data-size="md">${iconAlertCircleRaw}</span>
       </span>
-      <div class="theme-alert__content"><p class="theme-alert__body">${body}</p></div>
+      <div class="cremona-alert__content"><p class="cremona-alert__body">${body}</p></div>
     </div>
   `;
 }
@@ -31,17 +31,17 @@ function renderField({ label, htmlId, value = '', placeholder = '', error = null
   const errorId = `${htmlId}-error`;
   const describedBy = error ? errorId : '';
   const isInvalid = !!error;
-  const fieldClasses = ['theme-field'];
-  if (isInvalid) fieldClasses.push('theme-field--invalid');
+  const fieldClasses = ['cremona-field'];
+  if (isInvalid) fieldClasses.push('cremona-field--invalid');
 
   return `
     <div class="${fieldClasses.join(' ')}">
-      <label class="theme-label" data-size="sm" for="${htmlId}">
-        <span class="theme-label__text">${label}</span>
-        <span class="theme-label__required" aria-hidden="true">*</span>
+      <label class="cremona-label" data-size="sm" for="${htmlId}">
+        <span class="cremona-label__text">${label}</span>
+        <span class="cremona-label__required" aria-hidden="true">*</span>
       </label>
       <input
-        class="theme-input"
+        class="cremona-input"
         data-size="md"
         id="${htmlId}"
         type="email"
@@ -56,7 +56,7 @@ function renderField({ label, htmlId, value = '', placeholder = '', error = null
         ${describedBy ? `aria-describedby="${describedBy}"` : ''}
         spellcheck="false"
       />
-      ${error ? `<p id="${errorId}" class="theme-field__error" role="alert" aria-live="polite">${error}</p>` : ''}
+      ${error ? `<p id="${errorId}" class="cremona-field__error" role="alert" aria-live="polite">${error}</p>` : ''}
     </div>
   `;
 }
@@ -64,20 +64,20 @@ function renderField({ label, htmlId, value = '', placeholder = '', error = null
 function renderSubmitButton({ label, loading = false }) {
   return `
     <button
-      class="theme-button theme-button--full-width"
+      class="cremona-button cremona-button--full-width"
       data-variant="primary"
       data-size="md"
       type="submit"
       ${loading ? 'disabled aria-busy="true"' : ''}
     >
-      ${loading ? `<span class="theme-button__spinner"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 1-9 9" stroke-linecap="round"/></svg></span>` : ''}
-      <span class="theme-button__label">${label}</span>
+      ${loading ? `<span class="cremona-button__spinner"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity="0.25"/><path d="M21 12a9 9 0 0 1-9 9" stroke-linecap="round"/></svg></span>` : ''}
+      <span class="cremona-button__label">${label}</span>
     </button>
   `;
 }
 
 function renderLink({ label, href = '#' }) {
-  return `<a class="theme-button" data-variant="link" data-size="md" href="${href}"><span class="theme-button__label">${label}</span></a>`;
+  return `<a class="cremona-button" data-variant="link" data-size="md" href="${href}"><span class="cremona-button__label">${label}</span></a>`;
 }
 
 function renderSSO({
@@ -95,7 +95,7 @@ function renderSSO({
   const titleId = `${htmlId}-title`;
 
   const formHtml = `
-    <form class="theme-auth-sso" action="/auth/sso/start" method="post" novalidate data-state="${state}" ${loading ? 'data-loading="true"' : ''}>
+    <form class="cremona-auth-sso" action="/auth/sso/start" method="post" novalidate data-state="${state}" ${loading ? 'data-loading="true"' : ''}>
       ${globalError ? renderAlert({ body: globalError, htmlId: `${htmlId}-global-error` }) : ''}
       <input type="hidden" name="_token" value="csrf-demo-token-sso-1234"/>
       ${renderField({
@@ -113,19 +113,19 @@ function renderSSO({
   `;
 
   const footerHtml = passwordLoginHref
-    ? `<span class="theme-auth-sso__footer-question">${t('theme.auth.sso.password-login-question')}</span>${renderLink({ label: t('theme.auth.sso.password-login-cta'), href: passwordLoginHref })}`
+    ? `<span class="cremona-auth-sso__footer-question">${t('theme.auth.sso.password-login-question')}</span>${renderLink({ label: t('theme.auth.sso.password-login-cta'), href: passwordLoginHref })}`
     : '';
 
   return `
-    <main class="theme-auth-shell" data-variant="default">
-      <section class="theme-auth-shell__panel">
-        <article class="theme-card theme-auth-shell__card" aria-labelledby="${titleId}">
-          <header class="theme-card__header theme-auth-shell__card-header">
-            <h1 id="${titleId}" class="theme-auth-shell__title">${t('theme.auth.sso.title')}</h1>
-            <p class="theme-auth-shell__subtitle">${t('theme.auth.sso.subtitle')}</p>
+    <main class="cremona-auth-shell" data-variant="default">
+      <section class="cremona-auth-shell__panel">
+        <article class="cremona-card cremona-auth-shell__card" aria-labelledby="${titleId}">
+          <header class="cremona-card__header cremona-auth-shell__card-header">
+            <h1 id="${titleId}" class="cremona-auth-shell__title">${t('theme.auth.sso.title')}</h1>
+            <p class="cremona-auth-shell__subtitle">${t('theme.auth.sso.subtitle')}</p>
           </header>
-          <div class="theme-card__body theme-auth-shell__card-body">${formHtml}</div>
-          ${footerHtml ? `<footer class="theme-card__footer theme-auth-shell__card-footer">${footerHtml}</footer>` : ''}
+          <div class="cremona-card__body cremona-auth-shell__card-body">${formHtml}</div>
+          ${footerHtml ? `<footer class="cremona-card__footer cremona-auth-shell__card-footer">${footerHtml}</footer>` : ''}
         </article>
       </section>
     </main>
@@ -140,14 +140,14 @@ const bodyHtml = `
     </header>
 
     <section class="auth-sso-story__section" aria-labelledby="auth-sso-section-default">
-      <h2 id="auth-sso-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.default')}</h2>
-      <p class="auth-sso-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.default')}</p>
+      <h2 id="auth-sso-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.default')}</h2>
+      <p class="auth-sso-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.default')}</p>
       <div class="auth-sso-story__frame">${renderSSO({ htmlId: 'story-auth-sso-default' })}</div>
     </section>
 
     <section class="auth-sso-story__section" aria-labelledby="auth-sso-section-no-config">
-      <h2 id="auth-sso-section-no-config" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.no-config')}</h2>
-      <p class="auth-sso-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.no-config')}</p>
+      <h2 id="auth-sso-section-no-config" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.no-config')}</h2>
+      <p class="auth-sso-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.no-config')}</p>
       <div class="auth-sso-story__frame">${renderSSO({
         htmlId: 'story-auth-sso-no-config',
         emailValue: 'jean.dupont@gmail.com',
@@ -156,8 +156,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-sso-story__section" aria-labelledby="auth-sso-section-loading">
-      <h2 id="auth-sso-section-loading" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.loading')}</h2>
-      <p class="auth-sso-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.loading')}</p>
+      <h2 id="auth-sso-section-loading" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.loading')}</h2>
+      <p class="auth-sso-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.loading')}</p>
       <div class="auth-sso-story__frame">${renderSSO({
         htmlId: 'story-auth-sso-loading',
         emailValue: 'marie.martin@acme.example.com',
@@ -166,8 +166,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-sso-story__section" aria-labelledby="auth-sso-section-fallback">
-      <h2 id="auth-sso-section-fallback" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.fallback')}</h2>
-      <p class="auth-sso-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.fallback')}</p>
+      <h2 id="auth-sso-section-fallback" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.sso.story.section.fallback')}</h2>
+      <p class="auth-sso-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.sso.story.explainer.fallback')}</p>
       <div class="auth-sso-story__frame">${renderSSO({
         htmlId: 'story-auth-sso-fallback',
         emailValue: 'alex.bernard@samurai.example.fr',
@@ -194,6 +194,6 @@ const bodyHtml = `
 .auth-sso-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .auth-sso-story__explainer { max-inline-size: 70ch; }
 .auth-sso-story__frame { min-block-size: 32rem; max-block-size: 48rem; overflow: hidden; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.auth-sso-story__frame .theme-auth-shell { min-block-size: 100%; }
+.auth-sso-story__frame .cremona-auth-shell { min-block-size: 100%; }
 .auth-sso-dark-wrap { background: var(--color-bg-base); }
 </style>

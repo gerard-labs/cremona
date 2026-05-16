@@ -14,8 +14,8 @@
 {%- set decorative  = decorative  | default(true) -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _classes = ['theme-separator'] -%}
-{%- if variant != 'solid' -%}{%- set _classes = _classes | merge(['theme-separator--' ~ variant]) -%}{%- endif -%}
+{%- set _classes = ['cremona-separator'] -%}
+{%- if variant != 'solid' -%}{%- set _classes = _classes | merge(['cremona-separator--' ~ variant]) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div

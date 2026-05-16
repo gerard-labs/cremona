@@ -40,7 +40,7 @@
 
   Usage:
 
-    {% include '@theme/components/tabs/tabs.html.twig' with {
+    {% include '@cremona/components/tabs/tabs.html.twig' with {
       label: 'Sections du compte'|trans,
       items: [
         { id: 'profil', label: 'Profil'|trans, content: '<p>...</p>' },
@@ -52,7 +52,7 @@
     tabs:change — detail.{ value, previousValue }
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-tabs-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-tabs-' ~ random()) -%}
 {%- set items        = items        | default([]) -%}
 {%- set value        = value        | default(null) -%}
 {%- set variant      = variant      | default('underline') -%}
@@ -71,7 +71,7 @@
   {%- endfor -%}
 {%- endif -%}
 
-{%- set _classes = ['theme-tabs'] -%}
+{%- set _classes = ['cremona-tabs'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -87,7 +87,7 @@
 >
   <div
     role="tablist"
-    class="theme-tabs__list"
+    class="cremona-tabs__list"
     data-tabs-target="list"
     aria-label="{{ label }}"
     {%- if orientation == 'vertical' %} aria-orientation="vertical"{% endif -%}
@@ -102,7 +102,7 @@
         id="{{ trigId }}"
         type="button"
         role="tab"
-        class="theme-tabs__trigger"
+        class="cremona-tabs__trigger"
         data-tabs-target="trigger"
         data-tab-id="{{ itemId }}"
         data-action="click->tabs#activate keydown->tabs#onKeydown"
@@ -113,14 +113,14 @@
         {%- if itemDis %} disabled aria-disabled="true"{% endif -%}
       >
         {%- if item.iconLeading is defined and item.iconLeading -%}
-          {% include '@theme/components/icon/icon.html.twig' with {
+          {% include '@cremona/components/icon/icon.html.twig' with {
             name: item.iconLeading,
             decorative: true,
             size: 'sm',
-            className: 'theme-tabs__trigger-icon',
+            className: 'cremona-tabs__trigger-icon',
           } %}
         {%- endif -%}
-        <span class="theme-tabs__trigger-label">{{ item.label }}</span>
+        <span class="cremona-tabs__trigger-label">{{ item.label }}</span>
       </button>
     {%- endfor -%}
   </div>
@@ -133,7 +133,7 @@
     <div
       id="{{ panelId }}"
       role="tabpanel"
-      class="theme-tabs__panel"
+      class="cremona-tabs__panel"
       data-tabs-target="panel"
       data-tab-id="{{ itemId }}"
       aria-labelledby="{{ trigId }}"

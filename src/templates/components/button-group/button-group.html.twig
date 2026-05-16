@@ -13,21 +13,21 @@
   1. {% embed %} — the canonical Twig way, lets the consumer pass the
      inner buttons via the `buttons` block:
 
-       {% embed '@theme/components/button-group/button-group.html.twig' with {
+       {% embed '@cremona/components/button-group/button-group.html.twig' with {
          label: 'Actions du fichier'|trans, size: 'md',
        } %}
          {% block buttons %}
-           {% include '@theme/components/button/button.html.twig' with { label: 'Save'|trans } %}
-           {% include '@theme/components/button/button.html.twig' with { label: 'Cancel'|trans, variant: 'secondary' } %}
+           {% include '@cremona/components/button/button.html.twig' with { label: 'Save'|trans } %}
+           {% include '@cremona/components/button/button.html.twig' with { label: 'Cancel'|trans, variant: 'secondary' } %}
          {% endblock %}
        {% endembed %}
 
-  2. Raw HTML — the CSS contract works on any `<button class="theme-button">`
-     placed inside `<div class="theme-button-group" role="group">`:
+  2. Raw HTML — the CSS contract works on any `<button class="cremona-button">`
+     placed inside `<div class="cremona-button-group" role="group">`:
 
-       <div class="theme-button-group" role="group" aria-label="...">
-         <button class="theme-button" data-variant="primary" ...>Save</button>
-         <button class="theme-button" data-variant="secondary" ...>Cancel</button>
+       <div class="cremona-button-group" role="group" aria-label="...">
+         <button class="cremona-button" data-variant="primary" ...>Save</button>
+         <button class="cremona-button" data-variant="secondary" ...>Cancel</button>
        </div>
 
   Parameters:
@@ -45,7 +45,7 @@
     className     (string, optional)
 
   Block `buttons` (required when embedding):
-    N <button> or <a> elements with `class="theme-button"`. The CSS handles
+    N <button> or <a> elements with `class="cremona-button"`. The CSS handles
     border-radius collapsing + adjacent border removal — no extra attributes
     are needed on the inner buttons themselves.
 -#}
@@ -57,8 +57,8 @@
 {%- set size         = size         | default(null) -%}
 {%- set className    = className    | default('') -%}
 
-{%- set _classes = ['theme-button-group'] -%}
-{%- if not attached -%}{%- set _classes = _classes | merge(['theme-button-group--detached']) -%}{%- endif -%}
+{%- set _classes = ['cremona-button-group'] -%}
+{%- if not attached -%}{%- set _classes = _classes | merge(['cremona-button-group--detached']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div

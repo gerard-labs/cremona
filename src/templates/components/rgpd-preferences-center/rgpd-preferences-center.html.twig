@@ -26,7 +26,7 @@
     footerInfo       (string, optional)  — fine-print at the bottom
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-rgpd-preferences-center-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-rgpd-preferences-center-' ~ random()) -%}
 {%- set title       = title       | default('theme.rgpd-preferences-center.title'|trans) -%}
 {%- set description = description | default('theme.rgpd-preferences-center.description'|trans) -%}
 {%- set saveLabel   = saveLabel   | default('theme.rgpd-preferences-center.button.save'|trans) -%}
@@ -51,11 +51,11 @@
 
 {%- set _pcId = htmlId -%}
 
-{% embed '@theme/components/dialog/dialog.html.twig' with {
+{% embed '@cremona/components/dialog/dialog.html.twig' with {
   wrapId: htmlId,
   htmlId: htmlId ~ '-dialog',
   size: 'lg',
-  className: 'theme-rgpd-preferences-center',
+  className: 'cremona-rgpd-preferences-center',
   closeButton: true,
   closeAriaLabel: 'theme.dialog.aria.close'|trans,
   closeOnEscape: true,
@@ -66,25 +66,25 @@
   {% block title %}{{ title }}{% endblock %}
 
   {% block body %}
-    <p class="theme-rgpd-preferences-center__intro">{{ description }}</p>
+    <p class="cremona-rgpd-preferences-center__intro">{{ description }}</p>
 
-    <div class="theme-rgpd-preferences-center__categories" role="list">
+    <div class="cremona-rgpd-preferences-center__categories" role="list">
       {% for category in categories %}
-        <div class="theme-rgpd-preferences-center__category{{ category.required ? ' theme-rgpd-preferences-center__category--required' }}"
+        <div class="cremona-rgpd-preferences-center__category{{ category.required ? ' cremona-rgpd-preferences-center__category--required' }}"
              role="listitem">
-          <div class="theme-rgpd-preferences-center__category-content">
-            <span class="theme-rgpd-preferences-center__category-name">{{ category.name }}</span>
-            <span class="theme-rgpd-preferences-center__category-description">{{ category.description }}</span>
+          <div class="cremona-rgpd-preferences-center__category-content">
+            <span class="cremona-rgpd-preferences-center__category-name">{{ category.name }}</span>
+            <span class="cremona-rgpd-preferences-center__category-description">{{ category.description }}</span>
             {% if category.required %}
-              <span class="theme-rgpd-preferences-center__category-status">
+              <span class="cremona-rgpd-preferences-center__category-status">
                 {{ category.statusLabel | default('theme.rgpd-preferences-center.category.essential.status'|trans) }}
               </span>
             {% endif %}
           </div>
-          <div class="theme-rgpd-preferences-center__category-control">
+          <div class="cremona-rgpd-preferences-center__category-control">
             {# The controller reads each checkbox's `name` attr as the category key
                + `disabled` attr as the required-marker. No additional data-* needed. #}
-            {% include '@theme/components/switch/switch.html.twig' with {
+            {% include '@cremona/components/switch/switch.html.twig' with {
               htmlId:      _pcId ~ '-' ~ category.key,
               name:        category.key,
               checked:     category.initialChecked,
@@ -96,16 +96,16 @@
       {% endfor %}
     </div>
 
-    <p class="theme-rgpd-preferences-center__footer-info">{{ footerInfo }}</p>
+    <p class="cremona-rgpd-preferences-center__footer-info">{{ footerInfo }}</p>
   {% endblock %}
 
   {% block footer %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: cancelLabel,
       variant: 'secondary',
       attrs: { 'data-action': 'click->preferences-center#cancel click->dialog#close' },
     } only %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: saveLabel,
       variant: 'primary',
       attrs: {

@@ -37,7 +37,7 @@ function formatCountdown(seconds) {
 }
 
 function renderButton({ label, variant = 'primary' }) {
-  return `<button class="theme-button" data-variant="${variant}" data-size="md" type="button"><span class="theme-button__label">${label}</span></button>`;
+  return `<button class="cremona-button" data-variant="${variant}" data-size="md" type="button"><span class="cremona-button__label">${label}</span></button>`;
 }
 
 function renderSessionTimeoutModal({
@@ -48,7 +48,7 @@ function renderSessionTimeoutModal({
   const titleId = `${htmlId}-title`;
   const countdown = formatCountdown(remainingSeconds);
   return `
-    <div class="theme-dialog-wrap theme-auth-session-timeout-modal"
+    <div class="cremona-dialog-wrap cremona-auth-session-timeout-modal"
          data-controller="dialog session-timeout-countdown"
          data-dialog-open-value="true"
          data-dialog-close-on-escape-value="false"
@@ -56,16 +56,16 @@ function renderSessionTimeoutModal({
          data-session-timeout-countdown-remaining-seconds-value="${remainingSeconds}"
          data-session-timeout-countdown-warning-threshold-seconds-value="30"
          id="${htmlId}">
-      <dialog id="${htmlId}-dialog" class="theme-dialog" data-dialog-target="dialog" data-size="md" aria-labelledby="${titleId}" open>
-        <header class="theme-dialog__header">
-          <h2 id="${titleId}" class="theme-dialog__title">${t('theme.auth.session-timeout-modal.title')}</h2>
+      <dialog id="${htmlId}-dialog" class="cremona-dialog" data-dialog-target="dialog" data-size="md" aria-labelledby="${titleId}" open>
+        <header class="cremona-dialog__header">
+          <h2 id="${titleId}" class="cremona-dialog__title">${t('theme.auth.session-timeout-modal.title')}</h2>
         </header>
-        <div class="theme-dialog__body">
-          <p class="theme-auth-session-timeout-modal__body">
-            ${t('theme.auth.session-timeout-modal.body-before')}<span class="theme-auth-session-timeout-modal__countdown" aria-live="${ariaLive}">${countdown}</span>${t('theme.auth.session-timeout-modal.body-after')}
+        <div class="cremona-dialog__body">
+          <p class="cremona-auth-session-timeout-modal__body">
+            ${t('theme.auth.session-timeout-modal.body-before')}<span class="cremona-auth-session-timeout-modal__countdown" aria-live="${ariaLive}">${countdown}</span>${t('theme.auth.session-timeout-modal.body-after')}
           </p>
         </div>
-        <footer class="theme-dialog__footer">
+        <footer class="cremona-dialog__footer">
           ${renderButton({ label: t('theme.auth.session-timeout-modal.extend-cta'), variant: 'primary' })}
           ${renderButton({ label: t('theme.auth.session-timeout-modal.logout-cta'), variant: 'destructive' })}
         </footer>
@@ -82,20 +82,20 @@ const bodyHtml = `
     </header>
 
     <section class="auth-session-timeout-modal-story__section" aria-labelledby="auth-session-timeout-section-default">
-      <h2 id="auth-session-timeout-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.section.default')}</h2>
-      <p class="auth-session-timeout-modal-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.explainer.default')}</p>
+      <h2 id="auth-session-timeout-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.section.default')}</h2>
+      <p class="auth-session-timeout-modal-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.explainer.default')}</p>
       <div class="auth-session-timeout-modal-story__frame">${renderSessionTimeoutModal({ htmlId: 'story-stm-default', remainingSeconds: 60, ariaLive: 'polite' })}</div>
     </section>
 
     <section class="auth-session-timeout-modal-story__section" aria-labelledby="auth-session-timeout-section-urgent">
-      <h2 id="auth-session-timeout-section-urgent" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.section.urgent')}</h2>
-      <p class="auth-session-timeout-modal-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.explainer.urgent')}</p>
+      <h2 id="auth-session-timeout-section-urgent" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.section.urgent')}</h2>
+      <p class="auth-session-timeout-modal-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.explainer.urgent')}</p>
       <div class="auth-session-timeout-modal-story__frame">${renderSessionTimeoutModal({ htmlId: 'story-stm-urgent', remainingSeconds: 20, ariaLive: 'assertive' })}</div>
     </section>
 
     <section class="auth-session-timeout-modal-story__section" aria-labelledby="auth-session-timeout-section-long">
-      <h2 id="auth-session-timeout-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.section.long')}</h2>
-      <p class="auth-session-timeout-modal-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.explainer.long')}</p>
+      <h2 id="auth-session-timeout-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.section.long')}</h2>
+      <p class="auth-session-timeout-modal-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.session-timeout-modal.story.explainer.long')}</p>
       <div class="auth-session-timeout-modal-story__frame">${renderSessionTimeoutModal({ htmlId: 'story-stm-long', remainingSeconds: 180, ariaLive: 'polite' })}</div>
     </section>
   </section>
@@ -122,6 +122,6 @@ const bodyHtml = `
    visual baseline captures it. The [open] attribute on <dialog> renders
    it as a regular block-flow element ; the controller's showModal() is
    bypassed at story time. */
-.auth-session-timeout-modal-story__frame .theme-dialog[open] { position: relative; max-inline-size: 32rem; margin: 0 auto; }
+.auth-session-timeout-modal-story__frame .cremona-dialog[open] { position: relative; max-inline-size: 32rem; margin: 0 auto; }
 .auth-session-timeout-modal-dark-wrap { background: var(--color-bg-base); }
 </style>

@@ -23,7 +23,7 @@ import { t } from '../utils/i18n.js';
  *      Substring case-insensitive match on each option's label. Hidden
  *      options are excluded from nav; empty state renders inline when count = 0.
  *   3. `_announceResults(count)` — pushes a localized "N résultats" message
- *      to the shared `#theme-announcer` aria-live region (per OQ-31 sealed
+ *      to the shared `#cremona-announcer` aria-live region (per OQ-31 sealed
  *      S2.3b — single shared region from base/reset.css, NOT per-instance).
  *   4. Esc-clear semantics (per WAI-ARIA APG Combobox): first Esc clears the
  *      input query; second Esc (or Esc when query is empty) closes via the
@@ -184,7 +184,7 @@ export default class ComboboxController extends SelectController {
     let visibleCount = 0;
     for (const opt of this.optionTargets) {
       const label = (
-        opt.querySelector('.theme-item__label')?.textContent ||
+        opt.querySelector('.cremona-item__label')?.textContent ||
         opt.textContent ||
         ''
       )
@@ -319,7 +319,7 @@ export default class ComboboxController extends SelectController {
     const opt = opts[idx];
     const value = opt.dataset.value || '';
     const label =
-      opt.querySelector('.theme-item__label')?.textContent ||
+      opt.querySelector('.cremona-item__label')?.textContent ||
       opt.textContent.trim() ||
       '';
 
@@ -355,7 +355,7 @@ export default class ComboboxController extends SelectController {
   }
 
   /**
-   * Push a localized "N résultats" message to the shared #theme-announcer
+   * Push a localized "N résultats" message to the shared #cremona-announcer
    * aria-live region (per OQ-31 sealed S2.3b — single shared region).
    *
    * For count = 0, we deliberately do NOT announce here — the empty state
@@ -366,7 +366,7 @@ export default class ComboboxController extends SelectController {
    */
   _announceResults(count) {
     if (typeof document === 'undefined') return;
-    const announcer = document.getElementById('theme-announcer');
+    const announcer = document.getElementById('cremona-announcer');
     if (!announcer) return;
     if (count === 0) {
       // Empty state covers this — clear to avoid double-announce.

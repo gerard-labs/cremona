@@ -15,7 +15,7 @@ import DrawerController from './drawer_controller.js';
  * edge value). The only override is the dispatched event names — `sheet:*`
  * instead of `drawer:*` — so consumer listeners can filter by intent
  * (`document.addEventListener('sheet:open', ...)` is clearer than checking
- * `.theme-sheet-wrap` ancestor on every `drawer:open`).
+ * `.cremona-sheet-wrap` ancestor on every `drawer:open`).
  *
  * The event detail.edge reports the consumer's configured edge value
  * (NOT the responsively-rendered edge — on mobile it's always "bottom"

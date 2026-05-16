@@ -28,11 +28,11 @@ function addLog(line) {
 
 function renderSwitch({ id, name, checked, disabled, ariaLabel }) {
   return `
-    <span class="theme-switch-wrap${disabled ? ' theme-switch-row--disabled' : ''}" data-size="sm" ${disabled ? 'data-state="disabled"' : ''}>
-      <span class="theme-switch" data-size="sm">
-        <input type="checkbox" role="switch" class="theme-switch__input"
+    <span class="cremona-switch-wrap${disabled ? ' cremona-switch-row--disabled' : ''}" data-size="sm" ${disabled ? 'data-state="disabled"' : ''}>
+      <span class="cremona-switch" data-size="sm">
+        <input type="checkbox" role="switch" class="cremona-switch__input"
                id="${id}" name="${name}" ${checked ? 'checked' : ''} ${disabled ? 'disabled' : ''} aria-label="${ariaLabel}">
-        <span class="theme-switch__track" aria-hidden="true"><span class="theme-switch__thumb"></span></span>
+        <span class="cremona-switch__track" aria-hidden="true"><span class="cremona-switch__thumb"></span></span>
       </span>
     </span>
   `;
@@ -40,13 +40,13 @@ function renderSwitch({ id, name, checked, disabled, ariaLabel }) {
 
 function renderCategory({ wrapId, key, name, description, statusLabel, initialChecked, required }) {
   return `
-    <div class="theme-rgpd-preferences-center__category${required ? ' theme-rgpd-preferences-center__category--required' : ''}" role="listitem">
-      <div class="theme-rgpd-preferences-center__category-content">
-        <span class="theme-rgpd-preferences-center__category-name">${name}</span>
-        <span class="theme-rgpd-preferences-center__category-description">${description}</span>
-        ${required ? `<span class="theme-rgpd-preferences-center__category-status">${statusLabel}</span>` : ''}
+    <div class="cremona-rgpd-preferences-center__category${required ? ' cremona-rgpd-preferences-center__category--required' : ''}" role="listitem">
+      <div class="cremona-rgpd-preferences-center__category-content">
+        <span class="cremona-rgpd-preferences-center__category-name">${name}</span>
+        <span class="cremona-rgpd-preferences-center__category-description">${description}</span>
+        ${required ? `<span class="cremona-rgpd-preferences-center__category-status">${statusLabel}</span>` : ''}
       </div>
-      <div class="theme-rgpd-preferences-center__category-control">
+      <div class="cremona-rgpd-preferences-center__category-control">
         ${renderSwitch({ id: wrapId + '-' + key, name: key, checked: initialChecked, disabled: required, ariaLabel: name })}
       </div>
     </div>
@@ -73,22 +73,22 @@ function renderPreferencesCenter({ id }) {
   const categoriesHtml = categories.map((c) => renderCategory({ wrapId: id, ...c })).join('');
 
   return `
-    <div class="theme-dialog-wrap theme-rgpd-preferences-center"
+    <div class="cremona-dialog-wrap cremona-rgpd-preferences-center"
          id="${id}"
          data-controller="dialog preferences-center"
          data-dialog-open-value="true">
-      <dialog class="theme-dialog" data-dialog-target="dialog" data-size="lg" open aria-labelledby="${id}-title">
-        <header class="theme-dialog__header">
-          <h2 id="${id}-title" class="theme-dialog__title">${t('theme.rgpd-preferences-center.title')}</h2>
+      <dialog class="cremona-dialog" data-dialog-target="dialog" data-size="lg" open aria-labelledby="${id}-title">
+        <header class="cremona-dialog__header">
+          <h2 id="${id}-title" class="cremona-dialog__title">${t('theme.rgpd-preferences-center.title')}</h2>
         </header>
-        <div class="theme-dialog__body">
-          <p class="theme-rgpd-preferences-center__intro">${t('theme.rgpd-preferences-center.description')}</p>
-          <div class="theme-rgpd-preferences-center__categories" role="list">${categoriesHtml}</div>
-          <p class="theme-rgpd-preferences-center__footer-info">${t('theme.rgpd-preferences-center.footer-info')}</p>
+        <div class="cremona-dialog__body">
+          <p class="cremona-rgpd-preferences-center__intro">${t('theme.rgpd-preferences-center.description')}</p>
+          <div class="cremona-rgpd-preferences-center__categories" role="list">${categoriesHtml}</div>
+          <p class="cremona-rgpd-preferences-center__footer-info">${t('theme.rgpd-preferences-center.footer-info')}</p>
         </div>
-        <footer class="theme-dialog__footer">
-          <button type="button" class="theme-button" data-variant="secondary" data-action="click->preferences-center#cancel">${t('theme.rgpd-preferences-center.button.cancel')}</button>
-          <button type="button" class="theme-button" data-variant="primary" data-preferences-center-target="saveButton" data-action="click->preferences-center#save">${t('theme.rgpd-preferences-center.button.save')}</button>
+        <footer class="cremona-dialog__footer">
+          <button type="button" class="cremona-button" data-variant="secondary" data-action="click->preferences-center#cancel">${t('theme.rgpd-preferences-center.button.cancel')}</button>
+          <button type="button" class="cremona-button" data-variant="primary" data-preferences-center-target="saveButton" data-action="click->preferences-center#save">${t('theme.rgpd-preferences-center.button.save')}</button>
         </footer>
       </dialog>
     </div>
@@ -103,14 +103,14 @@ const bodyHtml = `
     </header>
 
     <section class="rgpd-preferences-center-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-preferences-center.story.section.default')}</h2>
-      <p class="rgpd-preferences-center-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-preferences-center.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-preferences-center.story.section.default')}</h2>
+      <p class="rgpd-preferences-center-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-preferences-center.story.explainer.default')}</p>
       <div class="rgpd-preferences-center-story__frame">${renderPreferencesCenter({ id: 'prefs-default' })}</div>
     </section>
 
     <section class="rgpd-preferences-center-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-preferences-center.story.section.events-log')}</h2>
-      <p class="rgpd-preferences-center-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-preferences-center.story.explainer.events-log')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-preferences-center.story.section.events-log')}</h2>
+      <p class="rgpd-preferences-center-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-preferences-center.story.explainer.events-log')}</p>
       <div class="rgpd-preferences-center-story__frame">${renderPreferencesCenter({ id: 'prefs-events' })}</div>
       <div id="preferences-center-events-log" class="rgpd-preferences-center-story__events-log" aria-live="polite"></div>
     </section>

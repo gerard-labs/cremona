@@ -12,7 +12,7 @@
   MenubarController). Per OQ-33: submenu items use Item with `as: 'a' href`.
 
   Stimulus controllers `popover` + `dropdown-menu` co-mounted on each submenu
-  wrap; `navigation-menu` mounted on the inner .theme-menubar (the <nav> shell
+  wrap; `navigation-menu` mounted on the inner .cremona-menubar (the <nav> shell
   carries no controller — it's a landmark).
 -->
 <script setup>
@@ -42,17 +42,17 @@ let _nmCounter = 0;
 function nextId(prefix = 'nm') { return `${prefix}-${++_nmCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderLinkItem({ label, href, iconLeading = null, description = null, current = false }) {
-  const leadingHtml = iconLeading ? `<span class="theme-item__icon theme-item__icon--leading" aria-hidden="true">${icon(iconLeading)}</span>` : '';
-  const descHtml = description ? `<span class="theme-item__description">${description}</span>` : '';
+  const leadingHtml = iconLeading ? `<span class="cremona-item__icon cremona-item__icon--leading" aria-hidden="true">${icon(iconLeading)}</span>` : '';
+  const descHtml = description ? `<span class="cremona-item__description">${description}</span>` : '';
   const currentAttr = current ? ' aria-current="page" data-selected="true"' : '';
-  return `<a class="theme-item" role="menuitem" tabindex="-1" href="${href}"${currentAttr}>
+  return `<a class="cremona-item" role="menuitem" tabindex="-1" href="${href}"${currentAttr}>
     ${leadingHtml}
-    <span class="theme-item__text">
-      <span class="theme-item__label">${label}</span>
+    <span class="cremona-item__text">
+      <span class="cremona-item__label">${label}</span>
       ${descHtml}
     </span>
   </a>`;
@@ -61,19 +61,19 @@ function renderLinkItem({ label, href, iconLeading = null, description = null, c
 function renderSubmenu({ triggerLabel, content }) {
   const id = nextId('sm');
   return `
-    <div class="theme-popover theme-dropdown-menu"
+    <div class="cremona-popover cremona-dropdown-menu"
       data-controller="popover dropdown-menu"
       data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
       data-popover-placement-value="bottom-start"
       data-popover-offset-value="2"
       data-popover-open-value="false">
-      <button type="button" class="theme-menubar__trigger"
+      <button type="button" class="cremona-menubar__trigger"
         data-popover-target="trigger"
         data-navigation-menu-target="trigger"
         aria-haspopup="menu" aria-expanded="false" aria-controls="${id}-content">
         ${triggerLabel}
       </button>
-      <div id="${id}-content" class="theme-popover__content theme-dropdown-menu__content"
+      <div id="${id}-content" class="cremona-popover__content cremona-dropdown-menu__content"
         data-popover-target="content"
         data-state="closed"
         hidden>
@@ -87,8 +87,8 @@ function renderNavMenu({ menus, label = null }) {
   const id = nextId('navmenu');
   const labelAttr = label ? `aria-label="${label}"` : '';
   return `
-    <nav id="${id}" class="theme-navigation-menu" ${labelAttr}>
-      <div id="${id}-menubar" class="theme-menubar"
+    <nav id="${id}" class="cremona-navigation-menu" ${labelAttr}>
+      <div id="${id}-menubar" class="cremona-menubar"
         data-controller="navigation-menu"
         data-action="keydown->navigation-menu#keydown"
         ${labelAttr}>
@@ -108,8 +108,8 @@ const bodyHtml = `
     </header>
 
     <section class="nm-story__section" aria-labelledby="nm-section-default">
-      <h2 id="nm-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.default')}</h2>
-      <p class="nm-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.default')}</p>
+      <h2 id="nm-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.default')}</h2>
+      <p class="nm-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.default')}</p>
       <div class="nm-story__row">
         ${renderNavMenu({
           label: N('aria.label-default'),
@@ -143,8 +143,8 @@ const bodyHtml = `
     </section>
 
     <section class="nm-story__section" aria-labelledby="nm-section-current">
-      <h2 id="nm-section-current" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.current')}</h2>
-      <p class="nm-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.current')}</p>
+      <h2 id="nm-section-current" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.current')}</h2>
+      <p class="nm-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.current')}</p>
       <div class="nm-story__row">
         ${renderNavMenu({
           label: N('aria.label-current'),
@@ -162,8 +162,8 @@ const bodyHtml = `
     </section>
 
     <section class="nm-story__section" aria-labelledby="nm-section-rich">
-      <h2 id="nm-section-rich" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.rich')}</h2>
-      <p class="nm-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.rich')}</p>
+      <h2 id="nm-section-rich" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.rich')}</h2>
+      <p class="nm-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.rich')}</p>
       <div class="nm-story__row">
         ${renderNavMenu({
           label: N('aria.label-rich'),
@@ -190,8 +190,8 @@ const bodyHtml = `
     </section>
 
     <section class="nm-story__section" aria-labelledby="nm-section-cascade">
-      <h2 id="nm-section-cascade" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.cascade')}</h2>
-      <p class="nm-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.cascade')}</p>
+      <h2 id="nm-section-cascade" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.cascade')}</h2>
+      <p class="nm-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.cascade')}</p>
       <div class="nm-story__row">
         ${renderNavMenu({
           label: N('aria.label-cascade'),
@@ -205,8 +205,8 @@ const bodyHtml = `
     </section>
 
     <section class="nm-story__section" aria-labelledby="nm-section-header">
-      <h2 id="nm-section-header" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.header')}</h2>
-      <p class="nm-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.header')}</p>
+      <h2 id="nm-section-header" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.navigation-menu.story.section.header')}</h2>
+      <p class="nm-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.navigation-menu.story.explainer.header')}</p>
       <div class="nm-story__header-demo">
         <a class="nm-story__brand" href="/">${N('header.brand')}</a>
         ${renderNavMenu({
@@ -217,8 +217,8 @@ const bodyHtml = `
           ],
         })}
         <div class="nm-story__actions">
-          <a class="theme-button" data-variant="ghost" href="/login">${N('header.signin')}</a>
-          <a class="theme-button" data-variant="primary" href="/signup">${N('header.signup')}</a>
+          <a class="cremona-button" data-variant="ghost" href="/login">${N('header.signin')}</a>
+          <a class="cremona-button" data-variant="primary" href="/signup">${N('header.signup')}</a>
         </div>
       </div>
     </section>

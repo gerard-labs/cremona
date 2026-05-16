@@ -3,7 +3,7 @@
 
   Wrapper around a trigger (icon button, abbreviation, etc.) plus a
   `<span role="tooltip">` sibling. The CSS toggles tooltip visibility on
-  `.theme-tooltip-wrap:hover` and `.theme-tooltip-wrap:focus-within`.
+  `.cremona-tooltip-wrap:hover` and `.cremona-tooltip-wrap:focus-within`.
   The 400 ms show delay (anti-flash on accidental hover) is CSS
   `transition-delay`. The hide is instant (no delay-out — feels snappy).
 
@@ -37,13 +37,13 @@
 
 {%- set label      = label      | default(null) -%}
 {%- set placement  = placement  | default('top') -%}
-{%- set htmlId     = htmlId     | default('theme-tt-' ~ random()) -%}
+{%- set htmlId     = htmlId     | default('cremona-tt-' ~ random()) -%}
 {%- set triggerId  = triggerId  | default(null) -%}
 {%- set className  = className  | default('') -%}
 
 {%- set tooltipHtmlId = htmlId -%}
 
-{%- set _classes = ['theme-tooltip-wrap'] -%}
+{%- set _classes = ['cremona-tooltip-wrap'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <span
@@ -54,7 +54,7 @@
 >
   {%- block trigger -%}{%- endblock -%}
   <span
-    class="theme-tooltip"
+    class="cremona-tooltip"
     id="{{ htmlId }}"
     role="tooltip"
     data-placement="{{ placement }}"

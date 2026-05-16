@@ -7,7 +7,7 @@
  * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
  */
 
-.theme-onboarding-welcome-screens {
+.cremona-onboarding-welcome-screens {
   min-block-size: 100dvh;
   display: flex;
   align-items: center;
@@ -17,32 +17,32 @@
   background-color: var(--color-bg-base);
 }
 
-.theme-onboarding-welcome-screens__card {
+.cremona-onboarding-welcome-screens__card {
   max-inline-size: 32rem;
   inline-size: 100%;
 }
 
-.theme-onboarding-welcome-screens__header {
+.cremona-onboarding-welcome-screens__header {
   display: grid;
   gap: var(--spacing-4);
 }
 
-.theme-onboarding-welcome-screens__title {
+.cremona-onboarding-welcome-screens__title {
   text-align: center;
 }
 
-.theme-onboarding-welcome-screens__stepper .theme-stepper {
+.cremona-onboarding-welcome-screens__stepper .cremona-stepper {
   margin: 0;
 }
 
-.theme-onboarding-welcome-screens__body {
+.cremona-onboarding-welcome-screens__body {
   display: grid;
   gap: var(--spacing-3);
   text-align: center;
   padding-block: var(--spacing-6);
 }
 
-.theme-onboarding-welcome-screens__step-icon {
+.cremona-onboarding-welcome-screens__step-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -54,44 +54,44 @@
   margin-inline: auto;
 }
 
-.theme-onboarding-welcome-screens__step-heading {
+.cremona-onboarding-welcome-screens__step-heading {
   color: var(--color-text-primary);
 }
 
-.theme-onboarding-welcome-screens__step-body {
+.cremona-onboarding-welcome-screens__step-body {
   color: var(--color-text-secondary);
   font: var(--typography-body);
   max-inline-size: 38ch;
   margin-inline: auto;
 }
 
-.theme-onboarding-welcome-screens__footer {
+.cremona-onboarding-welcome-screens__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-3);
 }
 
-.theme-onboarding-welcome-screens__nav {
+.cremona-onboarding-welcome-screens__nav {
   display: flex;
   gap: var(--spacing-2);
 }
 
 /* Mobile : stack the footer CTAs. */
 @media (width <= 600px) {
-  .theme-onboarding-welcome-screens__footer {
+  .cremona-onboarding-welcome-screens__footer {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .theme-onboarding-welcome-screens__nav {
+  .cremona-onboarding-welcome-screens__nav {
     flex-direction: column-reverse;
   }
 }
 
 /* iOS safe-area-inset. */
 @supports (padding: env(safe-area-inset-top)) {
-  .theme-onboarding-welcome-screens {
+  .cremona-onboarding-welcome-screens {
     padding-block: max(var(--spacing-8), env(safe-area-inset-top)) max(var(--spacing-8), env(safe-area-inset-bottom));
   }
 }

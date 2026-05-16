@@ -66,7 +66,7 @@ function carousel({
     const isActive = i === currentSlide;
     const ariaHidden = isActive ? '' : ' aria-hidden="true"';
     return `<article id="${wrapId}-slide-${i}"
-      class="theme-carousel__slide"
+      class="cremona-carousel__slide"
       data-carousel-target="slide"
       role="group"
       aria-roledescription="${S('aria.slide-roledescription')}"
@@ -78,7 +78,7 @@ function carousel({
     const isActive = i === currentSlide;
     const cur = isActive ? ' aria-current="true"' : '';
     const dotLbl = S('aria.dot').replace('{index}', i + 1).replace('{total}', total);
-    return `<button type="button" class="theme-carousel__dot"
+    return `<button type="button" class="cremona-carousel__dot"
       data-carousel-target="dot"
       data-slide-index="${i}"
       data-action="click->carousel#goTo"
@@ -86,16 +86,16 @@ function carousel({
       aria-controls="${wrapId}-slide-${i}"
       data-state="${isActive ? 'active' : 'inactive'}"${cur}></button>`;
   }).join('');
-  const autoplayHtml = showAuto ? `<button type="button" class="theme-carousel__autoplay-toggle"
+  const autoplayHtml = showAuto ? `<button type="button" class="cremona-carousel__autoplay-toggle"
     data-carousel-target="autoplayToggle"
     data-action="click->carousel#toggleAutoplay"
     aria-label="${S('aria.autoplay')}"
     aria-pressed="false"
     data-state="playing">
-    <span class="theme-carousel__autoplay-icon" aria-hidden="true"></span>
+    <span class="cremona-carousel__autoplay-icon" aria-hidden="true"></span>
   </button>` : '';
   const lbl = label || S('default-label');
-  return `<div id="${wrapId}" class="theme-carousel"
+  return `<div id="${wrapId}" class="cremona-carousel"
     data-controller="carousel"
     data-carousel-current-slide-value="${currentSlide}"
     data-carousel-autoplay-interval-value="${autoplayInterval}"
@@ -103,26 +103,26 @@ function carousel({
     role="region"
     aria-roledescription="${S('aria.carousel-roledescription')}"
     aria-label="${lbl}">
-    <div class="theme-carousel__viewport" data-carousel-target="viewport">
-      <div class="theme-carousel__track" data-carousel-target="track">${slidesHtml}</div>
+    <div class="cremona-carousel__viewport" data-carousel-target="viewport">
+      <div class="cremona-carousel__track" data-carousel-target="track">${slidesHtml}</div>
     </div>
-    <div class="theme-carousel__controls">
-      <button type="button" class="theme-carousel__nav theme-carousel__nav--prev"
+    <div class="cremona-carousel__controls">
+      <button type="button" class="cremona-carousel__nav cremona-carousel__nav--prev"
         data-carousel-target="prev"
         data-action="click->carousel#prev"
         aria-label="${S('aria.prev')}"
         aria-controls="${wrapId}">
-        <span class="theme-carousel__nav-icon" aria-hidden="true"></span>
+        <span class="cremona-carousel__nav-icon" aria-hidden="true"></span>
       </button>
-      <button type="button" class="theme-carousel__nav theme-carousel__nav--next"
+      <button type="button" class="cremona-carousel__nav cremona-carousel__nav--next"
         data-carousel-target="next"
         data-action="click->carousel#next"
         aria-label="${S('aria.next')}"
         aria-controls="${wrapId}">
-        <span class="theme-carousel__nav-icon" aria-hidden="true"></span>
+        <span class="cremona-carousel__nav-icon" aria-hidden="true"></span>
       </button>
     </div>
-    <div class="theme-carousel__pagination">${dotsHtml}</div>
+    <div class="cremona-carousel__pagination">${dotsHtml}</div>
     ${autoplayHtml}
   </div>`;
 }
@@ -148,35 +148,35 @@ const bodyHtml = `
     </header>
 
     <section class="car-story__section" aria-labelledby="car-section-default">
-      <h2 id="car-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="car-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="car-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="car-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${carousel({ slides: testimonials, label: S('aria.testimonials') })}
     </section>
 
     <section class="car-story__section" aria-labelledby="car-section-autoplay">
-      <h2 id="car-section-autoplay" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.autoplay')}</h2>
-      <p class="car-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.autoplay')}</p>
+      <h2 id="car-section-autoplay" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.autoplay')}</h2>
+      <p class="car-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.autoplay')}</p>
       ${carousel({ slides: features, autoplayInterval: 5000, label: S('aria.features') })}
     </section>
 
     <section class="car-story__section" aria-labelledby="car-section-bounded">
-      <h2 id="car-section-bounded" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.bounded')}</h2>
-      <p class="car-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.bounded')}</p>
+      <h2 id="car-section-bounded" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.bounded')}</h2>
+      <p class="car-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.bounded')}</p>
       ${carousel({ slides: features, loop: false, label: S('aria.bounded') })}
     </section>
 
     <section class="car-story__section" aria-labelledby="car-section-keyboard">
-      <h2 id="car-section-keyboard" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.keyboard')}</h2>
-      <p class="car-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.keyboard')}</p>
+      <h2 id="car-section-keyboard" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.keyboard')}</h2>
+      <p class="car-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.keyboard')}</p>
       ${carousel({ slides: testimonials, label: S('aria.keyboard') })}
     </section>
 
     <section class="car-story__section" aria-labelledby="car-section-events">
-      <h2 id="car-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="car-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="car-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="car-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       ${carousel({ id: 'car-events-demo', slides: testimonials, label: S('aria.events') })}
       <div class="car-story__log" data-events-log="car-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="car-story__log-out"></div>
       </div>
     </section>

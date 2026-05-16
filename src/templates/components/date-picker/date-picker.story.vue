@@ -24,8 +24,8 @@ setTranslations('fr', frDict);
 setTranslations('en', enDict);
 setLocale('fr');
 
-const sectionTitle = (id, key) => `<h2 id="${id}" class="theme-typography" data-variant="overline" data-color="tertiary">${t(key)}</h2>`;
-const sectionExplainer = (key) => `<p class="theme-typography" data-variant="caption" data-color="tertiary">${t(key)}</p>`;
+const sectionTitle = (id, key) => `<h2 id="${id}" class="cremona-typography" data-variant="overline" data-color="tertiary">${t(key)}</h2>`;
+const sectionExplainer = (key) => `<p class="cremona-typography" data-variant="caption" data-color="tertiary">${t(key)}</p>`;
 
 function renderDatePicker({
   id = 'dp',
@@ -47,7 +47,7 @@ function renderDatePicker({
   const nextAria = t('theme.calendar.aria.next-month');
   const calAria = t('theme.calendar.aria.calendar');
   return `
-    <div id="${id}" class="theme-popover theme-date-picker"
+    <div id="${id}" class="cremona-popover cremona-date-picker"
       data-controller="popover date-picker"
       data-action="keydown.esc@window->popover#close calendar:select->date-picker#onCalendarSelect popover:open->date-picker#onPopoverOpen"
       data-popover-placement-value="bottom-start"
@@ -59,8 +59,8 @@ function renderDatePicker({
       ${min ? `data-date-picker-min-value="${min}"` : ''}
       ${max ? `data-date-picker-max-value="${max}"` : ''}
     >
-      <div class="theme-date-picker__trigger">
-        <input id="${id}-input" type="text" class="theme-input theme-date-picker__input"
+      <div class="cremona-date-picker__trigger">
+        <input id="${id}-input" type="text" class="cremona-input cremona-date-picker__input"
           data-popover-target="trigger"
           data-date-picker-target="input"
           data-action="click->popover#toggle keydown->date-picker#onTriggerKeydown"
@@ -68,7 +68,7 @@ function renderDatePicker({
           aria-controls="${id}-popover" aria-label="${inputAria}"
           readonly placeholder="${ph}"
           ${describedBy ? `aria-describedby="${describedBy}"` : ''}>
-        <svg class="theme-date-picker__icon" aria-hidden="true"
+        <svg class="cremona-date-picker__icon" aria-hidden="true"
           width="16" height="16" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
@@ -76,11 +76,11 @@ function renderDatePicker({
           <path d="M16 2v4M8 2v4M3 10h18"/>
         </svg>
       </div>
-      <div id="${id}-popover" class="theme-popover__content theme-date-picker__panel"
+      <div id="${id}-popover" class="cremona-popover__content cremona-date-picker__panel"
         data-popover-target="content" data-state="closed"
         role="dialog" aria-modal="false" aria-labelledby="${id}-dialog-label" hidden>
         <span id="${id}-dialog-label" class="sr-only">${dialogAria}</span>
-        <div id="${id}-calendar" class="theme-calendar"
+        <div id="${id}-calendar" class="cremona-calendar"
           data-controller="calendar"
           data-action="keydown->calendar#onKeydown click->calendar#onDayClick"
           data-calendar-week-start-value="${weekStart}"
@@ -89,19 +89,19 @@ function renderDatePicker({
           ${value ? `data-calendar-value-value="${value}"` : ''}
           ${min ? `data-calendar-min-value="${min}"` : ''}
           ${max ? `data-calendar-max-value="${max}"` : ''}>
-          <header class="theme-calendar__header">
-            <button type="button" class="theme-button theme-calendar__nav" data-variant="ghost" data-size="sm"
+          <header class="cremona-calendar__header">
+            <button type="button" class="cremona-button cremona-calendar__nav" data-variant="ghost" data-size="sm"
               data-calendar-target="prevButton" data-action="click->calendar#prevMonth" aria-label="${prevAria}">
-              <svg class="theme-icon theme-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              <svg class="cremona-icon cremona-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
             </button>
-            <h2 class="theme-calendar__month-label" id="${id}-cal-month" data-calendar-target="monthLabel" aria-live="polite" aria-atomic="true"></h2>
-            <button type="button" class="theme-button theme-calendar__nav" data-variant="ghost" data-size="sm"
+            <h2 class="cremona-calendar__month-label" id="${id}-cal-month" data-calendar-target="monthLabel" aria-live="polite" aria-atomic="true"></h2>
+            <button type="button" class="cremona-button cremona-calendar__nav" data-variant="ghost" data-size="sm"
               data-calendar-target="nextButton" data-action="click->calendar#nextMonth" aria-label="${nextAria}">
-              <svg class="theme-icon theme-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              <svg class="cremona-icon cremona-icon-bidi" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
           </header>
-          <div class="theme-calendar__weekdays" data-calendar-target="weekdays" aria-hidden="true"></div>
-          <div class="theme-calendar__grid" id="${id}-cal-grid" role="grid" aria-labelledby="${id}-cal-month" aria-label="${calAria}" data-calendar-target="grid"></div>
+          <div class="cremona-calendar__weekdays" data-calendar-target="weekdays" aria-hidden="true"></div>
+          <div class="cremona-calendar__grid" id="${id}-cal-grid" role="grid" aria-labelledby="${id}-cal-month" aria-label="${calAria}" data-calendar-target="grid"></div>
         </div>
       </div>
       <input type="hidden" name="${name}" data-date-picker-target="hiddenInput" ${value ? `value="${value}"` : ''}>
@@ -180,10 +180,10 @@ const bodyHtml = `
     <section class="dp-story__section" aria-labelledby="dp-section-field">
       ${sectionTitle('dp-section-field', 'theme.date-picker.story.section.field')}
       ${sectionExplainer('theme.date-picker.story.section.field-explainer')}
-      <div class="theme-field" style="max-inline-size: 360px;">
-        <label class="theme-label" for="dp-field-input">${t('theme.date-picker.story.field.label')}</label>
+      <div class="cremona-field" style="max-inline-size: 360px;">
+        <label class="cremona-label" for="dp-field-input">${t('theme.date-picker.story.field.label')}</label>
         ${renderDatePicker({ id: 'dp-field', name: 'date-field', describedBy: 'dp-field-help' })}
-        <p class="theme-field__help" id="dp-field-help">${t('theme.date-picker.story.field.help')}</p>
+        <p class="cremona-field__help" id="dp-field-help">${t('theme.date-picker.story.field.help')}</p>
       </div>
     </section>
 
@@ -191,7 +191,7 @@ const bodyHtml = `
       ${sectionTitle('dp-section-events', 'theme.date-picker.story.section.events')}
       ${sectionExplainer('theme.date-picker.story.section.events-explainer')}
       <div class="dp-story__events">
-        <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.date-picker.story.sample.events-log-label')}</p>
+        <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.date-picker.story.sample.events-log-label')}</p>
         <ol id="${eventsLogId}" class="dp-story__log" aria-live="polite"></ol>
       </div>
     </section>
@@ -215,7 +215,7 @@ const bodyHtml = `
 .dp-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .dp-story__row { display: flex; flex-wrap: wrap; gap: var(--spacing-4); align-items: flex-start; }
 .dp-story__row--wide { flex-direction: column; max-inline-size: 320px; }
-.dp-story__row .theme-date-picker { inline-size: 240px; }
+.dp-story__row .cremona-date-picker { inline-size: 240px; }
 .dp-story__events { display: grid; gap: var(--spacing-2); }
 .dp-story__log { list-style: none; padding: var(--spacing-3); margin: 0; background: var(--color-bg-base); border-radius: var(--radius-sm); border: 1px solid var(--color-border-subtle); max-block-size: 200px; overflow-y: auto; font-family: var(--font-mono); font-size: var(--font-size-xs); }
 .dp-story__log:empty::before { content: 'No events yet.'; color: var(--color-text-tertiary); font-family: var(--font-sans); }

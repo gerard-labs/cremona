@@ -23,7 +23,7 @@
  *           item (each draggable child — listitem role + tabindex 0).
  *
  * Values : group (cross-list reorder grouping ; '' = no cross-list) +
- *          handleOnly (bool default true ; drag from .theme-sortable-handle only) +
+ *          handleOnly (bool default true ; drag from .cremona-sortable-handle only) +
  *          animation (ms default 150 ; 0 honors prefers-reduced-motion) +
  *          disabled (bool default false ; start disabled for archived boards).
  */
@@ -116,11 +116,11 @@ export default class SortableController extends Controller {
     if (!this.hasListTarget) return;
     this._sortable = new Ctor(this.listTarget, {
       group: this.groupValue || undefined,
-      handle: this.handleOnlyValue ? '.theme-sortable-handle' : undefined,
+      handle: this.handleOnlyValue ? '.cremona-sortable-handle' : undefined,
       animation: this._reducedMotion ? 0 : this.animationValue,
-      ghostClass: 'theme-sortable-ghost',
-      chosenClass: 'theme-sortable-chosen',
-      dragClass: 'theme-sortable-drag',
+      ghostClass: 'cremona-sortable-ghost',
+      chosenClass: 'cremona-sortable-chosen',
+      dragClass: 'cremona-sortable-drag',
       onUpdate: (e) => this._dispatchReorder('reorder', e, 'pointer'),
       onAdd: (e) => this._dispatchReorder('cross-add', e, 'pointer'),
       onRemove: (e) => this._dispatchReorder('cross-remove', e, 'pointer'),

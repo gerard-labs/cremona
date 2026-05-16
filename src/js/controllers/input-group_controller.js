@@ -18,7 +18,7 @@ import { Controller } from '@hotwired/stimulus';
  *   prefix  — the prefix <span> (auto-discovered if not stamped)
  *   suffix  — the suffix <span>
  *   input   — the <input>; if no explicit target, falls back to the
- *             first .theme-input within the wrapper. Stamped on connect.
+ *             first .cremona-input within the wrapper. Stamped on connect.
  *
  * Actions:
  *   data-action="click->input-group#delegateClick" on the wrapper itself
@@ -32,7 +32,7 @@ export default class InputGroupController extends Controller {
   connect() {
     // Stamp the input target so subsequent calls resolve in O(1) via Stimulus.
     if (!this.hasInputTarget) {
-      const input = this.element.querySelector('.theme-input');
+      const input = this.element.querySelector('.cremona-input');
       if (input) input.setAttribute('data-input-group-target', 'input');
     }
   }
@@ -72,9 +72,9 @@ export default class InputGroupController extends Controller {
     if (event) event.preventDefault();
   }
 
-  /** Resolve the input — prefer the explicit target, fall back to the first .theme-input. */
+  /** Resolve the input — prefer the explicit target, fall back to the first .cremona-input. */
   getInput() {
     if (this.hasInputTarget) return this.inputTarget;
-    return this.element.querySelector('.theme-input');
+    return this.element.querySelector('.cremona-input');
   }
 }

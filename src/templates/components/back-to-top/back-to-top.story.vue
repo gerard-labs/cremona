@@ -11,12 +11,12 @@ setLocale('fr');
 
 function renderBackToTop({ id = 'story-back-to-top', threshold = 400, visible = false }) {
   return `
-    <button type="button" class="theme-button theme-button--primary theme-back-to-top"
+    <button type="button" class="cremona-button cremona-button--primary cremona-back-to-top"
             id="${id}"
             data-back-to-top-threshold-value="${threshold}"
             data-visible="${visible}"
             aria-label="${t('theme.back-to-top.aria.label')}">
-      <svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-arrow-up"/></svg>
+      <svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-arrow-up"/></svg>
     </button>
   `;
 }
@@ -29,14 +29,14 @@ const bodyHtml = `
     </header>
 
     <section class="back-to-top-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.back-to-top.story.section.visible')}</h2>
-      <p class="back-to-top-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.back-to-top.story.explainer.visible')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.back-to-top.story.section.visible')}</h2>
+      <p class="back-to-top-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.back-to-top.story.explainer.visible')}</p>
       <div class="back-to-top-story__frame">${renderBackToTop({ id: 'story-visible', visible: true })}</div>
     </section>
 
     <section class="back-to-top-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.back-to-top.story.section.hidden')}</h2>
-      <p class="back-to-top-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.back-to-top.story.explainer.hidden')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.back-to-top.story.section.hidden')}</h2>
+      <p class="back-to-top-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.back-to-top.story.explainer.hidden')}</p>
       <div class="back-to-top-story__frame">${renderBackToTop({ id: 'story-hidden', visible: false })}</div>
     </section>
   </section>
@@ -59,6 +59,6 @@ const bodyHtml = `
 .back-to-top-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .back-to-top-story__explainer { max-inline-size: 70ch; }
 .back-to-top-story__frame { position: relative; min-block-size: 200px; padding: var(--spacing-4); border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); }
-.back-to-top-story__frame .theme-back-to-top { position: absolute; }
+.back-to-top-story__frame .cremona-back-to-top { position: absolute; }
 .back-to-top-dark-wrap { background: var(--color-bg-base); padding: var(--spacing-4); }
 </style>

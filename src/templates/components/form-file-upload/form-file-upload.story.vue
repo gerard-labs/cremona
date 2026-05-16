@@ -14,15 +14,15 @@ function renderFormFileUpload({ id, label, help, error, required = false, maxFil
   if (help) describedByIds.push(`${id}-help`);
   if (error) describedByIds.push(`${id}-error`);
   const describedBy = describedByIds.length ? ` aria-describedby="${describedByIds.join(' ')}"` : '';
-  const invalid = error ? ' theme-field--invalid' : '';
+  const invalid = error ? ' cremona-field--invalid' : '';
   return `
-    <div class="theme-field theme-form-file-upload${invalid}">
-      <label class="theme-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
-      <div class="theme-form-file-upload__widget" data-controller="file-upload" data-file-upload-accepted-file-types-value="${JSON.stringify(acceptedFileTypes).replace(/"/g, '&quot;')}"${maxFileSize ? ` data-file-upload-max-file-size-value="${maxFileSize}"` : ''} data-file-upload-max-files-value="${maxFiles}" data-file-upload-allow-image-preview-value="true">
+    <div class="cremona-field cremona-form-file-upload${invalid}">
+      <label class="cremona-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
+      <div class="cremona-form-file-upload__widget" data-controller="file-upload" data-file-upload-accepted-file-types-value="${JSON.stringify(acceptedFileTypes).replace(/"/g, '&quot;')}"${maxFileSize ? ` data-file-upload-max-file-size-value="${maxFileSize}"` : ''} data-file-upload-max-files-value="${maxFiles}" data-file-upload-allow-image-preview-value="true">
         <input type="file" id="${id}-input" name="${id}" data-file-upload-target="input"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy}${acceptedFileTypes.length ? ` accept="${acceptedFileTypes.join(',')}"` : ''}${maxFiles > 1 ? ' multiple' : ''} />
       </div>
-      ${help ? `<p class="theme-field__help" id="${id}-help">${help}</p>` : ''}
-      ${error ? `<p class="theme-field__error" id="${id}-error">${error}</p>` : ''}
+      ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
+      ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
     </div>
   `;
 }
@@ -35,17 +35,17 @@ const bodyHtml = `
     </header>
 
     <section class="form-file-upload-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.file-upload.story.section.default-avatar')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.file-upload.story.section.default-avatar')}</h2>
       <div class="form-file-upload-story__frame">${renderFormFileUpload({ id: 'story-avatar', label: t('theme.form.file-upload.label.avatar'), help: t('theme.form.file-upload.help.avatar-format'), required: true, acceptedFileTypes: ['image/jpeg', 'image/png'], maxFileSize: '2MB' })}</div>
     </section>
 
     <section class="form-file-upload-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.file-upload.story.section.with-error-format')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.file-upload.story.section.with-error-format')}</h2>
       <div class="form-file-upload-story__frame">${renderFormFileUpload({ id: 'story-error-format', label: t('theme.form.file-upload.label.avatar'), help: t('theme.form.file-upload.help.avatar-format'), error: t('theme.form.file-upload.error.format'), required: true, acceptedFileTypes: ['image/jpeg', 'image/png'] })}</div>
     </section>
 
     <section class="form-file-upload-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.file-upload.story.section.multi-file')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.file-upload.story.section.multi-file')}</h2>
       <div class="form-file-upload-story__frame">${renderFormFileUpload({ id: 'story-multi', label: t('theme.form.file-upload.label.documents'), help: t('theme.form.file-upload.help.documents-format'), maxFiles: 5, acceptedFileTypes: ['application/pdf', 'image/png'], maxFileSize: '5MB' })}</div>
     </section>
   </section>

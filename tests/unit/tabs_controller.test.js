@@ -55,25 +55,25 @@ describe('TabsController', () => {
       const isDisabled = disabled.includes(id);
       const disAttr = isDisabled ? ' disabled aria-disabled="true"' : '';
       return `<button id="trig-${id}" type="button" role="tab"
-        class="theme-tabs__trigger"
+        class="cremona-tabs__trigger"
         data-tabs-target="trigger"
         data-tab-id="${id}"
         data-action="click->tabs#activate keydown->tabs#onKeydown"
         aria-controls="panel-${id}"${disAttr}>${id}</button>`;
     }).join('');
     const panels = tabs.map((id) => `<div id="panel-${id}" role="tabpanel"
-      class="theme-tabs__panel"
+      class="cremona-tabs__panel"
       data-tabs-target="panel"
       data-tab-id="${id}"
       aria-labelledby="trig-${id}"
       tabindex="0">panel ${id}</div>`).join('');
     document.body.innerHTML = `
-      <div id="t" class="theme-tabs"
+      <div id="t" class="cremona-tabs"
         data-controller="tabs"
         data-tabs-value-value="${value}"
         data-tabs-orientation-value="${orientation}"
         data-tabs-activation-value="${activation}">
-        <div role="tablist" class="theme-tabs__list" data-tabs-target="list"
+        <div role="tablist" class="cremona-tabs__list" data-tabs-target="list"
           aria-label="Tests">${triggers}</div>
         ${panels}
       </div>

@@ -68,20 +68,20 @@ let _dCounter = 0;
 function nextId() { return `dlg-${++_dCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function triggerButton(label, opts = {}) {
   const { variant = 'secondary', size = 'md', iconLeading = null } = opts;
-  const leadingHtml = iconLeading ? `<span class="theme-button__icon theme-button__icon--leading">${icon(iconLeading)}</span>` : '';
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-size="${size}"
+  const leadingHtml = iconLeading ? `<span class="cremona-button__icon cremona-button__icon--leading">${icon(iconLeading)}</span>` : '';
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-size="${size}"
     data-action="click->dialog#open">
-    ${leadingHtml}<span class="theme-button__label">${label}</span>
+    ${leadingHtml}<span class="cremona-button__label">${label}</span>
   </button>`;
 }
 
 function closeButton(ariaLabel) {
-  return `<button type="button" class="theme-button theme-dialog__close" data-variant="ghost" data-size="sm"
+  return `<button type="button" class="cremona-button cremona-dialog__close" data-variant="ghost" data-size="sm"
     aria-label="${ariaLabel}" data-action="click->dialog#close">${icon('x')}</button>`;
 }
 
@@ -99,22 +99,22 @@ function renderDialog({
   const id = nextId();
   const titleId = `${id}-title`;
   return `
-    <div class="theme-dialog-wrap"
+    <div class="cremona-dialog-wrap"
       data-controller="dialog"
       data-dialog-open-value="false"
       data-dialog-close-on-escape-value="${closeOnEscape}"
       data-dialog-close-on-backdrop-click-value="${closeOnBackdropClick}">
       ${trigger}
-      <dialog id="${id}" class="theme-dialog ${dialogClass}"
+      <dialog id="${id}" class="cremona-dialog ${dialogClass}"
         data-dialog-target="dialog"
         data-size="${size}"
         aria-labelledby="${titleId}">
-        <header class="theme-dialog__header">
-          <h2 id="${titleId}" class="theme-dialog__title">${title}</h2>
+        <header class="cremona-dialog__header">
+          <h2 id="${titleId}" class="cremona-dialog__title">${title}</h2>
           ${showCloseButton ? closeButton(S.ariaClose) : ''}
         </header>
-        <div class="theme-dialog__body">${body}</div>
-        ${footer ? `<footer class="theme-dialog__footer">${footer}</footer>` : ''}
+        <div class="cremona-dialog__body">${body}</div>
+        ${footer ? `<footer class="cremona-dialog__footer">${footer}</footer>` : ''}
       </dialog>
     </div>
   `;
@@ -171,8 +171,8 @@ const bodyHtml = `
     </header>
 
     <section class="dialog-story__section" aria-labelledby="dlg-section-default">
-      <h2 id="dlg-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.default')}</h2>
-      <p class="dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.default')}</p>
+      <h2 id="dlg-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.default')}</h2>
+      <p class="dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.default')}</p>
       <div class="dialog-story__row">
         ${renderDialog({
           size: 'md',
@@ -180,64 +180,64 @@ const bodyHtml = `
           title: S.defaultTitle,
           body: `<p>${S.defaultBody1}</p>`,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->dialog#close"><span class="theme-button__label">${S.defaultCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="primary"><span class="theme-button__label">${S.defaultConfirm}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->dialog#close"><span class="cremona-button__label">${S.defaultCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="primary"><span class="cremona-button__label">${S.defaultConfirm}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="dialog-story__section" aria-labelledby="dlg-section-sizes">
-      <h2 id="dlg-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.sizes')}</h2>
-      <p class="dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.sizes')}</p>
+      <h2 id="dlg-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.sizes')}</h2>
+      <p class="dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.sizes')}</p>
       <div class="dialog-story__row">
         ${renderDialog({
           size: 'sm',
           trigger: triggerButton(S.sizeTrigSm),
           title: S.sizeTitleSm,
           body: `<p>${S.sizeBodySm}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->dialog#close"><span class="theme-button__label">${S.defaultCancel}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->dialog#close"><span class="cremona-button__label">${S.defaultCancel}</span></button>`,
         })}
         ${renderDialog({
           size: 'md',
           trigger: triggerButton(S.sizeTrigMd),
           title: S.sizeTitleMd,
           body: `<p>${S.sizeBodyMd}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->dialog#close"><span class="theme-button__label">${S.defaultCancel}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->dialog#close"><span class="cremona-button__label">${S.defaultCancel}</span></button>`,
         })}
         ${renderDialog({
           size: 'lg',
           trigger: triggerButton(S.sizeTrigLg),
           title: S.sizeTitleLg,
           body: `<p>${S.sizeBodyLg}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->dialog#close"><span class="theme-button__label">${S.defaultCancel}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->dialog#close"><span class="cremona-button__label">${S.defaultCancel}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="dialog-story__section" aria-labelledby="dlg-section-with-form">
-      <h2 id="dlg-section-with-form" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.with-form')}</h2>
-      <p class="dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.with-form')}</p>
+      <h2 id="dlg-section-with-form" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.with-form')}</h2>
+      <p class="dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.with-form')}</p>
       <div class="dialog-story__row">
         ${renderDialog({
           size: 'md',
           trigger: triggerButton(S.formTrig, { iconLeading: 'edit-3' }),
           title: S.formTitle,
           body: `
-            <label class="theme-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formLabel}</label>
-            <input type="text" class="theme-input" placeholder="${S.formPlaceholder}" />
+            <label class="cremona-typography" data-variant="label" style="display: block; margin-block-end: var(--spacing-1)">${S.formLabel}</label>
+            <input type="text" class="cremona-input" placeholder="${S.formPlaceholder}" />
           `,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->dialog#close"><span class="theme-button__label">${S.formCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="primary"><span class="theme-button__label">${S.formSave}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->dialog#close"><span class="cremona-button__label">${S.formCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="primary"><span class="cremona-button__label">${S.formSave}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="dialog-story__section" aria-labelledby="dlg-section-destructive">
-      <h2 id="dlg-section-destructive" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.destructive')}</h2>
-      <p class="dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.destructive')}</p>
+      <h2 id="dlg-section-destructive" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.destructive')}</h2>
+      <p class="dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.destructive')}</p>
       <div class="dialog-story__row">
         ${renderDialog({
           size: 'md',
@@ -247,16 +247,16 @@ const bodyHtml = `
           closeOnEscape: false,
           closeOnBackdropClick: false,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->dialog#close"><span class="theme-button__label">${S.destrCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="destructive" data-action="click->dialog#close"><span class="theme-button__label">${S.destrConfirm}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->dialog#close"><span class="cremona-button__label">${S.destrCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="destructive" data-action="click->dialog#close"><span class="cremona-button__label">${S.destrConfirm}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="dialog-story__section" aria-labelledby="dlg-section-long">
-      <h2 id="dlg-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.long')}</h2>
-      <p class="dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.long')}</p>
+      <h2 id="dlg-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.long')}</h2>
+      <p class="dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.long')}</p>
       <div class="dialog-story__row">
         ${renderDialog({
           size: 'lg',
@@ -269,14 +269,14 @@ const bodyHtml = `
             <p>${S.longBodyP4}</p>
             <p>${S.longBodyP5}</p>
           `,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->dialog#close"><span class="theme-button__label">${S.longClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->dialog#close"><span class="cremona-button__label">${S.longClose}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="dialog-story__section" aria-labelledby="dlg-section-events">
-      <h2 id="dlg-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.events')}</h2>
-      <p class="dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.events')}</p>
+      <h2 id="dlg-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.dialog.story.section.events')}</h2>
+      <p class="dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.dialog.story.explainer.events')}</p>
       <div class="dialog-story__events">
         <div class="dialog-story__events-trigger-row">
           ${renderDialog({
@@ -284,11 +284,11 @@ const bodyHtml = `
             trigger: triggerButton(S.eventsTrig, { iconLeading: 'bell' }),
             title: S.eventsTitle,
             body: `<p>${S.eventsBody}</p>`,
-            footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->dialog#close"><span class="theme-button__label">${S.eventsClose}</span></button>`,
+            footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->dialog#close"><span class="cremona-button__label">${S.eventsClose}</span></button>`,
           })}
         </div>
         <div class="dialog-story__events-log">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
           <pre class="dialog-story__events-log-output" data-dialog-events-log data-empty="1">${S.eventsLogEmpty}</pre>
         </div>
       </div>

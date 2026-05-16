@@ -6,19 +6,19 @@
   shared mechanics — aria-activedescendant nav, hidden input form integration,
   selection on Enter/click — come from Select. Combobox adds: an Input
   trigger, on-input filter logic, an inline empty state, results-count
-  announcement via the shared #theme-announcer (per OQ-31), and tab-out
+  announcement via the shared #cremona-announcer (per OQ-31), and tab-out
   dismiss (mirror DropdownMenu OQ-27).
 
   Composes:
     - Popover (positioning + dismiss).
     - combobox controller (filter + announce + select).
-    - Item visual envelope for each option (.theme-item).
-    - Input visual envelope for the trigger (.theme-input mirror).
+    - Item visual envelope for each option (.cremona-item).
+    - Input visual envelope for the trigger (.cremona-input mirror).
 
   Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter. For
   async-loading / virtual-scroll / multi-select, a Phase 4 ADR can revisit.
 
-  Per OQ-31: empty state inline in listbox; shared #theme-announcer carries
+  Per OQ-31: empty state inline in listbox; shared #cremona-announcer carries
   results count via aria-live="polite".
 
   Parameters:
@@ -59,7 +59,7 @@
     className   (string,  optional).
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-combobox-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-combobox-' ~ random()) -%}
 {%- set options      = options      | default([]) -%}
 {%- set value        = value        | default('') -%}
 {%- set placeholder  = placeholder  | default('') -%}
@@ -73,7 +73,7 @@
 {%- set emptyMessage = emptyMessage | default('Aucun résultat pour « {query} »') -%}
 {%- set className    = className    | default('') -%}
 
-{%- set _classes = ['theme-popover', 'theme-combobox'] -%}
+{%- set _classes = ['cremona-popover', 'cremona-combobox'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {# Resolve the initial input.value: matching option's label OR empty. #}
@@ -103,10 +103,10 @@
   data-combobox-placeholder-value="{{ placeholder }}"
   data-combobox-query-value=""
 >
-  <div class="theme-combobox__wrap">
+  <div class="cremona-combobox__wrap">
     <input
       type="text"
-      class="theme-combobox__input"
+      class="cremona-combobox__input"
       data-popover-target="trigger"
       data-combobox-target="input"
       data-size="{{ size }}"
@@ -124,8 +124,8 @@
       {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
       {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif -%}
     />
-    <span class="theme-combobox__chevron" aria-hidden="true">
-      {% include '@theme/components/icon/icon.html.twig' with { name: 'chevron-down', size: 'sm', decorative: true } %}
+    <span class="cremona-combobox__chevron" aria-hidden="true">
+      {% include '@cremona/components/icon/icon.html.twig' with { name: 'chevron-down', size: 'sm', decorative: true } %}
     </span>
   </div>
 
@@ -140,7 +140,7 @@
 
   <div
     id="{{ htmlId }}-listbox"
-    class="theme-popover__content theme-combobox__listbox"
+    class="cremona-popover__content cremona-combobox__listbox"
     data-popover-target="content"
     data-state="closed"
     data-placement="{{ placement }}"
@@ -148,16 +148,16 @@
     {%- if labelledBy %} aria-labelledby="{{ labelledBy }}"{% endif -%}
     hidden
   >
-    <div class="theme-combobox__options" data-combobox-target="optionsContainer">
+    <div class="cremona-combobox__options" data-combobox-target="optionsContainer">
       {%- for opt in options -%}
         {%- set _optDisabled = opt.disabled | default(false) -%}
         {%- set _optSelected = opt.value == value and value != '' -%}
-        {% include '@theme/components/item/item.html.twig' with {
+        {% include '@cremona/components/item/item.html.twig' with {
           label: opt.label,
           iconTrailing: _optSelected ? 'check' : null,
           disabled: _optDisabled,
           htmlId: htmlId ~ '-opt-' ~ loop.index,
-          className: 'theme-combobox__option',
+          className: 'cremona-combobox__option',
           attrs: {
             'data-combobox-target': 'option',
             'data-value': opt.value,
@@ -168,7 +168,7 @@
         } only %}
       {%- endfor -%}
     </div>
-    <div class="theme-combobox__empty" data-combobox-target="empty" hidden>
+    <div class="cremona-combobox__empty" data-combobox-target="empty" hidden>
       {{- _emptyHead -}}
       <strong data-combobox-target="emptyQuery"></strong>
       {{- _emptyTail -}}

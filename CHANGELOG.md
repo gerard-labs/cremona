@@ -19,8 +19,8 @@ Initial public release.
   dependency on first use to keep the base bundle small.
 - **i18n & RTL** layer — `fr` + `en` translation catalogs, a `t()` runtime with
   `Intl.PluralRules` plurals, and logical CSS properties throughout.
-- **Symfony bridge** — registers the `@theme` Twig namespace and auto-discovers
+- **Symfony bridge** — registers the `@cremona` Twig namespace and auto-discovers
   the translation catalogs through the Symfony Translator.
-- **Library build** emitting `dist/theme.js` (ESM) and a compiled `dist/theme.css`.
+- **Library build** emitting `dist/cremona.js` (ESM) and a compiled `dist/cremona.css`.
 - **Quality gates** — 673 unit tests, an axe-core accessibility suite, Playwright
   visual-regression tests, and 7 lint checks, all wired into GitHub Actions CI.

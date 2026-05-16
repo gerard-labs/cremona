@@ -14,7 +14,7 @@
       and prefers Twig over a manual `ensureSonnerViewport()` JS call.
 
   Usage:
-    {% include '@theme/components/sonner/sonner.html.twig' %}
+    {% include '@cremona/components/sonner/sonner.html.twig' %}
 
   Place near the closing `</body>` tag so the viewport sits at the end of
   the DOM (top-layer with `position: fixed` + `z-index: var(--z-toast)`
@@ -48,14 +48,14 @@
       gap region between toasts passes clicks through to page content
       below ; each rendered toast re-enables pointer events.
 -#}
-<aside class="theme-sonner__viewport"
+<aside class="cremona-sonner__viewport"
        aria-label="{{ 'theme.sonner.aria.viewport'|trans }}"
        data-controller="sonner"
        data-action="pointerenter->sonner#pauseAll pointerleave->sonner#resumeAll keydown.esc@window->sonner#dismissAll">
   {# Queue indicator — initially hidden. SonnerController toggles
      `hidden` + textContent ("+N autres") as the queue grows. #}
   <button type="button"
-          class="theme-sonner__queue-indicator"
+          class="cremona-sonner__queue-indicator"
           data-action="click->sonner#expandQueue"
           data-sonner-target="indicator"
           hidden></button>

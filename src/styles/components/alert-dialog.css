@@ -1,6 +1,6 @@
 /*
  * AlertDialog — wrapper around Dialog with leading status icon + tone-aware
- * accent. Inherits the full surface envelope from Dialog (.theme-dialog base
+ * accent. Inherits the full surface envelope from Dialog (.cremona-dialog base
  * class is co-applied on the <dialog>).
  *
  * Per Ring 2 S2.2: this file ONLY adds the icon-wrap + header alignment +
@@ -23,14 +23,14 @@
  * lands left in LTR, right in RTL.
  */
 
-.theme-alert-dialog__header {
+.cremona-alert-dialog__header {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-3);
   margin-block-end: var(--spacing-4);
 }
 
-.theme-alert-dialog__icon-wrap {
+.cremona-alert-dialog__icon-wrap {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -42,33 +42,33 @@
   color: var(--color-danger-soft-foreground);
 }
 
-.theme-alert-dialog[data-tone="warning"] .theme-alert-dialog__icon-wrap {
+.cremona-alert-dialog[data-tone="warning"] .cremona-alert-dialog__icon-wrap {
   background-color: var(--color-warning-soft);
   color: var(--color-warning-soft-foreground);
 }
 
-.theme-alert-dialog[data-tone="info"] .theme-alert-dialog__icon-wrap {
+.cremona-alert-dialog[data-tone="info"] .cremona-alert-dialog__icon-wrap {
   background-color: var(--color-info-soft);
   color: var(--color-info-soft-foreground);
 }
 
-.theme-alert-dialog__title {
+.cremona-alert-dialog__title {
   flex: 1 1 auto;
   min-inline-size: 0;
   /* Slightly tighter line-height since the icon visually anchors the row. */
   padding-block-start: var(--spacing-1);
 }
 
-.theme-alert-dialog__body {
+.cremona-alert-dialog__body {
   /* The body in AlertDialog is typically a single paragraph naming the
      consequence. Keep it readable but compact — no max-inline-size
      override (inherited from Dialog). */
   color: var(--color-text-secondary);
 }
 
-.theme-alert-dialog__footer {
+.cremona-alert-dialog__footer {
   /* Inherits Dialog's flex-end footer. Repeat the same rule so a brand
-     preset overriding .theme-dialog__footer doesn't accidentally
+     preset overriding .cremona-dialog__footer doesn't accidentally
      drop AlertDialog's behavior. */
   display: flex;
   flex-wrap: wrap;

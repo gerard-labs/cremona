@@ -29,24 +29,24 @@ function addLog(line) {
 
 function renderCookieBanner({ id, cookieName = 'theme.consent.story', autoShow = false, withCategories = false }) {
   const categoriesHtml = withCategories ? `
-    <div class="theme-rgpd-cookie-banner__categories-summary">
-      <div class="theme-rgpd-cookie-banner__category">
-        <span class="theme-rgpd-cookie-banner__category-name">${t('theme.rgpd-cookie-banner.category.essential.name')}</span>
-        <span class="theme-rgpd-cookie-banner__category-status">${t('theme.rgpd-cookie-banner.category.essential.status')}</span>
+    <div class="cremona-rgpd-cookie-banner__categories-summary">
+      <div class="cremona-rgpd-cookie-banner__category">
+        <span class="cremona-rgpd-cookie-banner__category-name">${t('theme.rgpd-cookie-banner.category.essential.name')}</span>
+        <span class="cremona-rgpd-cookie-banner__category-status">${t('theme.rgpd-cookie-banner.category.essential.status')}</span>
       </div>
-      <div class="theme-rgpd-cookie-banner__category">
-        <span class="theme-rgpd-cookie-banner__category-name">${t('theme.rgpd-cookie-banner.category.analytics.name')}</span>
-        <span class="theme-rgpd-cookie-banner__category-status">${t('theme.rgpd-cookie-banner.category.optional.status')}</span>
+      <div class="cremona-rgpd-cookie-banner__category">
+        <span class="cremona-rgpd-cookie-banner__category-name">${t('theme.rgpd-cookie-banner.category.analytics.name')}</span>
+        <span class="cremona-rgpd-cookie-banner__category-status">${t('theme.rgpd-cookie-banner.category.optional.status')}</span>
       </div>
-      <div class="theme-rgpd-cookie-banner__category">
-        <span class="theme-rgpd-cookie-banner__category-name">${t('theme.rgpd-cookie-banner.category.marketing.name')}</span>
-        <span class="theme-rgpd-cookie-banner__category-status">${t('theme.rgpd-cookie-banner.category.optional.status')}</span>
+      <div class="cremona-rgpd-cookie-banner__category">
+        <span class="cremona-rgpd-cookie-banner__category-name">${t('theme.rgpd-cookie-banner.category.marketing.name')}</span>
+        <span class="cremona-rgpd-cookie-banner__category-status">${t('theme.rgpd-cookie-banner.category.optional.status')}</span>
       </div>
     </div>
   ` : '';
 
   return `
-    <div class="theme-dialog-wrap theme-rgpd-cookie-banner"
+    <div class="cremona-dialog-wrap cremona-rgpd-cookie-banner"
          id="${id}"
          data-controller="dialog cookie-banner"
          data-dialog-open-value="true"
@@ -55,20 +55,20 @@ function renderCookieBanner({ id, cookieName = 'theme.consent.story', autoShow =
          data-cookie-banner-cookie-name-value="${cookieName}"
          data-cookie-banner-storage-key-value="${cookieName}"
          data-cookie-banner-auto-show-value="${autoShow}">
-      <dialog class="theme-dialog" data-dialog-target="dialog" data-size="md" open aria-labelledby="${id}-title">
-        <header class="theme-dialog__header">
-          <h2 id="${id}-title" class="theme-dialog__title">${t('theme.rgpd-cookie-banner.title')}</h2>
+      <dialog class="cremona-dialog" data-dialog-target="dialog" data-size="md" open aria-labelledby="${id}-title">
+        <header class="cremona-dialog__header">
+          <h2 id="${id}-title" class="cremona-dialog__title">${t('theme.rgpd-cookie-banner.title')}</h2>
         </header>
-        <div class="theme-dialog__body">
-          <p class="theme-rgpd-cookie-banner__legal-summary">${t('theme.rgpd-cookie-banner.legal-summary')}</p>
-          <p class="theme-rgpd-cookie-banner__legal-detail">${t('theme.rgpd-cookie-banner.legal-detail')}</p>
+        <div class="cremona-dialog__body">
+          <p class="cremona-rgpd-cookie-banner__legal-summary">${t('theme.rgpd-cookie-banner.legal-summary')}</p>
+          <p class="cremona-rgpd-cookie-banner__legal-detail">${t('theme.rgpd-cookie-banner.legal-detail')}</p>
           ${categoriesHtml}
         </div>
-        <footer class="theme-dialog__footer">
-          <div class="theme-rgpd-cookie-banner__actions">
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->cookie-banner#reject">${t('theme.rgpd-cookie-banner.button.reject-all')}</button>
-            <button type="button" class="theme-button" data-variant="ghost" data-action="click->cookie-banner#customize">${t('theme.rgpd-cookie-banner.button.customize')}</button>
-            <button type="button" class="theme-button" data-variant="primary" data-action="click->cookie-banner#accept">${t('theme.rgpd-cookie-banner.button.accept-all')}</button>
+        <footer class="cremona-dialog__footer">
+          <div class="cremona-rgpd-cookie-banner__actions">
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->cookie-banner#reject">${t('theme.rgpd-cookie-banner.button.reject-all')}</button>
+            <button type="button" class="cremona-button" data-variant="ghost" data-action="click->cookie-banner#customize">${t('theme.rgpd-cookie-banner.button.customize')}</button>
+            <button type="button" class="cremona-button" data-variant="primary" data-action="click->cookie-banner#accept">${t('theme.rgpd-cookie-banner.button.accept-all')}</button>
           </div>
         </footer>
       </dialog>
@@ -84,20 +84,20 @@ const bodyHtml = `
     </header>
 
     <section class="rgpd-cookie-banner-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.section.default')}</h2>
-      <p class="rgpd-cookie-banner-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.section.default')}</h2>
+      <p class="rgpd-cookie-banner-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.explainer.default')}</p>
       <div class="rgpd-cookie-banner-story__frame">${renderCookieBanner({ id: 'cookie-default', cookieName: 'theme.consent.story-default' })}</div>
     </section>
 
     <section class="rgpd-cookie-banner-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.section.with-categories')}</h2>
-      <p class="rgpd-cookie-banner-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.explainer.with-categories')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.section.with-categories')}</h2>
+      <p class="rgpd-cookie-banner-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.explainer.with-categories')}</p>
       <div class="rgpd-cookie-banner-story__frame">${renderCookieBanner({ id: 'cookie-categories', cookieName: 'theme.consent.story-categories', withCategories: true })}</div>
     </section>
 
     <section class="rgpd-cookie-banner-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.section.events-log')}</h2>
-      <p class="rgpd-cookie-banner-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.explainer.events-log')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.section.events-log')}</h2>
+      <p class="rgpd-cookie-banner-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.rgpd-cookie-banner.story.explainer.events-log')}</p>
       <div class="rgpd-cookie-banner-story__frame">${renderCookieBanner({ id: 'cookie-events', cookieName: 'theme.consent.story-events' })}</div>
       <div id="cookie-banner-events-log" class="rgpd-cookie-banner-story__events-log" aria-live="polite"></div>
     </section>

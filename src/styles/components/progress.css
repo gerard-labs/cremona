@@ -28,7 +28,7 @@
 
 /* ----- track (the background line) -------------------------------- */
 
-.theme-progress {
+.cremona-progress {
   display: block;
   appearance: none;
   inline-size: 100%;
@@ -39,25 +39,25 @@
   overflow: hidden;
 }
 
-.theme-progress[data-size="sm"] { block-size: 4px; }
-.theme-progress[data-size="md"] { block-size: 6px; }
-.theme-progress[data-size="lg"] { block-size: 8px; }
+.cremona-progress[data-size="sm"] { block-size: 4px; }
+.cremona-progress[data-size="md"] { block-size: 6px; }
+.cremona-progress[data-size="lg"] { block-size: 8px; }
 
 /* Gecko: the <progress> element IS the track. Set bg here. */
-.theme-progress::-moz-progress-bar {
+.cremona-progress::-moz-progress-bar {
   background-color: var(--color-primary);
   border-radius: var(--radius-pill);
   transition: inline-size var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
 /* WebKit: ::-webkit-progress-bar is the track. */
-.theme-progress::-webkit-progress-bar {
+.cremona-progress::-webkit-progress-bar {
   background-color: var(--color-bg-sunken);
   border-radius: var(--radius-pill);
 }
 
 /* WebKit: ::-webkit-progress-value is the filled portion. */
-.theme-progress::-webkit-progress-value {
+.cremona-progress::-webkit-progress-value {
   background-color: var(--color-primary);
   border-radius: var(--radius-pill);
   transition: inline-size var(--motion-duration-fast) var(--motion-easing-standard);
@@ -65,27 +65,27 @@
 
 /* ----- variant: success -------------------------------------------- */
 
-.theme-progress[data-variant="success"]::-moz-progress-bar { background-color: var(--color-success); }
-.theme-progress[data-variant="success"]::-webkit-progress-value { background-color: var(--color-success); }
+.cremona-progress[data-variant="success"]::-moz-progress-bar { background-color: var(--color-success); }
+.cremona-progress[data-variant="success"]::-webkit-progress-value { background-color: var(--color-success); }
 
 /* ----- variant: warning -------------------------------------------- */
 
-.theme-progress[data-variant="warning"]::-moz-progress-bar { background-color: var(--color-warning); }
-.theme-progress[data-variant="warning"]::-webkit-progress-value { background-color: var(--color-warning); }
+.cremona-progress[data-variant="warning"]::-moz-progress-bar { background-color: var(--color-warning); }
+.cremona-progress[data-variant="warning"]::-webkit-progress-value { background-color: var(--color-warning); }
 
 /* ----- variant: danger --------------------------------------------- */
 
-.theme-progress[data-variant="danger"]::-moz-progress-bar { background-color: var(--color-danger); }
-.theme-progress[data-variant="danger"]::-webkit-progress-value { background-color: var(--color-danger); }
+.cremona-progress[data-variant="danger"]::-moz-progress-bar { background-color: var(--color-danger); }
+.cremona-progress[data-variant="danger"]::-webkit-progress-value { background-color: var(--color-danger); }
 
 /* ----- indeterminate ----------------------------------------------- */
 
-@keyframes theme-progress-stripe {
+@keyframes cremona-progress-stripe {
   from { background-position-x: 0; }
   to   { background-position-x: -28px; }
 }
 
-.theme-progress--indeterminate {
+.cremona-progress--indeterminate {
   /* Diagonal stripe + moving via background-position keyframes. The two
      stops at 14px create a single full stripe; the animation translates
      the stripe pattern across the inline-axis. */
@@ -97,16 +97,16 @@
     color-mix(in oklch, var(--color-primary) 60%, transparent) 14px
   );
   background-size: 28px 100%;
-  animation: theme-progress-stripe 1600ms linear infinite;
+  animation: cremona-progress-stripe 1600ms linear infinite;
 }
 
-.theme-progress--indeterminate[data-variant="success"]   { background-image: repeating-linear-gradient(-45deg, var(--color-success) 0, var(--color-success) 7px, color-mix(in oklch, var(--color-success) 60%, transparent) 7px, color-mix(in oklch, var(--color-success) 60%, transparent) 14px); }
-.theme-progress--indeterminate[data-variant="warning"]   { background-image: repeating-linear-gradient(-45deg, var(--color-warning) 0, var(--color-warning) 7px, color-mix(in oklch, var(--color-warning) 60%, transparent) 7px, color-mix(in oklch, var(--color-warning) 60%, transparent) 14px); }
-.theme-progress--indeterminate[data-variant="danger"]    { background-image: repeating-linear-gradient(-45deg, var(--color-danger) 0, var(--color-danger) 7px, color-mix(in oklch, var(--color-danger) 60%, transparent) 7px, color-mix(in oklch, var(--color-danger) 60%, transparent) 14px); }
+.cremona-progress--indeterminate[data-variant="success"]   { background-image: repeating-linear-gradient(-45deg, var(--color-success) 0, var(--color-success) 7px, color-mix(in oklch, var(--color-success) 60%, transparent) 7px, color-mix(in oklch, var(--color-success) 60%, transparent) 14px); }
+.cremona-progress--indeterminate[data-variant="warning"]   { background-image: repeating-linear-gradient(-45deg, var(--color-warning) 0, var(--color-warning) 7px, color-mix(in oklch, var(--color-warning) 60%, transparent) 7px, color-mix(in oklch, var(--color-warning) 60%, transparent) 14px); }
+.cremona-progress--indeterminate[data-variant="danger"]    { background-image: repeating-linear-gradient(-45deg, var(--color-danger) 0, var(--color-danger) 7px, color-mix(in oklch, var(--color-danger) 60%, transparent) 7px, color-mix(in oklch, var(--color-danger) 60%, transparent) 14px); }
 
 /* Reduced-motion: freeze the stripe pattern (still indicative). */
 @media (prefers-reduced-motion: reduce) {
-  .theme-progress--indeterminate {
+  .cremona-progress--indeterminate {
     animation: none;
     background-position-x: 0;
   }
@@ -114,14 +114,14 @@
 
 /* ----- row wrapper (label + value display + bar) ------------------ */
 
-.theme-progress-row {
+.cremona-progress-row {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1_5);
   inline-size: 100%;
 }
 
-.theme-progress-row__header {
+.cremona-progress-row__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -129,12 +129,12 @@
   font: var(--typography-caption);
 }
 
-.theme-progress-row__label {
+.cremona-progress-row__label {
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
 }
 
-.theme-progress-row__value {
+.cremona-progress-row__value {
   font-variant-numeric: tabular-nums;
   color: var(--color-text-tertiary);
   font-weight: var(--font-weight-medium);

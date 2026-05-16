@@ -28,7 +28,7 @@
 
   Usage:
 
-    {% include '@theme/components/form-color-picker/form-color-picker.html.twig' with {
+    {% include '@cremona/components/form-color-picker/form-color-picker.html.twig' with {
       label: 'theme.form.color-picker.label.brand'|trans,
       name: 'brand_color',
       defaultColor: '#6366F1',
@@ -36,7 +36,7 @@
     } %}
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-form-color-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-form-color-' ~ random()) -%}
 {%- set required     = required     | default(false) -%}
 {%- set defaultColor = defaultColor | default('#000000') -%}
 {%- set alpha        = alpha        | default(false) -%}
@@ -46,16 +46,16 @@
 {%- set className    = className    | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-field', 'theme-form-color-picker'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field', 'cremona-form-color-picker'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set describedByIds = [] -%}
 {%- if help -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-help']) -%}{%- endif -%}
 {%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
 
-{%- set _wrapClasses    = ['theme-popover', 'theme-form-color-picker__wrap'] -%}
-{%- set _triggerClasses = ['theme-button', 'theme-form-color-picker__trigger'] -%}
+{%- set _wrapClasses    = ['cremona-popover', 'cremona-form-color-picker__wrap'] -%}
+{%- set _triggerClasses = ['cremona-button', 'cremona-form-color-picker__trigger'] -%}
 
 <div
   class="{{ _classes | join(' ') }}"
@@ -67,7 +67,7 @@
   data-color-picker-format-value="{{ format }}"
   {%- if swatches | length %} data-color-picker-swatches-value="{{ swatches | json_encode | e('html_attr') }}"{% endif -%}
 >
-  {% include '@theme/components/label/label.html.twig' with {
+  {% include '@cremona/components/label/label.html.twig' with {
     content: label,
     htmlFor: htmlId ~ '-input',
     required: required,
@@ -85,12 +85,12 @@
       aria-haspopup="dialog"
     >
       <span
-        class="theme-form-color-picker__preview"
+        class="cremona-form-color-picker__preview"
         data-color-picker-target="preview"
         style="background-color: {{ defaultColor }};"
         aria-hidden="true"
       ></span>
-      {% include '@theme/components/input/input.html.twig' with {
+      {% include '@cremona/components/input/input.html.twig' with {
         type: 'text',
         htmlId: htmlId ~ '-input',
         name: name,
@@ -99,13 +99,13 @@
         required: required,
         invalid: isInvalid,
         describedBy: describedByIds | length ? describedByIds | join(' ') : null,
-        className: 'theme-form-color-picker__hex',
+        className: 'cremona-form-color-picker__hex',
         attrs: { 'data-color-picker-target': 'input' },
       } only %}
     </button>
 
     <div
-      class="theme-popover__content theme-form-color-picker__panel"
+      class="cremona-popover__content cremona-form-color-picker__panel"
       data-popover-target="content"
       role="dialog"
       aria-label="{{ 'theme.form.color-picker.aria.trigger'|trans }}"
@@ -115,9 +115,9 @@
   </div>
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

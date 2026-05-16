@@ -14,7 +14,7 @@ function renderFormAddress({ id, label, help, error, placeholder, required = fal
   if (help) describedByIds.push(`${id}-help`);
   if (error) describedByIds.push(`${id}-error`);
   const describedBy = describedByIds.length ? ` aria-describedby="${describedByIds.join(' ')}"` : '';
-  const invalid = error ? ' theme-field--invalid' : '';
+  const invalid = error ? ' cremona-field--invalid' : '';
 
   const demoSuggestions = withSuggestions ? [
     { label: '15 rue de la République, 75001 Paris', placeId: 'demo-1' },
@@ -23,19 +23,19 @@ function renderFormAddress({ id, label, help, error, placeholder, required = fal
   ] : [];
 
   return `
-    <div class="theme-field theme-form-address-autocomplete${invalid}">
-      <label class="theme-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
-      <div class="theme-popover theme-form-address-autocomplete__wrap" data-controller="popover address-autocomplete" data-popover-placement-value="bottom-start" data-popover-offset-value="4" data-address-autocomplete-min-query-length-value="3" data-address-autocomplete-debounce-ms-value="250" data-address-autocomplete-consumer-endpoint-value="/api/addresses">
-        <input type="text" class="theme-input theme-form-address-autocomplete__input" id="${id}-input" name="${id}-display" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="${id}-suggestions" autocomplete="off" data-popover-target="trigger" data-address-autocomplete-target="input"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy}${placeholder ? ` placeholder="${placeholder}"` : ''}${withSuggestions ? ' value="15 rue"' : ''} />
+    <div class="cremona-field cremona-form-address-autocomplete${invalid}">
+      <label class="cremona-label" for="${id}-input">${label}${required ? ' <span aria-hidden="true">*</span>' : ''}</label>
+      <div class="cremona-popover cremona-form-address-autocomplete__wrap" data-controller="popover address-autocomplete" data-popover-placement-value="bottom-start" data-popover-offset-value="4" data-address-autocomplete-min-query-length-value="3" data-address-autocomplete-debounce-ms-value="250" data-address-autocomplete-consumer-endpoint-value="/api/addresses">
+        <input type="text" class="cremona-input cremona-form-address-autocomplete__input" id="${id}-input" name="${id}-display" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="${id}-suggestions" autocomplete="off" data-popover-target="trigger" data-address-autocomplete-target="input"${required ? ' required aria-required="true"' : ''}${error ? ' aria-invalid="true"' : ''}${describedBy}${placeholder ? ` placeholder="${placeholder}"` : ''}${withSuggestions ? ' value="15 rue"' : ''} />
         <input type="hidden" name="${id}" data-address-autocomplete-target="hiddenInput" />
-        <div class="theme-popover__content theme-form-address-autocomplete__panel" data-popover-target="content" role="listbox" id="${id}-suggestions">
-          <ul class="theme-form-address-autocomplete__suggestions" data-address-autocomplete-target="suggestionsList"${demoSuggestions.length ? '' : ' hidden'}>
+        <div class="cremona-popover__content cremona-form-address-autocomplete__panel" data-popover-target="content" role="listbox" id="${id}-suggestions">
+          <ul class="cremona-form-address-autocomplete__suggestions" data-address-autocomplete-target="suggestionsList"${demoSuggestions.length ? '' : ' hidden'}>
             ${demoSuggestions.map((s, idx) => `<li role="option" tabindex="-1" data-address-autocomplete-target="suggestionItem" data-suggestion-index="${idx}">${s.label}</li>`).join('')}
           </ul>
         </div>
       </div>
-      ${help ? `<p class="theme-field__help" id="${id}-help">${help}</p>` : ''}
-      ${error ? `<p class="theme-field__error" id="${id}-error">${error}</p>` : ''}
+      ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
+      ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
     </div>
   `;
 }
@@ -48,17 +48,17 @@ const bodyHtml = `
     </header>
 
     <section class="form-address-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.address-autocomplete.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.address-autocomplete.story.section.default')}</h2>
       <div class="form-address-story__frame">${renderFormAddress({ id: 'story-default', label: t('theme.form.address-autocomplete.label.shipping'), help: t('theme.form.address-autocomplete.help.format'), placeholder: t('theme.form.address-autocomplete.placeholder'), required: true })}</div>
     </section>
 
     <section class="form-address-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.address-autocomplete.story.section.with-suggestions')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.address-autocomplete.story.section.with-suggestions')}</h2>
       <div class="form-address-story__frame">${renderFormAddress({ id: 'story-suggestions', label: t('theme.form.address-autocomplete.label.shipping'), help: t('theme.form.address-autocomplete.help.format'), placeholder: t('theme.form.address-autocomplete.placeholder'), required: true, withSuggestions: true })}</div>
     </section>
 
     <section class="form-address-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.address-autocomplete.story.section.validation-error')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.address-autocomplete.story.section.validation-error')}</h2>
       <div class="form-address-story__frame">${renderFormAddress({ id: 'story-error', label: t('theme.form.address-autocomplete.label.shipping'), help: t('theme.form.address-autocomplete.help.format'), error: t('theme.form.address-autocomplete.error.required'), placeholder: t('theme.form.address-autocomplete.placeholder'), required: true })}</div>
     </section>
   </section>

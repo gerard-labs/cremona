@@ -10,6 +10,6 @@
  * See `docs/specs/ring3/Auth-EmailVerification.md` for the full spec.
  */
 
-.theme-auth-email-verification .theme-empty__illustration {
+.cremona-auth-email-verification .cremona-empty__illustration {
   color: var(--color-success);
 }

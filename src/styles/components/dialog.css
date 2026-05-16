@@ -42,7 +42,7 @@
  *   - lg: 720px (richer content — settings, multi-field forms)
  */
 
-.theme-dialog {
+.cremona-dialog {
   /* Centered in viewport via margin auto (native dialog quirk — works when
      top-layer'd via showModal()). */
   margin: auto;
@@ -70,7 +70,7 @@
 }
 
 /* Open state — drives the entry animation via @starting-style below. */
-.theme-dialog[open] {
+.cremona-dialog[open] {
   opacity: 1;
   transform: scale(1);
   transition-duration: var(--motion-duration-slow);
@@ -81,7 +81,7 @@
    values; the [open] rule above defines the AFTER-OPEN values; the
    transition between them is the entry animation. */
 @starting-style {
-  .theme-dialog[open] {
+  .cremona-dialog[open] {
     opacity: 0;
     transform: scale(0.96);
   }
@@ -89,7 +89,7 @@
 
 /* Backdrop — page-blocking overlay rendered by the browser when
    showModal() is called. */
-.theme-dialog::backdrop {
+.cremona-dialog::backdrop {
   background-color: var(--color-bg-overlay);
   opacity: 0;
   transition:
@@ -98,36 +98,36 @@
     display var(--motion-duration-base) allow-discrete;
 }
 
-.theme-dialog[open]::backdrop {
+.cremona-dialog[open]::backdrop {
   opacity: 1;
   transition-timing-function: var(--motion-easing-standard);
 }
 
 @starting-style {
-  .theme-dialog[open]::backdrop {
+  .cremona-dialog[open]::backdrop {
     opacity: 0;
   }
 }
 
 /* Size variants — override max-inline-size. The md default is unchanged. */
-.theme-dialog[data-size="sm"] {
+.cremona-dialog[data-size="sm"] {
   max-inline-size: 400px;
 }
 
-.theme-dialog[data-size="lg"] {
+.cremona-dialog[data-size="lg"] {
   max-inline-size: 720px;
 }
 
 /* ----- Layout: header / body / footer ------------------------------ */
 
-.theme-dialog__header {
+.cremona-dialog__header {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-3);
   margin-block-end: var(--spacing-4);
 }
 
-.theme-dialog__title {
+.cremona-dialog__title {
   font: var(--typography-h2);
   color: var(--color-text-primary);
   margin: 0;
@@ -138,20 +138,20 @@
 /* The close-X button slot (optional — top-right in LTR, top-left in RTL).
    Consumers stamp `data-dialog-close-button` so the kit's click-to-close
    wiring stays declarative. */
-.theme-dialog__close {
+.cremona-dialog__close {
   flex: 0 0 auto;
 }
 
-.theme-dialog__body {
+.cremona-dialog__body {
   font: var(--typography-body);
   color: var(--color-text-secondary);
 }
 
-.theme-dialog__body > * + * {
+.cremona-dialog__body > * + * {
   margin-block-start: var(--spacing-3);
 }
 
-.theme-dialog__footer {
+.cremona-dialog__footer {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
@@ -161,7 +161,7 @@
 
 /* ----- dark mode --------------------------------------------------- */
 
-[data-theme="dark"] .theme-dialog {
+[data-theme="dark"] .cremona-dialog {
   background-color: var(--color-bg-elevated);
   border-color: var(--color-border-default);
 }

@@ -15,7 +15,7 @@ import { t } from '../utils/i18n.js';
  *      on the Tag root so CSS fades the opacity 1 → 0 in 120 ms accelerate.
  *   2. After the opacity transition ends, remove the Tag from the DOM,
  *      dispatch `tag:dismissed` (bubbles + composed, detail = { label }),
- *      and announce the dismissal via the shared `#theme-announcer` live
+ *      and announce the dismissal via the shared `#cremona-announcer` live
  *      region.
  *
  * Why a 2-step dismiss instead of an instant remove :
@@ -62,7 +62,7 @@ export default class TagDismissController extends Controller {
 
   announce(label) {
     const announcer = typeof document !== 'undefined'
-      ? document.getElementById('theme-announcer')
+      ? document.getElementById('cremona-announcer')
       : null;
     if (!announcer) return;
     announcer.textContent = t('theme.tag.aria.dismissed', { label });

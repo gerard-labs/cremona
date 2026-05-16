@@ -14,7 +14,7 @@ function renderFormTagInput({ id, label, help, error, placeholder, whitelist = [
   if (help) describedByIds.push(`${id}-help`);
   if (error) describedByIds.push(`${id}-error`);
   const describedBy = ` aria-describedby="${describedByIds.join(' ')}"`;
-  const invalid = error ? ' theme-field--invalid' : '';
+  const invalid = error ? ' cremona-field--invalid' : '';
   const initialCount = initialTags.length;
   const countText = initialCount === 0
     ? t('theme.form.tag-input.count.zero')
@@ -23,13 +23,13 @@ function renderFormTagInput({ id, label, help, error, placeholder, whitelist = [
       : t('theme.form.tag-input.count.other').replace('{count}', String(initialCount));
 
   return `
-    <div class="theme-field theme-form-tag-input${invalid}" data-controller="tag-input" data-tag-input-whitelist-value='${JSON.stringify(whitelist)}' data-tag-input-max-tags-value="${maxTags}" data-tag-input-duplicates-value="${duplicates}" data-tag-input-delimiters-value=",|\\n">
-      <label class="theme-label" for="${id}-input">${label}</label>
-      <input type="text" class="theme-input theme-form-tag-input__input" id="${id}-input" name="${id}-display" role="textbox" aria-multiline="false" aria-label="${t('theme.form.tag-input.aria.label')}" data-tag-input-target="input" autocomplete="off" value="${initialTags.join(',')}"${error ? ' aria-invalid="true"' : ''}${describedBy}${placeholder ? ` placeholder="${placeholder}"` : ''} />
+    <div class="cremona-field cremona-form-tag-input${invalid}" data-controller="tag-input" data-tag-input-whitelist-value='${JSON.stringify(whitelist)}' data-tag-input-max-tags-value="${maxTags}" data-tag-input-duplicates-value="${duplicates}" data-tag-input-delimiters-value=",|\\n">
+      <label class="cremona-label" for="${id}-input">${label}</label>
+      <input type="text" class="cremona-input cremona-form-tag-input__input" id="${id}-input" name="${id}-display" role="textbox" aria-multiline="false" aria-label="${t('theme.form.tag-input.aria.label')}" data-tag-input-target="input" autocomplete="off" value="${initialTags.join(',')}"${error ? ' aria-invalid="true"' : ''}${describedBy}${placeholder ? ` placeholder="${placeholder}"` : ''} />
       <input type="hidden" name="${id}" data-tag-input-target="hiddenInput" value='${JSON.stringify(initialTags)}' />
-      <p class="theme-field__help theme-form-tag-input__counter" id="${id}-counter" data-tag-input-target="counter" aria-live="polite">${countText}</p>
-      ${help ? `<p class="theme-field__help" id="${id}-help">${help}</p>` : ''}
-      ${error ? `<p class="theme-field__error" id="${id}-error">${error}</p>` : ''}
+      <p class="cremona-field__help cremona-form-tag-input__counter" id="${id}-counter" data-tag-input-target="counter" aria-live="polite">${countText}</p>
+      ${help ? `<p class="cremona-field__help" id="${id}-help">${help}</p>` : ''}
+      ${error ? `<p class="cremona-field__error" id="${id}-error">${error}</p>` : ''}
     </div>
   `;
 }
@@ -42,22 +42,22 @@ const bodyHtml = `
     </header>
 
     <section class="form-tag-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.default')}</h2>
       <div class="form-tag-input-story__frame">${renderFormTagInput({ id: 'story-default', label: t('theme.form.tag-input.label.projects'), help: t('theme.form.tag-input.help.format'), placeholder: t('theme.form.tag-input.placeholder') })}</div>
     </section>
 
     <section class="form-tag-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.pre-filled')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.pre-filled')}</h2>
       <div class="form-tag-input-story__frame">${renderFormTagInput({ id: 'story-pre-filled', label: t('theme.form.tag-input.label.skills'), help: t('theme.form.tag-input.help.format'), placeholder: t('theme.form.tag-input.placeholder'), initialTags: ['javascript', 'typescript', 'css'] })}</div>
     </section>
 
     <section class="form-tag-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.with-whitelist')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.with-whitelist')}</h2>
       <div class="form-tag-input-story__frame">${renderFormTagInput({ id: 'story-whitelist', label: t('theme.form.tag-input.label.projects'), help: t('theme.form.tag-input.help.whitelist'), placeholder: t('theme.form.tag-input.placeholder'), whitelist: ['frontend', 'backend', 'design', 'ops', 'docs', 'qa', 'product'] })}</div>
     </section>
 
     <section class="form-tag-input-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.max-5')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.form.tag-input.story.section.max-5')}</h2>
       <div class="form-tag-input-story__frame">${renderFormTagInput({ id: 'story-max-5', label: t('theme.form.tag-input.label.projects'), help: t('theme.form.tag-input.help.max5'), placeholder: t('theme.form.tag-input.placeholder'), maxTags: 5, initialTags: ['one', 'two'] })}</div>
     </section>
   </section>

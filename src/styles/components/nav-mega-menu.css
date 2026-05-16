@@ -10,17 +10,17 @@
  * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
-.theme-nav-mega-menu {
+.cremona-nav-mega-menu {
   position: relative;
 }
 
-.theme-nav-mega-menu__trigger {
+.cremona-nav-mega-menu__trigger {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
 }
 
-.theme-nav-mega-menu__panel {
+.cremona-nav-mega-menu__panel {
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
@@ -32,32 +32,32 @@
   gap: var(--spacing-6);
 }
 
-.theme-nav-mega-menu--full .theme-nav-mega-menu__panel {
+.cremona-nav-mega-menu--full .cremona-nav-mega-menu__panel {
   max-inline-size: 100vw;
 }
 
-.theme-nav-mega-menu__panel[data-state="closed"],
-.theme-nav-mega-menu__panel[hidden] {
+.cremona-nav-mega-menu__panel[data-state="closed"],
+.cremona-nav-mega-menu__panel[hidden] {
   display: none;
 }
 
-.theme-nav-mega-menu__columns {
+.cremona-nav-mega-menu__columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--spacing-6);
 }
 
 /* When a featured aside is rendered, allocate it 1fr (its own column). */
-.theme-nav-mega-menu__panel:has(.theme-nav-mega-menu__featured) {
+.cremona-nav-mega-menu__panel:has(.cremona-nav-mega-menu__featured) {
   grid-template-columns: 1fr auto;
 }
 
-.theme-nav-mega-menu__column-heading {
+.cremona-nav-mega-menu__column-heading {
   color: var(--color-text-tertiary);
   margin-block-end: var(--spacing-3);
 }
 
-.theme-nav-mega-menu__column-items {
+.cremona-nav-mega-menu__column-items {
   display: grid;
   gap: var(--spacing-2);
   margin: 0;
@@ -65,7 +65,7 @@
   list-style: none;
 }
 
-.theme-nav-mega-menu__item {
+.cremona-nav-mega-menu__item {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -77,16 +77,16 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-nav-mega-menu__item:hover {
+.cremona-nav-mega-menu__item:hover {
   background-color: var(--color-hover-overlay);
 }
 
-.theme-nav-mega-menu__item:focus-visible {
+.cremona-nav-mega-menu__item:focus-visible {
   outline: var(--ring-width) solid var(--ring-color);
   outline-offset: var(--ring-offset-width);
 }
 
-.theme-nav-mega-menu__featured {
+.cremona-nav-mega-menu__featured {
   background-color: var(--color-bg-sunken);
   border-radius: var(--radius-md);
   padding: var(--spacing-4);
@@ -95,17 +95,17 @@
   gap: var(--spacing-2);
 }
 
-.theme-nav-mega-menu__featured-heading {
+.cremona-nav-mega-menu__featured-heading {
   color: var(--color-text-primary);
 }
 
-.theme-nav-mega-menu__featured-body {
+.cremona-nav-mega-menu__featured-body {
   color: var(--color-text-secondary);
   font: var(--typography-body);
 }
 
 @media (width <= 767.98px) {
-  .theme-nav-mega-menu {
+  .cremona-nav-mega-menu {
     display: none;
   }
 }

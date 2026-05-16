@@ -88,18 +88,18 @@ describe('PopoverController', () => {
     open = false,
   } = {}) {
     document.body.innerHTML = `
-      <div id="wrap" class="theme-popover"
+      <div id="wrap" class="cremona-popover"
         data-controller="popover"
         data-action="click->popover#toggle keydown.esc@window->popover#close"
         data-popover-placement-value="${placement}"
         data-popover-offset-value="${offset}"
         data-popover-open-value="${open ? 'true' : 'false'}">
-        <button id="trigger" type="button" class="theme-button"
+        <button id="trigger" type="button" class="cremona-button"
           data-popover-target="trigger"
           aria-haspopup="dialog" aria-expanded="${open ? 'true' : 'false'}" aria-controls="pp-content">
           Open
         </button>
-        <div id="pp-content" class="theme-popover__content"
+        <div id="pp-content" class="cremona-popover__content"
           data-popover-target="content"
           data-state="${open ? 'open' : 'closed'}"
           data-placement="${placement}"

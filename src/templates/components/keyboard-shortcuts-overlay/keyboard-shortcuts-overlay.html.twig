@@ -29,19 +29,19 @@
     size         (string, optional, default 'lg')
 -#}
 
-{%- set htmlId         = htmlId         | default('theme-keyboard-shortcuts-overlay') -%}
+{%- set htmlId         = htmlId         | default('cremona-keyboard-shortcuts-overlay') -%}
 {%- set title          = title          | default('theme.keyboard-shortcuts-overlay.title'|trans) -%}
 {%- set closeAriaLabel = closeAriaLabel | default('theme.dialog.aria.close'|trans) -%}
 {%- set size           = size           | default('lg') -%}
 
-{% embed '@theme/components/dialog/dialog.html.twig' with {
+{% embed '@cremona/components/dialog/dialog.html.twig' with {
   htmlId: htmlId,
   size: size,
   closeButton: true,
   closeOnEscape: true,
   closeOnBackdropClick: true,
   closeAriaLabel: closeAriaLabel,
-  dialogClassName: 'theme-keyboard-shortcuts-overlay',
+  dialogClassName: 'cremona-keyboard-shortcuts-overlay',
 } %}
   {% block trigger %}
     {# Intentionally empty : consumer wires `?` keypress at app-level. #}
@@ -50,19 +50,19 @@
   {% block title %}{{ title }}{% endblock %}
 
   {% block body %}
-    <div class="theme-keyboard-shortcuts-overlay__sections">
+    <div class="cremona-keyboard-shortcuts-overlay__sections">
       {%- for section in sections -%}
-        <section class="theme-keyboard-shortcuts-overlay__section"
+        <section class="cremona-keyboard-shortcuts-overlay__section"
                  aria-labelledby="{{ htmlId }}-section-{{ loop.index }}-title">
-          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', color: 'tertiary', content: section.title, htmlId: htmlId ~ '-section-' ~ loop.index ~ '-title', className: 'theme-keyboard-shortcuts-overlay__section-title' } only %}
-          <dl class="theme-keyboard-shortcuts-overlay__list">
+          {% include '@cremona/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', color: 'tertiary', content: section.title, htmlId: htmlId ~ '-section-' ~ loop.index ~ '-title', className: 'cremona-keyboard-shortcuts-overlay__section-title' } only %}
+          <dl class="cremona-keyboard-shortcuts-overlay__list">
             {%- for shortcut in section.shortcuts -%}
-              <div class="theme-keyboard-shortcuts-overlay__row">
-                <dt class="theme-keyboard-shortcuts-overlay__description">
-                  {% include '@theme/components/typography/typography.html.twig' with { as: 'span', variant: 'body', content: shortcut.description } only %}
+              <div class="cremona-keyboard-shortcuts-overlay__row">
+                <dt class="cremona-keyboard-shortcuts-overlay__description">
+                  {% include '@cremona/components/typography/typography.html.twig' with { as: 'span', variant: 'body', content: shortcut.description } only %}
                 </dt>
-                <dd class="theme-keyboard-shortcuts-overlay__chord">
-                  {% include '@theme/components/kbd/kbd.html.twig' with {
+                <dd class="cremona-keyboard-shortcuts-overlay__chord">
+                  {% include '@cremona/components/kbd/kbd.html.twig' with {
                     keys: shortcut.keys,
                     separator: shortcut.separator | default('+'),
                     size: 'sm',
@@ -77,6 +77,6 @@
   {% endblock %}
 
   {% block footer %}
-    {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'tertiary', content: 'theme.keyboard-shortcuts-overlay.footer.dismiss-hint'|trans, className: 'theme-keyboard-shortcuts-overlay__footer-hint' } only %}
+    {% include '@cremona/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'tertiary', content: 'theme.keyboard-shortcuts-overlay.footer.dismiss-hint'|trans, className: 'cremona-keyboard-shortcuts-overlay__footer-hint' } only %}
   {% endblock %}
 {% endembed %}

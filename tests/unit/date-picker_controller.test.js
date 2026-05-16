@@ -93,7 +93,7 @@ describe('DatePickerController', () => {
     name = 'date',
   } = {}) {
     document.body.innerHTML = `
-      <div id="dp" class="theme-popover theme-date-picker"
+      <div id="dp" class="cremona-popover cremona-date-picker"
         data-controller="popover date-picker"
         data-action="keydown.esc@window->popover#close calendar:select->date-picker#onCalendarSelect popover:open->date-picker#onPopoverOpen"
         data-popover-placement-value="bottom-start"
@@ -105,8 +105,8 @@ describe('DatePickerController', () => {
         ${min ? `data-date-picker-min-value="${min}"` : ''}
         ${max ? `data-date-picker-max-value="${max}"` : ''}
       >
-        <div class="theme-date-picker__trigger">
-          <input id="dp-input" type="text" class="theme-input theme-date-picker__input"
+        <div class="cremona-date-picker__trigger">
+          <input id="dp-input" type="text" class="cremona-input cremona-date-picker__input"
             data-popover-target="trigger"
             data-date-picker-target="input"
             data-action="click->popover#toggle keydown->date-picker#onTriggerKeydown"
@@ -114,9 +114,9 @@ describe('DatePickerController', () => {
             aria-controls="dp-popover" readonly
             placeholder="Choisis une date">
         </div>
-        <div id="dp-popover" class="theme-popover__content theme-date-picker__panel"
+        <div id="dp-popover" class="cremona-popover__content cremona-date-picker__panel"
           data-popover-target="content" data-state="closed" role="dialog" aria-modal="false" hidden>
-          <div id="dp-calendar" class="theme-calendar"
+          <div id="dp-calendar" class="cremona-calendar"
             data-controller="calendar"
             data-action="keydown->calendar#onKeydown click->calendar#onDayClick"
             data-calendar-week-start-value="${weekStart}"
@@ -125,19 +125,19 @@ describe('DatePickerController', () => {
             ${value ? `data-calendar-value-value="${value}"` : ''}
             ${min ? `data-calendar-min-value="${min}"` : ''}
             ${max ? `data-calendar-max-value="${max}"` : ''}>
-            <header class="theme-calendar__header">
-              <button id="dp-prev" type="button" class="theme-button theme-calendar__nav"
+            <header class="cremona-calendar__header">
+              <button id="dp-prev" type="button" class="cremona-button cremona-calendar__nav"
                 data-calendar-target="prevButton"
                 data-action="click->calendar#prevMonth" aria-label="Précédent">‹</button>
-              <h2 id="dp-cal-month" class="theme-calendar__month-label"
+              <h2 id="dp-cal-month" class="cremona-calendar__month-label"
                 data-calendar-target="monthLabel" aria-live="polite" aria-atomic="true"></h2>
-              <button id="dp-next" type="button" class="theme-button theme-calendar__nav"
+              <button id="dp-next" type="button" class="cremona-button cremona-calendar__nav"
                 data-calendar-target="nextButton"
                 data-action="click->calendar#nextMonth" aria-label="Suivant">›</button>
             </header>
-            <div id="dp-cal-weekdays" class="theme-calendar__weekdays"
+            <div id="dp-cal-weekdays" class="cremona-calendar__weekdays"
               data-calendar-target="weekdays" aria-hidden="true"></div>
-            <div id="dp-cal-grid" class="theme-calendar__grid"
+            <div id="dp-cal-grid" class="cremona-calendar__grid"
               role="grid" aria-labelledby="dp-cal-month"
               data-calendar-target="grid"></div>
           </div>

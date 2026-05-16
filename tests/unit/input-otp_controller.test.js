@@ -51,7 +51,7 @@ describe('InputOtpController', () => {
       const v = value[i] || '';
       const valueAttr = v ? ` value="${v}"` : '';
       cells.push(
-        `<input id="otp-${i}" type="text" class="theme-input theme-input-otp__cell"
+        `<input id="otp-${i}" type="text" class="cremona-input cremona-input-otp__cell"
           data-input-otp-target="input"
           data-input-otp-index="${i}"
           data-action="input->input-otp#onInput keydown->input-otp#onKeydown paste->input-otp#onPaste focus->input-otp#onFocus"
@@ -60,14 +60,14 @@ describe('InputOtpController', () => {
       );
     }
     document.body.innerHTML = `
-      <fieldset id="otp" class="theme-input-otp"
+      <fieldset id="otp" class="cremona-input-otp"
         data-controller="input-otp"
         data-input-otp-length-value="${length}"
         ${value ? `data-input-otp-value-value="${value}"` : ''}
         ${disabled ? 'disabled' : ''}
       >
         <legend>Code OTP</legend>
-        <div class="theme-input-otp__cells">${cells.join('')}</div>
+        <div class="cremona-input-otp__cells">${cells.join('')}</div>
         <input type="hidden" name="otp-code" data-input-otp-target="hiddenInput">
       </fieldset>
     `;

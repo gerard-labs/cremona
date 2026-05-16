@@ -81,8 +81,8 @@ function chart({
         }).join('');
         return `<tr><th scope="row">${cat}</th>${cells}</tr>`;
       }).join('');
-  const caption = showCaption ? `<figcaption class="theme-chart__caption">${label}</figcaption>` : '';
-  return `<figure id="${wrapId}" class="theme-chart"
+  const caption = showCaption ? `<figcaption class="cremona-chart__caption">${label}</figcaption>` : '';
+  return `<figure id="${wrapId}" class="cremona-chart"
     data-controller="chart"
     data-chart-variant-value="${variant}"
     data-chart-series-value="${seriesJson}"
@@ -93,10 +93,10 @@ function chart({
     role="img"
     aria-roledescription="${S('aria.role-description')}"
     aria-label="${label}">
-    <div class="theme-chart__container" data-chart-target="container"
+    <div class="cremona-chart__container" data-chart-target="container"
          style="min-block-size: ${height}px;" aria-hidden="true"></div>
     ${caption}
-    <div class="theme-chart__sr-only">
+    <div class="cremona-chart__sr-only">
       <table>
         <caption>${label}</caption>
         <thead>${tableHead}</thead>
@@ -138,8 +138,8 @@ const bodyHtml = `
     </header>
 
     <section class="cha-story__section" aria-labelledby="cha-section-kpi">
-      <h2 id="cha-section-kpi" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.kpi')}</h2>
-      <p class="cha-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.kpi')}</p>
+      <h2 id="cha-section-kpi" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.kpi')}</h2>
+      <p class="cha-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.kpi')}</p>
       <div class="cha-story__kpi-grid">
         ${kpiCard({ label: S('kpi.revenue'), value: '€ 142 380', trend: 8.4, series: [110, 120, 115, 135, 140, 138, 152, 142] })}
         ${kpiCard({ label: S('kpi.signups'), value: '1 248', trend: 12.7, series: [80, 95, 100, 110, 115, 120, 130, 124] })}
@@ -149,8 +149,8 @@ const bodyHtml = `
     </section>
 
     <section class="cha-story__section" aria-labelledby="cha-section-line">
-      <h2 id="cha-section-line" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.line')}</h2>
-      <p class="cha-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.line')}</p>
+      <h2 id="cha-section-line" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.line')}</h2>
+      <p class="cha-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.line')}</p>
       ${chart({
         variant: 'line',
         label: S('line.label'),
@@ -164,8 +164,8 @@ const bodyHtml = `
     </section>
 
     <section class="cha-story__section" aria-labelledby="cha-section-bar">
-      <h2 id="cha-section-bar" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.bar')}</h2>
-      <p class="cha-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.bar')}</p>
+      <h2 id="cha-section-bar" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.bar')}</h2>
+      <p class="cha-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.bar')}</p>
       ${chart({
         variant: 'bar',
         label: S('bar.label'),
@@ -176,8 +176,8 @@ const bodyHtml = `
     </section>
 
     <section class="cha-story__section" aria-labelledby="cha-section-donut">
-      <h2 id="cha-section-donut" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.donut')}</h2>
-      <p class="cha-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.donut')}</p>
+      <h2 id="cha-section-donut" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.donut')}</h2>
+      <p class="cha-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.donut')}</p>
       ${chart({
         variant: 'donut',
         label: S('donut.label'),
@@ -188,8 +188,8 @@ const bodyHtml = `
     </section>
 
     <section class="cha-story__section" aria-labelledby="cha-section-area">
-      <h2 id="cha-section-area" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.area')}</h2>
-      <p class="cha-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.area')}</p>
+      <h2 id="cha-section-area" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.area')}</h2>
+      <p class="cha-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.area')}</p>
       ${chart({
         variant: 'area',
         label: S('area.label'),
@@ -203,8 +203,8 @@ const bodyHtml = `
     </section>
 
     <section class="cha-story__section" aria-labelledby="cha-section-events">
-      <h2 id="cha-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="cha-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="cha-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="cha-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       ${chart({
         id: 'cha-events-demo',
         variant: 'bar',
@@ -214,7 +214,7 @@ const bodyHtml = `
         height: 260,
       })}
       <div class="cha-story__log" data-events-log="cha-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="cha-story__log-out"></div>
       </div>
     </section>

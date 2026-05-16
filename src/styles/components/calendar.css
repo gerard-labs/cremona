@@ -2,7 +2,7 @@
  * Calendar — month-grid date display.
  *
  * Layout : CSS Grid 7-column for both the weekday header and the day grid.
- * Day cells are square-ish (--theme-calendar-cell-size, default 36 px), with
+ * Day cells are square-ish (--cremona-calendar-cell-size, default 36 px), with
  * a small gap for visual breathing room. The header is a 3-column flex with
  * prev / month-label / next ; the label takes the inline middle, the nav
  * buttons live on the inline edges.
@@ -10,7 +10,7 @@
  * Direction : pure logical CSS throughout. Grid `direction: inherit` (default)
  * means RTL flips the column visual order — weekday labels stamped in
  * chronological order render right-to-left as expected. The chevron icons on
- * prev / next buttons use the .theme-icon-bidi class (Ring 1 Icon doctrine,
+ * prev / next buttons use the .cremona-icon-bidi class (Ring 1 Icon doctrine,
  * whitelisted bidi-flip) so the visual semantic stays "back" / "forward"
  * regardless of writing direction.
  *
@@ -39,7 +39,7 @@
  *   --motion-easing-standard
  */
 
-.theme-calendar {
+.cremona-calendar {
   display: grid;
   gap: var(--spacing-3);
   padding: var(--spacing-3);
@@ -47,12 +47,12 @@
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
   /*
-   * --theme-calendar-cell-size: custom prop driving the day cell square size.
+   * --cremona-calendar-cell-size: custom prop driving the day cell square size.
    * Consumers can override it on the wrap to shrink (compact density) or grow
    * (touch). Floor at 36 px to keep readable; pointer:coarse @media bumps it
    * to 44 px for touch target compliance.
    */
-  --theme-calendar-cell-size: 36px;
+  --cremona-calendar-cell-size: 36px;
 
   inline-size: fit-content;
   color: var(--color-text-primary);
@@ -60,7 +60,7 @@
 
 /* ----- Header (prev / month label / next) ---------------------------- */
 
-.theme-calendar__header {
+.cremona-calendar__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,16 +68,16 @@
   padding-inline: var(--spacing-1);
 }
 
-.theme-calendar__nav {
+.cremona-calendar__nav {
   /* The Button primitive ghost variant already covers most of this — we
      just need an inline-size override so the chevron-only nav is square. */
-  inline-size: var(--theme-calendar-cell-size);
-  min-inline-size: var(--theme-calendar-cell-size);
-  block-size: var(--theme-calendar-cell-size);
+  inline-size: var(--cremona-calendar-cell-size);
+  min-inline-size: var(--cremona-calendar-cell-size);
+  block-size: var(--cremona-calendar-cell-size);
   padding-inline: 0;
 }
 
-.theme-calendar__month-label {
+.cremona-calendar__month-label {
   flex: 1 1 auto;
   margin: 0;
   font: var(--typography-label);
@@ -92,13 +92,13 @@
 
 /* ----- Weekday header (S M T W T F S row) ----------------------------- */
 
-.theme-calendar__weekdays {
+.cremona-calendar__weekdays {
   display: grid;
-  grid-template-columns: repeat(7, var(--theme-calendar-cell-size));
+  grid-template-columns: repeat(7, var(--cremona-calendar-cell-size));
   gap: var(--spacing-1);
 }
 
-.theme-calendar__weekday {
+.cremona-calendar__weekday {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -113,13 +113,13 @@
 
 /* ----- Day grid (7 × N) ---------------------------------------------- */
 
-.theme-calendar__grid {
+.cremona-calendar__grid {
   display: grid;
-  grid-template-columns: repeat(7, var(--theme-calendar-cell-size));
+  grid-template-columns: repeat(7, var(--cremona-calendar-cell-size));
   gap: var(--spacing-1);
 }
 
-.theme-calendar__row {
+.cremona-calendar__row {
   display: contents;
   /*
    * `display: contents` lifts the row's children up to the grid container's
@@ -129,12 +129,12 @@
    */
 }
 
-.theme-calendar__day {
+.cremona-calendar__day {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--theme-calendar-cell-size);
-  block-size: var(--theme-calendar-cell-size);
+  inline-size: var(--cremona-calendar-cell-size);
+  block-size: var(--cremona-calendar-cell-size);
   padding: 0;
   margin: 0;
   background: transparent;
@@ -150,15 +150,15 @@
     color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-calendar__day:hover:not(:disabled, [aria-disabled="true"]) {
+.cremona-calendar__day:hover:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-hover-overlay);
 }
 
-.theme-calendar__day:active:not(:disabled, [aria-disabled="true"]) {
+.cremona-calendar__day:active:not(:disabled, [aria-disabled="true"]) {
   background-color: var(--color-active-overlay);
 }
 
-.theme-calendar__day:focus-visible {
+.cremona-calendar__day:focus-visible {
   outline: var(--ring-width) solid var(--ring-color);
   outline-offset: var(--ring-offset-width);
 }
@@ -168,20 +168,20 @@
 /* Today highlight (not selected) — soft primary ring + soft fg.
    Pairs perfectly with the selected state (full primary fill) when today is
    ALSO the selected day (selected wins, today's ring becomes redundant). */
-.theme-calendar__day[data-state="today"]:not([aria-selected="true"]) {
+.cremona-calendar__day[data-state="today"]:not([aria-selected="true"]) {
   color: var(--color-primary-soft-foreground);
   background-color: var(--color-primary-soft);
 }
 
 /* Selected — full primary fill, primary-foreground text.
    Wins visually over today (today's ring is suppressed via :not above). */
-.theme-calendar__day[aria-selected="true"] {
+.cremona-calendar__day[aria-selected="true"] {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
   font-weight: var(--font-weight-semibold);
 }
 
-.theme-calendar__day[aria-selected="true"]:hover {
+.cremona-calendar__day[aria-selected="true"]:hover {
   background-color: var(--color-primary-hover);
 }
 
@@ -189,26 +189,26 @@
    first / last week of the displayed month). Clicking still selects (the
    controller navigates the displayMonth to follow), but disabled when
    out of min/max. */
-.theme-calendar__day[data-state="other-month"] {
+.cremona-calendar__day[data-state="other-month"] {
   color: var(--color-text-tertiary);
 }
 
 /* Disabled — out-of-range, disabled-weekday, OR consumer-disabled day.
    aria-disabled is the authoritative state ; data-state mirrors for CSS hooks. */
-.theme-calendar__day[aria-disabled="true"] {
+.cremona-calendar__day[aria-disabled="true"] {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.theme-calendar__day[aria-disabled="true"]:hover {
+.cremona-calendar__day[aria-disabled="true"]:hover {
   background-color: transparent;
 }
 
 /* ----- Touch target compliance --------------------------------------- */
 
 @media (pointer: coarse) {
-  .theme-calendar {
-    --theme-calendar-cell-size: 44px;
+  .cremona-calendar {
+    --cremona-calendar-cell-size: 44px;
   }
 }
 

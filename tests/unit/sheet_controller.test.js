@@ -68,17 +68,17 @@ describe('SheetController', () => {
   } = {}) {
     document.body.innerHTML = `
       <button id="trigger" type="button">Open</button>
-      <div id="wrap" class="theme-sheet-wrap"
+      <div id="wrap" class="cremona-sheet-wrap"
         data-controller="sheet"
         data-sheet-open-value="${open ? 'true' : 'false'}"
         data-sheet-edge-value="${edge}"
         data-sheet-close-on-escape-value="${closeOnEscape ? 'true' : 'false'}"
         data-sheet-close-on-backdrop-click-value="${closeOnBackdropClick ? 'true' : 'false'}">
-        <dialog id="sh" class="theme-sheet" data-sheet-target="dialog" data-edge="${edge}" aria-labelledby="sh-title">
-          <header class="theme-sheet__header">
-            <h2 id="sh-title" class="theme-sheet__title">Title</h2>
+        <dialog id="sh" class="cremona-sheet" data-sheet-target="dialog" data-edge="${edge}" aria-labelledby="sh-title">
+          <header class="cremona-sheet__header">
+            <h2 id="sh-title" class="cremona-sheet__title">Title</h2>
           </header>
-          <div class="theme-sheet__body">
+          <div class="cremona-sheet__body">
             <p>Body text</p>
           </div>
         </dialog>

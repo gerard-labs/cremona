@@ -16,13 +16,13 @@ function mount(html) {
 function template({ currentDensity = 'comfortable', storageKey = 'theme.density', target = 'self' } = {}) {
   const opts = ['comfortable', 'cozy', 'compact'];
   const toggles = opts.map((d) => `
-    <button class="theme-toggle theme-toggle-group__item theme-density-switcher__item"
+    <button class="cremona-toggle cremona-toggle-group__item cremona-density-switcher__item"
             data-density="${d}"
             aria-pressed="${d === currentDensity ? 'true' : 'false'}"
             aria-label="${d}"></button>
   `).join('');
   return `
-    <div class="theme-toggle-group theme-density-switcher__group"
+    <div class="cremona-toggle-group cremona-density-switcher__group"
          role="group"
          data-controller="density-switcher"
          data-density-switcher-current-density-value="${currentDensity}"
@@ -61,7 +61,7 @@ describe('density-switcher controller', () => {
   it('applies the initial currentDensity to target=self on connect', async () => {
     app = mount(template({ currentDensity: 'cozy', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     expect(wrap.getAttribute('data-density')).toBe('cozy');
   });
 
@@ -69,7 +69,7 @@ describe('density-switcher controller', () => {
     window.localStorage.setItem('theme.density', 'compact');
     app = mount(template({ currentDensity: 'comfortable', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     expect(wrap.getAttribute('data-density')).toBe('compact');
     expect(wrap.getAttribute('data-density-switcher-current-density-value')).toBe('compact');
   });
@@ -77,7 +77,7 @@ describe('density-switcher controller', () => {
   it('dispatches density-switcher:change on pressed toggle with new density', async () => {
     app = mount(template({ currentDensity: 'comfortable', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('density-switcher:change', (e) => changeEvents.push(e.detail));
     // Wire the action like Twig does (in real usage handled by data-action).
@@ -94,7 +94,7 @@ describe('density-switcher controller', () => {
   it('ignores toggle events when pressed=false (mutex unpresses)', async () => {
     app = mount(template({ currentDensity: 'cozy', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('density-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.addEventListener('toggle', (e) => {
@@ -109,7 +109,7 @@ describe('density-switcher controller', () => {
   it('does not dispatch when selecting the already-current density', async () => {
     app = mount(template({ currentDensity: 'comfortable', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('density-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.addEventListener('toggle', (e) => {
@@ -124,7 +124,7 @@ describe('density-switcher controller', () => {
   it('persists the new density to localStorage', async () => {
     app = mount(template({ currentDensity: 'comfortable', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     wrap.addEventListener('toggle', (e) => {
       app.getControllerForElementAndIdentifier(wrap, 'density-switcher').onToggle(e);
     });
@@ -138,7 +138,7 @@ describe('density-switcher controller', () => {
     app = mount(template({ currentDensity: 'comfortable', target: 'documentElement' }));
     await tick();
     expect(document.documentElement.getAttribute('data-density')).toBe('comfortable');
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     wrap.addEventListener('toggle', (e) => {
       app.getControllerForElementAndIdentifier(wrap, 'density-switcher').onToggle(e);
     });
@@ -152,7 +152,7 @@ describe('density-switcher controller', () => {
     app = mount(template({ currentDensity: 'comfortable', target: 'body' }));
     await tick();
     expect(document.body.getAttribute('data-density')).toBe('comfortable');
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     wrap.addEventListener('toggle', (e) => {
       app.getControllerForElementAndIdentifier(wrap, 'density-switcher').onToggle(e);
     });
@@ -165,7 +165,7 @@ describe('density-switcher controller', () => {
   it('uses a custom storageKey', async () => {
     app = mount(template({ currentDensity: 'comfortable', storageKey: 'app.density', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     wrap.addEventListener('toggle', (e) => {
       app.getControllerForElementAndIdentifier(wrap, 'density-switcher').onToggle(e);
     });
@@ -178,14 +178,14 @@ describe('density-switcher controller', () => {
 
   it('ignores toggle events missing data-density attribute', async () => {
     app = mount(`
-      <div class="theme-toggle-group" data-controller="density-switcher"
+      <div class="cremona-toggle-group" data-controller="density-switcher"
            data-density-switcher-current-density-value="comfortable"
            data-density-switcher-target-value="self">
         <button aria-pressed="false"></button>
       </div>
     `);
     await tick();
-    const wrap = document.querySelector('.theme-toggle-group');
+    const wrap = document.querySelector('.cremona-toggle-group');
     const changeEvents = [];
     wrap.addEventListener('density-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.addEventListener('toggle', (e) => {
@@ -200,7 +200,7 @@ describe('density-switcher controller', () => {
   it('does not dispatch after disconnect', async () => {
     app = mount(template({ currentDensity: 'comfortable', target: 'self' }));
     await tick();
-    const wrap = document.querySelector('.theme-density-switcher__group');
+    const wrap = document.querySelector('.cremona-density-switcher__group');
     const changeEvents = [];
     wrap.addEventListener('density-switcher:change', (e) => changeEvents.push(e.detail));
     wrap.remove();

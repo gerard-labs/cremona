@@ -2,13 +2,13 @@
  * Combobox — Search-as-you-type single-select listbox with an Input trigger.
  *
  * Composes:
- *   - .theme-popover surface (radius, shadow, motion — Ring 2 S2.1).
- *   - .theme-combobox__input visually mirrors .theme-input (border, radius,
+ *   - .cremona-popover surface (radius, shadow, motion — Ring 2 S2.1).
+ *   - .cremona-combobox__input visually mirrors .cremona-input (border, radius,
  *     density-input-height, focus ring) — the trigger LOOKS like an Input
  *     because semantically IT IS an `<input role="combobox">`.
- *   - .theme-combobox__listbox extends popover content with slimmer padding +
+ *   - .cremona-combobox__listbox extends popover content with slimmer padding +
  *     min-inline-size matched to a comfortable single-select listbox.
- *   - .theme-item rows for options (inherited from Item.css).
+ *   - .cremona-item rows for options (inherited from Item.css).
  *
  * Per OQ-32 (sealed S2.3b): ComboboxController extends SelectController.
  * The CSS doesn't inherit through ES classes — we duplicate the trigger
@@ -18,8 +18,8 @@
  *     input has caret semantics; on button it's just focus ring).
  *   - Brand presets can re-skin Combobox vs Select independently.
  *
- * Per OQ-31: empty state is rendered inline in the listbox (`.theme-combobox__empty`)
- * with the user's untrimmed query injected. The shared `#theme-announcer`
+ * Per OQ-31: empty state is rendered inline in the listbox (`.cremona-combobox__empty`)
+ * with the user's untrimmed query injected. The shared `#cremona-announcer`
  * (declared in base/reset.css) carries the results count announcement; this
  * file ships no separate aria-live region.
  *
@@ -29,14 +29,14 @@
 
 /* ----- input trigger (visually mirrors Input) ----------------------- */
 
-.theme-combobox__wrap {
+.cremona-combobox__wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
   inline-size: 100%;
 }
 
-.theme-combobox__input {
+.cremona-combobox__input {
   display: block;
   inline-size: 100%;
   block-size: var(--density-input-height);
@@ -54,50 +54,50 @@
     box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-combobox__input::placeholder {
+.cremona-combobox__input::placeholder {
   color: var(--color-text-tertiary);
 }
 
-.theme-combobox__input[data-size="sm"] {
+.cremona-combobox__input[data-size="sm"] {
   block-size: 32px;
   font-size: var(--font-size-sm);
 }
 
-.theme-combobox__input[data-size="lg"] {
+.cremona-combobox__input[data-size="lg"] {
   block-size: 48px;
   font-size: var(--font-size-base);
 }
 
-.theme-combobox__input:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-combobox__input:hover:not(:disabled, [aria-invalid="true"]) {
   border-color: var(--color-border-strong);
 }
 
-.theme-combobox__input:focus-visible {
+.cremona-combobox__input:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: var(--ring-offset-width);
   border-color: var(--color-border-focus);
 }
 
-.theme-combobox__input[aria-invalid="true"] {
+.cremona-combobox__input[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-.theme-combobox__input[aria-invalid="true"]:focus-visible {
+.cremona-combobox__input[aria-invalid="true"]:focus-visible {
   outline-color: var(--color-danger);
   border-color: var(--color-danger);
 }
 
-.theme-combobox__input:disabled {
+.cremona-combobox__input:disabled {
   background-color: var(--color-bg-sunken);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.theme-combobox__input[aria-expanded="true"] {
+.cremona-combobox__input[aria-expanded="true"] {
   border-color: var(--color-border-focus);
 }
 
-.theme-combobox__chevron {
+.cremona-combobox__chevron {
   position: absolute;
   inset-inline-end: var(--spacing-3);
   inset-block-start: 50%;
@@ -107,20 +107,20 @@
   transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-combobox__input[aria-expanded="true"] ~ .theme-combobox__chevron {
+.cremona-combobox__input[aria-expanded="true"] ~ .cremona-combobox__chevron {
   transform: translateY(-50%) rotate(180deg);
 }
 
 /* Touch target hardening — matches Input doctrine. */
 @media (pointer: coarse) {
-  .theme-combobox__input {
+  .cremona-combobox__input {
     min-block-size: 44px;
   }
 }
 
 /* ----- listbox (popover content) ----------------------------------- */
 
-.theme-combobox__listbox {
+.cremona-combobox__listbox {
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-1);
   min-inline-size: 240px;
@@ -130,12 +130,12 @@
   overflow-y: auto;
 }
 
-.theme-combobox__options {
+.cremona-combobox__options {
   display: flex;
   flex-direction: column;
 }
 
-.theme-combobox__option {
+.cremona-combobox__option {
   inline-size: 100%;
   cursor: pointer;
 }
@@ -143,21 +143,21 @@
 /* aria-activedescendant pattern: controller stamps data-active on active
    option. Focus stays on the input — the option is highlighted visually
    without DOM focus. */
-.theme-combobox__option[data-active="true"]:not([aria-disabled="true"]) {
+.cremona-combobox__option[data-active="true"]:not([aria-disabled="true"]) {
   background-color: var(--color-bg-sunken);
 }
 
-.theme-combobox__option[aria-selected="true"] {
+.cremona-combobox__option[aria-selected="true"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-combobox__option[aria-selected="true"][data-active="true"] {
+.cremona-combobox__option[aria-selected="true"][data-active="true"] {
   background-color: var(--color-primary-soft);
 }
 
-.theme-combobox__option[aria-disabled="true"],
-.theme-combobox__option[data-state="disabled"] {
+.cremona-combobox__option[aria-disabled="true"],
+.cremona-combobox__option[data-state="disabled"] {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -166,14 +166,14 @@
    scroll-height contribution). The controller sets `hidden` attribute as the
    declarative source of truth; `data-hidden` mirrors it for CSS hooks (some
    consumers prefer the attribute for transitions). */
-.theme-combobox__option[data-hidden="true"],
-.theme-combobox__option[hidden] {
+.cremona-combobox__option[data-hidden="true"],
+.cremona-combobox__option[hidden] {
   display: none;
 }
 
 /* The check icon trailing (only rendered when aria-selected) inherits
    currentColor — picks up the selected-foreground via Item's CSS. */
-.theme-combobox__option-check {
+.cremona-combobox__option-check {
   color: var(--color-selected-foreground);
 }
 
@@ -185,11 +185,11 @@
  * injected. Auto-announced by AT via DOM mutation observation on the
  * `role="listbox"` content (NVDA + VoiceOver pick this up).
  *
- * The shared `#theme-announcer` carries the results-count message for
+ * The shared `#cremona-announcer` carries the results-count message for
  * non-zero counts; for count=0 we deliberately defer to this inline
  * state to avoid double-announce.
  */
-.theme-combobox__empty {
+.cremona-combobox__empty {
   padding-block: var(--spacing-3);
   padding-inline: var(--spacing-3);
   color: var(--color-text-tertiary);
@@ -198,11 +198,11 @@
   text-align: start;
 }
 
-.theme-combobox__empty[hidden] {
+.cremona-combobox__empty[hidden] {
   display: none;
 }
 
-.theme-combobox__empty strong {
+.cremona-combobox__empty strong {
   color: var(--color-text-secondary);
   font-weight: var(--font-weight-medium);
 }

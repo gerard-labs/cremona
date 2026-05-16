@@ -1,7 +1,7 @@
 /*
  * NativeSelect — native HTML <select> styled with kit tokens.
  *
- * Anatomy: .theme-native-select-wrap > .theme-native-select + .theme-icon
+ * Anatomy: .cremona-native-select-wrap > .cremona-native-select + .cremona-icon
  *   (chevron-down, decorative, absolute-positioned at inline-end).
  *
  * Why a wrapper + Icon (instead of a CSS background-image chevron):
@@ -16,15 +16,15 @@
  * `@media (pointer: coarse)`.
  */
 
-.theme-native-select-wrap {
+.cremona-native-select-wrap {
   position: relative;
   display: block;
   inline-size: 100%;
   color: var(--color-text-tertiary);
 }
 
-.theme-native-select-wrap__chevron,
-.theme-native-select__chevron {
+.cremona-native-select-wrap__chevron,
+.cremona-native-select__chevron {
   /* The chevron is absolutely positioned at the inline-end of the wrapper.
      Pointer-events disabled so clicks pass through to the <select>. */
   position: absolute;
@@ -37,11 +37,11 @@
 
 /* Disabled wrapper dims the chevron color (kept inside the wrap selector
    so the disabled state matches the select visually). */
-.theme-native-select-wrap--disabled {
+.cremona-native-select-wrap--disabled {
   color: var(--color-text-disabled);
 }
 
-.theme-native-select {
+.cremona-native-select {
   /* Layout */
   display: block;
   inline-size: 100%;
@@ -73,26 +73,26 @@
     background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-native-select:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-native-select:hover:not(:disabled, [aria-invalid="true"]) {
   border-color: var(--color-border-strong);
 }
 
-.theme-native-select:focus-visible {
+.cremona-native-select:focus-visible {
   outline: none;
   border-color: var(--color-border-focus);
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
-.theme-native-select[aria-invalid="true"] {
+.cremona-native-select[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-.theme-native-select[aria-invalid="true"]:focus-visible {
+.cremona-native-select[aria-invalid="true"]:focus-visible {
   border-color: var(--color-danger);
   box-shadow: 0 0 0 var(--ring-width) var(--color-danger);
 }
 
-.theme-native-select:disabled {
+.cremona-native-select:disabled {
   cursor: not-allowed;
   background-color: var(--color-bg-sunken);
   color: var(--color-text-disabled);
@@ -100,14 +100,14 @@
 }
 
 /* Sizes — sm / lg override the default density-driven height. */
-.theme-native-select[data-size="sm"] {
+.cremona-native-select[data-size="sm"] {
   block-size: 32px;
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2) var(--spacing-7);
   font-size: var(--font-size-sm);
 }
 
-.theme-native-select[data-size="lg"] {
+.cremona-native-select[data-size="lg"] {
   block-size: 48px;
   padding-block: var(--spacing-3);
   padding-inline: var(--spacing-4) var(--spacing-9);
@@ -116,8 +116,8 @@
 
 /* Touch target hardening — bump every size up to 44 px on coarse pointers. */
 @media (pointer: coarse) {
-  .theme-native-select,
-  .theme-native-select[data-size="sm"] {
+  .cremona-native-select,
+  .cremona-native-select[data-size="sm"] {
     min-block-size: 44px;
   }
 }

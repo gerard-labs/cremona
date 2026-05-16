@@ -2,14 +2,14 @@
  * DatePicker — Input-anchored single-date picker with Calendar popover.
  *
  * Composes :
- *   - .theme-popover surface (border, shadow, motion — Ring 2 S2.1).
- *   - .theme-date-picker__input visually mirrors .theme-input (same height,
+ *   - .cremona-popover surface (border, shadow, motion — Ring 2 S2.1).
+ *   - .cremona-date-picker__input visually mirrors .cremona-input (same height,
  *     border, radius, focus ring) — the trigger LOOKS like an Input because
  *     semantically it IS an `<input role="combobox">`.
- *   - .theme-date-picker__panel extends popover content with snug padding
+ *   - .cremona-date-picker__panel extends popover content with snug padding
  *     for the Calendar grid (the Calendar provides its own surface ; we
  *     just give it some breathing room from the popover edges).
- *   - .theme-calendar (rendered inside the panel by the Twig include).
+ *   - .cremona-calendar (rendered inside the panel by the Twig include).
  *
  * Logical CSS throughout — the calendar icon at `inline-end`, the input's
  * padding accounts for the icon's space via `padding-inline-end`. RTL flips
@@ -20,14 +20,14 @@
 
 /* ----- Trigger (Input + calendar icon) ------------------------------- */
 
-.theme-date-picker__trigger {
+.cremona-date-picker__trigger {
   position: relative;
   display: inline-flex;
   align-items: center;
   inline-size: 100%;
 }
 
-.theme-date-picker__input {
+.cremona-date-picker__input {
   display: block;
   inline-size: 100%;
   block-size: var(--density-input-height);
@@ -46,50 +46,50 @@
     box-shadow var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-date-picker__input::placeholder {
+.cremona-date-picker__input::placeholder {
   color: var(--color-text-tertiary);
 }
 
-.theme-date-picker__input[data-size="sm"] {
+.cremona-date-picker__input[data-size="sm"] {
   block-size: 32px;
   font-size: var(--font-size-sm);
 }
 
-.theme-date-picker__input[data-size="lg"] {
+.cremona-date-picker__input[data-size="lg"] {
   block-size: 48px;
   font-size: var(--font-size-base);
 }
 
-.theme-date-picker__input:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-date-picker__input:hover:not(:disabled, [aria-invalid="true"]) {
   border-color: var(--color-border-strong);
 }
 
-.theme-date-picker__input:focus-visible {
+.cremona-date-picker__input:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: var(--ring-offset-width);
   border-color: var(--color-border-focus);
 }
 
-.theme-date-picker__input[aria-expanded="true"] {
+.cremona-date-picker__input[aria-expanded="true"] {
   border-color: var(--color-border-focus);
 }
 
-.theme-date-picker__input[aria-invalid="true"] {
+.cremona-date-picker__input[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-.theme-date-picker__input[aria-invalid="true"]:focus-visible {
+.cremona-date-picker__input[aria-invalid="true"]:focus-visible {
   outline-color: var(--color-danger);
   border-color: var(--color-danger);
 }
 
-.theme-date-picker__input:disabled {
+.cremona-date-picker__input:disabled {
   background-color: var(--color-bg-sunken);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.theme-date-picker__icon {
+.cremona-date-picker__icon {
   position: absolute;
   inset-inline-end: var(--spacing-3);
   inset-block-start: 50%;
@@ -100,7 +100,7 @@
 
 /* ----- Panel (popover content holding the Calendar) ------------------ */
 
-.theme-date-picker__panel {
+.cremona-date-picker__panel {
   padding: var(--spacing-1);
   /* The Calendar surface already has its own border + bg + radius — the
      panel acts as a slim wrapper with the popover's shadow + slight gap.
@@ -110,7 +110,7 @@
 
 /* The Calendar inside the panel — remove its own border + bg + shadow so
    it visually merges with the popover surface. */
-.theme-date-picker__panel .theme-calendar {
+.cremona-date-picker__panel .cremona-calendar {
   border: 0;
   background: transparent;
   padding: var(--spacing-2);
@@ -119,7 +119,7 @@
 /* ----- Touch target compliance --------------------------------------- */
 
 @media (pointer: coarse) {
-  .theme-date-picker__input {
+  .cremona-date-picker__input {
     min-block-size: 44px;
   }
 }

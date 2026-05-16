@@ -37,7 +37,7 @@
 
   Usage:
 
-    {% include '@theme/components/command/command.html.twig' with {
+    {% include '@cremona/components/command/command.html.twig' with {
       label: 'Palette de commandes'|trans,
       hotkey: 'k',
       commands: [
@@ -52,7 +52,7 @@
     command:execute   — detail.{ id, label, group } when user selects.
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-cmd-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-cmd-' ~ random()) -%}
 {%- set label       = label       | default('Palette de commandes') -%}
 {%- set placeholder = placeholder | default('Rechercher projets, tâches, documents…') -%}
 {%- set hotkey      = hotkey      | default('k') -%}
@@ -62,7 +62,7 @@
 {%- set emptyBody   = emptyBody   | default('Essaie un autre terme.') -%}
 {%- set className   = className   | default('') -%}
 
-{%- set _classes = ['theme-command'] -%}
+{%- set _classes = ['cremona-command'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {#- Group commands by `group` for the section headers. Commands without a
@@ -85,17 +85,17 @@
   data-combobox-placeholder-value="{{ placeholder }}"
 >
   <dialog
-    class="theme-command__dialog theme-dialog"
+    class="cremona-command__dialog cremona-dialog"
     data-dialog-target="dialog"
     aria-labelledby="{{ htmlId }}-title"
   >
-    <h2 id="{{ htmlId }}-title" class="theme-command__sr-only">{{ label }}</h2>
+    <h2 id="{{ htmlId }}-title" class="cremona-command__sr-only">{{ label }}</h2>
 
-    <div class="theme-command__input-wrap">
-      <span class="theme-command__search-icon" aria-hidden="true"></span>
+    <div class="cremona-command__input-wrap">
+      <span class="cremona-command__search-icon" aria-hidden="true"></span>
       <input
         type="text"
-        class="theme-command__input theme-input"
+        class="cremona-command__input cremona-input"
         data-combobox-target="input"
         data-action="input->combobox#filter keydown->combobox#keydown"
         role="combobox"
@@ -105,36 +105,36 @@
         aria-controls="{{ htmlId }}-listbox"
         placeholder="{{ placeholder }}"
       />
-      <kbd class="theme-command__esc-hint theme-kbd" aria-hidden="true">Esc</kbd>
+      <kbd class="cremona-command__esc-hint cremona-kbd" aria-hidden="true">Esc</kbd>
     </div>
 
     <ul
       id="{{ htmlId }}-listbox"
-      class="theme-command__listbox"
+      class="cremona-command__listbox"
       role="listbox"
       data-combobox-target="optionsContainer"
     >
       {%- set _optIdx = 0 -%}
       {%- for groupName, groupCmds in _grouped -%}
         {%- if groupName -%}
-          <li role="presentation" class="theme-command__group-header" aria-hidden="true">{{ groupName }}</li>
+          <li role="presentation" class="cremona-command__group-header" aria-hidden="true">{{ groupName }}</li>
         {%- endif -%}
         {%- for cmd in groupCmds -%}
           {%- set _optIdx = _optIdx + 1 -%}
           <li
             id="{{ htmlId }}-opt-{{ _optIdx }}"
-            class="theme-command__option"
+            class="cremona-command__option"
             role="option"
             data-combobox-target="option"
             data-value="{{ cmd.id }}"
             aria-selected="false"
           >
             {%- if cmd.icon -%}
-              <span class="theme-command__option-icon" aria-hidden="true">{{ cmd.icon | raw }}</span>
+              <span class="cremona-command__option-icon" aria-hidden="true">{{ cmd.icon | raw }}</span>
             {%- endif -%}
-            <span class="theme-item__label">{{ cmd.label }}</span>
+            <span class="cremona-item__label">{{ cmd.label }}</span>
             {%- if cmd.kbdHint -%}
-              <kbd class="theme-command__option-kbd theme-kbd">{{ cmd.kbdHint }}</kbd>
+              <kbd class="cremona-command__option-kbd cremona-kbd">{{ cmd.kbdHint }}</kbd>
             {%- endif -%}
           </li>
         {%- endfor -%}
@@ -142,27 +142,27 @@
     </ul>
 
     <div
-      class="theme-command__empty"
+      class="cremona-command__empty"
       data-combobox-target="empty"
       hidden
       role="status"
       aria-live="polite"
     >
-      <strong class="theme-command__empty-title">{{ emptyTitle }}</strong>
-      <span class="theme-command__empty-query">
+      <strong class="cremona-command__empty-title">{{ emptyTitle }}</strong>
+      <span class="cremona-command__empty-query">
         {{ '' }}<strong data-combobox-target="emptyQuery"></strong>
       </span>
-      <span class="theme-command__empty-body">{{ emptyBody }}</span>
+      <span class="cremona-command__empty-body">{{ emptyBody }}</span>
     </div>
 
     {%- if kbdFooter | length > 0 -%}
-      <footer class="theme-command__footer">
+      <footer class="cremona-command__footer">
         {%- for hint in kbdFooter -%}
-          <span class="theme-command__footer-hint">
+          <span class="cremona-command__footer-hint">
             {%- for k in hint.keys -%}
-              <kbd class="theme-kbd">{{ k }}</kbd>
+              <kbd class="cremona-kbd">{{ k }}</kbd>
             {%- endfor -%}
-            <span class="theme-command__footer-label">{{ hint.label }}</span>
+            <span class="cremona-command__footer-label">{{ hint.label }}</span>
           </span>
         {%- endfor -%}
       </footer>

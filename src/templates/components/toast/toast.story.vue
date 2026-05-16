@@ -93,7 +93,7 @@ onMounted(() => {
 const SEP = '\n      ';
 
 function btn(label, demoKey, variant = 'primary') {
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-toast-demo="${demoKey}"><span class="theme-button__label">${label}</span></button>`;
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-toast-demo="${demoKey}"><span class="cremona-button__label">${label}</span></button>`;
 }
 
 const jsRow = [
@@ -114,14 +114,14 @@ const bodyHtml = `
     </header>
 
     <section class="toast-story__section" aria-labelledby="toast-section-js">
-      <h2 id="toast-section-js" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toast.story.section.js-api')}</h2>
-      <p class="toast-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toast.story.explainer.js-api')}</p>
+      <h2 id="toast-section-js" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toast.story.section.js-api')}</h2>
+      <p class="toast-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toast.story.explainer.js-api')}</p>
       <div class="toast-story__row">${SEP}${jsRow}${SEP}</div>
     </section>
 
     <section class="toast-story__section" aria-labelledby="toast-section-event">
-      <h2 id="toast-section-event" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.toast.story.section.event-api')}</h2>
-      <p class="toast-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.toast.story.explainer.event-api')}</p>
+      <h2 id="toast-section-event" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.toast.story.section.event-api')}</h2>
+      <p class="toast-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.toast.story.explainer.event-api')}</p>
       <div class="toast-story__row">${SEP}${eventRow}${SEP}</div>
     </section>
   </section>

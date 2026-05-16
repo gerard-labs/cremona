@@ -3,7 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * tooltip — minimal Esc-dismiss handler for the Tooltip primitive.
  *
- * The visibility itself is CSS-only (`.theme-tooltip-wrap:hover` /
+ * The visibility itself is CSS-only (`.cremona-tooltip-wrap:hover` /
  * `:focus-within` reveals the tooltip with a 400 ms show delay). This
  * controller adds the WAI-ARIA APG "Esc dismisses" requirement that CSS
  * alone can't implement:

@@ -46,7 +46,7 @@ onMounted(() => {
   if (typeof document !== 'undefined' && !window.__themeAlertDialogLogWired) {
     window.__themeAlertDialogLogWired = true;
     document.addEventListener('dialog:open', (e) => {
-      const wrap = e.target && e.target.closest && e.target.closest('.theme-alert-dialog-wrap');
+      const wrap = e.target && e.target.closest && e.target.closest('.cremona-alert-dialog-wrap');
       if (!wrap) return;
       const log = document.querySelector('[data-alert-dialog-events-log]');
       if (!log) return;
@@ -57,7 +57,7 @@ onMounted(() => {
       log.textContent += 'dialog:open\n';
     });
     document.addEventListener('dialog:close', (e) => {
-      const wrap = e.target && e.target.closest && e.target.closest('.theme-alert-dialog-wrap');
+      const wrap = e.target && e.target.closest && e.target.closest('.cremona-alert-dialog-wrap');
       if (!wrap) return;
       const log = document.querySelector('[data-alert-dialog-events-log]');
       if (!log) return;
@@ -74,15 +74,15 @@ let _adCounter = 0;
 function nextId() { return `ad-${++_adCounter}`; }
 
 function icon(name, size = 'md') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function triggerButton(label, opts = {}) {
   const { variant = 'destructive', size = 'md', iconLeading = null } = opts;
-  const leadingHtml = iconLeading ? `<span class="theme-button__icon theme-button__icon--leading">${icon(iconLeading, 'sm')}</span>` : '';
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-size="${size}"
+  const leadingHtml = iconLeading ? `<span class="cremona-button__icon cremona-button__icon--leading">${icon(iconLeading, 'sm')}</span>` : '';
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-size="${size}"
     data-action="click->dialog#open">
-    ${leadingHtml}<span class="theme-button__label">${label}</span>
+    ${leadingHtml}<span class="cremona-button__label">${label}</span>
   </button>`;
 }
 
@@ -100,27 +100,27 @@ function renderAlertDialog({
   const titleId = `${id}-title`;
   const iconName = tone === 'warning' ? 'alert-circle' : tone === 'info' ? 'info' : 'alert-triangle';
   return `
-    <div class="theme-dialog-wrap theme-alert-dialog-wrap"
+    <div class="cremona-dialog-wrap cremona-alert-dialog-wrap"
       data-controller="dialog"
       data-dialog-open-value="false"
       data-dialog-close-on-escape-value="false"
       data-dialog-close-on-backdrop-click-value="false">
       ${trigger}
-      <dialog id="${id}" class="theme-dialog theme-alert-dialog"
+      <dialog id="${id}" class="cremona-dialog cremona-alert-dialog"
         data-dialog-target="dialog"
         data-size="${size}"
         data-tone="${tone}"
         aria-labelledby="${titleId}">
-        <header class="theme-dialog__header theme-alert-dialog__header">
-          <span class="theme-alert-dialog__icon-wrap" aria-hidden="true">${icon(iconName, 'md')}</span>
-          <h2 id="${titleId}" class="theme-dialog__title theme-alert-dialog__title">${title}</h2>
+        <header class="cremona-dialog__header cremona-alert-dialog__header">
+          <span class="cremona-alert-dialog__icon-wrap" aria-hidden="true">${icon(iconName, 'md')}</span>
+          <h2 id="${titleId}" class="cremona-dialog__title cremona-alert-dialog__title">${title}</h2>
         </header>
-        <div class="theme-dialog__body theme-alert-dialog__body">
+        <div class="cremona-dialog__body cremona-alert-dialog__body">
           <p>${body}</p>
         </div>
-        <footer class="theme-dialog__footer theme-alert-dialog__footer">
-          <button type="button" class="theme-button" data-variant="secondary" data-action="click->dialog#close"><span class="theme-button__label">${cancelLabel}</span></button>
-          <button type="button" class="theme-button" data-variant="${confirmVariant}" data-action="click->dialog#close"><span class="theme-button__label">${confirmLabel}</span></button>
+        <footer class="cremona-dialog__footer cremona-alert-dialog__footer">
+          <button type="button" class="cremona-button" data-variant="secondary" data-action="click->dialog#close"><span class="cremona-button__label">${cancelLabel}</span></button>
+          <button type="button" class="cremona-button" data-variant="${confirmVariant}" data-action="click->dialog#close"><span class="cremona-button__label">${confirmLabel}</span></button>
         </footer>
       </dialog>
     </div>
@@ -165,8 +165,8 @@ const bodyHtml = `
     </header>
 
     <section class="alert-dialog-story__section" aria-labelledby="ad-section-danger">
-      <h2 id="ad-section-danger" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.danger')}</h2>
-      <p class="alert-dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.danger')}</p>
+      <h2 id="ad-section-danger" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.danger')}</h2>
+      <p class="alert-dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.danger')}</p>
       <div class="alert-dialog-story__row">
         ${renderAlertDialog({
           tone: 'danger',
@@ -181,8 +181,8 @@ const bodyHtml = `
     </section>
 
     <section class="alert-dialog-story__section" aria-labelledby="ad-section-warning">
-      <h2 id="ad-section-warning" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.warning')}</h2>
-      <p class="alert-dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.warning')}</p>
+      <h2 id="ad-section-warning" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.warning')}</h2>
+      <p class="alert-dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.warning')}</p>
       <div class="alert-dialog-story__row">
         ${renderAlertDialog({
           tone: 'warning',
@@ -197,8 +197,8 @@ const bodyHtml = `
     </section>
 
     <section class="alert-dialog-story__section" aria-labelledby="ad-section-info">
-      <h2 id="ad-section-info" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.info')}</h2>
-      <p class="alert-dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.info')}</p>
+      <h2 id="ad-section-info" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.info')}</h2>
+      <p class="alert-dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.info')}</p>
       <div class="alert-dialog-story__row">
         ${renderAlertDialog({
           tone: 'info',
@@ -213,8 +213,8 @@ const bodyHtml = `
     </section>
 
     <section class="alert-dialog-story__section" aria-labelledby="ad-section-multi">
-      <h2 id="ad-section-multi" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.multi-consequence')}</h2>
-      <p class="alert-dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.multi-consequence')}</p>
+      <h2 id="ad-section-multi" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.multi-consequence')}</h2>
+      <p class="alert-dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.multi-consequence')}</p>
       <div class="alert-dialog-story__row">
         ${renderAlertDialog({
           tone: 'danger',
@@ -230,8 +230,8 @@ const bodyHtml = `
     </section>
 
     <section class="alert-dialog-story__section" aria-labelledby="ad-section-events">
-      <h2 id="ad-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.events')}</h2>
-      <p class="alert-dialog-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.events')}</p>
+      <h2 id="ad-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.alert-dialog.story.section.events')}</h2>
+      <p class="alert-dialog-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.alert-dialog.story.explainer.events')}</p>
       <div class="alert-dialog-story__events">
         <div class="alert-dialog-story__events-trigger-row">
           ${renderAlertDialog({
@@ -245,7 +245,7 @@ const bodyHtml = `
           })}
         </div>
         <div class="alert-dialog-story__events-log">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
           <pre class="alert-dialog-story__events-log-output" data-alert-dialog-events-log data-empty="1">${S.eventsLogEmpty}</pre>
         </div>
       </div>

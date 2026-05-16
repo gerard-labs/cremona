@@ -49,7 +49,7 @@ const tick = () => new Promise((r) => setTimeout(r, 0));
  *  14. dismissAll() removes every visible + clears queue.
  *
  *   Announcer push
- *  15. polite variants push to #theme-announcer ; danger skips (covered
+ *  15. polite variants push to #cremona-announcer ; danger skips (covered
  *      by test #2 as the no-push assertion).
  *
  * Per S1.4b descriptor-binding gotcha: tests call controller methods
@@ -86,13 +86,13 @@ describe('SonnerController', () => {
 
   async function mount() {
     document.body.innerHTML = `
-      <div id="theme-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-      <aside class="theme-sonner__viewport"
+      <div id="cremona-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+      <aside class="cremona-sonner__viewport"
              aria-label="Notifications"
              data-controller="sonner"
              data-action="pointerenter->sonner#pauseAll pointerleave->sonner#resumeAll keydown.esc@window->sonner#dismissAll">
         <button type="button"
-                class="theme-sonner__queue-indicator"
+                class="cremona-sonner__queue-indicator"
                 data-action="click->sonner#expandQueue"
                 data-sonner-target="indicator"
                 hidden></button>
@@ -103,9 +103,9 @@ describe('SonnerController', () => {
     await tick();
     await tick();
     return {
-      viewport: document.querySelector('.theme-sonner__viewport'),
-      indicator: document.querySelector('.theme-sonner__queue-indicator'),
-      announcer: document.getElementById('theme-announcer'),
+      viewport: document.querySelector('.cremona-sonner__viewport'),
+      indicator: document.querySelector('.cremona-sonner__queue-indicator'),
+      announcer: document.getElementById('cremona-announcer'),
       ctrl: app.controllers.find((c) => c.identifier === 'sonner'),
     };
   }
@@ -313,7 +313,7 @@ describe('SonnerController', () => {
       undoCallback: undoCb,
     });
     await tick();
-    const undoBtn = document.querySelector('[data-toast-id="undo1"].theme-sonner__undo');
+    const undoBtn = document.querySelector('[data-toast-id="undo1"].cremona-sonner__undo');
     expect(undoBtn).not.toBeNull();
     // Simulate the Stimulus action: ctrl.undo(event) reads event.currentTarget.dataset.toastId.
     ctrl.undo({ currentTarget: undoBtn });
@@ -337,7 +337,7 @@ describe('SonnerController', () => {
     expect(indicator.hidden).toBe(true);
   });
 
-  it('_announce — polite variants push to #theme-announcer', async () => {
+  it('_announce — polite variants push to #cremona-announcer', async () => {
     const { ctrl, announcer } = await mount();
     ctrl._handleShow({ id: 's2', variant: 'success', title: 'Saved', message: 'Your changes are live.' });
     await tick();

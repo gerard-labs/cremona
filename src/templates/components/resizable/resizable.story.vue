@@ -49,7 +49,7 @@ function resizable({ id, orientation = 'horizontal', size = 50, minSize = 10, ma
   return `
     <div
       id="${wrapId}"
-      class="theme-resizable ${className}"
+      class="cremona-resizable ${className}"
       data-orientation="${orientation}"
       data-controller="resizable"
       data-resizable-orientation-value="${orientation}"
@@ -57,27 +57,27 @@ function resizable({ id, orientation = 'horizontal', size = 50, minSize = 10, ma
       data-resizable-min-size-value="${minSize}"
       data-resizable-max-size-value="${maxSize}"
       data-resizable-step-value="${step}"
-      style="--theme-resizable-size: ${size}%;"
+      style="--cremona-resizable-size: ${size}%;"
     >
-      <div id="${wrapId}-start" class="theme-resizable__pane theme-resizable__pane--start" data-resizable-target="startPane">${start}</div>
+      <div id="${wrapId}-start" class="cremona-resizable__pane cremona-resizable__pane--start" data-resizable-target="startPane">${start}</div>
       <div
-        class="theme-resizable__handle"
+        class="cremona-resizable__handle"
         data-resizable-target="handle"
         role="separator"
         aria-orientation="${orientation}"
         aria-controls="${wrapId}-start"
         aria-label="${S('aria.handle')}"
         tabindex="0"
-      ><span class="theme-resizable__grip" aria-hidden="true"></span></div>
-      <div class="theme-resizable__pane theme-resizable__pane--end">${end}</div>
+      ><span class="cremona-resizable__grip" aria-hidden="true"></span></div>
+      <div class="cremona-resizable__pane cremona-resizable__pane--end">${end}</div>
     </div>
   `;
 }
 
 function paneContent({ title, body, bg = 'sunken' }) {
   return `<div class="rs-story__pane" data-bg="${bg}">
-    <h3 class="theme-typography" data-variant="h3">${title}</h3>
-    <p class="theme-typography" data-variant="body">${body}</p>
+    <h3 class="cremona-typography" data-variant="h3">${title}</h3>
+    <p class="cremona-typography" data-variant="body">${body}</p>
   </div>`;
 }
 
@@ -89,8 +89,8 @@ const bodyHtml = `
     </header>
 
     <section class="rs-story__section" aria-labelledby="rs-section-horizontal">
-      <h2 id="rs-section-horizontal" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.horizontal')}</h2>
-      <p class="rs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.horizontal')}</p>
+      <h2 id="rs-section-horizontal" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.horizontal')}</h2>
+      <p class="rs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.horizontal')}</p>
       <div class="rs-story__container">
         ${resizable({
           orientation: 'horizontal',
@@ -102,8 +102,8 @@ const bodyHtml = `
     </section>
 
     <section class="rs-story__section" aria-labelledby="rs-section-vertical">
-      <h2 id="rs-section-vertical" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
-      <p class="rs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
+      <h2 id="rs-section-vertical" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
+      <p class="rs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
       <div class="rs-story__container rs-story__container--tall">
         ${resizable({
           orientation: 'vertical',
@@ -115,8 +115,8 @@ const bodyHtml = `
     </section>
 
     <section class="rs-story__section" aria-labelledby="rs-section-clamp">
-      <h2 id="rs-section-clamp" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.clamp')}</h2>
-      <p class="rs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.clamp')}</p>
+      <h2 id="rs-section-clamp" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.clamp')}</h2>
+      <p class="rs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.clamp')}</p>
       <div class="rs-story__container">
         ${resizable({
           orientation: 'horizontal',
@@ -130,8 +130,8 @@ const bodyHtml = `
     </section>
 
     <section class="rs-story__section" aria-labelledby="rs-section-editor">
-      <h2 id="rs-section-editor" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.editor')}</h2>
-      <p class="rs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.editor')}</p>
+      <h2 id="rs-section-editor" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.editor')}</h2>
+      <p class="rs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.editor')}</p>
       <div class="rs-story__container rs-story__container--tall">
         ${resizable({
           orientation: 'horizontal',
@@ -145,8 +145,8 @@ const bodyHtml = `
     </section>
 
     <section class="rs-story__section" aria-labelledby="rs-section-events">
-      <h2 id="rs-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="rs-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="rs-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="rs-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       <div class="rs-story__container">
         ${resizable({
           id: 'rs-events-demo',
@@ -157,7 +157,7 @@ const bodyHtml = `
         })}
       </div>
       <div class="rs-story__log" data-rs-events-log="rs-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-rs-events-out class="rs-story__log-out"></div>
       </div>
     </section>

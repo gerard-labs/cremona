@@ -28,18 +28,18 @@
                        `data-menubar-target="trigger"` (so Menubar can find
                        it for the roving nav) AND `data-popover-target="trigger"`
                        (so its co-mounted Popover wires the anchor).
-                       Strongly recommend the `.theme-menubar__trigger`
+                       Strongly recommend the `.cremona-menubar__trigger`
                        class for the standard visual.
 
   Usage example (3 submenus):
 
-    {% embed '@theme/components/menubar/menubar.html.twig' with {
+    {% embed '@cremona/components/menubar/menubar.html.twig' with {
       label: 'Menubar principal'|trans,
     } %}
       {% block menus %}
-        {% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' %}
+        {% embed '@cremona/components/dropdown-menu/dropdown-menu.html.twig' %}
           {% block trigger %}
-            <button type="button" class="theme-menubar__trigger"
+            <button type="button" class="cremona-menubar__trigger"
                     data-popover-target="trigger"
                     data-menubar-target="trigger"
                     aria-haspopup="menu" aria-expanded="false">
@@ -47,7 +47,7 @@
             </button>
           {% endblock %}
           {% block items %}
-            {% include '@theme/components/item/item.html.twig' with {
+            {% include '@cremona/components/item/item.html.twig' with {
               label: 'Nouveau'|trans, iconLeading: 'plus', kbdShortcut: ['⌘', 'N'], as: 'div',
             } %}
             ...
@@ -58,12 +58,12 @@
     {% endembed %}
 -#}
 
-{%- set htmlId     = htmlId     | default('theme-menubar-' ~ random()) -%}
+{%- set htmlId     = htmlId     | default('cremona-menubar-' ~ random()) -%}
 {%- set label      = label      | default(null) -%}
 {%- set labelledBy = labelledBy | default(null) -%}
 {%- set className  = className  | default('') -%}
 
-{%- set _classes = ['theme-menubar'] -%}
+{%- set _classes = ['cremona-menubar'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div

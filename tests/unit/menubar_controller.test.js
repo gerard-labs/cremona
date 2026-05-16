@@ -71,29 +71,29 @@ describe('MenubarController', () => {
     const menusHtml = triggers
       .map((label, i) => {
         const dis = i === disabledIdx ? 'disabled' : '';
-        return `<div id="sm-${i}" class="theme-popover theme-dropdown-menu"
+        return `<div id="sm-${i}" class="cremona-popover cremona-dropdown-menu"
           data-controller="popover dropdown-menu"
           data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
           data-popover-placement-value="bottom-start"
           data-popover-offset-value="2"
           data-popover-open-value="false">
-          <button id="tr-${i}" type="button" class="theme-menubar__trigger"
+          <button id="tr-${i}" type="button" class="cremona-menubar__trigger"
             data-popover-target="trigger"
             data-menubar-target="trigger"
             ${dis}
             aria-haspopup="menu" aria-expanded="false" aria-controls="sm-${i}-content">${label}</button>
-          <div id="sm-${i}-content" class="theme-popover__content theme-dropdown-menu__content"
+          <div id="sm-${i}-content" class="cremona-popover__content cremona-dropdown-menu__content"
             data-popover-target="content"
             data-state="closed"
             hidden>
-            <div class="theme-item" id="it-${i}-0">Item A</div>
-            <div class="theme-item" id="it-${i}-1">Item B</div>
+            <div class="cremona-item" id="it-${i}-0">Item A</div>
+            <div class="cremona-item" id="it-${i}-1">Item B</div>
           </div>
         </div>`;
       })
       .join('');
     document.body.innerHTML = `
-      <div id="mb-wrap" class="theme-menubar"
+      <div id="mb-wrap" class="cremona-menubar"
         data-controller="menubar"
         data-action="keydown->menubar#keydown">${menusHtml}</div>
     `;

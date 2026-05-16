@@ -33,7 +33,7 @@ const ICONS = Object.fromEntries(
 );
 
 function renderIcon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] ?? ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] ?? ''}</span>`;
 }
 
 function renderInput(props = {}) {
@@ -42,7 +42,7 @@ function renderInput(props = {}) {
     disabled, invalid, required, inputmode, autocomplete,
   } = props;
   const attrs = [
-    `class="theme-input"`,
+    `class="cremona-input"`,
     `type="${type}"`,
     `data-size="${size}"`,
     name ? `name="${name}"` : '',
@@ -59,18 +59,18 @@ function renderInput(props = {}) {
 }
 
 function renderGroup({ prefix, prefixIcon, suffix, suffixIcon, suffixButton, size = 'md', disabled, invalid, input }) {
-  const classes = ['theme-input-group'];
-  if (disabled) classes.push('theme-input-group--disabled');
-  if (invalid)  classes.push('theme-input-group--invalid');
+  const classes = ['cremona-input-group'];
+  if (disabled) classes.push('cremona-input-group--disabled');
+  if (invalid)  classes.push('cremona-input-group--invalid');
 
   const prefixHtml = (prefix || prefixIcon)
-    ? `<span class="theme-input-group__prefix" data-input-group-target="prefix">${prefixIcon ? renderIcon(prefixIcon) : ''}${prefix ? `<span>${prefix}</span>` : ''}</span>`
+    ? `<span class="cremona-input-group__prefix" data-input-group-target="prefix">${prefixIcon ? renderIcon(prefixIcon) : ''}${prefix ? `<span>${prefix}</span>` : ''}</span>`
     : '';
 
   const suffixHtml = suffixButton
-    ? `<span class="theme-input-group__suffix" data-input-group-target="suffix">${suffixButton}</span>`
+    ? `<span class="cremona-input-group__suffix" data-input-group-target="suffix">${suffixButton}</span>`
     : ((suffix || suffixIcon)
-        ? `<span class="theme-input-group__suffix" data-input-group-target="suffix">${suffixIcon ? renderIcon(suffixIcon) : ''}${suffix ? `<span>${suffix}</span>` : ''}</span>`
+        ? `<span class="cremona-input-group__suffix" data-input-group-target="suffix">${suffixIcon ? renderIcon(suffixIcon) : ''}${suffix ? `<span>${suffix}</span>` : ''}</span>`
         : '');
 
   return `
@@ -107,7 +107,7 @@ const bodyHtml = `
     </header>
 
     <section class="ig-story__section" aria-labelledby="ig-section-default">
-      <h2 id="ig-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.default')}</h2>
+      <h2 id="ig-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.default')}</h2>
       <div class="ig-story__stack">
         ${row(renderGroup({ prefix: 'https://', input: renderInput({ htmlId: 'demo-url',     type: 'url',  placeholder: 'monsite.fr' }) }), 'url')}
         ${row(renderGroup({ prefix: 'github.com/', input: renderInput({ htmlId: 'demo-github', placeholder: PH.username }) }),                'github')}
@@ -115,7 +115,7 @@ const bodyHtml = `
     </section>
 
     <section class="ig-story__section" aria-labelledby="ig-section-text-affix">
-      <h2 id="ig-section-text-affix" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.text-affix')}</h2>
+      <h2 id="ig-section-text-affix" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.text-affix')}</h2>
       <div class="ig-story__stack">
         ${row(renderGroup({ suffix: 'EUR',  input: renderInput({ htmlId: 'demo-amount-eur', type: 'number', inputmode: 'decimal', placeholder: PH.amount }) }), 'currency')}
         ${row(renderGroup({ suffix: 'kg',   input: renderInput({ htmlId: 'demo-weight',     type: 'number', inputmode: 'decimal', placeholder: '0' }) }),       'unit')}
@@ -124,7 +124,7 @@ const bodyHtml = `
     </section>
 
     <section class="ig-story__section" aria-labelledby="ig-section-icon-affix">
-      <h2 id="ig-section-icon-affix" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.icon-affix')}</h2>
+      <h2 id="ig-section-icon-affix" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.icon-affix')}</h2>
       <div class="ig-story__stack">
         ${row(renderGroup({ prefixIcon: 'search', input: renderInput({ htmlId: 'demo-search',  type: 'search', placeholder: t('theme.input.placeholder.search') }) }),    'search')}
         ${row(renderGroup({ prefixIcon: 'user',   input: renderInput({ htmlId: 'demo-user',    placeholder: PH.username }) }),                                            'user')}
@@ -132,15 +132,15 @@ const bodyHtml = `
     </section>
 
     <section class="ig-story__section" aria-labelledby="ig-section-button-affix">
-      <h2 id="ig-section-button-affix" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.button-affix')}</h2>
-      <p class="ig-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.input-group.story.explainer.button')}</p>
+      <h2 id="ig-section-button-affix" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.button-affix')}</h2>
+      <p class="ig-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.input-group.story.explainer.button')}</p>
       <div class="ig-story__stack">
         ${row(renderGroup({ suffixButton: clearButton, input: renderInput({ htmlId: 'demo-clear', value: 'préremplie pour le clear' }) }), 'clearable')}
       </div>
     </section>
 
     <section class="ig-story__section" aria-labelledby="ig-section-both-sides">
-      <h2 id="ig-section-both-sides" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.both-sides')}</h2>
+      <h2 id="ig-section-both-sides" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.both-sides')}</h2>
       <div class="ig-story__stack">
         ${row(renderGroup({ prefix: '€', suffix: '.00', input: renderInput({ htmlId: 'demo-both', type: 'number', inputmode: 'decimal', placeholder: PH.amount }) }), 'currency + decimals')}
         ${row(renderGroup({ prefixIcon: 'search', suffixButton: clearButton, input: renderInput({ htmlId: 'demo-search-clear', type: 'search', placeholder: t('theme.input.placeholder.search'), value: 'samurai' }) }), 'search + clear')}
@@ -148,16 +148,16 @@ const bodyHtml = `
     </section>
 
     <section class="ig-story__section" aria-labelledby="ig-section-states">
-      <h2 id="ig-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.states')}</h2>
+      <h2 id="ig-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.states')}</h2>
       <div class="ig-story__stack">
         ${row(renderGroup({ prefix: 'https://', disabled: true, input: renderInput({ htmlId: 'demo-state-disabled', disabled: true, placeholder: 'monsite.fr' }) }),                 'disabled')}
         ${row(renderGroup({ suffix: 'EUR',      invalid: true,  input: renderInput({ htmlId: 'demo-state-invalid',  type: 'number', value: '-5', invalid: true, describedBy: 'demo-state-invalid-error' }) }), 'invalid')}
       </div>
-      <p class="ig-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.input-group.story.explainer.button')}</p>
+      <p class="ig-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.input-group.story.explainer.button')}</p>
     </section>
 
     <section class="ig-story__section" aria-labelledby="ig-section-sizes">
-      <h2 id="ig-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.sizes')}</h2>
+      <h2 id="ig-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.input-group.story.section.sizes')}</h2>
       <div class="ig-story__stack">
         ${row(renderGroup({ prefix: '€', size: 'sm', input: renderInput({ htmlId: 'demo-size-sm', type: 'number', size: 'sm', placeholder: PH.amount }) }), 'sm')}
         ${row(renderGroup({ prefix: '€', size: 'md', input: renderInput({ htmlId: 'demo-size-md', type: 'number', size: 'md', placeholder: PH.amount }) }), 'md')}

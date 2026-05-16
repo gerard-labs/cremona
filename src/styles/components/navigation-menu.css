@@ -3,7 +3,7 @@
  * mechanics (controller + DropdownMenu children) under a <nav> landmark.
  *
  * Visual: same trigger/menubar surface as Menubar (the wrapping element
- * carries `.theme-menubar` class via the inherited template structure)
+ * carries `.cremona-menubar` class via the inherited template structure)
  * with a thin <nav> shell. NavigationMenu adds NO new visual tokens —
  * the styling is 100% inherited from Menubar + DropdownMenu + Item.
  *
@@ -23,7 +23,7 @@
 
 /* The <nav> shell is a layout container; no visual decoration of its own.
    The actual menubar inside carries the visual (border, padding, bg). */
-.theme-navigation-menu {
+.cremona-navigation-menu {
   display: inline-flex;
   align-items: center;
 }

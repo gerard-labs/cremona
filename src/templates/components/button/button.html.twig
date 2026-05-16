@@ -65,8 +65,8 @@
 {%- set htmlId       = htmlId       | default(null) -%}
 {%- set labelAttrs   = labelAttrs   | default({}) -%}
 
-{%- set _classes = ['theme-button'] -%}
-{%- if fullWidth -%}{%- set _classes = _classes | merge(['theme-button--full-width']) -%}{%- endif -%}
+{%- set _classes = ['cremona-button'] -%}
+{%- if fullWidth -%}{%- set _classes = _classes | merge(['cremona-button--full-width']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {# Spinner size pairs to button size: sm/md button → sm spinner (16 px); lg → md spinner (20 px). #}
@@ -92,31 +92,31 @@
 >
   {#- Leading slot: spinner replaces iconLeading when loading, else iconLeading shown. -#}
   {%- if loading -%}
-    {% include '@theme/components/spinner/spinner.html.twig' with {
+    {% include '@cremona/components/spinner/spinner.html.twig' with {
       size: _spinnerSize,
       inverted: variant == 'primary' or variant == 'destructive',
       label: '',
-      className: 'theme-button__spinner',
+      className: 'cremona-button__spinner',
     } %}
   {%- elseif iconLeadingRaw -%}
-    <span class="theme-button__icon theme-button__icon--leading" aria-hidden="true">{{ iconLeadingRaw | raw }}</span>
+    <span class="cremona-button__icon cremona-button__icon--leading" aria-hidden="true">{{ iconLeadingRaw | raw }}</span>
   {%- elseif iconLeading -%}
-    {% include '@theme/components/icon/icon.html.twig' with {
+    {% include '@cremona/components/icon/icon.html.twig' with {
       name: iconLeading,
       decorative: true,
       size: _iconSize,
-      className: 'theme-button__icon theme-button__icon--leading',
+      className: 'cremona-button__icon cremona-button__icon--leading',
     } %}
   {%- endif -%}
   {%- if label -%}
-    <span class="theme-button__label"{% for _n, _v in labelAttrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor %}>{{ label }}</span>
+    <span class="cremona-button__label"{% for _n, _v in labelAttrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor %}>{{ label }}</span>
   {%- endif -%}
   {%- if iconTrailing -%}
-    {% include '@theme/components/icon/icon.html.twig' with {
+    {% include '@cremona/components/icon/icon.html.twig' with {
       name: iconTrailing,
       decorative: true,
       size: _iconSize,
-      className: 'theme-button__icon theme-button__icon--trailing',
+      className: 'cremona-button__icon cremona-button__icon--trailing',
     } %}
   {%- endif -%}
 </{{ _tag }}>

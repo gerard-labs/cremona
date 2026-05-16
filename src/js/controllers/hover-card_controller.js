@@ -44,7 +44,7 @@ import { Controller } from '@hotwired/stimulus';
  *
  * Events emitted: none direct. Bubbled from Popover:
  *   popover:open / popover:close (consumers can filter to HoverCard wraps
- *   via `event.target.closest('.theme-hover-card')`).
+ *   via `event.target.closest('.cremona-hover-card')`).
  */
 export default class HoverCardController extends Controller {
   static values = {

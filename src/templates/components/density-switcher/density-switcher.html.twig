@@ -23,7 +23,7 @@
     hideLabel       (bool,   optional, default false)
 -#}
 
-{%- set htmlId          = htmlId          | default('theme-density-switcher-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-density-switcher-' ~ random()) -%}
 {%- set currentDensity  = currentDensity  | default('comfortable') -%}
 {%- set storageKey      = storageKey      | default('theme.density') -%}
 {%- set target          = target          | default('documentElement') -%}
@@ -43,12 +43,12 @@
     label: option.labelKey | trans,
     ariaLabel: option.labelKey | trans,
     pressed: option.density == currentDensity,
-    className: 'theme-density-switcher__item',
+    className: 'cremona-density-switcher__item',
     attrs: { 'data-density': option.density },
   }]) -%}
 {%- endfor -%}
 
-{% include '@theme/components/toggle-group/toggle-group.html.twig' with {
+{% include '@cremona/components/toggle-group/toggle-group.html.twig' with {
   label: 'theme.density-switcher.label.group'|trans,
   htmlId: htmlId,
   options: _tgOptions,
@@ -57,8 +57,8 @@
   size: size,
   variant: variant,
   hideLabel: hideLabel,
-  className: 'theme-density-switcher__group',
-  wrapClass: 'theme-density-switcher',
+  className: 'cremona-density-switcher__group',
+  wrapClass: 'cremona-density-switcher',
   controllerExtras: 'density-switcher',
   actionExtras: 'toggle->density-switcher#onToggle',
   attrs: {

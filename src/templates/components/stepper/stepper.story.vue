@@ -95,23 +95,23 @@ function stepper({
     else state = 'upcoming';
     const ariaCur = state === 'current' ? ' aria-current="step"' : '';
     const desc = it.description
-      ? `<span class="theme-stepper__description">${it.description}</span>`
+      ? `<span class="cremona-stepper__description">${it.description}</span>`
       : '';
-    return `<li id="${wrapId}-step-${idx}" class="theme-stepper__step"
+    return `<li id="${wrapId}-step-${idx}" class="cremona-stepper__step"
       data-stepper-target="step"
       data-step-index="${idx}"
       data-state="${state}"${ariaCur}>
-      <span class="theme-stepper__indicator" aria-hidden="true">
-        <span class="theme-stepper__indicator-number">${idx}</span>
-        <span class="theme-stepper__indicator-check"></span>
+      <span class="cremona-stepper__indicator" aria-hidden="true">
+        <span class="cremona-stepper__indicator-number">${idx}</span>
+        <span class="cremona-stepper__indicator-check"></span>
       </span>
-      <div class="theme-stepper__text">
-        <span class="theme-stepper__label">${it.label}</span>${desc}
+      <div class="cremona-stepper__text">
+        <span class="cremona-stepper__label">${it.label}</span>${desc}
       </div>
     </li>`;
   }).join('');
   const lbl = label || S('default-label');
-  return `<ol id="${wrapId}" class="theme-stepper"
+  return `<ol id="${wrapId}" class="cremona-stepper"
     data-controller="stepper"
     data-stepper-current-step-value="${currentStep}"
     data-stepper-total-steps-value="${total}"
@@ -156,14 +156,14 @@ const bodyHtml = `
     </header>
 
     <section class="stp-story__section" aria-labelledby="stp-section-default">
-      <h2 id="stp-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="stp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="stp-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="stp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${stepper({ currentStep: 2, items: onboardingItems, label: S('aria.account') })}
     </section>
 
     <section class="stp-story__section" aria-labelledby="stp-section-sizes">
-      <h2 id="stp-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
-      <p class="stp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
+      <h2 id="stp-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.sizes')}</h2>
+      <p class="stp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.sizes')}</p>
       <div class="stp-story__col">
         <div class="stp-story__size-label">${S('size.sm')}</div>
         ${stepper({ currentStep: 2, items: sizeItems, size: 'sm', label: S('aria.sm') })}
@@ -179,33 +179,33 @@ const bodyHtml = `
     </section>
 
     <section class="stp-story__section" aria-labelledby="stp-section-vertical">
-      <h2 id="stp-section-vertical" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
-      <p class="stp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
+      <h2 id="stp-section-vertical" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.vertical')}</h2>
+      <p class="stp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.vertical')}</p>
       ${stepper({ currentStep: 3, items: verticalItems, orientation: 'vertical', label: S('aria.vertical') })}
     </section>
 
     <section class="stp-story__section" aria-labelledby="stp-section-disabled">
-      <h2 id="stp-section-disabled" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.disabled')}</h2>
-      <p class="stp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.disabled')}</p>
+      <h2 id="stp-section-disabled" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.disabled')}</h2>
+      <p class="stp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.disabled')}</p>
       ${stepper({ currentStep: 2, items: disabledItems, label: S('aria.disabled') })}
     </section>
 
     <section class="stp-story__section" aria-labelledby="stp-section-interactive">
-      <h2 id="stp-section-interactive" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.interactive')}</h2>
-      <p class="stp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.interactive')}</p>
+      <h2 id="stp-section-interactive" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.interactive')}</h2>
+      <p class="stp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.interactive')}</p>
       ${stepper({ id: 'stp-interactive', currentStep: 1, items: onboardingItems, label: S('aria.interactive') })}
       <div class="stp-story__controls">
-        <button type="button" class="theme-button" data-variant="secondary" data-size="sm" data-demo-prev>${S('control.prev')}</button>
+        <button type="button" class="cremona-button" data-variant="secondary" data-size="sm" data-demo-prev>${S('control.prev')}</button>
         <span class="stp-story__counter" data-demo-current-label>1 / 4</span>
-        <button type="button" class="theme-button" data-variant="primary" data-size="sm" data-demo-next>${S('control.next')}</button>
+        <button type="button" class="cremona-button" data-variant="primary" data-size="sm" data-demo-next>${S('control.next')}</button>
       </div>
     </section>
 
     <section class="stp-story__section" aria-labelledby="stp-section-events">
-      <h2 id="stp-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="stp-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="stp-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="stp-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       <div class="stp-story__log" data-events-log="stp-interactive">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="stp-story__log-out"></div>
       </div>
     </section>

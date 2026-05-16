@@ -32,7 +32,7 @@ let _collapsibleCounter = 0;
 function nextId() { return `collapsible-${++_collapsibleCounter}`; }
 
 function chevronIcon() {
-  return `<span class="theme-icon theme-icon-bidi theme-collapsible__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${chevronDownSvg}</span>`;
+  return `<span class="cremona-icon cremona-icon-bidi cremona-collapsible__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${chevronDownSvg}</span>`;
 }
 
 function renderCollapsible({
@@ -47,19 +47,19 @@ function renderCollapsible({
   const contentId = `${id}-content`;
   const labelBlock = triggerHtml
     ? triggerHtml
-    : `<span class="theme-collapsible__label">${triggerLabel}</span>`;
+    : `<span class="cremona-collapsible__label">${triggerLabel}</span>`;
   return `
-    <div class="theme-collapsible" data-controller="collapsible" data-action="click->collapsible#toggle">
-      <button type="button" id="${triggerId}" class="theme-collapsible__trigger"
+    <div class="cremona-collapsible" data-controller="collapsible" data-action="click->collapsible#toggle">
+      <button type="button" id="${triggerId}" class="cremona-collapsible__trigger"
               aria-expanded="${open ? 'true' : 'false'}"
               aria-controls="${contentId}">
         ${labelBlock}
         ${iconChevron ? chevronIcon() : ''}
       </button>
-      <div id="${contentId}" class="theme-collapsible__content"
+      <div id="${contentId}" class="cremona-collapsible__content"
            role="region" aria-labelledby="${triggerId}"
            data-state="${open ? 'open' : 'closed'}">
-        <div class="theme-collapsible__content-inner">${contentHtml}</div>
+        <div class="cremona-collapsible__content-inner">${contentHtml}</div>
       </div>
     </div>
   `;
@@ -100,8 +100,8 @@ const bodyHtml = `
     </header>
 
     <section class="collapsible-story__section" aria-labelledby="coll-section-default">
-      <h2 id="coll-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.default')}</h2>
-      <p class="collapsible-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.default')}</p>
+      <h2 id="coll-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.default')}</h2>
+      <p class="collapsible-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.default')}</p>
       <div class="collapsible-story__stack">
         ${block(renderCollapsible({
           triggerLabel: SAMPLES.faq1Q,
@@ -111,8 +111,8 @@ const bodyHtml = `
     </section>
 
     <section class="collapsible-story__section" aria-labelledby="coll-section-open">
-      <h2 id="coll-section-open" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.open-by-default')}</h2>
-      <p class="collapsible-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.open-by-default')}</p>
+      <h2 id="coll-section-open" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.open-by-default')}</h2>
+      <p class="collapsible-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.open-by-default')}</p>
       <div class="collapsible-story__stack">
         ${block(renderCollapsible({
           triggerLabel: SAMPLES.faq2Q,
@@ -123,8 +123,8 @@ const bodyHtml = `
     </section>
 
     <section class="collapsible-story__section" aria-labelledby="coll-section-no-chevron">
-      <h2 id="coll-section-no-chevron" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.no-chevron')}</h2>
-      <p class="collapsible-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.no-chevron')}</p>
+      <h2 id="coll-section-no-chevron" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.no-chevron')}</h2>
+      <p class="collapsible-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.no-chevron')}</p>
       <div class="collapsible-story__stack">
         ${block(renderCollapsible({
           triggerLabel: SAMPLES.detailsTitle,
@@ -135,8 +135,8 @@ const bodyHtml = `
     </section>
 
     <section class="collapsible-story__section" aria-labelledby="coll-section-multiple">
-      <h2 id="coll-section-multiple" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.multiple-independent')}</h2>
-      <p class="collapsible-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.multiple-independent')}</p>
+      <h2 id="coll-section-multiple" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.multiple-independent')}</h2>
+      <p class="collapsible-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.multiple-independent')}</p>
       <div class="collapsible-story__stack collapsible-story__stack--tight">
         ${renderCollapsible({ triggerLabel: SAMPLES.faq1Q, contentHtml: `<p>${SAMPLES.faq1A}</p>` })}
         ${renderCollapsible({ triggerLabel: SAMPLES.faq2Q, contentHtml: `<p>${SAMPLES.faq2A}</p>` })}
@@ -145,16 +145,16 @@ const bodyHtml = `
     </section>
 
     <section class="collapsible-story__section" aria-labelledby="coll-section-composition">
-      <h2 id="coll-section-composition" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.composition')}</h2>
-      <p class="collapsible-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.composition')}</p>
+      <h2 id="coll-section-composition" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.composition')}</h2>
+      <p class="collapsible-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.collapsible.story.explainer.composition')}</p>
       <div class="collapsible-story__stack">
         ${block(`
-          <article class="theme-card" data-variant="surface">
-            <header class="theme-card__header">
-              <h3 class="theme-typography" data-variant="h3">${SAMPLES.inCardTitle}</h3>
-              <p class="theme-typography" data-variant="caption" data-color="tertiary">${SAMPLES.inCardSummary}</p>
+          <article class="cremona-card" data-variant="surface">
+            <header class="cremona-card__header">
+              <h3 class="cremona-typography" data-variant="h3">${SAMPLES.inCardTitle}</h3>
+              <p class="cremona-typography" data-variant="caption" data-color="tertiary">${SAMPLES.inCardSummary}</p>
             </header>
-            <div class="theme-card__body">
+            <div class="cremona-card__body">
               ${renderCollapsible({
                 triggerLabel: SAMPLES.detailsTitle,
                 contentHtml: `<p>${SAMPLES.inCardBody}</p>`,
@@ -166,7 +166,7 @@ const bodyHtml = `
     </section>
 
     <section class="collapsible-story__section" aria-labelledby="coll-section-long">
-      <h2 id="coll-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.long-content')}</h2>
+      <h2 id="coll-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.collapsible.story.section.long-content')}</h2>
       <div class="collapsible-story__stack">
         ${block(renderCollapsible({
           triggerLabel: SAMPLES.longTitle,

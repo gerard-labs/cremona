@@ -39,7 +39,7 @@
 {%- set size      = size      | default('md') -%}
 {%- set className = className | default('') -%}
 
-{%- set _classes = ['theme-status'] -%}
+{%- set _classes = ['cremona-status'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _isDanger = variant == 'danger' -%}
@@ -52,8 +52,8 @@
   {%- if pulse %} data-pulse="true"{% endif %}
   role="alert"
 >
-  <span class="theme-status__dot" aria-hidden="true"></span>
-  <span class="theme-status__label">{{ label }}</span>
+  <span class="cremona-status__dot" aria-hidden="true"></span>
+  <span class="cremona-status__label">{{ label }}</span>
 </div>
 {%- else -%}
 <output
@@ -62,7 +62,7 @@
   data-size="{{ size }}"
   {%- if pulse %} data-pulse="true"{% endif %}
 >
-  <span class="theme-status__dot" aria-hidden="true"></span>
-  <span class="theme-status__label">{{ label }}</span>
+  <span class="cremona-status__dot" aria-hidden="true"></span>
+  <span class="cremona-status__label">{{ label }}</span>
 </output>
 {%- endif -%}

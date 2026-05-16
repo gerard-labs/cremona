@@ -69,7 +69,7 @@ describe('HoverCardController', () => {
 
   async function mount({ openDelay = 400, closeDelay = 200 } = {}) {
     document.body.innerHTML = `
-      <div id="wrap" class="theme-popover theme-hover-card"
+      <div id="wrap" class="cremona-popover cremona-hover-card"
         data-controller="popover hover-card"
         data-action="mouseenter->hover-card#enter mouseleave->hover-card#leave keydown.esc@window->popover#close"
         data-popover-placement-value="top"
@@ -81,12 +81,12 @@ describe('HoverCardController', () => {
           aria-haspopup="dialog" aria-expanded="false" aria-controls="hc-content"
           href="#">@user</a>
         <div id="hc-content"
-          class="theme-popover__content theme-hover-card__content"
+          class="cremona-popover__content cremona-hover-card__content"
           data-popover-target="content"
           data-state="closed"
           role="dialog"
           hidden>
-          <div class="theme-hover-card__body">Preview body</div>
+          <div class="cremona-hover-card__body">Preview body</div>
         </div>
       </div>
     `;

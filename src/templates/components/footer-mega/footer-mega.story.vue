@@ -11,10 +11,10 @@ setLocale('fr');
 
 function renderColumn({ heading, items }) {
   return `
-    <section class="theme-footer-mega__column">
-      <h3 class="theme-typography theme-footer-mega__column-heading" data-variant="overline">${heading}</h3>
-      <ul class="theme-footer-mega__column-items">
-        ${items.map(item => `<li><a href="${item.href}" class="theme-footer-mega__item">${item.label}</a></li>`).join('')}
+    <section class="cremona-footer-mega__column">
+      <h3 class="cremona-typography cremona-footer-mega__column-heading" data-variant="overline">${heading}</h3>
+      <ul class="cremona-footer-mega__column-items">
+        ${items.map(item => `<li><a href="${item.href}" class="cremona-footer-mega__item">${item.label}</a></li>`).join('')}
       </ul>
     </section>
   `;
@@ -22,29 +22,29 @@ function renderColumn({ heading, items }) {
 
 function renderFooterMega({ id = 'story-footer-mega', columns, aside = null, social = [], legal = [], copyright = '' }) {
   return `
-    <footer class="theme-footer-mega" id="${id}" aria-label="${t('theme.nav.footer.aria.label')}">
-      <div class="theme-footer-mega__top">
-        <div class="theme-footer-mega__columns">${columns.map(renderColumn).join('')}</div>
+    <footer class="cremona-footer-mega" id="${id}" aria-label="${t('theme.nav.footer.aria.label')}">
+      <div class="cremona-footer-mega__top">
+        <div class="cremona-footer-mega__columns">${columns.map(renderColumn).join('')}</div>
         ${aside ? `
-          <aside class="theme-footer-mega__aside" aria-labelledby="${id}-aside">
-            <h3 id="${id}-aside" class="theme-typography" data-variant="h3">${aside.heading}</h3>
-            <p class="theme-footer-mega__aside-body">${aside.body}</p>
+          <aside class="cremona-footer-mega__aside" aria-labelledby="${id}-aside">
+            <h3 id="${id}-aside" class="cremona-typography" data-variant="h3">${aside.heading}</h3>
+            <p class="cremona-footer-mega__aside-body">${aside.body}</p>
             ${social.length ? `
-              <ul class="theme-footer-mega__social">
-                ${social.map(s => `<li><a href="${s.href}" class="theme-footer-mega__social-link" aria-label="${s.label}">${s.icon}</a></li>`).join('')}
+              <ul class="cremona-footer-mega__social">
+                ${social.map(s => `<li><a href="${s.href}" class="cremona-footer-mega__social-link" aria-label="${s.label}">${s.icon}</a></li>`).join('')}
               </ul>
             ` : ''}
           </aside>
         ` : ''}
       </div>
       ${legal.length || copyright ? `
-        <div class="theme-footer-mega__bottom">
+        <div class="cremona-footer-mega__bottom">
           ${legal.length ? `
-            <ul class="theme-footer-mega__legal">
-              ${legal.map(l => `<li><a href="${l.href}" class="theme-footer-mega__legal-link">${l.label}</a></li>`).join('')}
+            <ul class="cremona-footer-mega__legal">
+              ${legal.map(l => `<li><a href="${l.href}" class="cremona-footer-mega__legal-link">${l.label}</a></li>`).join('')}
             </ul>
           ` : ''}
-          ${copyright ? `<p class="theme-footer-mega__copyright">${copyright}</p>` : ''}
+          ${copyright ? `<p class="cremona-footer-mega__copyright">${copyright}</p>` : ''}
         </div>
       ` : ''}
     </footer>
@@ -94,12 +94,12 @@ const bodyHtml = `
     </header>
 
     <section class="footer-mega-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.footer.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.footer.story.section.default')}</h2>
       <div class="footer-mega-story__frame">${renderFooterMega({ id: 'story-default', columns, legal, copyright: '© 2026 Acme Inc.' })}</div>
     </section>
 
     <section class="footer-mega-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.footer.story.section.with-aside')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.footer.story.section.with-aside')}</h2>
       <div class="footer-mega-story__frame">${renderFooterMega({
         id: 'story-aside',
         columns,

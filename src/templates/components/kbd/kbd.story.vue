@@ -11,14 +11,14 @@ setLocale('fr');
 
 function renderKbd({ keys, separator = '+', size = 'sm', className }) {
   const arr = Array.isArray(keys) ? keys : [keys];
-  const classes = ['theme-kbd-group'];
+  const classes = ['cremona-kbd-group'];
   if (className) classes.push(className);
   const inner = arr
     .map(
       (k, i) =>
-        `<kbd class="theme-kbd" data-size="${size}">${k}</kbd>${
+        `<kbd class="cremona-kbd" data-size="${size}">${k}</kbd>${
           i < arr.length - 1
-            ? `<span class="theme-kbd-sep" aria-hidden="true">${separator}</span>`
+            ? `<span class="cremona-kbd-sep" aria-hidden="true">${separator}</span>`
             : ''
         }`,
     )
@@ -34,7 +34,7 @@ const bodyHtml = `
     </header>
 
     <section class="kbd-story__section" aria-labelledby="kbd-section-single">
-      <h2 id="kbd-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.single')}</h2>
+      <h2 id="kbd-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.single')}</h2>
       <div class="kbd-story__row">
         ${renderKbd({ keys: 'Esc' })}
         ${renderKbd({ keys: 'Tab' })}
@@ -44,7 +44,7 @@ const bodyHtml = `
     </section>
 
     <section class="kbd-story__section" aria-labelledby="kbd-section-chord">
-      <h2 id="kbd-section-chord" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.chord')}</h2>
+      <h2 id="kbd-section-chord" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.chord')}</h2>
       <div class="kbd-story__row">
         ${renderKbd({ keys: ['Cmd', 'K'] })}
         ${renderKbd({ keys: ['Ctrl', 'Shift', 'P'] })}
@@ -53,8 +53,8 @@ const bodyHtml = `
     </section>
 
     <section class="kbd-story__section" aria-labelledby="kbd-section-sequence">
-      <h2 id="kbd-section-sequence" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.sequence')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.kbd.story.sequence-explainer')}</p>
+      <h2 id="kbd-section-sequence" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.sequence')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.kbd.story.sequence-explainer')}</p>
       <div class="kbd-story__row">
         ${renderKbd({ keys: ['g', 'i'], separator: ' ' })}
         ${renderKbd({ keys: ['y', 'y'], separator: ' ' })}
@@ -62,7 +62,7 @@ const bodyHtml = `
     </section>
 
     <section class="kbd-story__section" aria-labelledby="kbd-section-size">
-      <h2 id="kbd-section-size" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.sizes')}</h2>
+      <h2 id="kbd-section-size" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.sizes')}</h2>
       <div class="kbd-story__row">
         <div class="kbd-story__cell">
           ${renderKbd({ keys: ['Cmd', 'K'], size: 'sm' })}
@@ -76,8 +76,8 @@ const bodyHtml = `
     </section>
 
     <section class="kbd-story__section" aria-labelledby="kbd-section-inline">
-      <h2 id="kbd-section-inline" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.inline')}</h2>
-      <p class="theme-typography" data-variant="body">
+      <h2 id="kbd-section-inline" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.inline')}</h2>
+      <p class="cremona-typography" data-variant="body">
         <span>${t('theme.kbd.story.inline-before')}</span>
         ${renderKbd({ keys: ['Cmd', 'K'] })}
         <span>${t('theme.kbd.story.inline-after')}</span>
@@ -85,14 +85,14 @@ const bodyHtml = `
     </section>
 
     <section class="kbd-story__section" aria-labelledby="kbd-section-help">
-      <h2 id="kbd-section-help" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.help')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.kbd.story.help-explainer')}</p>
+      <h2 id="kbd-section-help" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.kbd.story.section.help')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.kbd.story.help-explainer')}</p>
       <dl class="kbd-story__deflist">
-        <dt class="theme-typography" data-variant="body">${t('theme.kbd.story.shortcut.search')}</dt>
+        <dt class="cremona-typography" data-variant="body">${t('theme.kbd.story.shortcut.search')}</dt>
         <dd>${renderKbd({ keys: ['Cmd', 'K'] })}</dd>
-        <dt class="theme-typography" data-variant="body">${t('theme.kbd.story.shortcut.save')}</dt>
+        <dt class="cremona-typography" data-variant="body">${t('theme.kbd.story.shortcut.save')}</dt>
         <dd>${renderKbd({ keys: ['Cmd', 'S'] })}</dd>
-        <dt class="theme-typography" data-variant="body">${t('theme.kbd.story.shortcut.toggle-shortcuts')}</dt>
+        <dt class="cremona-typography" data-variant="body">${t('theme.kbd.story.shortcut.toggle-shortcuts')}</dt>
         <dd>${renderKbd({ keys: 'Shift' })} ${renderKbd({ keys: '?' })}</dd>
       </dl>
     </section>

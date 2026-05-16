@@ -9,12 +9,12 @@
  * See `docs/specs/ring3/Auth-SSO.md` for the full spec.
  */
 
-.theme-auth-sso {
+.cremona-auth-sso {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 }
 
-.theme-auth-sso__footer-question {
+.cremona-auth-sso__footer-question {
   margin-inline-end: var(--spacing-1);
 }

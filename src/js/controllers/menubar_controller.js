@@ -166,7 +166,7 @@ export default class MenubarController extends Controller {
    * — the cascading-open behavior matching macOS / Apple HIG menubar idiom.
    *
    * Cross-controller calls find the Popover controller attached to each
-   * DropdownMenu wrap (the wrap is the trigger's nearest `.theme-popover`
+   * DropdownMenu wrap (the wrap is the trigger's nearest `.cremona-popover`
    * ancestor — the same element that carries `data-controller="popover dropdown-menu"`).
    */
   _cascadeOpen(fromIdx, toIdx) {
@@ -204,13 +204,13 @@ export default class MenubarController extends Controller {
   /**
    * Find the Popover controller attached to the DropdownMenu wrap that
    * contains the trigger at the given index. The DropdownMenu wrap is
-   * the trigger's nearest `.theme-popover` ancestor — both DropdownMenu
+   * the trigger's nearest `.cremona-popover` ancestor — both DropdownMenu
    * and Popover controllers are mounted on that same element.
    */
   _popoverForIdx(idx) {
     const trigger = this.triggerTargets[idx];
     if (!trigger) return null;
-    const wrap = trigger.closest('.theme-popover');
+    const wrap = trigger.closest('.cremona-popover');
     if (!wrap) return null;
     return this.application.getControllerForElementAndIdentifier(
       wrap,

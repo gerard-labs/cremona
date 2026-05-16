@@ -102,7 +102,7 @@ describe('PasswordStrengthController', () => {
 
   async function mount({ minScore = 2, debounceMs = 0 } = {}) {
     document.body.innerHTML = `
-      <div id="pwd-wrap" class="theme-auth-password-strength"
+      <div id="pwd-wrap" class="cremona-auth-password-strength"
         data-controller="password-strength"
         data-password-strength-min-score-value="${minScore}"
         data-password-strength-debounce-ms-value="${debounceMs}">
@@ -110,10 +110,10 @@ describe('PasswordStrengthController', () => {
           data-password-strength-target="input"
           data-action="input->password-strength#evaluate"
           autocomplete="new-password"/>
-        <progress class="theme-progress" data-size="sm" data-variant="danger"
+        <progress class="cremona-progress" data-size="sm" data-variant="danger"
           data-password-strength-target="meter"
           value="0" max="100" aria-label="Force du mot de passe"></progress>
-        <p class="theme-auth-password-strength__hint" data-password-strength-target="hint" aria-live="polite"></p>
+        <p class="cremona-auth-password-strength__hint" data-password-strength-target="hint" aria-live="polite"></p>
       </div>
     `;
     app = Application.start();

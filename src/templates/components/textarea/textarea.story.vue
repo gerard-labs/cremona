@@ -33,7 +33,7 @@ function renderTextarea(props = {}) {
     maxlength, spellcheck, className,
   } = props;
 
-  const classes = ['theme-textarea'];
+  const classes = ['cremona-textarea'];
   if (className) classes.push(className);
 
   const attrs = [
@@ -90,7 +90,7 @@ const bodyHtml = `
     </header>
 
     <section class="textarea-story__section" aria-labelledby="textarea-section-default">
-      <h2 id="textarea-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.default')}</h2>
+      <h2 id="textarea-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.default')}</h2>
       <div class="textarea-story__stack">
         ${row(renderTextarea({ htmlId: 'demo-default-msg',  placeholder: PH.message, autosize: true }), 'autosize 2-8')}
         ${row(renderTextarea({ htmlId: 'demo-default-desc', placeholder: PH.description, rows: 3 }),     'rows=3 fixed')}
@@ -98,7 +98,7 @@ const bodyHtml = `
     </section>
 
     <section class="textarea-story__section" aria-labelledby="textarea-section-states">
-      <h2 id="textarea-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.states')}</h2>
+      <h2 id="textarea-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.states')}</h2>
       <div class="textarea-story__stack">
         ${row(renderTextarea({ htmlId: 'demo-state-default',  placeholder: PH.message }),                                                  'default')}
         ${row(renderTextarea({ htmlId: 'demo-state-value',    value: SAMPLES.short }),                                                     'with value')}
@@ -107,11 +107,11 @@ const bodyHtml = `
         ${row(renderTextarea({ htmlId: 'demo-state-required', placeholder: PH.message, required: true }),                                  'required')}
         ${row(renderTextarea({ htmlId: 'demo-state-invalid',  value: 'a', invalid: true, describedBy: 'demo-state-invalid-error' }),       'invalid')}
       </div>
-      <p class="textarea-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.textarea.story.explainer.invalid')}</p>
+      <p class="textarea-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.textarea.story.explainer.invalid')}</p>
     </section>
 
     <section class="textarea-story__section" aria-labelledby="textarea-section-sizes">
-      <h2 id="textarea-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.sizes')}</h2>
+      <h2 id="textarea-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.sizes')}</h2>
       <div class="textarea-story__stack">
         ${row(renderTextarea({ htmlId: 'demo-size-sm', size: 'sm', placeholder: PH.message, rows: 2 }), 'sm')}
         ${row(renderTextarea({ htmlId: 'demo-size-md', size: 'md', placeholder: PH.message, rows: 3 }), 'md')}
@@ -120,8 +120,8 @@ const bodyHtml = `
     </section>
 
     <section class="textarea-story__section" aria-labelledby="textarea-section-autosize">
-      <h2 id="textarea-section-autosize" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.autosize')}</h2>
-      <p class="textarea-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.textarea.story.explainer.autosize')}</p>
+      <h2 id="textarea-section-autosize" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.autosize')}</h2>
+      <p class="textarea-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.textarea.story.explainer.autosize')}</p>
       <div class="textarea-story__stack">
         ${row(renderTextarea({ htmlId: 'demo-autosize-empty',  placeholder: PH.message, autosize: true, minRows: 2, maxRows: 6 }),  'empty')}
         ${row(renderTextarea({ htmlId: 'demo-autosize-medium', value: SAMPLES.medium, autosize: true, minRows: 2, maxRows: 6 }),    'medium content')}
@@ -129,8 +129,8 @@ const bodyHtml = `
     </section>
 
     <section class="textarea-story__section" aria-labelledby="textarea-section-fixed">
-      <h2 id="textarea-section-fixed" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.fixed')}</h2>
-      <p class="textarea-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.textarea.story.explainer.fixed')}</p>
+      <h2 id="textarea-section-fixed" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.fixed')}</h2>
+      <p class="textarea-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.textarea.story.explainer.fixed')}</p>
       <div class="textarea-story__stack">
         ${row(renderTextarea({ htmlId: 'demo-fixed-2', placeholder: PH.notes, rows: 2 }), 'rows=2')}
         ${row(renderTextarea({ htmlId: 'demo-fixed-5', placeholder: PH.notes, rows: 5 }), 'rows=5')}
@@ -138,7 +138,7 @@ const bodyHtml = `
     </section>
 
     <section class="textarea-story__section" aria-labelledby="textarea-section-long-value">
-      <h2 id="textarea-section-long-value" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.long-value')}</h2>
+      <h2 id="textarea-section-long-value" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.textarea.story.section.long-value')}</h2>
       <div class="textarea-story__stack">
         ${row(renderTextarea({ htmlId: 'demo-long', value: SAMPLES.long, autosize: true, minRows: 2, maxRows: 6 }), 'autosize → clamp 6 + scroll')}
       </div>

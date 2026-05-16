@@ -18,19 +18,19 @@
 {%- set primaryHref    = primaryHref    | default('https://browsehappy.com/') -%}
 {%- set secondaryLabel = secondaryLabel | default(null) -%}
 {%- set secondaryHref  = secondaryHref  | default(null) -%}
-{%- set htmlId         = htmlId         | default('theme-error-browser-unsupported') -%}
+{%- set htmlId         = htmlId         | default('cremona-error-browser-unsupported') -%}
 {%- set className      = className      | default('') -%}
 
-{%- set _classes = ['theme-error-browser-unsupported'] -%}
+{%- set _classes = ['cremona-error-browser-unsupported'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
-{% embed '@theme/components/_error-shell/_error-shell.html.twig' with {
+{% embed '@cremona/components/_error-shell/_error-shell.html.twig' with {
   variant: 'default',
   htmlId: htmlId,
   className: _classes | join(' '),
 } %}
   {% block content %}
-    {% embed '@theme/components/empty/empty.html.twig' with {
+    {% embed '@cremona/components/empty/empty.html.twig' with {
       size: 'lg',
       titleLevel: 'h1',
       icon: 'info',
@@ -39,14 +39,14 @@
       htmlId: htmlId ~ '-empty',
     } %}
       {% block actions %}
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           label: primaryLabel,
           variant: 'primary',
           size: 'md',
           href: primaryHref,
         } %}
         {% if secondaryLabel and secondaryHref %}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: secondaryLabel,
             variant: 'ghost',
             size: 'md',

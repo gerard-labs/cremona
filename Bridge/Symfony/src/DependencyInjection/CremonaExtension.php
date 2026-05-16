@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gerard\Theme\Bridge\Symfony\DependencyInjection;
+namespace Gerard\Cremona\Bridge\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -11,13 +11,13 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Registers the @theme Twig namespace + framework.translator.paths so the
+ * Registers the @cremona Twig namespace + framework.translator.paths so the
  * Symfony Translator picks up the kit's fr.json / en.json catalogues
  * automatically.
  *
  * Consumers write:
  *
- *     {% include '@theme/components/typography/typography.html.twig'
+ *     {% include '@cremona/components/typography/typography.html.twig'
  *                with { variant: 'h1', content: 'Bonjour'|trans } %}
  *
  *     // Or directly use the translation keys:
@@ -32,7 +32,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  * into their import-map. The actual auto-wire bridge is deferred — for now,
  * consumers manually `import { boot } from '@gerard/cremona'` in their app.js.
  */
-final class ThemeExtension extends Extension implements PrependExtensionInterface
+final class CremonaExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -52,10 +52,10 @@ final class ThemeExtension extends Extension implements PrependExtensionInterfac
 
     public function prepend(ContainerBuilder $container): void
     {
-        // 1. Twig — register the @theme namespace pointing at src/templates/.
+        // 1. Twig — register the @cremona namespace pointing at src/templates/.
         $container->prependExtensionConfig('twig', [
             'paths' => [
-                $this->resolveTemplatesPath() => 'theme',
+                $this->resolveTemplatesPath() => 'cremona',
             ],
         ]);
 
@@ -74,7 +74,7 @@ final class ThemeExtension extends Extension implements PrependExtensionInterfac
 
     public function getAlias(): string
     {
-        return 'theme';
+        return 'cremona';
     }
 
     /**

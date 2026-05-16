@@ -26,7 +26,7 @@
 
   Usage:
 
-    {% include '@theme/components/form-file-upload/form-file-upload.html.twig' with {
+    {% include '@cremona/components/form-file-upload/form-file-upload.html.twig' with {
       label: 'theme.form.file-upload.label.avatar'|trans,
       name: 'avatar',
       acceptedFileTypes: ['image/jpeg', 'image/png'],
@@ -34,7 +34,7 @@
     } %}
 -#}
 
-{%- set htmlId            = htmlId            | default('theme-form-file-upload-' ~ random()) -%}
+{%- set htmlId            = htmlId            | default('cremona-form-file-upload-' ~ random()) -%}
 {%- set required          = required          | default(false) -%}
 {%- set disabled          = disabled          | default(false) -%}
 {%- set acceptedFileTypes = acceptedFileTypes | default([]) -%}
@@ -43,9 +43,9 @@
 {%- set className         = className         | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-field', 'theme-form-file-upload'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-field--invalid']) -%}{%- endif -%}
-{%- if disabled -%}{%- set _classes = _classes | merge(['theme-field--disabled']) -%}{%- endif -%}
+{%- set _classes = ['cremona-field', 'cremona-form-file-upload'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-field--invalid']) -%}{%- endif -%}
+{%- if disabled -%}{%- set _classes = _classes | merge(['cremona-field--disabled']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set describedByIds = [] -%}
@@ -53,7 +53,7 @@
 {%- if isInvalid -%}{%- set describedByIds = describedByIds | merge([htmlId ~ '-error']) -%}{%- endif -%}
 
 <div class="{{ _classes | join(' ') }}">
-  {% include '@theme/components/label/label.html.twig' with {
+  {% include '@cremona/components/label/label.html.twig' with {
     content: label,
     htmlFor: htmlId ~ '-input',
     required: required,
@@ -61,7 +61,7 @@
   } only %}
 
   <div
-    class="theme-form-file-upload__widget"
+    class="cremona-form-file-upload__widget"
     data-controller="file-upload"
     data-file-upload-accepted-file-types-value="{{ acceptedFileTypes | json_encode }}"
     {%- if maxFileSize is defined %} data-file-upload-max-file-size-value="{{ maxFileSize }}"{% endif -%}
@@ -83,9 +83,9 @@
   </div>
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

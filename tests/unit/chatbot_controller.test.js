@@ -48,7 +48,7 @@ describe('chatbot controller', () => {
     const root = document.querySelector('[data-controller="chatbot"]');
     const ctrl = app.getControllerForElementAndIdentifier(root, 'chatbot');
     ctrl.appendMessage('user', 'Bonjour');
-    const li = root.querySelector('.theme-chatbot__message');
+    const li = root.querySelector('.cremona-chatbot__message');
     expect(li).not.toBeNull();
     expect(li.getAttribute('data-role')).toBe('user');
     expect(li.textContent.trim()).toBe('Bonjour');
@@ -60,7 +60,7 @@ describe('chatbot controller', () => {
     const root = document.querySelector('[data-controller="chatbot"]');
     const ctrl = app.getControllerForElementAndIdentifier(root, 'chatbot');
     ctrl.appendMessage('bot', 'Salut !');
-    const li = root.querySelector('.theme-chatbot__message');
+    const li = root.querySelector('.cremona-chatbot__message');
     expect(li.getAttribute('data-role')).toBe('bot');
   });
 
@@ -70,7 +70,7 @@ describe('chatbot controller', () => {
     const root = document.querySelector('[data-controller="chatbot"]');
     const ctrl = app.getControllerForElementAndIdentifier(root, 'chatbot');
     ctrl.appendMessage('hacker', 'XSS attempt');
-    const li = root.querySelector('.theme-chatbot__message');
+    const li = root.querySelector('.cremona-chatbot__message');
     expect(li.getAttribute('data-role')).toBe('bot');
   });
 
@@ -150,9 +150,9 @@ describe('chatbot controller', () => {
     const ctrl = app.getControllerForElementAndIdentifier(root, 'chatbot');
     ctrl.appendMessage('user', 'A');
     ctrl.appendMessage('bot', 'B');
-    expect(root.querySelectorAll('.theme-chatbot__message')).toHaveLength(2);
+    expect(root.querySelectorAll('.cremona-chatbot__message')).toHaveLength(2);
     ctrl.clearMessages();
-    expect(root.querySelectorAll('.theme-chatbot__message')).toHaveLength(0);
+    expect(root.querySelectorAll('.cremona-chatbot__message')).toHaveLength(0);
   });
 
   it('auto-scrolls to bottom on append (smooth behavior by default)', async () => {

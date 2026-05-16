@@ -10,18 +10,18 @@
  * for thin pattern — marker class + state-machine CSS hooks).
  */
 
-.theme-rgpd-data-export {
+.cremona-rgpd-data-export {
   /* Inherits Card variant=elevated from consumer composition. */
 }
 
-.theme-rgpd-data-export__legal-note {
+.cremona-rgpd-data-export__legal-note {
   font: var(--typography-caption);
   color: var(--color-text-tertiary);
   margin-block-start: var(--spacing-2);
   max-inline-size: 65ch;
 }
 
-.theme-rgpd-data-export__meta {
+.cremona-rgpd-data-export__meta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-3);
@@ -29,30 +29,30 @@
   color: var(--color-text-secondary);
 }
 
-.theme-rgpd-data-export__meta-item {
+.cremona-rgpd-data-export__meta-item {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
 }
 
-.theme-rgpd-data-export__button-state {
+.cremona-rgpd-data-export__button-state {
   /* Per-state button styling — the consumer sets data-rgpd-data-export-state on the wrap. */
 }
 
 /* State : loading — disabled button + spinner inline */
-.theme-rgpd-data-export[data-rgpd-data-export-state="loading"] .theme-rgpd-data-export__button-state {
+.cremona-rgpd-data-export[data-rgpd-data-export-state="loading"] .cremona-rgpd-data-export__button-state {
   pointer-events: none;
   opacity: 0.7;
 }
 
 /* State : success — button shows download icon + success tone */
-.theme-rgpd-data-export[data-rgpd-data-export-state="success"] .theme-rgpd-data-export__button-state[data-variant="primary"] {
+.cremona-rgpd-data-export[data-rgpd-data-export-state="success"] .cremona-rgpd-data-export__button-state[data-variant="primary"] {
   background: var(--color-success-bg, var(--color-bg-elevated));
   color: var(--color-success-foreground, var(--color-text-primary));
 }
 
 /* State : error — button shows alert tone */
-.theme-rgpd-data-export[data-rgpd-data-export-state="error"] .theme-rgpd-data-export__button-state[data-variant="primary"] {
+.cremona-rgpd-data-export[data-rgpd-data-export-state="error"] .cremona-rgpd-data-export__button-state[data-variant="primary"] {
   background: var(--color-bg-elevated);
   color: var(--color-danger, var(--color-text-primary));
   border: 1px solid var(--color-danger, var(--color-border-default));

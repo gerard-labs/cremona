@@ -3,14 +3,14 @@
  *
  * Marker classes override Sortable.js's default chrome (ghost / chosen /
  * drag clones) to use the kit's token vocabulary (light + dark + RTL).
- * The drag-handle class (.theme-sortable-handle) styles the affordance
+ * The drag-handle class (.cremona-sortable-handle) styles the affordance
  * button + provides the cursor feedback.
  *
  * Per ADR-0045 §"Marker class chrome override".
  */
 
 /* Drag handle button — visible cursor affordance + larger touch target. */
-.theme-sortable-handle {
+.cremona-sortable-handle {
   cursor: grab;
   display: inline-flex;
   align-items: center;
@@ -26,24 +26,24 @@
               color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-sortable-handle:hover,
-.theme-sortable-handle:focus-visible {
+.cremona-sortable-handle:hover,
+.cremona-sortable-handle:focus-visible {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
   outline: none;
 }
 
-.theme-sortable-handle:focus-visible {
+.cremona-sortable-handle:focus-visible {
   outline: var(--ring-width) solid var(--ring-color);
   outline-offset: var(--ring-offset-width);
 }
 
-.theme-sortable-handle:active {
+.cremona-sortable-handle:active {
   cursor: grabbing;
 }
 
 /* Ghost element — visual placeholder in the source position during drag. */
-.theme-sortable-ghost {
+.cremona-sortable-ghost {
   opacity: 0.35;
   background: var(--color-bg-elevated);
   border: 1px dashed var(--color-border-default);
@@ -51,13 +51,13 @@
 }
 
 /* Chosen item — highlighted just before drag starts (mouse-down state). */
-.theme-sortable-chosen {
+.cremona-sortable-chosen {
   background: var(--color-bg-elevated);
   box-shadow: var(--shadow-md);
 }
 
 /* Drag clone — the floating preview that follows the pointer. */
-.theme-sortable-drag {
+.cremona-sortable-drag {
   opacity: 0.95;
   box-shadow: var(--shadow-lg);
   cursor: grabbing;
@@ -75,7 +75,7 @@
    to 0 ms in the controller when the OS preference is set ; this rule
    removes any residual CSS transitions on ghost/chosen states. */
 @media (prefers-reduced-motion: reduce) {
-  .theme-sortable-handle {
+  .cremona-sortable-handle {
     transition: none;
   }
 }

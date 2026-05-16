@@ -13,12 +13,12 @@
  * visible enough to indicate a placeholder is present).
  */
 
-@keyframes theme-skeleton-shimmer {
+@keyframes cremona-skeleton-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
-.theme-skeleton {
+.cremona-skeleton {
   display: block;
   background:
     linear-gradient(
@@ -28,35 +28,35 @@
       var(--color-bg-sunken) 100%
     );
   background-size: 200% 100%;
-  animation: theme-skeleton-shimmer 1500ms linear infinite;
+  animation: cremona-skeleton-shimmer 1500ms linear infinite;
   border-radius: var(--radius-sm);
   inline-size: 100%;
   block-size: 1em;
 }
 
-.theme-skeleton--circle {
+.cremona-skeleton--circle {
   border-radius: var(--radius-pill);
   inline-size: 2em;
   block-size: 2em;
   aspect-ratio: 1 / 1;
 }
 
-.theme-skeleton--text {
+.cremona-skeleton--text {
   border-radius: var(--radius-xs);
   block-size: 1em;
 }
 
-.theme-skeleton--rect {
+.cremona-skeleton--rect {
   border-radius: var(--radius-sm);
 }
 
-.theme-skeleton-group {
+.cremona-skeleton-group {
   display: grid;
   gap: var(--spacing-2);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-skeleton {
+  .cremona-skeleton {
     animation: none;
     background: var(--color-bg-elevated);
   }

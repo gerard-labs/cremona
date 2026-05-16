@@ -29,7 +29,7 @@
     footer  (optional) — button cluster at flex-end.
 -#}
 
-{%- set htmlId               = htmlId               | default('theme-drawer-' ~ random()) -%}
+{%- set htmlId               = htmlId               | default('cremona-drawer-' ~ random()) -%}
 {%- set edge                 = edge                 | default('end') -%}
 {%- set open                 = open                 | default(false) -%}
 {%- set closeButton          = closeButton          ?? true -%}
@@ -44,10 +44,10 @@
 {%- set bodyClass            = bodyClass            | default('') -%}
 {%- set footerClass          = footerClass          | default('') -%}
 
-{%- set _wrapClasses = ['theme-drawer-wrap'] -%}
+{%- set _wrapClasses = ['cremona-drawer-wrap'] -%}
 {%- if className -%}{%- set _wrapClasses = _wrapClasses | merge([className]) -%}{%- endif -%}
 
-{%- set _drawerClasses = ['theme-drawer'] -%}
+{%- set _drawerClasses = ['cremona-drawer'] -%}
 {%- if drawerClassName -%}{%- set _drawerClasses = _drawerClasses | merge([drawerClassName]) -%}{%- endif -%}
 
 {%- set _titleId = htmlId ~ '-title' -%}
@@ -75,28 +75,28 @@
     data-edge="{{ edge }}"
     aria-labelledby="{{ _titleId }}"
   >
-    <header class="theme-drawer__header{% if headerClass %} {{ headerClass }}{% endif %}">
-      <h2 id="{{ _titleId }}" class="theme-drawer__title">
+    <header class="cremona-drawer__header{% if headerClass %} {{ headerClass }}{% endif %}">
+      <h2 id="{{ _titleId }}" class="cremona-drawer__title">
         {%- block title -%}{%- endblock -%}
       </h2>
       {%- if closeButton and closeAriaLabel -%}
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           variant: 'ghost',
           size: 'sm',
           iconLeading: 'x',
           ariaLabel: closeAriaLabel,
-          className: 'theme-drawer__close',
+          className: 'cremona-drawer__close',
           attrs: { 'data-action': 'click->drawer#close' },
         } only %}
       {%- endif -%}
     </header>
 
-    <div class="theme-drawer__body{% if bodyClass %} {{ bodyClass }}{% endif %}">
+    <div class="cremona-drawer__body{% if bodyClass %} {{ bodyClass }}{% endif %}">
       {%- block body -%}{%- endblock -%}
     </div>
 
     {%- if block('footer') is defined and block('footer') is not empty -%}
-      <footer class="theme-drawer__footer{% if footerClass %} {{ footerClass }}{% endif %}">
+      <footer class="cremona-drawer__footer{% if footerClass %} {{ footerClass }}{% endif %}">
         {%- block footer -%}{%- endblock -%}
       </footer>
     {%- endif -%}

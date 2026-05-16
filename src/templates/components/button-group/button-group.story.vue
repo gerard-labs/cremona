@@ -41,17 +41,17 @@ setLocale('fr');
 
 function icon(name, size, modifier) {
   const sz = size === 'sm' ? 'sm' : 'md';
-  return `<span class="theme-icon theme-button__icon theme-button__icon--${modifier}" data-icon="${name}" data-size="${sz}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon cremona-button__icon cremona-button__icon--${modifier}" data-icon="${name}" data-size="${sz}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderButton(props = {}) {
   const { label, variant = 'primary', size = 'md', iconLeading, iconTrailing, ariaLabel, disabled } = props;
   const leadingHtml = iconLeading ? icon(iconLeading, size, 'leading') : '';
   const trailingHtml = iconTrailing ? icon(iconTrailing, size, 'trailing') : '';
-  const labelHtml = label ? `<span class="theme-button__label">${label}</span>` : '';
+  const labelHtml = label ? `<span class="cremona-button__label">${label}</span>` : '';
   const attrs = [
     `type="button"`,
-    `class="theme-button"`,
+    `class="cremona-button"`,
     `data-variant="${variant}"`,
     `data-size="${size}"`,
     disabled ? 'disabled' : '',
@@ -61,8 +61,8 @@ function renderButton(props = {}) {
 }
 
 function group({ label, orientation = 'horizontal', detached = false }, buttonsHtml) {
-  const classes = ['theme-button-group'];
-  if (detached) classes.push('theme-button-group--detached');
+  const classes = ['cremona-button-group'];
+  if (detached) classes.push('cremona-button-group--detached');
   return `<div class="${classes.join(' ')}" role="group" data-orientation="${orientation}" aria-label="${label}">${buttonsHtml}</div>`;
 }
 
@@ -104,8 +104,8 @@ const bodyHtml = `
     </header>
 
     <section class="bgroup-story__section" aria-labelledby="bg-section-default">
-      <h2 id="bg-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.default')}</h2>
-      <p class="bgroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button-group.story.explainer.default')}</p>
+      <h2 id="bg-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.default')}</h2>
+      <p class="bgroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button-group.story.explainer.default')}</p>
       <div class="bgroup-story__stack">
         ${row(
           group({ label: SAMPLES.groupConfirm },
@@ -118,7 +118,7 @@ const bodyHtml = `
     </section>
 
     <section class="bgroup-story__section" aria-labelledby="bg-section-variants">
-      <h2 id="bg-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.variants')}</h2>
+      <h2 id="bg-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.variants')}</h2>
       <div class="bgroup-story__stack">
         ${row(
           group({ label: SAMPLES.groupPaging },
@@ -140,7 +140,7 @@ const bodyHtml = `
     </section>
 
     <section class="bgroup-story__section" aria-labelledby="bg-section-sizes">
-      <h2 id="bg-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.sizes')}</h2>
+      <h2 id="bg-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.sizes')}</h2>
       <div class="bgroup-story__stack">
         ${row(
           group({ label: SAMPLES.groupSize },
@@ -167,8 +167,8 @@ const bodyHtml = `
     </section>
 
     <section class="bgroup-story__section" aria-labelledby="bg-section-vertical">
-      <h2 id="bg-section-vertical" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.vertical')}</h2>
-      <p class="bgroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button-group.story.explainer.vertical')}</p>
+      <h2 id="bg-section-vertical" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.vertical')}</h2>
+      <p class="bgroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button-group.story.explainer.vertical')}</p>
       <div class="bgroup-story__stack">
         ${row(
           group({ label: SAMPLES.groupSidebar, orientation: 'vertical' },
@@ -182,8 +182,8 @@ const bodyHtml = `
     </section>
 
     <section class="bgroup-story__section" aria-labelledby="bg-section-detached">
-      <h2 id="bg-section-detached" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.detached')}</h2>
-      <p class="bgroup-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button-group.story.explainer.detached')}</p>
+      <h2 id="bg-section-detached" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button-group.story.section.detached')}</h2>
+      <p class="bgroup-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button-group.story.explainer.detached')}</p>
       <div class="bgroup-story__stack">
         ${row(
           group({ label: SAMPLES.groupDialog, detached: true },

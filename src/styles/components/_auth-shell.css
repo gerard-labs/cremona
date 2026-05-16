@@ -7,7 +7,7 @@
  * Layout (default variant):
  *
  *   ┌─────────────────────────────────────────────┐
- *   │  <main class="theme-auth-shell">            │
+ *   │  <main class="cremona-auth-shell">            │
  *   │  ┌───────────────────────────────────────┐  │
  *   │  │  <section class="…__panel">           │  │
  *   │  │  ┌─────────────────────────────────┐  │  │
@@ -30,7 +30,7 @@
  * Input) keep their own 120 ms transitions per their primitive's CSS.
  */
 
-.theme-auth-shell {
+.cremona-auth-shell {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,9 +46,9 @@
 
 /* ----- split variant ------------------------------------------------- */
 
-.theme-auth-shell--split {
+.cremona-auth-shell--split {
   /* Mobile-first: same single-column centered layout (illustration hidden
-     via .theme-auth-shell__illustration `display: none` default). */
+     via .cremona-auth-shell__illustration `display: none` default). */
   flex-direction: column;
 }
 
@@ -57,14 +57,14 @@
      the panel (50 % / 50 % flex). Below 1024 px, the panel-only layout
      stays — illustration deliberately hidden to preserve form prominence
      on mobile. */
-  .theme-auth-shell--split {
+  .cremona-auth-shell--split {
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
     padding: 0;
   }
 
-  .theme-auth-shell--split .theme-auth-shell__illustration {
+  .cremona-auth-shell--split .cremona-auth-shell__illustration {
     display: flex;
     flex: 1 1 50%;
     align-items: center;
@@ -75,7 +75,7 @@
     color: var(--color-primary-soft-foreground);
   }
 
-  .theme-auth-shell--split .theme-auth-shell__panel {
+  .cremona-auth-shell--split .cremona-auth-shell__panel {
     flex: 1 1 50%;
     display: flex;
     flex-direction: column;
@@ -85,14 +85,14 @@
   }
 }
 
-.theme-auth-shell__illustration {
+.cremona-auth-shell__illustration {
   /* Default-variant: never shown. Split-variant + < 1024 px: also hidden. */
   display: none;
 }
 
 /* ----- panel + card -------------------------------------------------- */
 
-.theme-auth-shell__panel {
+.cremona-auth-shell__panel {
   inline-size: 100%;
   max-inline-size: 26rem; /* ~416 px — the standard auth-card width */
   display: flex;
@@ -100,7 +100,7 @@
   gap: var(--spacing-6);
 }
 
-.theme-auth-shell__brand {
+.cremona-auth-shell__brand {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,40 +108,40 @@
      with their logo / wordmark. */
 }
 
-.theme-auth-shell__card {
+.cremona-auth-shell__card {
   /* Compose Card's surface visuals; override its padding so Auth's
-     vertical rhythm (header + body + footer with .theme-card-divider)
+     vertical rhythm (header + body + footer with .cremona-card-divider)
      reads as a single editable block. */
   padding: var(--spacing-6);
   inline-size: 100%;
 }
 
 @media (width >= 30rem) {
-  .theme-auth-shell__card {
+  .cremona-auth-shell__card {
     padding: var(--spacing-8);
   }
 }
 
-.theme-auth-shell__card-header {
+.cremona-auth-shell__card-header {
   /* Compose Card's __header padding model; Auth-shell adds extra block-end
      gap so the title block breathes before the form fields. */
   padding: 0;
   margin-block-end: var(--spacing-5);
 }
 
-.theme-auth-shell__title {
+.cremona-auth-shell__title {
   font: var(--typography-h1);
   color: var(--color-text-primary);
   margin: 0;
 }
 
-.theme-auth-shell__subtitle {
+.cremona-auth-shell__subtitle {
   font: var(--typography-body-lg);
   color: var(--color-text-secondary);
   margin-block: var(--spacing-1_5) 0;
 }
 
-.theme-auth-shell__card-body {
+.cremona-auth-shell__card-body {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -151,7 +151,7 @@
      fields inside a <form> direct child of the body. */
 }
 
-.theme-auth-shell__card-footer {
+.cremona-auth-shell__card-footer {
   padding: 0;
   margin-block-start: var(--spacing-5);
   text-align: center;

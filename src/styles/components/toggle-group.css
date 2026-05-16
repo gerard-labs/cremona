@@ -10,19 +10,19 @@
  * vertical stacks on the block-axis. Logical CSS throughout.
  */
 
-.theme-toggle-group-wrap {
+.cremona-toggle-group-wrap {
   display: inline-grid;
   gap: var(--spacing-2);
   /* The wrap stays display: inline-grid so the label can sit above the group
      without forcing 100% width; consumer layouts can override with .w-full. */
 }
 
-.theme-toggle-group__label {
+.cremona-toggle-group__label {
   font: var(--typography-label);
   color: var(--color-text-primary);
 }
 
-.theme-toggle-group {
+.cremona-toggle-group {
   display: inline-flex;
   flex-direction: row;
   align-items: stretch;
@@ -33,14 +33,14 @@
   gap: var(--spacing-0_5);
 }
 
-.theme-toggle-group[data-orientation="vertical"] {
+.cremona-toggle-group[data-orientation="vertical"] {
   flex-direction: column;
 }
 
-/* Item — the inner Toggle inherits from `.theme-toggle` (no overrides) but
+/* Item — the inner Toggle inherits from `.cremona-toggle` (no overrides) but
    the group strips the per-item border + relaxes border-radius so adjacent
    items don't double-stroke. */
-.theme-toggle-group__item {
+.cremona-toggle-group__item {
   border-radius: var(--radius-sm);
   /* Slightly tighter inset so all items fit comfortably inside the group's
      own border + padding. */

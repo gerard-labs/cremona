@@ -48,49 +48,49 @@ function renderCommandPalette({ id, commands }) {
     grouped[c.group].push(c);
   });
   const groupHtml = Object.keys(grouped).map((group) => `
-    <li role="presentation" class="theme-command__group-header" aria-hidden="true">${group}</li>
+    <li role="presentation" class="cremona-command__group-header" aria-hidden="true">${group}</li>
     ${grouped[group].map((c, i) => `
-      <li id="${id}-opt-${c.id}" role="option" class="theme-command__option"
+      <li id="${id}-opt-${c.id}" role="option" class="cremona-command__option"
           data-combobox-target="option" data-value="${c.id}" aria-selected="false">
-        <span class="theme-item__label">${c.label}</span>
-        ${c.kbdHint ? `<kbd class="theme-command__option-kbd theme-kbd">${c.kbdHint}</kbd>` : ''}
+        <span class="cremona-item__label">${c.label}</span>
+        ${c.kbdHint ? `<kbd class="cremona-command__option-kbd cremona-kbd">${c.kbdHint}</kbd>` : ''}
       </li>
     `).join('')}
   `).join('');
   return `
-    <div class="theme-search-command-palette">
-      <div class="theme-command"
+    <div class="cremona-search-command-palette">
+      <div class="cremona-command"
            data-controller="dialog combobox command"
            data-command-hotkey-value="k">
-        <dialog class="theme-command__dialog theme-dialog"
+        <dialog class="cremona-command__dialog cremona-dialog"
                 data-dialog-target="dialog"
                 aria-labelledby="${id}-title">
-          <h2 id="${id}-title" class="theme-command__sr-only">${t('theme.search-command-palette.label')}</h2>
-          <div class="theme-command__input-wrap">
-            <svg class="theme-command__search-icon theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
+          <h2 id="${id}-title" class="cremona-command__sr-only">${t('theme.search-command-palette.label')}</h2>
+          <div class="cremona-command__input-wrap">
+            <svg class="cremona-command__search-icon cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
             <input type="text"
-                   class="theme-command__input theme-input"
+                   class="cremona-command__input cremona-input"
                    data-combobox-target="input"
                    data-action="input->combobox#filter keydown->combobox#keydown"
                    role="combobox"
                    aria-autocomplete="list" aria-expanded="true"
                    aria-haspopup="listbox" aria-controls="${id}-listbox"
                    placeholder="${t('theme.search-command-palette.placeholder')}" />
-            <kbd class="theme-command__esc-hint theme-kbd" aria-hidden="true">Esc</kbd>
+            <kbd class="cremona-command__esc-hint cremona-kbd" aria-hidden="true">Esc</kbd>
           </div>
-          <ul id="${id}-listbox" class="theme-command__listbox" role="listbox"
+          <ul id="${id}-listbox" class="cremona-command__listbox" role="listbox"
               data-combobox-target="optionsContainer">
             ${groupHtml}
           </ul>
-          <div class="theme-command__empty" data-combobox-target="empty" hidden role="status" aria-live="polite">
-            <strong class="theme-command__empty-title">${t('theme.command.empty.title')}</strong>
-            <span class="theme-command__empty-query">${t('theme.command.empty.query-prefix')} « <strong data-combobox-target="emptyQuery"></strong> »</span>
-            <span class="theme-command__empty-body">${t('theme.command.empty.body')}</span>
+          <div class="cremona-command__empty" data-combobox-target="empty" hidden role="status" aria-live="polite">
+            <strong class="cremona-command__empty-title">${t('theme.command.empty.title')}</strong>
+            <span class="cremona-command__empty-query">${t('theme.command.empty.query-prefix')} « <strong data-combobox-target="emptyQuery"></strong> »</span>
+            <span class="cremona-command__empty-body">${t('theme.command.empty.body')}</span>
           </div>
-          <footer class="theme-command__footer">
-            <span class="theme-command__footer-hint"><kbd class="theme-kbd">↑</kbd><kbd class="theme-kbd">↓</kbd><span>${t('theme.command.footer.navigate')}</span></span>
-            <span class="theme-command__footer-hint"><kbd class="theme-kbd">⏎</kbd><span>${t('theme.command.footer.execute')}</span></span>
-            <span class="theme-command__footer-hint"><kbd class="theme-kbd">Esc</kbd><span>${t('theme.command.footer.dismiss')}</span></span>
+          <footer class="cremona-command__footer">
+            <span class="cremona-command__footer-hint"><kbd class="cremona-kbd">↑</kbd><kbd class="cremona-kbd">↓</kbd><span>${t('theme.command.footer.navigate')}</span></span>
+            <span class="cremona-command__footer-hint"><kbd class="cremona-kbd">⏎</kbd><span>${t('theme.command.footer.execute')}</span></span>
+            <span class="cremona-command__footer-hint"><kbd class="cremona-kbd">Esc</kbd><span>${t('theme.command.footer.dismiss')}</span></span>
           </footer>
         </dialog>
       </div>
@@ -112,31 +112,31 @@ const bodyHtml = `
     </header>
 
     <section class="search-command-palette-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-command-palette.story.section.launcher')}</h2>
-      <p class="search-command-palette-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.explainer.launcher')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-command-palette.story.section.launcher')}</h2>
+      <p class="search-command-palette-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.explainer.launcher')}</p>
       <div class="search-command-palette-story__frame">
         <button type="button"
-                class="theme-button theme-search-command-palette__launcher"
+                class="cremona-button cremona-search-command-palette__launcher"
                 data-variant="ghost"
                 onclick="window.themeCommand && window.themeCommand.open()"
                 aria-label="${t('theme.search-command-palette.label')}">
-          <svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
+          <svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
           <span>${t('theme.search-command-palette.placeholder')}</span>
-          <kbd class="theme-kbd theme-search-command-palette__launcher-kbd">${t('theme.search-command-palette.launcher.kbd-hint')}</kbd>
+          <kbd class="cremona-kbd cremona-search-command-palette__launcher-kbd">${t('theme.search-command-palette.launcher.kbd-hint')}</kbd>
         </button>
       </div>
     </section>
 
     <section class="search-command-palette-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-command-palette.story.section.palette')}</h2>
-      <p class="search-command-palette-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.explainer.palette')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-command-palette.story.section.palette')}</h2>
+      <p class="search-command-palette-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.explainer.palette')}</p>
       <div class="search-command-palette-story__frame">${renderCommandPalette({ id: 'story-search-cmd', commands: sampleCommands })}</div>
-      <p class="search-command-palette-story__hint theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.hint.programmatic')}</p>
+      <p class="search-command-palette-story__hint cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.hint.programmatic')}</p>
     </section>
 
     <section class="search-command-palette-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-command-palette.story.section.events-log')}</h2>
-      <p class="search-command-palette-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.explainer.events-log')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-command-palette.story.section.events-log')}</h2>
+      <p class="search-command-palette-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-command-palette.story.explainer.events-log')}</p>
       <div id="search-command-events-log" class="search-command-palette-story__events-log" aria-live="polite"></div>
     </section>
 

@@ -26,8 +26,8 @@ function renderPasswordField({
   value = '',
   error = null,
 }) {
-  const fieldClasses = ['theme-field'];
-  if (error) fieldClasses.push('theme-field--invalid');
+  const fieldClasses = ['cremona-field'];
+  if (error) fieldClasses.push('cremona-field--invalid');
   const helpId = `${htmlId}-help`;
   const errorId = `${htmlId}-error`;
   const hintId = `${htmlId}-hint`;
@@ -35,12 +35,12 @@ function renderPasswordField({
 
   return `
     <div class="${fieldClasses.join(' ')}">
-      <label class="theme-label" data-size="sm" for="${htmlId}">
-        <span class="theme-label__text">${t('theme.auth.password-strength.input-label')}</span>
-        <span class="theme-label__required" aria-hidden="true">*</span>
+      <label class="cremona-label" data-size="sm" for="${htmlId}">
+        <span class="cremona-label__text">${t('theme.auth.password-strength.input-label')}</span>
+        <span class="cremona-label__required" aria-hidden="true">*</span>
       </label>
       <input
-        class="theme-input"
+        class="cremona-input"
         data-size="md"
         id="${htmlId}"
         type="password"
@@ -53,18 +53,18 @@ function renderPasswordField({
         ${error ? 'aria-invalid="true"' : ''}
         aria-describedby="${describedBy}"
       />
-      <p class="theme-field__help" id="${helpId}">${t('theme.auth.password-strength.help')}</p>
-      ${error ? `<p class="theme-field__error" id="${errorId}" role="alert" aria-live="polite">${error}</p>` : ''}
+      <p class="cremona-field__help" id="${helpId}">${t('theme.auth.password-strength.help')}</p>
+      ${error ? `<p class="cremona-field__error" id="${errorId}" role="alert" aria-live="polite">${error}</p>` : ''}
     </div>
   `;
 }
 
 function renderMeter({ variant = 'danger', value = 0, ariaLabel }) {
-  return `<progress class="theme-progress" data-size="sm" data-variant="${variant}" value="${value}" max="100" aria-label="${ariaLabel}"></progress>`;
+  return `<progress class="cremona-progress" data-size="sm" data-variant="${variant}" value="${value}" max="100" aria-label="${ariaLabel}"></progress>`;
 }
 
 function renderHint({ text, htmlId = 'story-pwd' }) {
-  return `<p class="theme-auth-password-strength__hint" id="${htmlId}-hint" aria-live="polite">${text}</p>`;
+  return `<p class="cremona-auth-password-strength__hint" id="${htmlId}-hint" aria-live="polite">${text}</p>`;
 }
 
 function renderPasswordStrength({
@@ -89,7 +89,7 @@ function renderPasswordStrength({
   };
 
   return `
-    <div class="theme-auth-password-strength" data-controller="password-strength" data-password-strength-min-score-value="2" data-password-strength-debounce-ms-value="150">
+    <div class="cremona-auth-password-strength" data-controller="password-strength" data-password-strength-min-score-value="2" data-password-strength-debounce-ms-value="150">
       ${renderPasswordField({ htmlId, value, error })}
       ${renderMeter({ variant: variantMap[tier], value: valueMap[tier], ariaLabel: t('theme.auth.password-strength.aria.meter') })}
       ${renderHint({ text: hintMap[tier], htmlId })}
@@ -105,32 +105,32 @@ const bodyHtml = `
     </header>
 
     <section class="auth-password-strength-story__section" aria-labelledby="auth-pwd-section-empty">
-      <h2 id="auth-pwd-section-empty" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.empty')}</h2>
-      <p class="auth-password-strength-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.empty')}</p>
+      <h2 id="auth-pwd-section-empty" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.empty')}</h2>
+      <p class="auth-password-strength-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.empty')}</p>
       <div class="auth-password-strength-story__frame">${renderPasswordStrength({ htmlId: 'story-pwd-empty', tier: 'empty' })}</div>
     </section>
 
     <section class="auth-password-strength-story__section" aria-labelledby="auth-pwd-section-weak">
-      <h2 id="auth-pwd-section-weak" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.weak')}</h2>
-      <p class="auth-password-strength-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.weak')}</p>
+      <h2 id="auth-pwd-section-weak" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.weak')}</h2>
+      <p class="auth-password-strength-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.weak')}</p>
       <div class="auth-password-strength-story__frame">${renderPasswordStrength({ htmlId: 'story-pwd-weak', value: 'Password1!', tier: '1' })}</div>
     </section>
 
     <section class="auth-password-strength-story__section" aria-labelledby="auth-pwd-section-medium">
-      <h2 id="auth-pwd-section-medium" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.medium')}</h2>
-      <p class="auth-password-strength-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.medium')}</p>
+      <h2 id="auth-pwd-section-medium" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.medium')}</h2>
+      <p class="auth-password-strength-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.medium')}</p>
       <div class="auth-password-strength-story__frame">${renderPasswordStrength({ htmlId: 'story-pwd-medium', value: 'Tr0ub4dor', tier: '2' })}</div>
     </section>
 
     <section class="auth-password-strength-story__section" aria-labelledby="auth-pwd-section-strong">
-      <h2 id="auth-pwd-section-strong" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.strong')}</h2>
-      <p class="auth-password-strength-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.strong')}</p>
+      <h2 id="auth-pwd-section-strong" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.strong')}</h2>
+      <p class="auth-password-strength-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.strong')}</p>
       <div class="auth-password-strength-story__frame">${renderPasswordStrength({ htmlId: 'story-pwd-strong', value: 'correct horse battery staple', tier: '4' })}</div>
     </section>
 
     <section class="auth-password-strength-story__section" aria-labelledby="auth-pwd-section-error">
-      <h2 id="auth-pwd-section-error" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.error')}</h2>
-      <p class="auth-password-strength-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.error')}</p>
+      <h2 id="auth-pwd-section-error" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.password-strength.story.section.error')}</h2>
+      <p class="auth-password-strength-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.password-strength.story.explainer.error')}</p>
       <div class="auth-password-strength-story__frame">${renderPasswordStrength({
         htmlId: 'story-pwd-error',
         value: 'AnyPass1!',

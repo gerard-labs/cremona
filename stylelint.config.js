@@ -66,7 +66,7 @@ export default {
     },
     {
       // Component CSS must reference tokens, never raw color values.
-      files: ['src/styles/{base,components,presets}/**/*.css', 'src/styles/theme.css'],
+      files: ['src/styles/{base,components,presets}/**/*.css', 'src/styles/cremona.css'],
       rules: {
         'color-no-hex': true,
       },

@@ -25,8 +25,8 @@ function renderProgress(props = {}) {
     variant = 'primary', size = 'md',
   } = props;
   const isIndeterminate = value == null;
-  const classes = ['theme-progress'];
-  if (isIndeterminate) classes.push('theme-progress--indeterminate');
+  const classes = ['cremona-progress'];
+  if (isIndeterminate) classes.push('cremona-progress--indeterminate');
 
   const wantsRow = label || (valueDisplay && !isIndeterminate);
 
@@ -37,12 +37,12 @@ function renderProgress(props = {}) {
   if (!wantsRow) return bar;
 
   const header = `
-    <div class="theme-progress-row__header">
-      ${label ? `<span class="theme-progress-row__label">${label}</span>` : ''}
-      ${valueDisplay && !isIndeterminate ? `<output class="theme-progress-row__value">${value}${valueSuffix}</output>` : ''}
+    <div class="cremona-progress-row__header">
+      ${label ? `<span class="cremona-progress-row__label">${label}</span>` : ''}
+      ${valueDisplay && !isIndeterminate ? `<output class="cremona-progress-row__value">${value}${valueSuffix}</output>` : ''}
     </div>`;
 
-  return `<div class="theme-progress-row" data-size="${size}" data-variant="${variant}">${header}${bar}</div>`;
+  return `<div class="cremona-progress-row" data-size="${size}" data-variant="${variant}">${header}${bar}</div>`;
 }
 
 function row(html, label) {
@@ -71,7 +71,7 @@ const bodyHtml = `
     </header>
 
     <section class="progress-story__section" aria-labelledby="prog-section-determinate">
-      <h2 id="prog-section-determinate" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.determinate')}</h2>
+      <h2 id="prog-section-determinate" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.determinate')}</h2>
       <div class="progress-story__stack">
         ${row(renderProgress({ value: 0, label: SAMPLES.uploadLabel }),    'value=0')}
         ${row(renderProgress({ value: 25, label: SAMPLES.uploadLabel }),   'value=25')}
@@ -82,8 +82,8 @@ const bodyHtml = `
     </section>
 
     <section class="progress-story__section" aria-labelledby="prog-section-value-display">
-      <h2 id="prog-section-value-display" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.value-display')}</h2>
-      <p class="progress-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.value-display')}</p>
+      <h2 id="prog-section-value-display" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.value-display')}</h2>
+      <p class="progress-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.value-display')}</p>
       <div class="progress-story__stack">
         ${row(renderProgress({ value: 42, label: SAMPLES.uploadLabel, valueDisplay: true, valueSuffix: ' %' }),                    'percent (default)')}
         ${row(renderProgress({ value: 128, max: 512, label: SAMPLES.syncLabel, valueDisplay: true, valueSuffix: ' MB / 512 MB' }), 'fraction (sync)')}
@@ -92,8 +92,8 @@ const bodyHtml = `
     </section>
 
     <section class="progress-story__section" aria-labelledby="prog-section-variants">
-      <h2 id="prog-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.variants')}</h2>
-      <p class="progress-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.variants')}</p>
+      <h2 id="prog-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.variants')}</h2>
+      <p class="progress-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.variants')}</p>
       <div class="progress-story__stack">
         ${row(renderProgress({ value: 60, variant: 'primary',   label: SAMPLES.diskUsage, valueDisplay: true, valueSuffix: ' %' }), 'primary')}
         ${row(renderProgress({ value: 60, variant: 'success',   label: SAMPLES.diskUsage, valueDisplay: true, valueSuffix: ' %' }), 'success')}
@@ -103,7 +103,7 @@ const bodyHtml = `
     </section>
 
     <section class="progress-story__section" aria-labelledby="prog-section-sizes">
-      <h2 id="prog-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.sizes')}</h2>
+      <h2 id="prog-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.sizes')}</h2>
       <div class="progress-story__stack">
         ${row(renderProgress({ value: 50, size: 'sm', label: SAMPLES.uploadLabel }), 'sm (4 px)')}
         ${row(renderProgress({ value: 50, size: 'md', label: SAMPLES.uploadLabel }), 'md (6 px — défaut)')}
@@ -112,8 +112,8 @@ const bodyHtml = `
     </section>
 
     <section class="progress-story__section" aria-labelledby="prog-section-indeterminate">
-      <h2 id="prog-section-indeterminate" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.indeterminate')}</h2>
-      <p class="progress-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.indeterminate')}</p>
+      <h2 id="prog-section-indeterminate" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.indeterminate')}</h2>
+      <p class="progress-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.indeterminate')}</p>
       <div class="progress-story__stack">
         ${row(renderProgress({ label: SAMPLES.loadingLabel }),                            'indeterminate primary')}
         ${row(renderProgress({ label: SAMPLES.loadingLabel, variant: 'success' }),        'indeterminate success')}
@@ -122,15 +122,15 @@ const bodyHtml = `
     </section>
 
     <section class="progress-story__section" aria-labelledby="prog-section-bare">
-      <h2 id="prog-section-bare" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.bare')}</h2>
-      <p class="progress-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.bare')}</p>
+      <h2 id="prog-section-bare" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.bare')}</h2>
+      <p class="progress-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.progress.story.explainer.bare')}</p>
       <div class="progress-story__stack">
         ${row(renderProgress({ value: 65, label: SAMPLES.uploadLabel }), 'bar nu avec aria-label')}
       </div>
     </section>
 
     <section class="progress-story__section" aria-labelledby="prog-section-long-label">
-      <h2 id="prog-section-long-label" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.long-label')}</h2>
+      <h2 id="prog-section-long-label" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.progress.story.section.long-label')}</h2>
       <div class="progress-story__stack">
         ${row(renderProgress({ value: 73, label: SAMPLES.longLabel, valueDisplay: true, valueSuffix: ' %' }), '+30 % FR expansion')}
       </div>

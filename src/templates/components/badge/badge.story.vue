@@ -23,7 +23,7 @@ const ICONS = Object.fromEntries(
 );
 
 function renderIcon({ name, size = 'xs', decorative = true, label }) {
-  const classes = ['theme-icon'];
+  const classes = ['cremona-icon'];
   const effDecorative = decorative || !label;
   const ariaAttrs = effDecorative
     ? 'aria-hidden="true" role="presentation"'
@@ -32,8 +32,8 @@ function renderIcon({ name, size = 'xs', decorative = true, label }) {
 }
 
 function renderBadge({ variant = 'default', size = 'md', label, leadingIcon, count, soft = false, dot = false, className }) {
-  const classes = ['theme-badge'];
-  if (dot) classes.push('theme-badge--dot');
+  const classes = ['cremona-badge'];
+  if (dot) classes.push('cremona-badge--dot');
   if (className) classes.push(className);
   const softAttr = soft ? ' data-soft="true"' : '';
   if (dot) {
@@ -75,28 +75,28 @@ const bodyHtml = `
     </header>
 
     <section class="badge-story__section" aria-labelledby="badge-section-solid">
-      <h2 id="badge-section-solid" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.solid')}</h2>
+      <h2 id="badge-section-solid" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.solid')}</h2>
       <div class="badge-story__row">
         ${VARIANTS.map((v) => renderBadge({ variant: v, label: VARIANT_LABELS[v] })).join('')}
       </div>
     </section>
 
     <section class="badge-story__section" aria-labelledby="badge-section-soft">
-      <h2 id="badge-section-soft" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.soft')}</h2>
+      <h2 id="badge-section-soft" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.soft')}</h2>
       <div class="badge-story__row">
         ${VARIANTS.map((v) => renderBadge({ variant: v, label: VARIANT_LABELS[v], soft: true })).join('')}
       </div>
     </section>
 
     <section class="badge-story__section" aria-labelledby="badge-section-icon">
-      <h2 id="badge-section-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.icon')}</h2>
+      <h2 id="badge-section-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.icon')}</h2>
       <div class="badge-story__row">
         ${VARIANTS.filter((v) => VARIANT_ICONS[v]).map((v) => renderBadge({ variant: v, label: VARIANT_LABELS[v], leadingIcon: VARIANT_ICONS[v] })).join('')}
       </div>
     </section>
 
     <section class="badge-story__section" aria-labelledby="badge-section-sizes">
-      <h2 id="badge-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.sizes')}</h2>
+      <h2 id="badge-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.sizes')}</h2>
       <div class="badge-story__row">
         ${renderBadge({ variant: 'primary', size: 'sm', label: VARIANT_LABELS.primary })}
         ${renderBadge({ variant: 'primary', size: 'md', label: VARIANT_LABELS.primary })}
@@ -106,8 +106,8 @@ const bodyHtml = `
     </section>
 
     <section class="badge-story__section" aria-labelledby="badge-section-count">
-      <h2 id="badge-section-count" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.count')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.badge.story.count-explainer')}</p>
+      <h2 id="badge-section-count" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.count')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.badge.story.count-explainer')}</p>
       <div class="badge-story__row">
         ${renderBadge({ variant: 'danger', size: 'sm', count: 1 })}
         ${renderBadge({ variant: 'danger', size: 'sm', count: 12 })}
@@ -117,31 +117,31 @@ const bodyHtml = `
     </section>
 
     <section class="badge-story__section" aria-labelledby="badge-section-dot">
-      <h2 id="badge-section-dot" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.dot')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.badge.story.dot-explainer')}</p>
+      <h2 id="badge-section-dot" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.dot')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.badge.story.dot-explainer')}</p>
       <div class="badge-story__row">
         <div class="badge-story__dot-cell">
           ${renderBadge({ dot: true, variant: 'success', label: t('theme.badge.story.status.online') })}
-          <span class="theme-typography" data-variant="caption">${t('theme.badge.story.status.online')}</span>
+          <span class="cremona-typography" data-variant="caption">${t('theme.badge.story.status.online')}</span>
         </div>
         <div class="badge-story__dot-cell">
           ${renderBadge({ dot: true, variant: 'warning', label: t('theme.badge.story.status.away') })}
-          <span class="theme-typography" data-variant="caption">${t('theme.badge.story.status.away')}</span>
+          <span class="cremona-typography" data-variant="caption">${t('theme.badge.story.status.away')}</span>
         </div>
         <div class="badge-story__dot-cell">
           ${renderBadge({ dot: true, variant: 'danger', label: t('theme.badge.story.status.busy') })}
-          <span class="theme-typography" data-variant="caption">${t('theme.badge.story.status.busy')}</span>
+          <span class="cremona-typography" data-variant="caption">${t('theme.badge.story.status.busy')}</span>
         </div>
         <div class="badge-story__dot-cell">
           ${renderBadge({ dot: true, variant: 'default', label: t('theme.badge.story.status.offline') })}
-          <span class="theme-typography" data-variant="caption">${t('theme.badge.story.status.offline')}</span>
+          <span class="cremona-typography" data-variant="caption">${t('theme.badge.story.status.offline')}</span>
         </div>
       </div>
     </section>
 
     <section class="badge-story__section" aria-labelledby="badge-section-inline">
-      <h2 id="badge-section-inline" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.inline')}</h2>
-      <p class="theme-typography" data-variant="body">
+      <h2 id="badge-section-inline" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.badge.story.section.inline')}</h2>
+      <p class="cremona-typography" data-variant="body">
         <span>${t('theme.badge.story.inline-before')}</span>
         ${renderBadge({ variant: 'primary', size: 'sm', label: VARIANT_LABELS.primary })}
         <span>${t('theme.badge.story.inline-middle')}</span>

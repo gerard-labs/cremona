@@ -10,8 +10,8 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderSpinner({ size = 'md', label, inverted = false, className }) {
-  const classes = ['theme-spinner'];
-  if (inverted) classes.push('theme-spinner--inverted');
+  const classes = ['cremona-spinner'];
+  if (inverted) classes.push('cremona-spinner--inverted');
   if (className) classes.push(className);
   const text = label ?? t('theme.common.states.loading');
   return `
@@ -19,7 +19,7 @@ function renderSpinner({ size = 'md', label, inverted = false, className }) {
       <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false">
         <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="25 75"></circle>
       </svg>
-      <span class="theme-sr-only">${text}</span>
+      <span class="cremona-sr-only">${text}</span>
     </span>
   `;
 }
@@ -34,7 +34,7 @@ const bodyHtml = `
     </header>
 
     <section class="spinner-story__section" aria-labelledby="spinner-section-sizes">
-      <h2 id="spinner-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.sizes')}</h2>
+      <h2 id="spinner-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.sizes')}</h2>
       <div class="spinner-story__row">
         ${SIZES.map((s) => `
           <div class="spinner-story__cell">
@@ -46,22 +46,22 @@ const bodyHtml = `
     </section>
 
     <section class="spinner-story__section" aria-labelledby="spinner-section-default">
-      <h2 id="spinner-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.default')}</h2>
+      <h2 id="spinner-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.default')}</h2>
       <div class="spinner-story__row">
         ${renderSpinner({ size: 'lg' })}
       </div>
     </section>
 
     <section class="spinner-story__section" aria-labelledby="spinner-section-inverted">
-      <h2 id="spinner-section-inverted" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.inverted')}</h2>
+      <h2 id="spinner-section-inverted" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.inverted')}</h2>
       <div class="spinner-story__primary-surface">
         ${renderSpinner({ size: 'lg', inverted: true })}
       </div>
     </section>
 
     <section class="spinner-story__section" aria-labelledby="spinner-section-inline">
-      <h2 id="spinner-section-inline" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.inline')}</h2>
-      <p class="theme-typography" data-variant="body">
+      <h2 id="spinner-section-inline" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.inline')}</h2>
+      <p class="cremona-typography" data-variant="body">
         ${renderSpinner({ size: 'sm', className: 'spinner-story__inline-spinner' })}
         <span>${t('theme.spinner.story.inline-text')}</span>
       </p>
@@ -72,8 +72,8 @@ const bodyHtml = `
     </section>
 
     <section class="spinner-story__section" aria-labelledby="spinner-section-custom">
-      <h2 id="spinner-section-custom" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.custom-label')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.spinner.story.custom-label-explainer')}</p>
+      <h2 id="spinner-section-custom" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.spinner.story.section.custom-label')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.spinner.story.custom-label-explainer')}</p>
       <div class="spinner-story__row">
         ${renderSpinner({ size: 'lg', label: t('theme.spinner.story.label.exporting') })}
       </div>

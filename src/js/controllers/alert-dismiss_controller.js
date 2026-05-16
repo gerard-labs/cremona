@@ -10,7 +10,7 @@ import { t } from '../utils/i18n.js';
  *   2. After the opacity transition ends, remove the Alert from the DOM,
  *      dispatch `alert:dismissed` (bubbles + composed) so external listeners
  *      can react, and announce the dismissal via the shared
- *      `#theme-announcer` live region.
+ *      `#cremona-announcer` live region.
  *
  * Why a 2-step dismiss instead of an instant remove:
  *   The CSS fade-out is the visual feedback that "the action registered".
@@ -26,7 +26,7 @@ import { t } from '../utils/i18n.js';
  *
  * Values:
  *   message (string) — i18n key resolved via t() and posted into
- *                      #theme-announcer at dismiss time. Defaults to
+ *                      #cremona-announcer at dismiss time. Defaults to
  *                      'theme.alert.aria.dismissed' if absent.
  */
 export default class AlertDismissController extends Controller {
@@ -51,7 +51,7 @@ export default class AlertDismissController extends Controller {
 
   announce() {
     const announcer = typeof document !== 'undefined'
-      ? document.getElementById('theme-announcer')
+      ? document.getElementById('cremona-announcer')
       : null;
     if (!announcer) return;
     announcer.textContent = t(this.messageValue);

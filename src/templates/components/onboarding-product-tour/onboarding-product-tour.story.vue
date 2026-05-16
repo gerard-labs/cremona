@@ -11,13 +11,13 @@ setLocale('fr');
 
 function renderProductTour({ id = 'story-product-tour', triggerLabel, steps, autoStart = false }) {
   return `
-    <div class="theme-onboarding-product-tour" id="${id}"
+    <div class="cremona-onboarding-product-tour" id="${id}"
          data-controller="product-tour"
          data-product-tour-steps-value='${JSON.stringify(steps)}'
          data-product-tour-auto-start-value="${autoStart}"
          data-product-tour-show-progress-value="true"
          data-product-tour-state="idle">
-      <button type="button" class="theme-button theme-button--primary"
+      <button type="button" class="cremona-button cremona-button--primary"
               data-product-tour-target="trigger"
               data-action="click->product-tour#start">${triggerLabel}</button>
     </div>
@@ -39,8 +39,8 @@ const bodyHtml = `
     </header>
 
     <section class="onboarding-product-tour-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.product-tour.story.section.trigger')}</h2>
-      <p class="onboarding-product-tour-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.onboarding.product-tour.story.explainer.trigger')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.product-tour.story.section.trigger')}</h2>
+      <p class="onboarding-product-tour-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.onboarding.product-tour.story.explainer.trigger')}</p>
       <div class="onboarding-product-tour-story__frame">
         <div class="onboarding-product-tour-story__anchors">
           <div id="story-anchor-1" class="onboarding-product-tour-story__anchor">A</div>
@@ -52,8 +52,8 @@ const bodyHtml = `
     </section>
 
     <section class="onboarding-product-tour-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.product-tour.story.section.events')}</h2>
-      <p class="onboarding-product-tour-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.onboarding.product-tour.story.explainer.events')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.onboarding.product-tour.story.section.events')}</h2>
+      <p class="onboarding-product-tour-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.onboarding.product-tour.story.explainer.events')}</p>
       <div class="onboarding-product-tour-story__frame">
         <p>${t('theme.onboarding.product-tour.story.events-list')}</p>
       </div>

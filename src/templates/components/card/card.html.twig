@@ -47,20 +47,20 @@
 {%- set footerClass = footerClass | default('') -%}
 {%- set htmlId      = htmlId      | default(null) -%}
 
-{%- set _classes = ['theme-card'] -%}
-{%- if variant == 'elevated' -%}{%- set _classes = _classes | merge(['theme-card--elevated']) -%}{%- endif -%}
-{%- if variant == 'subtle' -%}{%- set _classes = _classes | merge(['theme-card--subtle']) -%}{%- endif -%}
-{%- if hoverable -%}{%- set _classes = _classes | merge(['theme-card--hoverable']) -%}{%- endif -%}
+{%- set _classes = ['cremona-card'] -%}
+{%- if variant == 'elevated' -%}{%- set _classes = _classes | merge(['cremona-card--elevated']) -%}{%- endif -%}
+{%- if variant == 'subtle' -%}{%- set _classes = _classes | merge(['cremona-card--subtle']) -%}{%- endif -%}
+{%- if hoverable -%}{%- set _classes = _classes | merge(['cremona-card--hoverable']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <article class="{{ _classes | join(' ') }}" data-variant="{{ variant }}"{% if htmlId %} id="{{ htmlId }}"{% endif %}{% for _n, _v in attrs if _n not in ['class', 'id'] %} {{ _n }}="{{ _v }}"{% endfor %}>
   {%- if block('header') is defined and block('header') is not empty -%}
-    <header class="theme-card__header{% if headerClass %} {{ headerClass }}{% endif %}">{%- block header -%}{%- endblock -%}</header>
+    <header class="cremona-card__header{% if headerClass %} {{ headerClass }}{% endif %}">{%- block header -%}{%- endblock -%}</header>
   {%- endif -%}
   {%- if block('body') is defined and block('body') is not empty -%}
-    <div class="theme-card__body{% if bodyClass %} {{ bodyClass }}{% endif %}">{%- block body -%}{%- endblock -%}</div>
+    <div class="cremona-card__body{% if bodyClass %} {{ bodyClass }}{% endif %}">{%- block body -%}{%- endblock -%}</div>
   {%- endif -%}
   {%- if block('footer') is defined and block('footer') is not empty -%}
-    <footer class="theme-card__footer{% if footerClass %} {{ footerClass }}{% endif %}">{%- block footer -%}{%- endblock -%}</footer>
+    <footer class="cremona-card__footer{% if footerClass %} {{ footerClass }}{% endif %}">{%- block footer -%}{%- endblock -%}</footer>
   {%- endif -%}
 </article>

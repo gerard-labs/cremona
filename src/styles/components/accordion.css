@@ -12,7 +12,7 @@
  * orchestration. The CSS does not depend on which child is open.
  */
 
-.theme-accordion {
+.cremona-accordion {
   display: flex;
   flex-direction: column;
   border-radius: var(--radius-md);
@@ -23,24 +23,24 @@
 }
 
 /* Inner Collapsibles drop their own outer envelope to merge into the group. */
-.theme-accordion .theme-collapsible {
+.cremona-accordion .cremona-collapsible {
   border: 0;
   border-radius: 0;
 }
 
 /* Re-add the divider between adjacent items so they don't visually merge
    on hover (where one bg-sunken would touch the next). */
-.theme-accordion .theme-collapsible + .theme-collapsible {
+.cremona-accordion .cremona-collapsible + .cremona-collapsible {
   border-block-start: 1px solid var(--color-border-subtle);
 }
 
 /* First item rounds the top corners; last item rounds the bottom. */
-.theme-accordion .theme-collapsible:first-child {
+.cremona-accordion .cremona-collapsible:first-child {
   border-start-start-radius: var(--radius-md);
   border-start-end-radius: var(--radius-md);
 }
 
-.theme-accordion .theme-collapsible:last-child {
+.cremona-accordion .cremona-collapsible:last-child {
   border-end-start-radius: var(--radius-md);
   border-end-end-radius: var(--radius-md);
 }

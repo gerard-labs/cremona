@@ -12,21 +12,21 @@
     showProgress  (bool, optional)    — default true
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-onboarding-product-tour-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-onboarding-product-tour-' ~ random()) -%}
 {%- set autoStart    = autoStart    | default(false) -%}
 {%- set showProgress = showProgress | default(true) -%}
 
-<div class="theme-onboarding-product-tour"
+<div class="cremona-onboarding-product-tour"
      id="{{ htmlId }}"
      data-controller="product-tour"
      data-product-tour-steps-value="{{ steps|json_encode }}"
      data-product-tour-auto-start-value="{{ autoStart ? 'true' : 'false' }}"
      data-product-tour-show-progress-value="{{ showProgress ? 'true' : 'false' }}"
      data-product-tour-state="idle">
-  {% include '@theme/components/button/button.html.twig' with {
+  {% include '@cremona/components/button/button.html.twig' with {
     label: triggerLabel,
     variant: 'primary',
-    className: 'theme-onboarding-product-tour__trigger',
+    className: 'cremona-onboarding-product-tour__trigger',
     attrs: {
       'data-product-tour-target': 'trigger',
       'data-action': 'click->product-tour#start',

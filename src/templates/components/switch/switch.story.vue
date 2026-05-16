@@ -25,10 +25,10 @@ function renderSwitch(props = {}) {
     required, disabled, invalid, describedBy, ariaLabel, className,
   } = props;
 
-  const rootClass = label ? 'theme-switch-row' : 'theme-switch-wrap';
+  const rootClass = label ? 'cremona-switch-row' : 'cremona-switch-wrap';
   const stateClasses = [];
-  if (disabled) stateClasses.push('theme-switch-row--disabled');
-  if (invalid) stateClasses.push('theme-switch-row--invalid');
+  if (disabled) stateClasses.push('cremona-switch-row--disabled');
+  if (invalid) stateClasses.push('cremona-switch-row--invalid');
   if (className) stateClasses.push(className);
   const rootClasses = [rootClass, ...stateClasses].join(' ');
   const tag = label ? 'label' : 'span';
@@ -36,7 +36,7 @@ function renderSwitch(props = {}) {
   const inputAttrs = [
     `type="checkbox"`,
     `role="switch"`,
-    `class="theme-switch__input"`,
+    `class="cremona-switch__input"`,
     htmlId ? `id="${htmlId}"` : '',
     name ? `name="${name}"` : '',
     value != null ? `value="${value}"` : '',
@@ -49,10 +49,10 @@ function renderSwitch(props = {}) {
   ].filter(Boolean).join(' ');
 
   const knob = `
-    <span class="theme-switch" data-size="${size}">
+    <span class="cremona-switch" data-size="${size}">
       <input ${inputAttrs}>
-      <span class="theme-switch__track" aria-hidden="true">
-        <span class="theme-switch__thumb"></span>
+      <span class="cremona-switch__track" aria-hidden="true">
+        <span class="cremona-switch__thumb"></span>
       </span>
     </span>`;
 
@@ -61,10 +61,10 @@ function renderSwitch(props = {}) {
   }
 
   const labelInner = `
-    <span class="theme-switch-row__text">
-      <span class="theme-switch-row__label">${label}</span>
-      ${required ? '<span class="theme-switch-row__required" aria-hidden="true">*</span>' : ''}
-      ${description ? `<span class="theme-switch-row__description">${description}</span>` : ''}
+    <span class="cremona-switch-row__text">
+      <span class="cremona-switch-row__label">${label}</span>
+      ${required ? '<span class="cremona-switch-row__required" aria-hidden="true">*</span>' : ''}
+      ${description ? `<span class="cremona-switch-row__description">${description}</span>` : ''}
     </span>`;
 
   return `<${tag} class="${rootClasses}" data-size="${size}"${disabled ? ' data-state="disabled"' : ''}>${knob}${labelInner}</${tag}>`;
@@ -106,7 +106,7 @@ const bodyHtml = `
     </header>
 
     <section class="switch-story__section" aria-labelledby="switch-section-default">
-      <h2 id="switch-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.default')}</h2>
+      <h2 id="switch-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.default')}</h2>
       <div class="switch-story__stack">
         ${row(renderSwitch({ htmlId: 'demo-default-notif', label: SAMPLES.notifications, checked: true }), 'on')}
         ${row(renderSwitch({ htmlId: 'demo-default-dark',  label: SAMPLES.darkMode }),                     'off')}
@@ -114,7 +114,7 @@ const bodyHtml = `
     </section>
 
     <section class="switch-story__section" aria-labelledby="switch-section-states">
-      <h2 id="switch-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.states')}</h2>
+      <h2 id="switch-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.states')}</h2>
       <div class="switch-story__stack">
         ${row(renderSwitch({ htmlId: 'demo-state-off',      label: SAMPLES.darkMode }),                              'off')}
         ${row(renderSwitch({ htmlId: 'demo-state-on',       label: SAMPLES.darkMode, checked: true }),               'on')}
@@ -123,11 +123,11 @@ const bodyHtml = `
         ${row(renderSwitch({ htmlId: 'demo-state-required', label: SAMPLES.twoFactor, required: true }),              'required')}
         ${row(renderSwitch({ htmlId: 'demo-state-invalid',  label: SAMPLES.twoFactor, required: true, invalid: true, describedBy: 'demo-state-invalid-error' }), 'invalid + required')}
       </div>
-      <p class="switch-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.switch.story.explainer.invalid')}</p>
+      <p class="switch-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.switch.story.explainer.invalid')}</p>
     </section>
 
     <section class="switch-story__section" aria-labelledby="switch-section-sizes">
-      <h2 id="switch-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.sizes')}</h2>
+      <h2 id="switch-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.sizes')}</h2>
       <div class="switch-story__stack">
         ${row(renderSwitch({ htmlId: 'demo-size-sm-off', label: SAMPLES.notifications, size: 'sm' }),                'sm (32 × 18 track, 14 px thumb)')}
         ${row(renderSwitch({ htmlId: 'demo-size-sm-on',  label: SAMPLES.notifications, size: 'sm', checked: true }), 'sm on')}
@@ -137,8 +137,8 @@ const bodyHtml = `
     </section>
 
     <section class="switch-story__section" aria-labelledby="switch-section-row-vs-bare">
-      <h2 id="switch-section-row-vs-bare" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.row-vs-bare')}</h2>
-      <p class="switch-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.switch.story.explainer.bare')}</p>
+      <h2 id="switch-section-row-vs-bare" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.row-vs-bare')}</h2>
+      <p class="switch-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.switch.story.explainer.bare')}</p>
       <div class="switch-story__stack">
         ${row(renderSwitch({ htmlId: 'demo-row',  label: SAMPLES.publicProfile, checked: true }), 'row mode (label inline)')}
         ${row(renderSwitch({ htmlId: 'demo-bare', ariaLabel: ARIA.syncEnabled }),                  'bare (aria-label only)')}
@@ -147,7 +147,7 @@ const bodyHtml = `
     </section>
 
     <section class="switch-story__section" aria-labelledby="switch-section-description">
-      <h2 id="switch-section-description" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.description')}</h2>
+      <h2 id="switch-section-description" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.description')}</h2>
       <div class="switch-story__stack">
         ${row(renderSwitch({ htmlId: 'demo-desc-notif', label: SAMPLES.notifications, description: DESCS.notifications, checked: true }), 'notifications (on)')}
         ${row(renderSwitch({ htmlId: 'demo-desc-beta',  label: SAMPLES.betaFeatures,  description: DESCS.betaFeatures }),                  'beta (off)')}
@@ -156,21 +156,21 @@ const bodyHtml = `
     </section>
 
     <section class="switch-story__section" aria-labelledby="switch-section-long-label">
-      <h2 id="switch-section-long-label" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.long-label')}</h2>
+      <h2 id="switch-section-long-label" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.long-label')}</h2>
       <div class="switch-story__stack">
         ${row(renderSwitch({ htmlId: 'demo-long', label: SAMPLES.longLabel, checked: true }), '+30 % FR expansion')}
       </div>
     </section>
 
     <section class="switch-story__section" aria-labelledby="switch-section-in-field">
-      <h2 id="switch-section-in-field" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.in-field')}</h2>
+      <h2 id="switch-section-in-field" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.switch.story.section.in-field')}</h2>
       <div class="switch-story__stack">
-        <div class="theme-field">
-          <label class="theme-label" data-size="sm" for="demo-field-marketing">
-            <span class="theme-label__text">${t('theme.switch.field.label.marketing')}</span>
+        <div class="cremona-field">
+          <label class="cremona-label" data-size="sm" for="demo-field-marketing">
+            <span class="cremona-label__text">${t('theme.switch.field.label.marketing')}</span>
           </label>
           ${renderSwitch({ htmlId: 'demo-field-marketing', ariaLabel: t('theme.switch.field.label.marketing'), describedBy: 'demo-field-marketing-help' })}
-          <p id="demo-field-marketing-help" class="theme-field__help">${t('theme.switch.field.help.marketing')}</p>
+          <p id="demo-field-marketing-help" class="cremona-field__help">${t('theme.switch.field.help.marketing')}</p>
         </div>
       </div>
     </section>

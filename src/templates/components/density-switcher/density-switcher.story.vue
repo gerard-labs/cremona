@@ -17,17 +17,17 @@ function renderDensitySwitcher({ id, currentDensity = 'comfortable', target = 's
   ];
   const toggles = opts.map((o) => `
     <button type="button"
-            class="theme-toggle theme-toggle-group__item theme-density-switcher__item"
+            class="cremona-toggle cremona-toggle-group__item cremona-density-switcher__item"
             data-size="md" data-variant="default"
             data-density="${o.density}"
             aria-pressed="${o.density === currentDensity ? 'true' : 'false'}"
             aria-label="${o.label}">
-      <span class="theme-toggle__label">${o.label}</span>
+      <span class="cremona-toggle__label">${o.label}</span>
     </button>`).join('');
   return `
-    <div class="theme-toggle-group-wrap theme-density-switcher" data-orientation="horizontal">
-      <span id="${id}-label" class="theme-toggle-group__label">${t('theme.density-switcher.label.group')}</span>
-      <div class="theme-toggle-group theme-density-switcher__group"
+    <div class="cremona-toggle-group-wrap cremona-density-switcher" data-orientation="horizontal">
+      <span id="${id}-label" class="cremona-toggle-group__label">${t('theme.density-switcher.label.group')}</span>
+      <div class="cremona-toggle-group cremona-density-switcher__group"
            role="group" aria-labelledby="${id}-label"
            data-density-switcher-current-density-value="${currentDensity}"
            data-density-switcher-storage-key-value="theme.density"
@@ -46,20 +46,20 @@ const bodyHtml = `
     </header>
 
     <section class="density-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.density-switcher.story.section.default')}</h2>
-      <p class="density-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.density-switcher.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.density-switcher.story.section.default')}</h2>
+      <p class="density-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.density-switcher.story.explainer.default')}</p>
       <div class="density-switcher-story__frame">${renderDensitySwitcher({ id: 'story-default', currentDensity: 'comfortable' })}</div>
     </section>
 
     <section class="density-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.density-switcher.story.section.cozy')}</h2>
-      <p class="density-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.density-switcher.story.explainer.cozy')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.density-switcher.story.section.cozy')}</h2>
+      <p class="density-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.density-switcher.story.explainer.cozy')}</p>
       <div class="density-switcher-story__frame">${renderDensitySwitcher({ id: 'story-cozy', currentDensity: 'cozy' })}</div>
     </section>
 
     <section class="density-switcher-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.density-switcher.story.section.compact')}</h2>
-      <p class="density-switcher-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.density-switcher.story.explainer.compact')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.density-switcher.story.section.compact')}</h2>
+      <p class="density-switcher-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.density-switcher.story.explainer.compact')}</p>
       <div class="density-switcher-story__frame">${renderDensitySwitcher({ id: 'story-compact', currentDensity: 'compact' })}</div>
     </section>
   </section>

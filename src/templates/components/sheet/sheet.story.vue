@@ -57,20 +57,20 @@ let _shCounter = 0;
 function nextId() { return `sh-${++_shCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function triggerButton(label, opts = {}) {
   const { variant = 'primary', size = 'md', iconLeading = null } = opts;
-  const leadingHtml = iconLeading ? `<span class="theme-button__icon theme-button__icon--leading">${icon(iconLeading)}</span>` : '';
-  return `<button type="button" class="theme-button" data-variant="${variant}" data-size="${size}"
+  const leadingHtml = iconLeading ? `<span class="cremona-button__icon cremona-button__icon--leading">${icon(iconLeading)}</span>` : '';
+  return `<button type="button" class="cremona-button" data-variant="${variant}" data-size="${size}"
     data-action="click->sheet#open">
-    ${leadingHtml}<span class="theme-button__label">${label}</span>
+    ${leadingHtml}<span class="cremona-button__label">${label}</span>
   </button>`;
 }
 
 function closeXButton(ariaLabel) {
-  return `<button type="button" class="theme-button theme-sheet__close" data-variant="ghost" data-size="sm"
+  return `<button type="button" class="cremona-button cremona-sheet__close" data-variant="ghost" data-size="sm"
     aria-label="${ariaLabel}" data-action="click->sheet#close">${icon('x')}</button>`;
 }
 
@@ -88,24 +88,24 @@ function renderSheet({
   const id = nextId();
   const titleId = `${id}-title`;
   return `
-    <div class="theme-sheet-wrap"
+    <div class="cremona-sheet-wrap"
       data-controller="sheet"
       data-sheet-open-value="false"
       data-sheet-edge-value="${edge}"
       data-sheet-close-on-escape-value="${closeOnEscape}"
       data-sheet-close-on-backdrop-click-value="${closeOnBackdropClick}">
       ${trigger}
-      <dialog id="${id}" class="theme-sheet"
+      <dialog id="${id}" class="cremona-sheet"
         data-sheet-target="dialog"
         data-edge="${edge}"
         aria-labelledby="${titleId}">
-        ${showHandle ? '<span class="theme-sheet__handle" aria-hidden="true"></span>' : ''}
-        <header class="theme-sheet__header">
-          <h2 id="${titleId}" class="theme-sheet__title">${title}</h2>
+        ${showHandle ? '<span class="cremona-sheet__handle" aria-hidden="true"></span>' : ''}
+        <header class="cremona-sheet__header">
+          <h2 id="${titleId}" class="cremona-sheet__title">${title}</h2>
           ${showCloseButton ? closeXButton(S.ariaClose) : ''}
         </header>
-        <div class="theme-sheet__body">${body}</div>
-        ${footer ? `<footer class="theme-sheet__footer">${footer}</footer>` : ''}
+        <div class="cremona-sheet__body">${body}</div>
+        ${footer ? `<footer class="cremona-sheet__footer">${footer}</footer>` : ''}
       </dialog>
     </div>
   `;
@@ -159,8 +159,8 @@ const bodyHtml = `
     </header>
 
     <section class="sheet-story__section" aria-labelledby="sh-section-default">
-      <h2 id="sh-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.default')}</h2>
-      <p class="sheet-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.default')}</p>
+      <h2 id="sh-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.default')}</h2>
+      <p class="sheet-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.default')}</p>
       <div class="sheet-story__row">
         ${renderSheet({
           edge: 'end',
@@ -168,70 +168,70 @@ const bodyHtml = `
           title: S.defTitle,
           body: `<p>${S.defBody}</p>`,
           footer: `
-            <button type="button" class="theme-button" data-variant="secondary" data-action="click->sheet#close"><span class="theme-button__label">${S.defCancel}</span></button>
-            <button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.defConfirm}</span></button>
+            <button type="button" class="cremona-button" data-variant="secondary" data-action="click->sheet#close"><span class="cremona-button__label">${S.defCancel}</span></button>
+            <button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.defConfirm}</span></button>
           `,
         })}
       </div>
     </section>
 
     <section class="sheet-story__section" aria-labelledby="sh-section-edges">
-      <h2 id="sh-section-edges" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.edges')}</h2>
-      <p class="sheet-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.edges')}</p>
+      <h2 id="sh-section-edges" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.edges')}</h2>
+      <p class="sheet-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.edges')}</p>
       <div class="sheet-story__row">
         ${renderSheet({
           edge: 'start',
           trigger: triggerButton(S.edgeTrigStart, { variant: 'secondary' }),
           title: S.edgeTitleStart,
           body: `<p>${S.edgeBody}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
         ${renderSheet({
           edge: 'end',
           trigger: triggerButton(S.edgeTrigEnd, { variant: 'secondary' }),
           title: S.edgeTitleEnd,
           body: `<p>${S.edgeBody}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
         ${renderSheet({
           edge: 'top',
           trigger: triggerButton(S.edgeTrigTop, { variant: 'secondary' }),
           title: S.edgeTitleTop,
           body: `<p>${S.edgeBody}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
         ${renderSheet({
           edge: 'bottom',
           trigger: triggerButton(S.edgeTrigBottom, { variant: 'secondary' }),
           title: S.edgeTitleBottom,
           body: `<p>${S.edgeBody}</p>`,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.edgeClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.edgeClose}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="sheet-story__section" aria-labelledby="sh-section-form">
-      <h2 id="sh-section-form" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.with-form')}</h2>
-      <p class="sheet-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.with-form')}</p>
+      <h2 id="sh-section-form" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.with-form')}</h2>
+      <p class="sheet-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.with-form')}</p>
       <div class="sheet-story__row">
         ${renderSheet({
           edge: 'bottom',
           trigger: triggerButton(S.formTrig, { iconLeading: 'menu' }),
           title: S.formTitle,
           body: `
-            <div class="theme-item" data-as="button"><div class="theme-item__leading">${icon('edit-3')}</div><div class="theme-item__text"><span class="theme-item__label">${S.formActionShare}</span></div></div>
-            <div class="theme-item" data-as="button"><div class="theme-item__leading">${icon('edit-3')}</div><div class="theme-item__text"><span class="theme-item__label">${S.formActionArchive}</span></div></div>
-            <div class="theme-item" data-as="button"><div class="theme-item__leading">${icon('edit-3')}</div><div class="theme-item__text"><span class="theme-item__label">${S.formActionDuplicate}</span></div></div>
-            <div class="theme-item" data-as="button"><div class="theme-item__leading">${icon('trash-2')}</div><div class="theme-item__text"><span class="theme-item__label">${S.formActionDelete}</span></div></div>
+            <div class="cremona-item" data-as="button"><div class="cremona-item__leading">${icon('edit-3')}</div><div class="cremona-item__text"><span class="cremona-item__label">${S.formActionShare}</span></div></div>
+            <div class="cremona-item" data-as="button"><div class="cremona-item__leading">${icon('edit-3')}</div><div class="cremona-item__text"><span class="cremona-item__label">${S.formActionArchive}</span></div></div>
+            <div class="cremona-item" data-as="button"><div class="cremona-item__leading">${icon('edit-3')}</div><div class="cremona-item__text"><span class="cremona-item__label">${S.formActionDuplicate}</span></div></div>
+            <div class="cremona-item" data-as="button"><div class="cremona-item__leading">${icon('trash-2')}</div><div class="cremona-item__text"><span class="cremona-item__label">${S.formActionDelete}</span></div></div>
           `,
-          footer: `<button type="button" class="theme-button" data-variant="secondary" data-action="click->sheet#close"><span class="theme-button__label">${S.formCancel}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="secondary" data-action="click->sheet#close"><span class="cremona-button__label">${S.formCancel}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="sheet-story__section" aria-labelledby="sh-section-long">
-      <h2 id="sh-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.long-content')}</h2>
-      <p class="sheet-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.long-content')}</p>
+      <h2 id="sh-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.long-content')}</h2>
+      <p class="sheet-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.long-content')}</p>
       <div class="sheet-story__row">
         ${renderSheet({
           edge: 'end',
@@ -244,14 +244,14 @@ const bodyHtml = `
             <p>${S.longBodyP4}</p>
             <p>${S.longBodyP5}</p>
           `,
-          footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.longClose}</span></button>`,
+          footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.longClose}</span></button>`,
         })}
       </div>
     </section>
 
     <section class="sheet-story__section" aria-labelledby="sh-section-events">
-      <h2 id="sh-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.events')}</h2>
-      <p class="sheet-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.events')}</p>
+      <h2 id="sh-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.sheet.story.section.events')}</h2>
+      <p class="sheet-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.sheet.story.explainer.events')}</p>
       <div class="sheet-story__events">
         <div class="sheet-story__events-trigger-row">
           ${renderSheet({
@@ -259,11 +259,11 @@ const bodyHtml = `
             trigger: triggerButton(S.eventsTrig, { iconLeading: 'bell' }),
             title: S.eventsTitle,
             body: `<p>${S.eventsBody}</p>`,
-            footer: `<button type="button" class="theme-button" data-variant="primary" data-action="click->sheet#close"><span class="theme-button__label">${S.eventsClose}</span></button>`,
+            footer: `<button type="button" class="cremona-button" data-variant="primary" data-action="click->sheet#close"><span class="cremona-button__label">${S.eventsClose}</span></button>`,
           })}
         </div>
         <div class="sheet-story__events-log">
-          <span class="theme-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
+          <span class="cremona-typography" data-variant="caption" data-color="tertiary">${S.eventsLogLabel}</span>
           <pre class="sheet-story__events-log-output" data-sheet-events-log data-empty="1">${S.eventsLogEmpty}</pre>
         </div>
       </div>

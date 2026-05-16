@@ -66,7 +66,7 @@ onMounted(() => {
         bodyEl.textContent = t('theme.data-table.bulk-destructive.body', { count });
       }
       // Open the dialog programmatically — find its controller and call open().
-      const dlgWrap = dialog.closest('.theme-dialog-wrap');
+      const dlgWrap = dialog.closest('.cremona-dialog-wrap');
       if (!dlgWrap) return;
       const app = document.documentElement.__themeApp;
       const dialogCtrl = app && app.getControllerForElementAndIdentifier(dlgWrap, 'dialog');
@@ -119,17 +119,17 @@ function checkbox({ id, ariaLabel, checked = false, indeterminate = false, rowId
     dataset.push(`data-action="change->data-table#toggleSelectAll"`);
   }
   if (indeterminate) dataset.push(`data-indeterminate="true"`);
-  return `<span class="theme-checkbox-wrap" data-size="${sizeAttr}">
-    <span class="theme-checkbox" data-size="${sizeAttr}">
+  return `<span class="cremona-checkbox-wrap" data-size="${sizeAttr}">
+    <span class="cremona-checkbox" data-size="${sizeAttr}">
       <input
         type="checkbox"
         id="${id}"
-        class="theme-checkbox__input"
+        class="cremona-checkbox__input"
         ${dataset.join(' ')}
         aria-label="${ariaLabel}"${checked ? ' checked' : ''}>
-      <span class="theme-checkbox__box" aria-hidden="true">
-        <svg class="theme-checkbox__glyph theme-checkbox__glyph--check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 8 7 12 13 4"></polyline></svg>
-        <svg class="theme-checkbox__glyph theme-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="8" x2="13" y2="8"></line></svg>
+      <span class="cremona-checkbox__box" aria-hidden="true">
+        <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 8 7 12 13 4"></polyline></svg>
+        <svg class="cremona-checkbox__glyph cremona-checkbox__glyph--dash" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="8" x2="13" y2="8"></line></svg>
       </span>
     </span>
   </span>`;
@@ -142,12 +142,12 @@ function sortableHeader({ column, label, sortDir = 'none' }) {
     data-sortable="true"
     aria-sort="${sortDir}"
   >
-    <button type="button" class="theme-table__sort"
+    <button type="button" class="cremona-table__sort"
       data-data-table-column="${column}"
       data-sort-dir="${sortDir}"
     >
-      <span class="theme-table__sort-label">${label}</span>
-      <span class="theme-table__sort-icon" aria-hidden="true"></span>
+      <span class="cremona-table__sort-label">${label}</span>
+      <span class="cremona-table__sort-icon" aria-hidden="true"></span>
     </button>
   </th>`;
 }
@@ -168,7 +168,7 @@ function plainHeader({ column, label, numeric = false }) {
 function filterHeader({ column, value = '', placeholder = '' }) {
   if (!column) return `<th></th>`;
   return `<th data-data-table-column-cell="${column}">
-    <input type="text" class="theme-input theme-data-table__filter-input"
+    <input type="text" class="cremona-input cremona-data-table__filter-input"
       data-size="sm"
       data-data-table-filter-column="${column}"
       data-action="input->data-table#filter"
@@ -185,7 +185,7 @@ function bodyRow({ rowId, cells, selected = false, selectable = true }) {
     trAttrs.push('aria-selected="true"');
   }
   const selectCell = selectable
-    ? `<td class="theme-data-table__select-cell">${checkbox({
+    ? `<td class="cremona-data-table__select-cell">${checkbox({
         id: `cb-${rowId}`,
         ariaLabel: `${S('aria.select-row')} ${rowId}`,
         checked: selected,
@@ -209,9 +209,9 @@ function nativeSelect({ htmlId, value, options, size = 'sm' }) {
     const sel = String(o.value) === String(value) ? ' selected' : '';
     return `<option value="${o.value}"${sel}>${o.label}</option>`;
   }).join('');
-  return `<div class="theme-native-select-wrap" data-size="${size}">
-    <select class="theme-native-select" data-size="${size}" id="${htmlId}">${optsHtml}</select>
-    <span class="theme-icon theme-native-select__chevron" data-size="sm" aria-hidden="true">${chevronDownSvg}</span>
+  return `<div class="cremona-native-select-wrap" data-size="${size}">
+    <select class="cremona-native-select" data-size="${size}" id="${htmlId}">${optsHtml}</select>
+    <span class="cremona-icon cremona-native-select__chevron" data-size="sm" aria-hidden="true">${chevronDownSvg}</span>
   </div>`;
 }
 
@@ -220,7 +220,7 @@ function pagination({ id, page = 1, pageSize = 25, totalItems = 142, pageSizes =
   const selectOptions = pageSizes.map((s) => ({ value: String(s), label: String(s) }));
   return `<nav
     id="${navId}"
-    class="theme-pagination"
+    class="cremona-pagination"
     role="navigation"
     aria-label="${S('aria.pagination')}"
     data-controller="pagination"
@@ -229,16 +229,16 @@ function pagination({ id, page = 1, pageSize = 25, totalItems = 142, pageSizes =
     data-pagination-page-size-value="${pageSize}"
     data-pagination-total-items-value="${totalItems}"
   >
-    <span class="theme-pagination__range" data-pagination-target="rangeLabel" aria-live="polite" aria-atomic="true"></span>
-    <span class="theme-pagination__page-size">
-      <label class="theme-pagination__page-size-label" for="${navId}-size">${S('page-size-label')}</label>
+    <span class="cremona-pagination__range" data-pagination-target="rangeLabel" aria-live="polite" aria-atomic="true"></span>
+    <span class="cremona-pagination__page-size">
+      <label class="cremona-pagination__page-size-label" for="${navId}-size">${S('page-size-label')}</label>
       ${nativeSelect({ htmlId: `${navId}-size`, value: pageSize, options: selectOptions, size: 'sm' })}
     </span>
-    <span class="theme-pagination__nav" role="group">
-      <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="firstButton" data-action="click->pagination#first" aria-label="${S('aria.first')}"><span class="theme-pagination__icon theme-pagination__icon--first" aria-hidden="true"></span></button>
-      <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="prevButton" data-action="click->pagination#prev" aria-label="${S('aria.prev')}"><span class="theme-pagination__icon theme-pagination__icon--prev" aria-hidden="true"></span></button>
-      <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="nextButton" data-action="click->pagination#next" aria-label="${S('aria.next')}"><span class="theme-pagination__icon theme-pagination__icon--next" aria-hidden="true"></span></button>
-      <button type="button" class="theme-button theme-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="lastButton" data-action="click->pagination#last" aria-label="${S('aria.last')}"><span class="theme-pagination__icon theme-pagination__icon--last" aria-hidden="true"></span></button>
+    <span class="cremona-pagination__nav" role="group">
+      <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="firstButton" data-action="click->pagination#first" aria-label="${S('aria.first')}"><span class="cremona-pagination__icon cremona-pagination__icon--first" aria-hidden="true"></span></button>
+      <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="prevButton" data-action="click->pagination#prev" aria-label="${S('aria.prev')}"><span class="cremona-pagination__icon cremona-pagination__icon--prev" aria-hidden="true"></span></button>
+      <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="nextButton" data-action="click->pagination#next" aria-label="${S('aria.next')}"><span class="cremona-pagination__icon cremona-pagination__icon--next" aria-hidden="true"></span></button>
+      <button type="button" class="cremona-button cremona-pagination__btn" data-variant="ghost" data-size="sm" data-pagination-target="lastButton" data-action="click->pagination#last" aria-label="${S('aria.last')}"><span class="cremona-pagination__icon cremona-pagination__icon--last" aria-hidden="true"></span></button>
     </span>
   </nav>`;
 }
@@ -283,18 +283,18 @@ function dataTable({
             ? trash2Svg
             : '';
         const variant = a.variant || (a.destructive ? 'destructive' : 'secondary');
-        return `<button type="button" class="theme-button" data-variant="${variant}" data-size="sm"
+        return `<button type="button" class="cremona-button" data-variant="${variant}" data-size="sm"
           data-bulk-action-id="${a.id}"
           data-action="click->data-table#bulkAction">
-          ${icon ? `<span class="theme-icon theme-button__icon theme-button__icon--leading" data-size="sm" aria-hidden="true">${icon}</span>` : ''}
-          <span class="theme-button__label">${a.label}</span>
+          ${icon ? `<span class="cremona-icon cremona-button__icon cremona-button__icon--leading" data-size="sm" aria-hidden="true">${icon}</span>` : ''}
+          <span class="cremona-button__label">${a.label}</span>
         </button>`;
       }).join('');
       const hidden = withBulkBar ? '' : 'hidden';
-      bulkBarHtml = `<div class="theme-data-table__bulk-bar" data-data-table-target="bulkBar" ${hidden}>
-        <span class="theme-data-table__bulk-count" data-data-table-target="bulkCount" aria-live="polite" aria-atomic="true"></span>
-        <div class="theme-data-table__bulk-actions" role="group">
-          <button type="button" class="theme-button" data-variant="ghost" data-size="sm"
+      bulkBarHtml = `<div class="cremona-data-table__bulk-bar" data-data-table-target="bulkBar" ${hidden}>
+        <span class="cremona-data-table__bulk-count" data-data-table-target="bulkCount" aria-live="polite" aria-atomic="true"></span>
+        <div class="cremona-data-table__bulk-actions" role="group">
+          <button type="button" class="cremona-button" data-variant="ghost" data-size="sm"
             data-action="click->data-table#clearSelection">${S('aria.deselect')}</button>
           ${bulkActionsHtml}
         </div>
@@ -305,42 +305,42 @@ function dataTable({
       const togglableCols = columns.filter((c) => c.togglable !== false);
       const colVisItems = togglableCols.map((c) => {
         const checked = visIds.includes(c.id);
-        return `<div class="theme-item" role="menuitem">
-          <label class="theme-data-table__column-visibility-option">
-            <input type="checkbox" class="theme-checkbox__input"
+        return `<div class="cremona-item" role="menuitem">
+          <label class="cremona-data-table__column-visibility-option">
+            <input type="checkbox" class="cremona-checkbox__input"
               data-data-table-column-vis="${c.id}"
               data-action="change->data-table#toggleColumnVisibility"${checked ? ' checked' : ''}>
             <span>${c.label}</span>
           </label>
         </div>`;
       }).join('');
-      colVisHtml = `<div class="theme-data-table__column-visibility" data-data-table-target="columnVisibilityTrigger">
-        <div class="theme-popover theme-dropdown-menu theme-data-table__column-visibility-menu"
+      colVisHtml = `<div class="cremona-data-table__column-visibility" data-data-table-target="columnVisibilityTrigger">
+        <div class="cremona-popover cremona-dropdown-menu cremona-data-table__column-visibility-menu"
           data-controller="popover dropdown-menu"
           data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown"
           data-popover-placement-value="bottom-end"
           data-popover-offset-value="4"
           data-popover-open-value="false">
-          <button type="button" class="theme-button" data-variant="secondary" data-size="sm"
+          <button type="button" class="cremona-button" data-variant="secondary" data-size="sm"
             data-popover-target="trigger"
             aria-haspopup="menu" aria-expanded="false" aria-controls="${dtId}-col-vis"
             aria-label="${S('aria.column-visibility')}">
-            <span class="theme-icon theme-button__icon theme-button__icon--leading" data-size="sm" aria-hidden="true">${settingsSvg}</span>
-            <span class="theme-button__label">${S('column-visibility.label')}</span>
+            <span class="cremona-icon cremona-button__icon cremona-button__icon--leading" data-size="sm" aria-hidden="true">${settingsSvg}</span>
+            <span class="cremona-button__label">${S('column-visibility.label')}</span>
           </button>
-          <div id="${dtId}-col-vis" class="theme-popover__content theme-dropdown-menu__content"
+          <div id="${dtId}-col-vis" class="cremona-popover__content cremona-dropdown-menu__content"
             data-popover-target="content" data-state="closed" hidden>
             ${colVisItems}
           </div>
         </div>
       </div>`;
     }
-    toolbarHtml = `<div class="theme-data-table__toolbar">${bulkBarHtml}${colVisHtml}</div>`;
+    toolbarHtml = `<div class="cremona-data-table__toolbar">${bulkBarHtml}${colVisHtml}</div>`;
   }
 
   // ---- Header rows ----
   const selectAllTh = selectable
-    ? `<th class="theme-data-table__select-all-cell">${checkbox({
+    ? `<th class="cremona-data-table__select-all-cell">${checkbox({
         id: `${dtId}-select-all`,
         ariaLabel: S('aria.select-all'),
       })}</th>`
@@ -368,7 +368,7 @@ function dataTable({
       const hidden = !visIds.includes(c.id) ? ' hidden' : '';
       if (filtType === 'text') {
         return `<th data-data-table-column-cell="${c.id}"${hidden}>
-          <input type="text" class="theme-input theme-data-table__filter-input" data-size="sm"
+          <input type="text" class="cremona-input cremona-data-table__filter-input" data-size="sm"
             data-data-table-filter-column="${c.id}"
             data-action="input->data-table#filter"
             value="${filtValue}"
@@ -378,7 +378,7 @@ function dataTable({
       }
       return `<th data-data-table-column-cell="${c.id}"${hidden}></th>`;
     }).join('');
-    filterRowHtml = `<tr class="theme-data-table__filter-row" data-data-table-target="filterRow">
+    filterRowHtml = `<tr class="cremona-data-table__filter-row" data-data-table-target="filterRow">
       ${selectable ? '<th></th>' : ''}
       ${filterCols}
     </tr>`;
@@ -388,21 +388,21 @@ function dataTable({
   let bodyRowsHtml = '';
   if (showEmpty || rows.length === 0) {
     const ctaHtml = emptyCta
-      ? `<div class="theme-data-table__empty-cta">
-          <button type="button" class="theme-button" data-variant="secondary" data-size="sm">${emptyCta}</button>
+      ? `<div class="cremona-data-table__empty-cta">
+          <button type="button" class="cremona-button" data-variant="secondary" data-size="sm">${emptyCta}</button>
         </div>`
       : '';
-    bodyRowsHtml = `<tr class="theme-data-table__empty-row" data-data-table-target="emptyState">
+    bodyRowsHtml = `<tr class="cremona-data-table__empty-row" data-data-table-target="emptyState">
       <td colspan="${colspanTotal}">
-        <div class="theme-empty" data-size="sm" role="region" aria-labelledby="${dtId}-empty-title">
-          <div class="theme-empty__illustration" aria-hidden="true">
-            <span class="theme-icon" data-size="lg" aria-hidden="true">
+        <div class="cremona-empty" data-size="sm" role="region" aria-labelledby="${dtId}-empty-title">
+          <div class="cremona-empty__illustration" aria-hidden="true">
+            <span class="cremona-icon" data-size="lg" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </span>
           </div>
-          <div class="theme-empty__content">
-            <h3 id="${dtId}-empty-title" class="theme-empty__title">${emptyTitle || S('empty.title')}</h3>
-            <div class="theme-empty__body">${emptyBody || S('empty.body')}</div>
+          <div class="cremona-empty__content">
+            <h3 id="${dtId}-empty-title" class="cremona-empty__title">${emptyTitle || S('empty.title')}</h3>
+            <div class="cremona-empty__body">${emptyBody || S('empty.body')}</div>
             ${ctaHtml}
           </div>
         </div>
@@ -426,7 +426,7 @@ function dataTable({
       }).join('');
       const isSelected = selectedRows.includes(r.id);
       const selectCellHtml = selectable
-        ? `<td class="theme-data-table__select-cell">${checkbox({
+        ? `<td class="cremona-data-table__select-cell">${checkbox({
             id: `${dtId}-cb-${r.id}`,
             ariaLabel: `${S('aria.select-row')} ${r.id}`,
             checked: isSelected,
@@ -445,7 +445,7 @@ function dataTable({
 
   // ---- Pagination ----
   const paginationHtml = (withPagination && totalForPagination > pageSize)
-    ? `<div class="theme-data-table__pagination-wrap" data-data-table-target="paginationMount">
+    ? `<div class="cremona-data-table__pagination-wrap" data-data-table-target="paginationMount">
         ${pagination({ id: `${dtId}-pg`, page, pageSize, totalItems: totalForPagination })}
       </div>`
     : '';
@@ -454,7 +454,7 @@ function dataTable({
   const controllerAttr = ['data-table', ...controllerExtras].join(' ');
   return `<div
     id="${dtId}"
-    class="theme-data-table"
+    class="cremona-data-table"
     data-controller="${controllerAttr}"
     data-action="click->data-table#toggleSort change->data-table#toggleRow change->data-table#toggleSelectAll change->data-table#toggleColumnVisibility input->data-table#filter click->data-table#bulkAction click->data-table#clearSelection"
     data-data-table-sort-column-value=""
@@ -465,13 +465,13 @@ function dataTable({
     data-data-table-multi-column-sort-value="false"
   >
     ${toolbarHtml}
-    <table class="theme-table theme-data-table__table" data-data-table-target="table" data-size="md" data-variant="default">
-      <caption class="theme-table__caption sr-only">${S('caption.team')}</caption>
-      <thead class="theme-table__thead">
+    <table class="cremona-table cremona-data-table__table" data-data-table-target="table" data-size="md" data-variant="default">
+      <caption class="cremona-table__caption sr-only">${S('caption.team')}</caption>
+      <thead class="cremona-table__thead">
         <tr>${selectAllTh}${headerColsHtml}</tr>
         ${filterRowHtml}
       </thead>
-      <tbody class="theme-table__tbody">
+      <tbody class="cremona-table__tbody">
         ${bodyRowsHtml}
       </tbody>
     </table>
@@ -480,31 +480,31 @@ function dataTable({
 }
 
 function alertDialog({ id }) {
-  return `<div id="${id}-alert-dialog-wrap" class="theme-dialog-wrap theme-alert-dialog-wrap"
+  return `<div id="${id}-alert-dialog-wrap" class="cremona-dialog-wrap cremona-alert-dialog-wrap"
     data-controller="dialog"
     data-dialog-open-value="false"
     data-dialog-close-on-escape-value="false"
     data-dialog-close-on-backdrop-click-value="false">
-    <dialog id="${id}-alert-dialog" class="theme-dialog theme-alert-dialog"
+    <dialog id="${id}-alert-dialog" class="cremona-dialog cremona-alert-dialog"
       data-dialog-target="dialog"
       data-size="sm"
       data-tone="danger"
       aria-labelledby="${id}-alert-dialog-title">
-      <header class="theme-dialog__header theme-alert-dialog__header">
-        <span class="theme-alert-dialog__icon-wrap" aria-hidden="true">
-          <span class="theme-icon" data-size="md" aria-hidden="true">
+      <header class="cremona-dialog__header cremona-alert-dialog__header">
+        <span class="cremona-alert-dialog__icon-wrap" aria-hidden="true">
+          <span class="cremona-icon" data-size="md" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
           </span>
         </span>
-        <h2 id="${id}-alert-dialog-title" class="theme-dialog__title theme-alert-dialog__title" data-destructive-title>${t('theme.data-table.bulk-destructive.title', { count: 12 })}</h2>
+        <h2 id="${id}-alert-dialog-title" class="cremona-dialog__title cremona-alert-dialog__title" data-destructive-title>${t('theme.data-table.bulk-destructive.title', { count: 12 })}</h2>
       </header>
-      <div class="theme-dialog__body theme-alert-dialog__body">
+      <div class="cremona-dialog__body cremona-alert-dialog__body">
         <p data-destructive-body>${t('theme.data-table.bulk-destructive.body', { count: 12 })}</p>
       </div>
-      <footer class="theme-dialog__footer theme-alert-dialog__footer">
-        <button type="button" class="theme-button" data-variant="secondary"
+      <footer class="cremona-dialog__footer cremona-alert-dialog__footer">
+        <button type="button" class="cremona-button" data-variant="secondary"
           data-action="click->dialog#close">${S('bulk-destructive.cancel')}</button>
-        <button type="button" class="theme-button" data-variant="destructive"
+        <button type="button" class="cremona-button" data-variant="destructive"
           data-action="click->dialog#close">${S('bulk-destructive.confirm')}</button>
       </footer>
     </dialog>
@@ -540,8 +540,8 @@ const bodyHtml = `
     </header>
 
     <section class="dt-story__section" aria-labelledby="dt-section-default">
-      <h2 id="dt-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="dt-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       ${dataTable({
         columns: SAMPLE_COLUMNS,
         rows: SAMPLE_ROWS,
@@ -552,8 +552,8 @@ const bodyHtml = `
     </section>
 
     <section class="dt-story__section" aria-labelledby="dt-section-vis">
-      <h2 id="dt-section-vis" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.column-visibility')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.column-visibility')}</p>
+      <h2 id="dt-section-vis" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.column-visibility')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.column-visibility')}</p>
       ${dataTable({
         columns: SAMPLE_COLUMNS,
         rows: SAMPLE_ROWS,
@@ -565,8 +565,8 @@ const bodyHtml = `
     </section>
 
     <section class="dt-story__section" aria-labelledby="dt-section-filter">
-      <h2 id="dt-section-filter" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.filter')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.filter')}</p>
+      <h2 id="dt-section-filter" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.filter')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.filter')}</p>
       ${dataTable({
         columns: [
           { id: 'name', label: S('column.name'), sortable: true, filterType: 'text', filterValue: 'Marie', filterPlaceholder: S('filter.placeholder-name') },
@@ -584,8 +584,8 @@ const bodyHtml = `
     </section>
 
     <section class="dt-story__section" aria-labelledby="dt-section-empty">
-      <h2 id="dt-section-empty" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.empty')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.empty')}</p>
+      <h2 id="dt-section-empty" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.empty')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.empty')}</p>
       ${dataTable({
         columns: SAMPLE_COLUMNS,
         rows: [],
@@ -600,8 +600,8 @@ const bodyHtml = `
     </section>
 
     <section class="dt-story__section" aria-labelledby="dt-section-bulk-destructive">
-      <h2 id="dt-section-bulk-destructive" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.bulk-destructive')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.bulk-destructive')}</p>
+      <h2 id="dt-section-bulk-destructive" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.bulk-destructive')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.bulk-destructive')}</p>
       <div data-bulk-destructive-demo="dt-destructive-demo">
         ${dataTable({
           id: 'dt-destructive-demo',
@@ -616,8 +616,8 @@ const bodyHtml = `
     </section>
 
     <section class="dt-story__section" aria-labelledby="dt-section-events">
-      <h2 id="dt-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="dt-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       ${dataTable({
         id: 'dt-events-demo',
         columns: SAMPLE_COLUMNS.slice(0, 4),
@@ -626,14 +626,14 @@ const bodyHtml = `
         bulkActions: [{ id: 'export', label: S('bulk.export'), variant: 'secondary', iconLeading: 'download' }],
       })}
       <div class="dt-story__log" data-events-log="dt-events-demo">
-        <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+        <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
         <div data-events-out class="dt-story__log-out"></div>
       </div>
     </section>
 
     <section class="dt-story__section" aria-labelledby="dt-section-controller-extras">
-      <h2 id="dt-section-controller-extras" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.controller-extras')}</h2>
-      <p class="dt-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.controller-extras')}</p>
+      <h2 id="dt-section-controller-extras" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.controller-extras')}</h2>
+      <p class="dt-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.controller-extras')}</p>
       ${dataTable({
         id: 'dt-controller-extras-demo',
         columns: SAMPLE_COLUMNS.slice(0, 4),

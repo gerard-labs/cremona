@@ -90,7 +90,7 @@ describe('DataTableController', () => {
       : '';
     const selAttr = `data-data-table-selected-rows-value='${JSON.stringify(selectedRows)}'`;
     const selectAllTh = withSelectable
-      ? `<th class="theme-data-table__select-all-cell">
+      ? `<th class="cremona-data-table__select-all-cell">
           <input type="checkbox" id="select-all"
                  data-data-table-target="selectAllCheckbox"
                  data-action="change->data-table#toggleSelectAll"
@@ -98,7 +98,7 @@ describe('DataTableController', () => {
         </th>`
       : '';
     const filterRow = withFilter
-      ? `<tr class="theme-data-table__filter-row" data-data-table-target="filterRow">
+      ? `<tr class="cremona-data-table__filter-row" data-data-table-target="filterRow">
           ${withSelectable ? '<th></th>' : ''}
           <th data-data-table-column-cell="name">
             <input type="text" id="filter-name"
@@ -115,7 +115,7 @@ describe('DataTableController', () => {
       : '';
 
     document.body.innerHTML = `
-      <div id="dt" class="theme-data-table"
+      <div id="dt" class="cremona-data-table"
         data-controller="data-table"
         data-action="click->data-table#toggleSort change->data-table#toggleRow change->data-table#toggleSelectAll change->data-table#toggleColumnVisibility input->data-table#filter click->data-table#bulkAction click->data-table#clearSelection"
         ${selAttr}
@@ -123,10 +123,10 @@ describe('DataTableController', () => {
         data-data-table-total-rows-value="${totalRows}"
         data-data-table-multi-column-sort-value="${multiColumnSort ? 'true' : 'false'}">
 
-        <div class="theme-data-table__toolbar">
-          <div id="bulk-bar" class="theme-data-table__bulk-bar"
+        <div class="cremona-data-table__toolbar">
+          <div id="bulk-bar" class="cremona-data-table__bulk-bar"
                data-data-table-target="bulkBar" hidden>
-            <span id="bulk-count" class="theme-data-table__bulk-count"
+            <span id="bulk-count" class="cremona-data-table__bulk-count"
                   data-data-table-target="bulkCount"
                   aria-live="polite" aria-atomic="true"></span>
             <button id="clear-btn" type="button" data-action="click->data-table#clearSelection">Désélectionner</button>
@@ -150,20 +150,20 @@ describe('DataTableController', () => {
           </div>
         </div>
 
-        <table id="tbl" class="theme-table theme-data-table__table"
+        <table id="tbl" class="cremona-table cremona-data-table__table"
                data-data-table-target="table">
           <thead>
             <tr>
               ${selectAllTh}
               <th data-data-table-column="name" data-data-table-column-cell="name"
                   data-sortable="true" aria-sort="none">
-                <button type="button" class="theme-table__sort"
+                <button type="button" class="cremona-table__sort"
                         data-data-table-column="name"
                         data-sort-dir="none">Nom</button>
               </th>
               <th data-data-table-column="email" data-data-table-column-cell="email"
                   data-sortable="true" aria-sort="none">
-                <button type="button" class="theme-table__sort"
+                <button type="button" class="cremona-table__sort"
                         data-data-table-column="email"
                         data-sort-dir="none">Email</button>
               </th>
@@ -175,7 +175,7 @@ describe('DataTableController', () => {
           <tbody>
             ${['user-1', 'user-2', 'user-3', 'user-4'].map((id) => `
               <tr data-data-table-row-id="${id}">
-                ${withSelectable ? `<td class="theme-data-table__select-cell">
+                ${withSelectable ? `<td class="cremona-data-table__select-cell">
                   <input type="checkbox" id="cb-${id}"
                          data-data-table-target="rowCheckbox"
                          data-data-table-row-id="${id}"
@@ -206,8 +206,8 @@ describe('DataTableController', () => {
       thName: document.querySelector('th[data-data-table-column="name"]'),
       thEmail: document.querySelector('th[data-data-table-column="email"]'),
       thScore: document.querySelector('th[data-data-table-column="score"]'),
-      sortBtnName: document.querySelector('button.theme-table__sort[data-data-table-column="name"]'),
-      sortBtnEmail: document.querySelector('button.theme-table__sort[data-data-table-column="email"]'),
+      sortBtnName: document.querySelector('button.cremona-table__sort[data-data-table-column="name"]'),
+      sortBtnEmail: document.querySelector('button.cremona-table__sort[data-data-table-column="email"]'),
       filterName: document.getElementById('filter-name'),
       filterEmail: document.getElementById('filter-email'),
       visName: document.getElementById('vis-name'),
@@ -265,7 +265,7 @@ describe('DataTableController', () => {
 
   it('toggleSort on a non-sortable column → no-op', async () => {
     const { ctrl, thScore } = await mount();
-    // Score th has data-sortable="false" — but it has no .theme-table__sort
+    // Score th has data-sortable="false" — but it has no .cremona-table__sort
     // button child, so we pass the th itself which doesn't carry the column
     // data attr on the button-closest path.
     ctrl.toggleSort({ target: thScore });

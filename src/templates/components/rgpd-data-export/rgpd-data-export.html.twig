@@ -25,7 +25,7 @@
     csrfTokenValue  (string, optional)
 -#}
 
-{%- set htmlId         = htmlId         | default('theme-rgpd-data-export-' ~ random()) -%}
+{%- set htmlId         = htmlId         | default('cremona-rgpd-data-export-' ~ random()) -%}
 {%- set title          = title          | default('theme.rgpd-data-export.title'|trans) -%}
 {%- set description    = description    | default('theme.rgpd-data-export.description'|trans) -%}
 {%- set state          = state          | default('idle') -%}
@@ -35,43 +35,43 @@
 {%- set buttonLabel    = buttonLabel    | default(('theme.rgpd-data-export.button.' ~ state)|trans) -%}
 {%- set actionUrl      = actionUrl      | default('#') -%}
 
-{% embed '@theme/components/card/card.html.twig' with {
+{% embed '@cremona/components/card/card.html.twig' with {
   variant: 'elevated',
   htmlId: htmlId,
-  className: 'theme-rgpd-data-export',
+  className: 'cremona-rgpd-data-export',
   attrs: {
     'data-rgpd-data-export-state': state,
     'aria-labelledby': htmlId ~ '-title',
   },
 } %}
   {% block header %}
-    <h2 id="{{ htmlId }}-title" class="theme-card__title">{{ title }}</h2>
-    <p class="theme-card__description">{{ description }}</p>
+    <h2 id="{{ htmlId }}-title" class="cremona-card__title">{{ title }}</h2>
+    <p class="cremona-card__description">{{ description }}</p>
   {% endblock %}
 
   {% block body %}
     {% if format or estimatedSize or estimatedTime %}
-      <ul class="theme-rgpd-data-export__meta" role="list">
+      <ul class="cremona-rgpd-data-export__meta" role="list">
         {% if format %}
-          <li class="theme-rgpd-data-export__meta-item">
-            {% include '@theme/components/icon/icon.html.twig' with { name: 'edit-3', decorative: true, size: 'sm' } %}
+          <li class="cremona-rgpd-data-export__meta-item">
+            {% include '@cremona/components/icon/icon.html.twig' with { name: 'edit-3', decorative: true, size: 'sm' } %}
             <span>{{ 'theme.rgpd-data-export.meta.format'|trans({ '%format%': format }) }}</span>
           </li>
         {% endif %}
         {% if estimatedSize %}
-          <li class="theme-rgpd-data-export__meta-item">
+          <li class="cremona-rgpd-data-export__meta-item">
             <span>{{ 'theme.rgpd-data-export.meta.size'|trans({ '%size%': estimatedSize }) }}</span>
           </li>
         {% endif %}
         {% if estimatedTime %}
-          <li class="theme-rgpd-data-export__meta-item">
+          <li class="cremona-rgpd-data-export__meta-item">
             <span>{{ 'theme.rgpd-data-export.meta.time'|trans({ '%time%': estimatedTime }) }}</span>
           </li>
         {% endif %}
       </ul>
     {% endif %}
 
-    <p class="theme-rgpd-data-export__legal-note">{{ 'theme.rgpd-data-export.legal-note'|trans }}</p>
+    <p class="cremona-rgpd-data-export__legal-note">{{ 'theme.rgpd-data-export.legal-note'|trans }}</p>
   {% endblock %}
 
   {% block footer %}
@@ -79,13 +79,13 @@
       {% if csrfTokenName and csrfTokenValue %}
         <input type="hidden" name="{{ csrfTokenName }}" value="{{ csrfTokenValue }}">
       {% endif %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: buttonLabel,
         variant: 'primary',
         type: 'submit',
         iconLeading: (state == 'success' ? 'arrow-right' : (state == 'loading' ? 'option' : (state == 'error' ? 'alert-triangle' : null))),
         disabled: state == 'loading',
-        className: 'theme-rgpd-data-export__button-state',
+        className: 'cremona-rgpd-data-export__button-state',
         attrs: state == 'loading' ? { 'aria-disabled': 'true' } : {},
       } only %}
     </form>

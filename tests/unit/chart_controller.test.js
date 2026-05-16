@@ -117,7 +117,7 @@ describe('ChartController', () => {
     locale = 'fr',
   } = {}) {
     document.body.innerHTML = `
-      <figure id="chart-wrap" class="theme-chart"
+      <figure id="chart-wrap" class="cremona-chart"
         data-controller="chart"
         data-chart-variant-value="${variant}"
         data-chart-series-value='${series}'

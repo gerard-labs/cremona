@@ -6,7 +6,7 @@
  *
  * Per OQ-30 (sealed S2.3a): per-submenu DropdownMenus + thin orchestrator.
  *
- * The `.theme-menubar__trigger` class is the standard Menubar trigger
+ * The `.cremona-menubar__trigger` class is the standard Menubar trigger
  * visual: compact ghost-style button with active-when-expanded state via
  * `[aria-expanded="true"]` selector. Brand presets can re-skin via the
  * `--color-selected-bg` / `--color-selected-foreground` tokens.
@@ -15,7 +15,7 @@
  * inline-block for RTL flow without direction-specific rules.
  */
 
-.theme-menubar {
+.cremona-menubar {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
@@ -26,7 +26,7 @@
   border-radius: var(--radius-md);
 }
 
-.theme-menubar__trigger {
+.cremona-menubar__trigger {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -45,23 +45,23 @@
     color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-menubar__trigger:hover:not(:disabled) {
+.cremona-menubar__trigger:hover:not(:disabled) {
   background-color: var(--color-bg-sunken);
 }
 
-.theme-menubar__trigger:focus-visible {
+.cremona-menubar__trigger:focus-visible {
   outline: var(--ring-width) solid var(--color-border-focus);
   outline-offset: var(--ring-offset-width);
 }
 
 /* When a submenu is open, the trigger gets aria-expanded="true" from the
    co-mounted Popover controller — paint a selected-state visual. */
-.theme-menubar__trigger[aria-expanded="true"] {
+.cremona-menubar__trigger[aria-expanded="true"] {
   background-color: var(--color-selected-bg);
   color: var(--color-selected-foreground);
 }
 
-.theme-menubar__trigger:disabled {
+.cremona-menubar__trigger:disabled {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
@@ -69,7 +69,7 @@
 /* Touch target hardening — menubar triggers must hit the 44 px floor under
    coarse pointer (matches Button doctrine). */
 @media (pointer: coarse) {
-  .theme-menubar__trigger {
+  .cremona-menubar__trigger {
     min-block-size: 44px;
     min-inline-size: 44px;
   }

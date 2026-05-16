@@ -56,7 +56,7 @@
 
   Usage:
 
-    {% include '@theme/components/carousel/carousel.html.twig' with {
+    {% include '@cremona/components/carousel/carousel.html.twig' with {
       label: 'Témoignages clients'|trans,
       autoplayInterval: 5000,
       slides: [
@@ -70,7 +70,7 @@
                                       direction: 'next' | 'prev' | 'jump' }
 -#}
 
-{%- set htmlId             = htmlId             | default('theme-carousel-' ~ random()) -%}
+{%- set htmlId             = htmlId             | default('cremona-carousel-' ~ random()) -%}
 {%- set label              = label              | default('Carousel') -%}
 {%- set slides             = slides             | default([]) -%}
 {%- set currentSlide       = currentSlide       | default(0) -%}
@@ -89,7 +89,7 @@
 {%- set className          = className          | default('') -%}
 {%- set total              = slides | length -%}
 
-{%- set _classes = ['theme-carousel'] -%}
+{%- set _classes = ['cremona-carousel'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -103,15 +103,15 @@
   aria-roledescription="{{ roleDescriptionCarousel }}"
   aria-label="{{ label }}"
 >
-  <div class="theme-carousel__viewport" data-carousel-target="viewport">
-    <div class="theme-carousel__track" data-carousel-target="track">
+  <div class="cremona-carousel__viewport" data-carousel-target="viewport">
+    <div class="cremona-carousel__track" data-carousel-target="track">
       {%- for slide in slides -%}
         {%- set idx = loop.index -%}
         {%- set slideLabel = slideAriaLabel | replace({ '{index}': idx, '{total}': total }) -%}
         {%- set isActive = (loop.index0 == currentSlide) -%}
         <article
           id="{{ htmlId }}-slide-{{ loop.index0 }}"
-          class="theme-carousel__slide"
+          class="cremona-carousel__slide"
           data-carousel-target="slide"
           role="group"
           aria-roledescription="{{ roleDescriptionSlide }}"
@@ -127,39 +127,39 @@
   </div>
 
   {%- if showNav -%}
-    <div class="theme-carousel__controls">
+    <div class="cremona-carousel__controls">
       <button
         type="button"
-        class="theme-carousel__nav theme-carousel__nav--prev"
+        class="cremona-carousel__nav cremona-carousel__nav--prev"
         data-carousel-target="prev"
         data-action="click->carousel#prev"
         aria-label="{{ prevAriaLabel }}"
         aria-controls="{{ htmlId }}"
       >
-        <span class="theme-carousel__nav-icon" aria-hidden="true"></span>
+        <span class="cremona-carousel__nav-icon" aria-hidden="true"></span>
       </button>
       <button
         type="button"
-        class="theme-carousel__nav theme-carousel__nav--next"
+        class="cremona-carousel__nav cremona-carousel__nav--next"
         data-carousel-target="next"
         data-action="click->carousel#next"
         aria-label="{{ nextAriaLabel }}"
         aria-controls="{{ htmlId }}"
       >
-        <span class="theme-carousel__nav-icon" aria-hidden="true"></span>
+        <span class="cremona-carousel__nav-icon" aria-hidden="true"></span>
       </button>
     </div>
   {%- endif -%}
 
   {%- if showDots -%}
-    <div class="theme-carousel__pagination">
+    <div class="cremona-carousel__pagination">
       {%- for slide in slides -%}
         {%- set idx = loop.index -%}
         {%- set dotLabel = dotAriaLabel | replace({ '{index}': idx, '{total}': total }) -%}
         {%- set isActive = (loop.index0 == currentSlide) -%}
         <button
           type="button"
-          class="theme-carousel__dot"
+          class="cremona-carousel__dot"
           data-carousel-target="dot"
           data-slide-index="{{ loop.index0 }}"
           data-action="click->carousel#goTo"
@@ -175,14 +175,14 @@
   {%- if showAutoplayToggle -%}
     <button
       type="button"
-      class="theme-carousel__autoplay-toggle"
+      class="cremona-carousel__autoplay-toggle"
       data-carousel-target="autoplayToggle"
       data-action="click->carousel#toggleAutoplay"
       aria-label="{{ autoplayAriaLabel }}"
       aria-pressed="false"
       data-state="playing"
     >
-      <span class="theme-carousel__autoplay-icon" aria-hidden="true"></span>
+      <span class="cremona-carousel__autoplay-icon" aria-hidden="true"></span>
     </button>
   {%- endif -%}
 </div>

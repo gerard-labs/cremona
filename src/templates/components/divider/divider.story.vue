@@ -23,28 +23,28 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function icon(name) {
-  return `<span class="theme-icon theme-divider__icon" data-icon="${name}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon cremona-divider__icon" data-icon="${name}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderDivider(props = {}) {
   const { label, icon: iconName, orientation = 'horizontal', variant = 'solid', decorative = true } = props;
   const hasCenter = label || iconName;
-  const classes = ['theme-divider'];
-  if (hasCenter) classes.push('theme-divider--with-content');
-  if (variant === 'dashed') classes.push('theme-divider--dashed');
-  if (variant === 'dotted') classes.push('theme-divider--dotted');
+  const classes = ['cremona-divider'];
+  if (hasCenter) classes.push('cremona-divider--with-content');
+  if (variant === 'dashed') classes.push('cremona-divider--dashed');
+  if (variant === 'dotted') classes.push('cremona-divider--dotted');
 
   const ariaAttrs = decorative
     ? 'role="presentation" aria-hidden="true"'
     : `role="separator" aria-orientation="${orientation}"`;
 
   const contentHtml = hasCenter ? `
-    <span class="theme-divider__line" aria-hidden="true"></span>
-    <span class="theme-divider__content">
+    <span class="cremona-divider__line" aria-hidden="true"></span>
+    <span class="cremona-divider__content">
       ${iconName ? icon(iconName) : ''}
-      ${label ? `<span class="theme-divider__label">${label}</span>` : ''}
+      ${label ? `<span class="cremona-divider__label">${label}</span>` : ''}
     </span>
-    <span class="theme-divider__line" aria-hidden="true"></span>
+    <span class="cremona-divider__line" aria-hidden="true"></span>
   ` : '';
 
   return `<div class="${classes.join(' ')}" data-orientation="${orientation}" ${ariaAttrs}>${contentHtml}</div>`;
@@ -74,7 +74,7 @@ const bodyHtml = `
     </header>
 
     <section class="divider-story__section" aria-labelledby="div-section-plain">
-      <h2 id="div-section-plain" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.plain')}</h2>
+      <h2 id="div-section-plain" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.plain')}</h2>
       <div class="divider-story__stack">
         ${block(renderDivider(), 'horizontal solid (no content)')}
         ${block(renderDivider({ variant: 'dashed' }), 'horizontal dashed')}
@@ -83,8 +83,8 @@ const bodyHtml = `
     </section>
 
     <section class="divider-story__section" aria-labelledby="div-section-with-label">
-      <h2 id="div-section-with-label" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.with-label')}</h2>
-      <p class="divider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.divider.story.explainer.with-label')}</p>
+      <h2 id="div-section-with-label" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.with-label')}</h2>
+      <p class="divider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.divider.story.explainer.with-label')}</p>
       <div class="divider-story__stack">
         ${block(renderDivider({ label: SAMPLES.or }), '"ou" (auth pattern)')}
         ${block(renderDivider({ label: SAMPLES.recentArticles }), 'section header')}
@@ -92,7 +92,7 @@ const bodyHtml = `
     </section>
 
     <section class="divider-story__section" aria-labelledby="div-section-with-icon">
-      <h2 id="div-section-with-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.with-icon')}</h2>
+      <h2 id="div-section-with-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.with-icon')}</h2>
       <div class="divider-story__stack">
         ${block(renderDivider({ icon: 'star' }), 'icon only (star)')}
         ${block(renderDivider({ icon: 'option', label: SAMPLES.options }), 'icon + label')}
@@ -100,8 +100,8 @@ const bodyHtml = `
     </section>
 
     <section class="divider-story__section" aria-labelledby="div-section-vertical">
-      <h2 id="div-section-vertical" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.vertical')}</h2>
-      <p class="divider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.divider.story.explainer.vertical')}</p>
+      <h2 id="div-section-vertical" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.vertical')}</h2>
+      <p class="divider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.divider.story.explainer.vertical')}</p>
       <div class="divider-story__stack divider-story__row-stretch">
         <div class="divider-story__inline-row">
           <span>${t('theme.divider.story.inline.first')}</span>
@@ -119,8 +119,8 @@ const bodyHtml = `
     </section>
 
     <section class="divider-story__section" aria-labelledby="div-section-semantic">
-      <h2 id="div-section-semantic" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.semantic')}</h2>
-      <p class="divider-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.divider.story.explainer.semantic')}</p>
+      <h2 id="div-section-semantic" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.divider.story.section.semantic')}</h2>
+      <p class="divider-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.divider.story.explainer.semantic')}</p>
       <div class="divider-story__stack">
         ${block(renderDivider({ decorative: false, label: SAMPLES.favorite }), 'role=separator (announced to SR)')}
       </div>

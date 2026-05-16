@@ -135,7 +135,7 @@ describe('product-tour controller', () => {
     await tick();
     const config = mockDriver.mock.calls[0][0];
     expect(config.showProgress).toBe(true);
-    expect(config.popoverClass).toBe('theme-product-tour');
+    expect(config.popoverClass).toBe('cremona-product-tour');
   });
 
   it('config localized button labels via t()', async () => {

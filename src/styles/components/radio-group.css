@@ -2,7 +2,7 @@
  * RadioGroup + Radio — native <input type="radio"> styled with kit tokens.
  *
  * The radio's visible disc and inner dot are painted directly on the input via
- * `appearance: none`. The dot is a `::after` pseudo on `.theme-radio__box`
+ * `appearance: none`. The dot is a `::after` pseudo on `.cremona-radio__box`
  * overlay, revealed by sibling combinator on `:checked`.
  *
  * RadioGroup wraps N radios in a <fieldset> with a visible (or sr-only)
@@ -16,7 +16,7 @@
 
 /* ----- fieldset wrapper ----- */
 
-.theme-radiogroup {
+.cremona-radiogroup {
   display: grid;
   gap: var(--spacing-2);
   margin: 0;
@@ -25,7 +25,7 @@
   min-inline-size: 0;
 }
 
-.theme-radiogroup__legend {
+.cremona-radiogroup__legend {
   display: inline-flex;
   align-items: baseline;
   flex-wrap: wrap;
@@ -36,34 +36,34 @@
   color: var(--color-text-primary);
 }
 
-.theme-radiogroup[data-size="md"] .theme-radiogroup__legend {
+.cremona-radiogroup[data-size="md"] .cremona-radiogroup__legend {
   font-size: var(--font-size-base);
 }
 
-.theme-radiogroup[disabled] .theme-radiogroup__legend {
+.cremona-radiogroup[disabled] .cremona-radiogroup__legend {
   color: var(--color-text-disabled);
 }
 
-.theme-radiogroup--invalid .theme-radiogroup__legend {
+.cremona-radiogroup--invalid .cremona-radiogroup__legend {
   /* Legend text stays primary — the danger signal is on each radio's border
      + on the inline error block below (Field's responsibility). Color-only
      legend recolor would conflict with low-vision contrast guidance. */
   color: var(--color-text-primary);
 }
 
-.theme-radiogroup__required {
+.cremona-radiogroup__required {
   color: var(--color-danger);
   font-weight: var(--font-weight-bold);
   line-height: 1;
   margin-inline-start: calc(var(--spacing-0_5) * -1);
 }
 
-.theme-radiogroup__items {
+.cremona-radiogroup__items {
   display: grid;
   gap: var(--spacing-2);
 }
 
-.theme-radiogroup[data-orientation="horizontal"] .theme-radiogroup__items {
+.cremona-radiogroup[data-orientation="horizontal"] .cremona-radiogroup__items {
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, max-content);
   column-gap: var(--spacing-4);
@@ -71,18 +71,18 @@
 
 /* ----- single radio anatomy ----- */
 
-.theme-radio {
+.cremona-radio {
   position: relative;
   display: inline-flex;
-  inline-size: var(--theme-radio-size, 18px);
-  block-size: var(--theme-radio-size, 18px);
+  inline-size: var(--cremona-radio-size, 18px);
+  block-size: var(--cremona-radio-size, 18px);
   flex-shrink: 0;
 }
 
-.theme-radio[data-size="sm"] { --theme-radio-size: 16px; }
-.theme-radio[data-size="md"] { --theme-radio-size: 20px; }
+.cremona-radio[data-size="sm"] { --cremona-radio-size: 16px; }
+.cremona-radio[data-size="md"] { --cremona-radio-size: 20px; }
 
-.theme-radio__input {
+.cremona-radio__input {
   appearance: none;
   position: absolute;
   inset: 0;
@@ -99,57 +99,57 @@
     box-shadow var(--motion-duration-fast) var(--motion-easing-decelerate);
 }
 
-.theme-radio__input:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-radio__input:hover:not(:disabled, [aria-invalid="true"]) {
   border-color: var(--color-primary);
 }
 
-.theme-radio__input:focus-visible {
+.cremona-radio__input:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
-.theme-radio__input:checked {
+.cremona-radio__input:checked {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
 
-.theme-radio__input:checked:hover:not(:disabled, [aria-invalid="true"]) {
+.cremona-radio__input:checked:hover:not(:disabled, [aria-invalid="true"]) {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
 }
 
-.theme-radio__input:checked:focus-visible {
+.cremona-radio__input:checked:focus-visible {
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
-.theme-radio__input[aria-invalid="true"] {
+.cremona-radio__input[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-.theme-radio__input[aria-invalid="true"]:checked {
+.cremona-radio__input[aria-invalid="true"]:checked {
   background-color: var(--color-danger);
   border-color: var(--color-danger);
 }
 
-.theme-radio__input[aria-invalid="true"]:focus-visible {
+.cremona-radio__input[aria-invalid="true"]:focus-visible {
   box-shadow: 0 0 0 var(--ring-width) var(--color-danger);
 }
 
-.theme-radio__input:disabled {
+.cremona-radio__input:disabled {
   cursor: not-allowed;
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-default);
   opacity: 1;
 }
 
-.theme-radio__input:disabled:checked {
+.cremona-radio__input:disabled:checked {
   background-color: var(--color-text-disabled);
   border-color: var(--color-text-disabled);
 }
 
 /* ----- inner dot via ::after on the overlay ----- */
 
-.theme-radio__box {
+.cremona-radio__box {
   position: absolute;
   inset: 0;
   display: grid;
@@ -157,7 +157,7 @@
   pointer-events: none;
 }
 
-.theme-radio__box::after {
+.cremona-radio__box::after {
   content: "";
   display: block;
   inline-size: 40%;
@@ -168,24 +168,24 @@
   transition: opacity var(--motion-duration-fast) var(--motion-easing-decelerate);
 }
 
-.theme-radio__input:checked ~ .theme-radio__box::after {
+.cremona-radio__input:checked ~ .cremona-radio__box::after {
   opacity: 1;
 }
 
 /* ----- row layout (radio + label inline) ----- */
 
-.theme-radio-row {
+.cremona-radio-row {
   display: inline-flex;
   align-items: flex-start;
   gap: var(--spacing-2);
   cursor: pointer;
 }
 
-.theme-radio-row[data-state="disabled"] {
+.cremona-radio-row[data-state="disabled"] {
   cursor: not-allowed;
 }
 
-.theme-radio-row__text {
+.cremona-radio-row__text {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -195,20 +195,20 @@
   user-select: none;
 }
 
-.theme-radio-row[data-size="sm"] .theme-radio-row__text {
+.cremona-radio-row[data-size="sm"] .cremona-radio-row__text {
   font-size: var(--font-size-sm);
 }
 
-.theme-radio-row[data-size="md"] .theme-radio-row__text {
+.cremona-radio-row[data-size="md"] .cremona-radio-row__text {
   font-size: var(--font-size-base);
 }
 
-.theme-radio-row__label {
+.cremona-radio-row__label {
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-snug);
 }
 
-.theme-radio-row__description {
+.cremona-radio-row__description {
   flex-basis: 100%;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
@@ -216,15 +216,15 @@
   line-height: var(--line-height-snug);
 }
 
-.theme-radio-row[data-state="disabled"] .theme-radio-row__label,
-.theme-radio-row[data-state="disabled"] .theme-radio-row__description {
+.cremona-radio-row[data-state="disabled"] .cremona-radio-row__label,
+.cremona-radio-row[data-state="disabled"] .cremona-radio-row__description {
   color: var(--color-text-disabled);
 }
 
 /* ----- touch target hardening ----- */
 
 @media (pointer: coarse) {
-  .theme-radio-row {
+  .cremona-radio-row {
     min-block-size: 44px;
     padding-block: var(--spacing-2);
   }

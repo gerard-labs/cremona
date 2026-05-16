@@ -27,7 +27,7 @@ const ICONS = Object.fromEntries(
 );
 
 function renderChevron() {
-  return `<span class="theme-icon theme-native-select__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${ICONS['chevron-down'] ?? ''}</span>`;
+  return `<span class="cremona-icon cremona-native-select__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${ICONS['chevron-down'] ?? ''}</span>`;
 }
 
 function renderOption(opt, value) {
@@ -47,12 +47,12 @@ function renderNativeSelect(props = {}) {
     required, disabled, invalid, describedBy, autocomplete, className,
   } = props;
 
-  const wrapClasses = ['theme-native-select-wrap'];
-  if (disabled) wrapClasses.push('theme-native-select-wrap--disabled');
+  const wrapClasses = ['cremona-native-select-wrap'];
+  if (disabled) wrapClasses.push('cremona-native-select-wrap--disabled');
   if (className) wrapClasses.push(className);
 
   const attrs = [
-    `class="theme-native-select"`,
+    `class="cremona-native-select"`,
     `data-size="${size}"`,
     name ? `name="${name}"` : '',
     htmlId ? `id="${htmlId}"` : '',
@@ -122,7 +122,7 @@ const bodyHtml = `
     </header>
 
     <section class="ns-story__section" aria-labelledby="ns-section-default">
-      <h2 id="ns-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.default')}</h2>
+      <h2 id="ns-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.default')}</h2>
       <div class="ns-story__stack">
         ${row(renderNativeSelect({ htmlId: 'demo-default',  options: COUNTRIES }),                 'empty')}
         ${row(renderNativeSelect({ htmlId: 'demo-selected', options: COUNTRIES, value: 'fr' }),    'selected: France')}
@@ -130,7 +130,7 @@ const bodyHtml = `
     </section>
 
     <section class="ns-story__section" aria-labelledby="ns-section-states">
-      <h2 id="ns-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.states')}</h2>
+      <h2 id="ns-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.states')}</h2>
       <div class="ns-story__stack">
         ${row(renderNativeSelect({ htmlId: 'demo-state-default',  options: COUNTRIES }),                                   'default')}
         ${row(renderNativeSelect({ htmlId: 'demo-state-value',    options: COUNTRIES, value: 'de' }),                      'with value')}
@@ -138,11 +138,11 @@ const bodyHtml = `
         ${row(renderNativeSelect({ htmlId: 'demo-state-required', options: COUNTRIES, required: true }),                   'required')}
         ${row(renderNativeSelect({ htmlId: 'demo-state-invalid',  options: COUNTRIES, invalid: true, describedBy: 'demo-state-invalid-error' }), 'invalid')}
       </div>
-      <p class="ns-story__explainer theme-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.native-select.story.explainer.invalid')}</p>
+      <p class="ns-story__explainer cremona-typography" data-variant="caption" data-color="tertiary" id="demo-state-invalid-error">${t('theme.native-select.story.explainer.invalid')}</p>
     </section>
 
     <section class="ns-story__section" aria-labelledby="ns-section-sizes">
-      <h2 id="ns-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.sizes')}</h2>
+      <h2 id="ns-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.sizes')}</h2>
       <div class="ns-story__stack">
         ${row(renderNativeSelect({ htmlId: 'demo-size-sm', options: COUNTRIES, value: 'fr', size: 'sm' }), 'sm')}
         ${row(renderNativeSelect({ htmlId: 'demo-size-md', options: COUNTRIES, value: 'fr', size: 'md' }), 'md')}
@@ -151,8 +151,8 @@ const bodyHtml = `
     </section>
 
     <section class="ns-story__section" aria-labelledby="ns-section-optgroups">
-      <h2 id="ns-section-optgroups" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.optgroups')}</h2>
-      <p class="ns-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.native-select.story.explainer.optgroups')}</p>
+      <h2 id="ns-section-optgroups" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.native-select.story.section.optgroups')}</h2>
+      <p class="ns-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.native-select.story.explainer.optgroups')}</p>
       <div class="ns-story__stack">
         ${row(renderNativeSelect({ htmlId: 'demo-optgroups', options: COUNTRIES_GROUPED, value: 'fr' }), 'grouped')}
       </div>

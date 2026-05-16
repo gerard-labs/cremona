@@ -33,7 +33,7 @@
     modalDialogId          (string, optional)              # if variant='modal' — the dialog's htmlId
 -#}
 
-{%- set htmlId               = htmlId               | default('theme-danger-zone-' ~ random()) -%}
+{%- set htmlId               = htmlId               | default('cremona-danger-zone-' ~ random()) -%}
 {%- set variant              = variant              | default('inline') -%}
 {%- set buttonAriaLabel      = buttonAriaLabel      | default(null) -%}
 {%- set expectedConfirmation = expectedConfirmation | default(null) -%}
@@ -61,53 +61,53 @@
   {%- set _ctaAttrs = { 'data-action': 'click->dialog#open', 'aria-controls': modalDialogId } -%}
 {%- endif -%}
 
-{% embed '@theme/components/card/card.html.twig' with {
+{% embed '@cremona/components/card/card.html.twig' with {
   variant: 'elevated',
   htmlId: htmlId,
-  className: 'theme-danger-zone',
-  headerClass: 'theme-danger-zone__header',
-  bodyClass: 'theme-danger-zone__body',
-  footerClass: 'theme-danger-zone__footer',
+  className: 'cremona-danger-zone',
+  headerClass: 'cremona-danger-zone__header',
+  bodyClass: 'cremona-danger-zone__body',
+  footerClass: 'cremona-danger-zone__footer',
   attrs: _cardAttrs,
 } %}
   {% block header %}
-    {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: title, className: 'theme-danger-zone__title' } only %}
+    {% include '@cremona/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: title, className: 'cremona-danger-zone__title' } only %}
   {% endblock %}
 
   {% block body %}
-    {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'body', color: 'secondary', content: description } only %}
+    {% include '@cremona/components/typography/typography.html.twig' with { as: 'p', variant: 'body', color: 'secondary', content: description } only %}
 
     {%- if _dzVariant == 'inline' -%}
       {%- if expectedConfirmation is empty -%}
         {# safety guardrail : inline variant requires an expectedConfirmation #}
-        {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'danger', content: 'theme.danger-zone.error.missing-expected'|trans, className: 'theme-danger-zone__error' } only %}
+        {% include '@cremona/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'danger', content: 'theme.danger-zone.error.missing-expected'|trans, className: 'cremona-danger-zone__error' } only %}
       {%- else -%}
-        <div class="theme-danger-zone__confirmation">
-          {% include '@theme/components/label/label.html.twig' with { htmlFor: htmlId ~ '-input', content: 'theme.danger-zone.input.label'|trans({ expected: expectedConfirmation }) } only %}
-          {% include '@theme/components/input/input.html.twig' with {
+        <div class="cremona-danger-zone__confirmation">
+          {% include '@cremona/components/label/label.html.twig' with { htmlFor: htmlId ~ '-input', content: 'theme.danger-zone.input.label'|trans({ expected: expectedConfirmation }) } only %}
+          {% include '@cremona/components/input/input.html.twig' with {
             type: 'text',
             htmlId: htmlId ~ '-input',
             placeholder: inputPlaceholder,
             autocomplete: 'off',
             spellcheck: 'false',
             describedBy: htmlId ~ '-help',
-            className: 'theme-danger-zone__input',
+            className: 'cremona-danger-zone__input',
             attrs: { 'data-danger-zone-target': 'input' },
           } only %}
-          {% include '@theme/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'tertiary', content: inputHelp | default('theme.danger-zone.input.help'|trans({ expected: expectedConfirmation })), htmlId: htmlId ~ '-help', className: 'theme-danger-zone__help' } only %}
+          {% include '@cremona/components/typography/typography.html.twig' with { as: 'p', variant: 'caption', color: 'tertiary', content: inputHelp | default('theme.danger-zone.input.help'|trans({ expected: expectedConfirmation })), htmlId: htmlId ~ '-help', className: 'cremona-danger-zone__help' } only %}
         </div>
       {%- endif -%}
     {%- endif -%}
   {% endblock %}
 
   {% block footer %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: buttonLabel,
       variant: 'destructive',
       size: 'md',
       disabled: _dzVariant == 'inline',
       ariaLabel: buttonAriaLabel,
-      className: 'theme-danger-zone__cta',
+      className: 'cremona-danger-zone__cta',
       attrs: _ctaAttrs,
     } only %}
   {% endblock %}

@@ -30,7 +30,7 @@ setLocale('fr');
 onMounted(() => boot(document.documentElement));
 
 function chevronIcon() {
-  return `<span class="theme-icon theme-icon-bidi theme-collapsible__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${chevronDownSvg}</span>`;
+  return `<span class="cremona-icon cremona-icon-bidi cremona-collapsible__chevron" data-icon="chevron-down" data-size="sm" aria-hidden="true" role="presentation">${chevronDownSvg}</span>`;
 }
 
 let _accordionItemCounter = 0;
@@ -41,17 +41,17 @@ function renderCollapsibleItem({ triggerLabel, contentHtml, open = false, disabl
   const triggerId = `${id}-trigger`;
   const contentId = `${id}-content`;
   return `
-    <div class="theme-collapsible" data-controller="collapsible" data-action="click->collapsible#toggle">
-      <button type="button" id="${triggerId}" class="theme-collapsible__trigger"
+    <div class="cremona-collapsible" data-controller="collapsible" data-action="click->collapsible#toggle">
+      <button type="button" id="${triggerId}" class="cremona-collapsible__trigger"
               aria-expanded="${open ? 'true' : 'false'}"
               aria-controls="${contentId}"
               ${disabled ? 'disabled' : ''}>
-        <span class="theme-collapsible__label">${triggerLabel}</span>
+        <span class="cremona-collapsible__label">${triggerLabel}</span>
         ${chevronIcon()}
       </button>
-      <div id="${contentId}" class="theme-collapsible__content"
+      <div id="${contentId}" class="cremona-collapsible__content"
            role="region" data-state="${open ? 'open' : 'closed'}">
-        <div class="theme-collapsible__content-inner">${contentHtml}</div>
+        <div class="cremona-collapsible__content-inner">${contentHtml}</div>
       </div>
     </div>
   `;
@@ -60,7 +60,7 @@ function renderCollapsibleItem({ triggerLabel, contentHtml, open = false, disabl
 function renderAccordion({ items, mode = 'single' }) {
   const inner = items.map((item) => renderCollapsibleItem(item)).join('');
   return `
-    <div class="theme-accordion"
+    <div class="cremona-accordion"
          data-controller="accordion"
          data-action="collapsible:toggle->accordion#onChildToggle keydown->accordion#keydown"
          data-accordion-mode-value="${mode}"
@@ -116,8 +116,8 @@ const bodyHtml = `
     </header>
 
     <section class="accordion-story__section" aria-labelledby="acc-section-single">
-      <h2 id="acc-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.single')}</h2>
-      <p class="accordion-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.single')}</p>
+      <h2 id="acc-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.single')}</h2>
+      <p class="accordion-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.single')}</p>
       <div class="accordion-story__stack">
         ${block(renderAccordion({
           mode: 'single',
@@ -131,8 +131,8 @@ const bodyHtml = `
     </section>
 
     <section class="accordion-story__section" aria-labelledby="acc-section-multi">
-      <h2 id="acc-section-multi" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.multi')}</h2>
-      <p class="accordion-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.multi')}</p>
+      <h2 id="acc-section-multi" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.multi')}</h2>
+      <p class="accordion-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.multi')}</p>
       <div class="accordion-story__stack">
         ${block(renderAccordion({
           mode: 'multi',
@@ -146,8 +146,8 @@ const bodyHtml = `
     </section>
 
     <section class="accordion-story__section" aria-labelledby="acc-section-disabled">
-      <h2 id="acc-section-disabled" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.disabled')}</h2>
-      <p class="accordion-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.disabled')}</p>
+      <h2 id="acc-section-disabled" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.disabled')}</h2>
+      <p class="accordion-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.disabled')}</p>
       <div class="accordion-story__stack">
         ${block(renderAccordion({
           mode: 'single',
@@ -161,8 +161,8 @@ const bodyHtml = `
     </section>
 
     <section class="accordion-story__section" aria-labelledby="acc-section-many">
-      <h2 id="acc-section-many" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.many-items')}</h2>
-      <p class="accordion-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.many-items')}</p>
+      <h2 id="acc-section-many" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.many-items')}</h2>
+      <p class="accordion-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.many-items')}</p>
       <div class="accordion-story__stack">
         ${block(renderAccordion({
           mode: 'single',
@@ -178,16 +178,16 @@ const bodyHtml = `
     </section>
 
     <section class="accordion-story__section" aria-labelledby="acc-section-composition">
-      <h2 id="acc-section-composition" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.composition')}</h2>
-      <p class="accordion-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.composition')}</p>
+      <h2 id="acc-section-composition" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.accordion.story.section.composition')}</h2>
+      <p class="accordion-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.accordion.story.explainer.composition')}</p>
       <div class="accordion-story__stack">
         ${block(`
-          <article class="theme-card" data-variant="surface">
-            <header class="theme-card__header">
-              <h3 class="theme-typography" data-variant="h3">${SAMPLES.cardTitle}</h3>
-              <p class="theme-typography" data-variant="caption" data-color="tertiary">${SAMPLES.cardSummary}</p>
+          <article class="cremona-card" data-variant="surface">
+            <header class="cremona-card__header">
+              <h3 class="cremona-typography" data-variant="h3">${SAMPLES.cardTitle}</h3>
+              <p class="cremona-typography" data-variant="caption" data-color="tertiary">${SAMPLES.cardSummary}</p>
             </header>
-            <div class="theme-card__body">
+            <div class="cremona-card__body">
               ${renderAccordion({
                 mode: 'single',
                 items: [

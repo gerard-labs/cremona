@@ -8,7 +8,7 @@
     - Standalone "Sign in with…" page wrapped in `_auth-shell` at consumer level
 
   Composes :
-    - Button (Ring 1) — via **compose-by-class** (`theme-button` styling
+    - Button (Ring 1) — via **compose-by-class** (`cremona-button` styling
       envelope inherited via the class name). Does NOT `{% include %}`
       button.html.twig because Button's `iconLeading` param expects a
       Lucide curated-set icon name and brand marks (GitHub / Google /
@@ -43,31 +43,31 @@
 {%- set orientation     = orientation     | default('vertical') -%}
 {%- set buttonVariant   = buttonVariant   | default('secondary') -%}
 {%- set size            = size            | default('md') -%}
-{%- set htmlId          = htmlId          | default('theme-auth-social-buttons-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-auth-social-buttons-' ~ random()) -%}
 {%- set className       = className       | default('') -%}
 
 {%- set _headingId = htmlId ~ '-heading' -%}
 
-{%- set _classes = ['theme-auth-social-buttons'] -%}
+{%- set _classes = ['cremona-auth-social-buttons'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div class="{{ _classes | join(' ') }}" data-orientation="{{ orientation }}" id="{{ htmlId }}">
   {%- if heading -%}
-    <p class="theme-auth-social-buttons__heading" id="{{ _headingId }}">{{ heading }}</p>
+    <p class="cremona-auth-social-buttons__heading" id="{{ _headingId }}">{{ heading }}</p>
   {%- endif -%}
 
   <div
-    class="theme-auth-social-buttons__list"
+    class="cremona-auth-social-buttons__list"
     {%- if heading %} aria-labelledby="{{ _headingId }}"{% endif -%}
   >
     {%- for provider in socialProviders -%}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: provider.label,
         variant: buttonVariant,
         size: size,
         href: provider.action,
         iconLeadingRaw: provider.icon,
-        className: 'theme-auth-social-button',
+        className: 'cremona-auth-social-button',
         attrs: { 'data-social-provider': provider.name },
       } only %}
     {%- endfor -%}

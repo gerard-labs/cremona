@@ -10,28 +10,28 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function renderIcon(name) {
-  return `<svg class="theme-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
+  return `<svg class="cremona-icon" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${name}"/></svg>`;
 }
 
 function renderTab({ href, label, icon, current = false, badge = null, showLabel = true }) {
   return `
-    <li class="theme-nav-bottom-mobile__item">
-      <a href="${href}" class="theme-nav-bottom-mobile__link"${current ? ' aria-current="page"' : ''}${!showLabel ? ` aria-label="${label}"` : ''}>
-        <span class="theme-nav-bottom-mobile__icon-wrap">
+    <li class="cremona-nav-bottom-mobile__item">
+      <a href="${href}" class="cremona-nav-bottom-mobile__link"${current ? ' aria-current="page"' : ''}${!showLabel ? ` aria-label="${label}"` : ''}>
+        <span class="cremona-nav-bottom-mobile__icon-wrap">
           ${renderIcon(icon)}
-          ${badge ? `<span class="theme-badge theme-nav-bottom-mobile__badge" data-variant="danger" data-size="sm">${badge}</span>` : ''}
+          ${badge ? `<span class="cremona-badge cremona-nav-bottom-mobile__badge" data-variant="danger" data-size="sm">${badge}</span>` : ''}
         </span>
-        ${showLabel ? `<span class="theme-nav-bottom-mobile__label">${label}</span>` : ''}
+        ${showLabel ? `<span class="cremona-nav-bottom-mobile__label">${label}</span>` : ''}
       </a>
     </li>
   `;
 }
 
 function renderBottomNav({ id = 'story-bottom-nav', items, showLabels = true }) {
-  const classes = ['theme-nav-bottom-mobile', !showLabels ? 'theme-nav-bottom-mobile--icon-only' : ''].filter(Boolean).join(' ');
+  const classes = ['cremona-nav-bottom-mobile', !showLabels ? 'cremona-nav-bottom-mobile--icon-only' : ''].filter(Boolean).join(' ');
   return `
     <nav class="${classes}" id="${id}" aria-label="${t('theme.nav.bottom-mobile.aria.label')}">
-      <ul class="theme-nav-bottom-mobile__list">${items.map(it => renderTab({ ...it, showLabel: showLabels })).join('')}</ul>
+      <ul class="cremona-nav-bottom-mobile__list">${items.map(it => renderTab({ ...it, showLabel: showLabels })).join('')}</ul>
     </nav>
   `;
 }
@@ -57,17 +57,17 @@ const bodyHtml = `
     </header>
 
     <section class="nav-bottom-mobile-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.bottom-mobile.story.section.default')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.bottom-mobile.story.section.default')}</h2>
       <div class="nav-bottom-mobile-story__frame">${renderBottomNav({ id: 'story-default', items: items4 })}</div>
     </section>
 
     <section class="nav-bottom-mobile-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.bottom-mobile.story.section.icon-only')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.bottom-mobile.story.section.icon-only')}</h2>
       <div class="nav-bottom-mobile-story__frame">${renderBottomNav({ id: 'story-icon-only', items: items4, showLabels: false })}</div>
     </section>
 
     <section class="nav-bottom-mobile-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.bottom-mobile.story.section.5-tabs')}</h2>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.nav.bottom-mobile.story.section.5-tabs')}</h2>
       <div class="nav-bottom-mobile-story__frame">${renderBottomNav({ id: 'story-5tabs', items: items5 })}</div>
     </section>
   </section>
@@ -89,6 +89,6 @@ const bodyHtml = `
 .nav-bottom-mobile-story__header p { font: var(--typography-body); color: var(--color-text-secondary); max-inline-size: 70ch; }
 .nav-bottom-mobile-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .nav-bottom-mobile-story__frame { display: flex; justify-content: center; align-items: flex-end; min-block-size: 100px; border: 1px dashed var(--color-border-subtle); border-radius: var(--radius-md); max-inline-size: 375px; margin-inline: auto; }
-.nav-bottom-mobile-story__frame .theme-nav-bottom-mobile { position: static; display: block !important; inline-size: 100%; }
+.nav-bottom-mobile-story__frame .cremona-nav-bottom-mobile { position: static; display: block !important; inline-size: 100%; }
 .nav-bottom-mobile-dark-wrap { background: var(--color-bg-base); padding: var(--spacing-4); }
 </style>

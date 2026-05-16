@@ -6,11 +6,11 @@
  * Form-FileUpload positions the two together.
  */
 
-.theme-form-file-upload {
-  /* Inherits .theme-field base layout (display: grid + gap). */
+.cremona-form-file-upload {
+  /* Inherits .cremona-field base layout (display: grid + gap). */
 }
 
-.theme-form-file-upload__widget {
+.cremona-form-file-upload__widget {
   /* Subtle inset border to delineate the file widget from the Field wrap.
      FilePond injects its own CSS chrome on top async ; this is fallback /
      initial visual before the chunk fetches. */
@@ -22,6 +22,6 @@
   transition: border-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-field--invalid .theme-form-file-upload__widget {
+.cremona-field--invalid .cremona-form-file-upload__widget {
   border-color: var(--color-danger-border);
 }

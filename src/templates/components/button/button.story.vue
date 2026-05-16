@@ -41,12 +41,12 @@ setTranslations('fr', frDict);
 setLocale('fr');
 
 function spinner(spinnerSize, inverted) {
-  return `<span class="theme-spinner${inverted ? ' theme-spinner--inverted' : ''} theme-button__spinner" data-size="${spinnerSize}" role="status" aria-live="polite"><svg viewBox="0 0 50 50" aria-hidden="true" focusable="false"><circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="25 75"></circle></svg><span class="theme-sr-only"></span></span>`;
+  return `<span class="cremona-spinner${inverted ? ' cremona-spinner--inverted' : ''} cremona-button__spinner" data-size="${spinnerSize}" role="status" aria-live="polite"><svg viewBox="0 0 50 50" aria-hidden="true" focusable="false"><circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="25 75"></circle></svg><span class="cremona-sr-only"></span></span>`;
 }
 
 function icon(name, size, modifier) {
   const sz = size === 'sm' ? 'sm' : 'md';
-  return `<span class="theme-icon theme-button__icon theme-button__icon--${modifier}" data-icon="${name}" data-size="${sz}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon cremona-button__icon cremona-button__icon--${modifier}" data-icon="${name}" data-size="${sz}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function renderButton(props = {}) {
@@ -56,8 +56,8 @@ function renderButton(props = {}) {
     ariaLabel, name, value, className,
   } = props;
 
-  const classes = ['theme-button'];
-  if (fullWidth) classes.push('theme-button--full-width');
+  const classes = ['cremona-button'];
+  if (fullWidth) classes.push('cremona-button--full-width');
   if (className) classes.push(className);
 
   const spinnerSize = size === 'lg' ? 'md' : 'sm';
@@ -67,7 +67,7 @@ function renderButton(props = {}) {
   if (loading) leadingHtml = spinner(spinnerSize, inverted);
   else if (iconLeading) leadingHtml = icon(iconLeading, size, 'leading');
   const trailingHtml = iconTrailing ? icon(iconTrailing, size, 'trailing') : '';
-  const labelHtml = label ? `<span class="theme-button__label">${label}</span>` : '';
+  const labelHtml = label ? `<span class="cremona-button__label">${label}</span>` : '';
 
   const tag = href ? 'a' : 'button';
   const attrs = [
@@ -125,7 +125,7 @@ const bodyHtml = `
     </header>
 
     <section class="button-story__section" aria-labelledby="button-section-default">
-      <h2 id="button-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.default')}</h2>
+      <h2 id="button-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.default')}</h2>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.save }), 'primary md')}
         ${row(renderButton({ label: SAMPLES.cancel, variant: 'secondary' }), 'secondary md')}
@@ -133,8 +133,8 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-variants">
-      <h2 id="button-section-variants" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.variants')}</h2>
-      <p class="button-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.variants')}</p>
+      <h2 id="button-section-variants" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.variants')}</h2>
+      <p class="button-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.variants')}</p>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.confirm, variant: 'primary' }),     'primary')}
         ${row(renderButton({ label: SAMPLES.cancel,  variant: 'secondary' }),   'secondary')}
@@ -145,8 +145,8 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-sizes">
-      <h2 id="button-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.sizes')}</h2>
-      <p class="button-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.sizes')}</p>
+      <h2 id="button-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.sizes')}</h2>
+      <p class="button-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.sizes')}</p>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.save, size: 'sm' }), 'sm (32 px)')}
         ${row(renderButton({ label: SAMPLES.save, size: 'md' }), 'md (40 px — défaut)')}
@@ -155,7 +155,7 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-states">
-      <h2 id="button-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.states')}</h2>
+      <h2 id="button-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.states')}</h2>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.save }),                                              'default')}
         ${row(renderButton({ label: SAMPLES.save, disabled: true }),                              'disabled')}
@@ -165,7 +165,7 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-with-icon">
-      <h2 id="button-section-with-icon" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.with-icon')}</h2>
+      <h2 id="button-section-with-icon" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.with-icon')}</h2>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.newProject, iconLeading: 'plus' }),                       'leading plus')}
         ${row(renderButton({ label: SAMPLES.back, iconLeading: 'arrow-left', variant: 'secondary' }), 'leading arrow-left (RTL flip)')}
@@ -177,8 +177,8 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-loading">
-      <h2 id="button-section-loading" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.loading')}</h2>
-      <p class="button-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.loading')}</p>
+      <h2 id="button-section-loading" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.loading')}</h2>
+      <p class="button-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.loading')}</p>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.exporting, iconLeading: 'plus', loading: true }), 'primary loading (remplace iconLeading)')}
         ${row(renderButton({ label: SAMPLES.save, loading: true }),                            'primary loading (sans iconLeading — prepend)')}
@@ -188,8 +188,8 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-full-width">
-      <h2 id="button-section-full-width" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.full-width')}</h2>
-      <p class="button-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.full-width')}</p>
+      <h2 id="button-section-full-width" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.full-width')}</h2>
+      <p class="button-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.full-width')}</p>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.createAccount, fullWidth: true }),                       'primary fullWidth')}
         ${row(renderButton({ label: SAMPLES.signIn, fullWidth: true, variant: 'secondary' }),         'secondary fullWidth')}
@@ -197,8 +197,8 @@ const bodyHtml = `
     </section>
 
     <section class="button-story__section" aria-labelledby="button-section-as-link">
-      <h2 id="button-section-as-link" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.as-link')}</h2>
-      <p class="button-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.as-link')}</p>
+      <h2 id="button-section-as-link" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.button.story.section.as-link')}</h2>
+      <p class="button-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.button.story.explainer.as-link')}</p>
       <div class="button-story__stack">
         ${row(renderButton({ label: SAMPLES.seeAll, href: '#all', iconTrailing: 'arrow-right' }), '<a> stylé comme button (primary)')}
         ${row(renderButton({ label: SAMPLES.seeAll, href: '#all', variant: 'secondary', iconTrailing: 'arrow-right' }), '<a> stylé comme secondary')}

@@ -24,7 +24,7 @@ import DialogController from './dialog_controller.js';
  *   - `@starting-style` rule per edge for the entry's starting frame
  *   - `transition allow-discrete` for the `display` / `overlay` discrete
  *     transitions (Baseline 2024 — same pattern as Dialog)
- *   - `--theme-drawer-flip` custom property (1 in LTR, -1 in RTL) inverts
+ *   - `--cremona-drawer-flip` custom property (1 in LTR, -1 in RTL) inverts
  *     the inline-axis transform direction for `edge="start"` / `edge="end"`
  *
  * The controller does NOT touch the transform/inset — those are pure CSS.

@@ -76,14 +76,14 @@ const ICONS = {
 
 function item({ label, href, icon = null, current = false }) {
   const iconHtml = icon && ICONS[icon]
-    ? `<span class="theme-icon theme-item__icon theme-item__icon--leading" data-icon="${icon}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[icon]}</span>`
+    ? `<span class="cremona-icon cremona-item__icon cremona-item__icon--leading" data-icon="${icon}" data-size="sm" aria-hidden="true" role="presentation">${ICONS[icon]}</span>`
     : '';
   const cur = current ? ' aria-current="page"' : '';
   return `<li>
-    <a class="theme-item" href="${href}"${cur}>
+    <a class="cremona-item" href="${href}"${cur}>
       ${iconHtml}
-      <div class="theme-item__text">
-        <span class="theme-item__label">${label}</span>
+      <div class="cremona-item__text">
+        <span class="cremona-item__label">${label}</span>
       </div>
     </a>
   </li>`;
@@ -98,33 +98,33 @@ function sidebar({
   footer = null,
 }) {
   const wrapId = id || nextId('sb');
-  const headerHtml = (brand || showCollapseToggle) ? `<div class="theme-sidebar__header">
-    ${brand ? `<a href="#" class="theme-sidebar__brand"><span class="theme-sidebar__brand-label">${brand}</span></a>` : ''}
+  const headerHtml = (brand || showCollapseToggle) ? `<div class="cremona-sidebar__header">
+    ${brand ? `<a href="#" class="cremona-sidebar__brand"><span class="cremona-sidebar__brand-label">${brand}</span></a>` : ''}
     ${showCollapseToggle ? `<button type="button"
-      class="theme-sidebar__collapse-toggle"
+      class="cremona-sidebar__collapse-toggle"
       data-sidebar-target="collapseToggle"
       data-action="click->sidebar#toggleCollapse"
       aria-controls="${wrapId}"
       aria-expanded="${collapsed ? 'false' : 'true'}"
       aria-label="${S('aria.toggle')}">
-      <span class="theme-sidebar__collapse-icon" aria-hidden="true"></span>
+      <span class="cremona-sidebar__collapse-icon" aria-hidden="true"></span>
     </button>` : ''}
   </div>` : '';
   const navHtml = sections.map((sec) => {
     const titleHtml = sec.title
-      ? `<h3 class="theme-sidebar__section-title">${sec.title}</h3>`
+      ? `<h3 class="cremona-sidebar__section-title">${sec.title}</h3>`
       : '';
     const itemsHtml = (sec.items || []).map(item).join('');
-    return `${titleHtml}<ul class="theme-sidebar__section">${itemsHtml}</ul>`;
+    return `${titleHtml}<ul class="cremona-sidebar__section">${itemsHtml}</ul>`;
   }).join('');
-  const footerHtml = footer ? `<div class="theme-sidebar__footer">${footer}</div>` : '';
-  return `<aside id="${wrapId}" class="theme-sidebar"
+  const footerHtml = footer ? `<div class="cremona-sidebar__footer">${footer}</div>` : '';
+  return `<aside id="${wrapId}" class="cremona-sidebar"
     data-controller="sidebar"
     data-sidebar-collapsed-value="${collapsed}"
     data-collapsed="${collapsed}"
     aria-label="${S('aria.main')}">
     ${headerHtml}
-    <nav class="theme-sidebar__nav" aria-label="${S('aria.sections')}">
+    <nav class="cremona-sidebar__nav" aria-label="${S('aria.sections')}">
       ${navHtml}
     </nav>
     ${footerHtml}
@@ -148,8 +148,8 @@ const defaultSections = [
   },
 ];
 
-const footerUserMenu = `<button type="button" class="theme-button" data-variant="ghost" data-size="sm" style="inline-size: 100%; justify-content: flex-start;">
-  <span class="theme-icon theme-item__icon" data-icon="arrow-left" data-size="sm" aria-hidden="true" role="presentation">${arrowLeftSvg}</span>
+const footerUserMenu = `<button type="button" class="cremona-button" data-variant="ghost" data-size="sm" style="inline-size: 100%; justify-content: flex-start;">
+  <span class="cremona-icon cremona-item__icon" data-icon="arrow-left" data-size="sm" aria-hidden="true" role="presentation">${arrowLeftSvg}</span>
   <span>${S('item.logout')}</span>
 </button>`;
 
@@ -161,49 +161,49 @@ const bodyHtml = `
     </header>
 
     <section class="sb-story__section" aria-labelledby="sb-section-default">
-      <h2 id="sb-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
-      <p class="sb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
+      <h2 id="sb-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.default')}</h2>
+      <p class="sb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.default')}</p>
       <div class="sb-story__shell">
         ${sidebar({ brand: 'Samurai', sections: defaultSections })}
         <div class="sb-story__shell-main">
-          <h3 class="theme-typography" data-variant="h3">${S('shell.placeholder-title')}</h3>
-          <p class="theme-typography" data-variant="body">${S('shell.placeholder-body')}</p>
+          <h3 class="cremona-typography" data-variant="h3">${S('shell.placeholder-title')}</h3>
+          <p class="cremona-typography" data-variant="body">${S('shell.placeholder-body')}</p>
         </div>
       </div>
     </section>
 
     <section class="sb-story__section" aria-labelledby="sb-section-collapsed">
-      <h2 id="sb-section-collapsed" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.collapsed')}</h2>
-      <p class="sb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.collapsed')}</p>
+      <h2 id="sb-section-collapsed" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.collapsed')}</h2>
+      <p class="sb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.collapsed')}</p>
       <div class="sb-story__shell">
         ${sidebar({ id: 'sb-collapsed', brand: 'Samurai', collapsed: true, sections: defaultSections })}
         <div class="sb-story__shell-main">
-          <h3 class="theme-typography" data-variant="h3">${S('shell.collapsed-title')}</h3>
-          <p class="theme-typography" data-variant="body">${S('shell.collapsed-body')}</p>
+          <h3 class="cremona-typography" data-variant="h3">${S('shell.collapsed-title')}</h3>
+          <p class="cremona-typography" data-variant="body">${S('shell.collapsed-body')}</p>
         </div>
       </div>
     </section>
 
     <section class="sb-story__section" aria-labelledby="sb-section-footer">
-      <h2 id="sb-section-footer" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.footer')}</h2>
-      <p class="sb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.footer')}</p>
+      <h2 id="sb-section-footer" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.footer')}</h2>
+      <p class="sb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.footer')}</p>
       <div class="sb-story__shell">
         ${sidebar({ brand: 'Samurai', sections: defaultSections, footer: footerUserMenu })}
         <div class="sb-story__shell-main">
-          <h3 class="theme-typography" data-variant="h3">${S('shell.footer-title')}</h3>
-          <p class="theme-typography" data-variant="body">${S('shell.footer-body')}</p>
+          <h3 class="cremona-typography" data-variant="h3">${S('shell.footer-title')}</h3>
+          <p class="cremona-typography" data-variant="body">${S('shell.footer-body')}</p>
         </div>
       </div>
     </section>
 
     <section class="sb-story__section" aria-labelledby="sb-section-events">
-      <h2 id="sb-section-events" class="theme-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
-      <p class="sb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
+      <h2 id="sb-section-events" class="cremona-typography" data-variant="overline" data-color="tertiary">${S('section.events')}</h2>
+      <p class="sb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${S('explainer.events')}</p>
       <div class="sb-story__shell">
         ${sidebar({ id: 'sb-events-demo', brand: 'Samurai', sections: defaultSections.slice(0, 1) })}
         <div class="sb-story__shell-main">
           <div class="sb-story__log" data-events-log="sb-events-demo">
-            <div class="theme-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
+            <div class="cremona-typography" data-variant="overline" data-color="tertiary">${S('events.log')}</div>
             <div data-events-out class="sb-story__log-out"></div>
           </div>
         </div>
@@ -229,7 +229,7 @@ const bodyHtml = `
 .sb-story__section { display: grid; gap: var(--spacing-3); padding: var(--spacing-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
 .sb-story__explainer { max-inline-size: 70ch; }
 .sb-story__shell { display: flex; align-items: stretch; min-block-size: 320px; max-block-size: 480px; overflow: hidden; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
-.sb-story__shell .theme-sidebar { min-block-size: 0; }
+.sb-story__shell .cremona-sidebar { min-block-size: 0; }
 .sb-story__shell-main { flex: 1 1 auto; padding: var(--spacing-6); background: var(--color-bg-base); display: flex; flex-direction: column; gap: var(--spacing-3); }
 .sb-story__log { display: grid; gap: var(--spacing-2); padding: var(--spacing-3); background: var(--color-bg-sunken); border-radius: var(--radius-sm); font: var(--typography-code); font-size: var(--font-size-xs); }
 .sb-story__log-out { display: grid; gap: var(--spacing-1); color: var(--color-text-secondary); min-block-size: var(--spacing-8); }

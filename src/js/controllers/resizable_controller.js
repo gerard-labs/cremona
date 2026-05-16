@@ -10,7 +10,7 @@ import { Controller } from '@hotwired/stimulus';
  *
  * Architecture:
  *   CSS Grid 2-pane layout with the start pane's size driven by a CSS
- *   custom property `--theme-resizable-size`. The controller updates this
+ *   custom property `--cremona-resizable-size`. The controller updates this
  *   custom prop on pointer move + keyboard arrow keys. The handle in the
  *   middle is a draggable + focusable element with role="separator".
  *
@@ -98,7 +98,7 @@ export default class ResizableController extends Controller {
   }
 
   _applySize() {
-    this.element.style.setProperty('--theme-resizable-size', `${this.sizeValue}%`);
+    this.element.style.setProperty('--cremona-resizable-size', `${this.sizeValue}%`);
   }
 
   /** Stimulus auto-callback. */

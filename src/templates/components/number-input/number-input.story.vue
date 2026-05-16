@@ -51,15 +51,15 @@ function renderNumberInput({
   const describedByAttr = describedBy ? ` aria-describedby="${describedBy}"` : '';
 
   return `
-    <div class="theme-number-input" data-controller="number-input" data-size="${size}">
-      <button type="button" class="theme-number-input__btn theme-number-input__btn--decrement"
+    <div class="cremona-number-input" data-controller="number-input" data-size="${size}">
+      <button type="button" class="cremona-number-input__btn cremona-number-input__btn--decrement"
               aria-label="${decAria}"
               data-number-input-target="decrement"
               data-action="click->number-input#decrement"${disabledAttr}><span aria-hidden="true">−</span></button>
-      <input class="theme-input theme-number-input__input" type="number" inputmode="numeric"
+      <input class="cremona-input cremona-number-input__input" type="number" inputmode="numeric"
              data-size="${size}"
              data-number-input-target="input"${nameAttr}${idAttr}${valueAttr}${minAttr}${maxAttr}${stepAttr}${placeholderAttr}${requiredAttr}${disabledAttr}${readonlyAttr}${invalidAttr}${describedByAttr}>
-      <button type="button" class="theme-number-input__btn theme-number-input__btn--increment"
+      <button type="button" class="cremona-number-input__btn cremona-number-input__btn--increment"
               aria-label="${incAria}"
               data-number-input-target="increment"
               data-action="click->number-input#increment"${disabledAttr}><span aria-hidden="true">+</span></button>
@@ -83,8 +83,8 @@ const bodyHtml = `
     </header>
 
     <section class="ni-story__section" aria-labelledby="ni-section-default">
-      <h2 id="ni-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.default')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.default-explainer')}</p>
+      <h2 id="ni-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.default')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.default-explainer')}</p>
       <div class="ni-story__row">
         ${renderNumberInput({ name: 'qty-1', value: 1, htmlId: 'qty-1' })}
         ${renderNumberInput({ name: 'qty-empty', placeholder: t('theme.number-input.story.placeholder.empty'), htmlId: 'qty-empty' })}
@@ -92,42 +92,42 @@ const bodyHtml = `
     </section>
 
     <section class="ni-story__section" aria-labelledby="ni-section-min-max">
-      <h2 id="ni-section-min-max" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.min-max')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.min-max-explainer')}</p>
+      <h2 id="ni-section-min-max" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.min-max')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.min-max-explainer')}</p>
       <div class="ni-story__row">
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.qty-bounded')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.qty-bounded')}</p>
           ${renderNumberInput({ name: 'qty-bounded', value: 5, min: 1, max: 10, htmlId: 'qty-bounded' })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.qty-at-min')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.qty-at-min')}</p>
           ${renderNumberInput({ name: 'qty-at-min', value: 1, min: 1, max: 10, htmlId: 'qty-at-min' })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.qty-at-max')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.qty-at-max')}</p>
           ${renderNumberInput({ name: 'qty-at-max', value: 10, min: 1, max: 10, htmlId: 'qty-at-max' })}
         </div>
       </div>
     </section>
 
     <section class="ni-story__section" aria-labelledby="ni-section-step">
-      <h2 id="ni-section-step" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.step')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.step-explainer')}</p>
+      <h2 id="ni-section-step" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.step')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.step-explainer')}</p>
       <div class="ni-story__row">
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.step-5')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.step-5')}</p>
           ${renderNumberInput({ name: 'step5', value: 25, min: 0, max: 100, step: 5, htmlId: 'step5' })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.step-decimal')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.step-decimal')}</p>
           ${renderNumberInput({ name: 'price', value: 9.99, min: 0, step: 0.01, htmlId: 'price' })}
         </div>
       </div>
     </section>
 
     <section class="ni-story__section" aria-labelledby="ni-section-sizes">
-      <h2 id="ni-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.sizes')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.sizes-explainer')}</p>
+      <h2 id="ni-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.sizes')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.sizes-explainer')}</p>
       <div class="ni-story__row">
         ${renderNumberInput({ name: 'sz-sm', value: 1, size: 'sm', htmlId: 'sz-sm' })}
         ${renderNumberInput({ name: 'sz-md', value: 1, size: 'md', htmlId: 'sz-md' })}
@@ -136,30 +136,30 @@ const bodyHtml = `
     </section>
 
     <section class="ni-story__section" aria-labelledby="ni-section-states">
-      <h2 id="ni-section-states" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.states')}</h2>
+      <h2 id="ni-section-states" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.states')}</h2>
       <div class="ni-story__row">
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.disabled')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.disabled')}</p>
           ${renderNumberInput({ name: 'disabled', value: 5, disabled: true, htmlId: 'disabled' })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.readonly')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.number-input.story.label.readonly')}</p>
           ${renderNumberInput({ name: 'readonly', value: 7, readonly: true, htmlId: 'readonly' })}
         </div>
       </div>
     </section>
 
     <section class="ni-story__section" aria-labelledby="ni-section-field">
-      <h2 id="ni-section-field" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.field')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.field-explainer')}</p>
-      <div class="theme-field" style="max-inline-size: 320px;">
-        <label class="theme-label" for="field-qty">
+      <h2 id="ni-section-field" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.number-input.story.section.field')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.number-input.story.section.field-explainer')}</p>
+      <div class="cremona-field" style="max-inline-size: 320px;">
+        <label class="cremona-label" for="field-qty">
           ${t('theme.number-input.story.field.label')}
-          <span class="theme-label__required" aria-hidden="true">*</span>
+          <span class="cremona-label__required" aria-hidden="true">*</span>
           <span class="sr-only">${t('theme.number-input.story.field.required')}</span>
         </label>
         ${renderNumberInput({ name: 'field-qty', value: 1, min: 1, max: 99, htmlId: 'field-qty', required: true, describedBy: 'field-qty-help' })}
-        <p class="theme-field__help" id="field-qty-help">${t('theme.number-input.story.field.help')}</p>
+        <p class="cremona-field__help" id="field-qty-help">${t('theme.number-input.story.field.help')}</p>
       </div>
     </section>
   </section>

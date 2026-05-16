@@ -32,7 +32,7 @@
 
   Usage:
 
-    {% include '@theme/components/stepper/stepper.html.twig' with {
+    {% include '@cremona/components/stepper/stepper.html.twig' with {
       currentStep: 2,
       label: 'Création de compte'|trans,
       steps: [
@@ -47,7 +47,7 @@
     stepper:step-change — detail.{ currentStep, previousStep, totalSteps, completed }
 -#}
 
-{%- set htmlId       = htmlId       | default('theme-stepper-' ~ random()) -%}
+{%- set htmlId       = htmlId       | default('cremona-stepper-' ~ random()) -%}
 {%- set steps        = steps        | default([]) -%}
 {%- set currentStep  = currentStep  | default(1) -%}
 {%- set totalSteps   = totalSteps   | default(steps | length) -%}
@@ -57,7 +57,7 @@
 {%- set className    = className    | default('') -%}
 {%- set controllerless = controllerless | default(false) -%}
 
-{%- set _classes = ['theme-stepper'] -%}
+{%- set _classes = ['cremona-stepper'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <ol
@@ -82,20 +82,20 @@
     -%}
     <li
       id="{{ htmlId }}-step-{{ idx }}"
-      class="theme-stepper__step"
+      class="cremona-stepper__step"
       data-stepper-target="step"
       data-step-index="{{ idx }}"
       data-state="{{ state }}"
       {%- if state == 'current' %} aria-current="step"{% endif -%}
     >
-      <span class="theme-stepper__indicator" aria-hidden="true">
-        <span class="theme-stepper__indicator-number">{{ idx }}</span>
-        <span class="theme-stepper__indicator-check"></span>
+      <span class="cremona-stepper__indicator" aria-hidden="true">
+        <span class="cremona-stepper__indicator-number">{{ idx }}</span>
+        <span class="cremona-stepper__indicator-check"></span>
       </span>
-      <div class="theme-stepper__text">
-        <span class="theme-stepper__label">{{ step.label }}</span>
+      <div class="cremona-stepper__text">
+        <span class="cremona-stepper__label">{{ step.label }}</span>
         {%- if step.description is defined and step.description -%}
-          <span class="theme-stepper__description">{{ step.description }}</span>
+          <span class="cremona-stepper__description">{{ step.description }}</span>
         {%- endif -%}
       </div>
     </li>

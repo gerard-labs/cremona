@@ -24,41 +24,41 @@
     clearLabel      (string, optional, default 'Effacer les filtres')
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-faceted-filters-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-faceted-filters-' ~ random()) -%}
 {%- set title       = title       | default('theme.search-faceted-filters.title'|trans) -%}
 {%- set groups      = groups      | default([]) -%}
 {%- set showClear   = showClear   ?? true -%}
 {%- set clearLabel  = clearLabel  | default('theme.search-faceted-filters.clear'|trans) -%}
 
-<aside class="theme-search-faceted-filters"
+<aside class="cremona-search-faceted-filters"
        id="{{ htmlId }}"
        data-controller="faceted-filters"
        data-faceted-filters-mode-value="multi"
        aria-labelledby="{{ htmlId }}-title">
 
-  <header class="theme-search-faceted-filters__header">
-    <h2 id="{{ htmlId }}-title" class="theme-search-faceted-filters__title">{{ title }}</h2>
+  <header class="cremona-search-faceted-filters__header">
+    <h2 id="{{ htmlId }}-title" class="cremona-search-faceted-filters__title">{{ title }}</h2>
     {% if showClear %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: clearLabel,
         variant: 'ghost',
         size: 'sm',
-        className: 'theme-search-faceted-filters__clear',
+        className: 'cremona-search-faceted-filters__clear',
         attrs: { 'data-action': 'click->faceted-filters#clear' },
       } only %}
     {% endif %}
   </header>
 
   {% for group in groups %}
-    <fieldset class="theme-search-faceted-filters__group" data-group-key="{{ group.key }}">
-      <legend class="theme-search-faceted-filters__group-title">{{ group.label }}</legend>
+    <fieldset class="cremona-search-faceted-filters__group" data-group-key="{{ group.key }}">
+      <legend class="cremona-search-faceted-filters__group-title">{{ group.label }}</legend>
 
       {% if group.kind == 'checkbox' %}
-        <ul class="theme-search-faceted-filters__options" role="list">
+        <ul class="cremona-search-faceted-filters__options" role="list">
           {% for option in group.options %}
             {% set optionId = htmlId ~ '-' ~ group.key ~ '-' ~ option.value %}
-            <li class="theme-search-faceted-filters__option">
-              {% include '@theme/components/checkbox/checkbox.html.twig' with {
+            <li class="cremona-search-faceted-filters__option">
+              {% include '@cremona/components/checkbox/checkbox.html.twig' with {
                 htmlId: optionId,
                 name: group.key,
                 value: option.value,
@@ -66,7 +66,7 @@
                 label: option.label,
               } only %}
               {% if option.count is defined and option.count is not null %}
-                <span class="theme-search-faceted-filters__option-count" aria-hidden="true">
+                <span class="cremona-search-faceted-filters__option-count" aria-hidden="true">
                   {{ option.count }}
                 </span>
               {% endif %}
@@ -75,8 +75,8 @@
         </ul>
 
       {% elseif group.kind == 'range' %}
-        <div class="theme-search-faceted-filters__range">
-          {% include '@theme/components/slider/slider.html.twig' with {
+        <div class="cremona-search-faceted-filters__range">
+          {% include '@cremona/components/slider/slider.html.twig' with {
             htmlId: htmlId ~ '-' ~ group.key,
             name: group.key,
             min: group.min,
@@ -85,28 +85,28 @@
             value: group.value | default(group.valueMin | default(group.min)),
             ariaLabel: group.label,
           } only %}
-          <div class="theme-search-faceted-filters__range-values">
+          <div class="cremona-search-faceted-filters__range-values">
             <span>{{ group.formatValueMin | default(group.valueMin | default(group.min)) }}</span>
             <span>{{ group.formatValueMax | default(group.valueMax | default(group.max)) }}</span>
           </div>
         </div>
 
       {% elseif group.kind == 'radio' %}
-        <ul class="theme-search-faceted-filters__options" role="list">
+        <ul class="cremona-search-faceted-filters__options" role="list">
           {% for option in group.options %}
             {% set optionId = htmlId ~ '-' ~ group.key ~ '-' ~ option.value %}
-            <li class="theme-search-faceted-filters__option">
+            <li class="cremona-search-faceted-filters__option">
               <input type="radio"
                      id="{{ optionId }}"
                      name="{{ group.key }}"
                      value="{{ option.value }}"
-                     class="theme-radio"
+                     class="cremona-radio"
                      {{ option.checked | default(false) ? 'checked' }} />
-              <label for="{{ optionId }}" class="theme-search-faceted-filters__option-label">
+              <label for="{{ optionId }}" class="cremona-search-faceted-filters__option-label">
                 {{ option.label }}
               </label>
               {% if option.count is defined and option.count is not null %}
-                <span class="theme-search-faceted-filters__option-count" aria-hidden="true">
+                <span class="cremona-search-faceted-filters__option-count" aria-hidden="true">
                   {{ option.count }}
                 </span>
               {% endif %}

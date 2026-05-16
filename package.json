@@ -10,15 +10,15 @@
     "pnpm": ">=10.0.0"
   },
   "packageManager": "pnpm@11.1.1",
-  "main": "./dist/theme.js",
-  "module": "./dist/theme.js",
-  "style": "./dist/theme.css",
+  "main": "./dist/cremona.js",
+  "module": "./dist/cremona.js",
+  "style": "./dist/cremona.css",
   "exports": {
     ".": {
-      "import": "./dist/theme.js",
-      "style": "./dist/theme.css"
+      "import": "./dist/cremona.js",
+      "style": "./dist/cremona.css"
     },
-    "./theme.css": "./dist/theme.css"
+    "./cremona.css": "./dist/cremona.css"
   },
   "sideEffects": [
     "**/*.css"

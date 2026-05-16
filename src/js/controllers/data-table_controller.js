@@ -136,7 +136,7 @@ export default class DataTableController extends Controller {
 
   /**
    * Sync aria-sort on each sortable <th> + data-sort-dir on the inner
-   * `.theme-table__sort` button. Only the current sortColumn carries the
+   * `.cremona-table__sort` button. Only the current sortColumn carries the
    * active direction; all others reset to 'none'.
    */
   _syncSortAria() {
@@ -144,7 +144,7 @@ export default class DataTableController extends Controller {
     const headers = this.tableTarget.querySelectorAll('thead th[data-sortable="true"]');
     headers.forEach((th) => {
       const col = th.dataset.dataTableColumn;
-      const sortBtn = th.querySelector('.theme-table__sort');
+      const sortBtn = th.querySelector('.cremona-table__sort');
       if (col === this.sortColumnValue) {
         th.setAttribute('aria-sort', this.sortDirValue);
         if (sortBtn) sortBtn.setAttribute('data-sort-dir', this.sortDirValue);

@@ -21,46 +21,46 @@ function renderItem({ label, description = null, iconLeading = null, href = null
     ? `href="${href || '#'}"`
     : `type="button"`;
   const iconL = iconLeading
-    ? `<svg class="theme-icon theme-item__icon--leading" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${iconLeading}"/></svg>`
+    ? `<svg class="cremona-icon cremona-item__icon--leading" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-${iconLeading}"/></svg>`
     : '';
   const desc = description
-    ? `<span class="theme-item__description">${description}</span>`
+    ? `<span class="cremona-item__description">${description}</span>`
     : '';
   return `
-    <${tag} class="theme-item" ${attrs} aria-label="${ariaLabel}">
+    <${tag} class="cremona-item" ${attrs} aria-label="${ariaLabel}">
       ${iconL}
-      <div class="theme-item__text">
-        <span class="theme-item__label">${label}</span>
+      <div class="cremona-item__text">
+        <span class="cremona-item__label">${label}</span>
         ${desc}
       </div>
-      <svg class="theme-icon theme-item__icon--trailing" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-chevron-right"/></svg>
+      <svg class="cremona-icon cremona-item__icon--trailing" data-size="sm" aria-hidden="true" focusable="false"><use href="#icon-chevron-right"/></svg>
     </${tag}>
   `;
 }
 
 function renderSearchResults({ query, results, countLabel, showCount = true, empty = false }) {
   const header = showCount
-    ? `<header class="theme-search-results__header">
-         <h2 class="theme-search-results__count">${countLabel}</h2>
+    ? `<header class="cremona-search-results__header">
+         <h2 class="cremona-search-results__count">${countLabel}</h2>
        </header>`
     : '';
   const body = empty
-    ? `<div class="theme-search-results__empty">
-         <div class="theme-empty" data-size="md" role="region">
-           <div class="theme-empty__illustration" aria-hidden="true">
-             <svg class="theme-icon theme-empty__icon" data-size="xl" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
+    ? `<div class="cremona-search-results__empty">
+         <div class="cremona-empty" data-size="md" role="region">
+           <div class="cremona-empty__illustration" aria-hidden="true">
+             <svg class="cremona-icon cremona-empty__icon" data-size="xl" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
            </div>
-           <div class="theme-empty__content">
-             <h2 class="theme-empty__title">${t('theme.search-results.empty.title')}</h2>
-             <div class="theme-empty__body"><p>${t('theme.search-results.empty.body').replace('%s', query)}</p></div>
+           <div class="cremona-empty__content">
+             <h2 class="cremona-empty__title">${t('theme.search-results.empty.title')}</h2>
+             <div class="cremona-empty__body"><p>${t('theme.search-results.empty.body').replace('%s', query)}</p></div>
            </div>
          </div>
        </div>`
-    : `<ul class="theme-search-results__list" role="list">
-         ${results.map((r) => `<li class="theme-search-results__item">${renderItem(r)}</li>`).join('')}
+    : `<ul class="cremona-search-results__list" role="list">
+         ${results.map((r) => `<li class="cremona-search-results__item">${renderItem(r)}</li>`).join('')}
        </ul>`;
   return `
-    <section class="theme-search-results" aria-labelledby="story-search-results-title" data-query="${query}">
+    <section class="cremona-search-results" aria-labelledby="story-search-results-title" data-query="${query}">
       ${header}
       ${body}
     </section>
@@ -109,8 +109,8 @@ const bodyHtml = `
     </header>
 
     <section class="search-results-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.default')}</h2>
-      <p class="search-results-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.default')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.default')}</h2>
+      <p class="search-results-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.default')}</p>
       <div class="search-results-story__frame">
         ${renderSearchResults({
           query: 'design',
@@ -121,8 +121,8 @@ const bodyHtml = `
     </section>
 
     <section class="search-results-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.with-descriptions')}</h2>
-      <p class="search-results-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.with-descriptions')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.with-descriptions')}</h2>
+      <p class="search-results-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.with-descriptions')}</p>
       <div class="search-results-story__frame">
         ${renderSearchResults({
           query: 'utilisateur',
@@ -133,8 +133,8 @@ const bodyHtml = `
     </section>
 
     <section class="search-results-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.mixed-elements')}</h2>
-      <p class="search-results-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.mixed-elements')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.mixed-elements')}</h2>
+      <p class="search-results-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.mixed-elements')}</p>
       <div class="search-results-story__frame">
         ${renderSearchResults({
           query: 'mixed',
@@ -145,8 +145,8 @@ const bodyHtml = `
     </section>
 
     <section class="search-results-story__section">
-      <h2 class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.empty')}</h2>
-      <p class="search-results-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.empty')}</p>
+      <h2 class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.search-results.story.section.empty')}</h2>
+      <p class="search-results-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.search-results.story.explainer.empty')}</p>
       <div class="search-results-story__frame">
         ${renderSearchResults({
           query: 'xyznonexistent',

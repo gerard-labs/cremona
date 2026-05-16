@@ -29,17 +29,17 @@
 {%- set resendHref        = resendHref        | default('#') -%}
 {%- set backToLoginLabel  = backToLoginLabel  | default('theme.auth.email-verification.back-to-login-cta'|trans) -%}
 {%- set backToLoginHref   = backToLoginHref   | default(null) -%}
-{%- set htmlId            = htmlId            | default('theme-auth-email-verification') -%}
+{%- set htmlId            = htmlId            | default('cremona-auth-email-verification') -%}
 {%- set className         = className         | default('') -%}
 
-{% embed '@theme/components/_auth-shell/_auth-shell.html.twig' with {
+{% embed '@cremona/components/_auth-shell/_auth-shell.html.twig' with {
   title: null,
   htmlId: htmlId,
   variant: 'default',
-  className: ('theme-auth-email-verification ' ~ className)|trim,
+  className: ('cremona-auth-email-verification ' ~ className)|trim,
 } %}
   {% block content %}
-    {% embed '@theme/components/empty/empty.html.twig' with {
+    {% embed '@cremona/components/empty/empty.html.twig' with {
       title: title,
       body: body,
       icon: 'check',
@@ -48,14 +48,14 @@
       htmlId: htmlId ~ '-empty',
     } %}
       {% block actions %}
-        {% include '@theme/components/button/button.html.twig' with {
+        {% include '@cremona/components/button/button.html.twig' with {
           label: resendLabel,
           variant: 'secondary',
           size: 'md',
           href: resendHref,
         } %}
         {% if backToLoginHref %}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: backToLoginLabel,
             variant: 'ghost',
             size: 'md',

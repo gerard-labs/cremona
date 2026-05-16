@@ -46,7 +46,7 @@ const tick = () => new Promise((r) => setTimeout(r, 0));
  * context (aria-activedescendant nav, Enter selects, click selects).
  *
  * Per OQ-31 (sealed S2.3b opening): announce results count via the shared
- * #theme-announcer (declared in base/reset.css). Tests inject the announcer
+ * #cremona-announcer (declared in base/reset.css). Tests inject the announcer
  * element manually since base/reset.css isn't loaded in test env.
  *
  * Per S1.4b descriptor-binding gotcha: tests call controller methods
@@ -60,7 +60,7 @@ const tick = () => new Promise((r) => setTimeout(r, 0));
  *   5. filter() — sets activedescendant on first visible option.
  *   6. filter() — clears activedescendant when no visible options.
  *   7. filter() — dispatches combobox:filter with detail.{query, count}.
- *   8. filter() — announces count to #theme-announcer (count > 0).
+ *   8. filter() — announces count to #cremona-announcer (count > 0).
  *   9. filter() — clears announcer to "" when count = 0 (empty state covers).
  *  10. filter() — excludes aria-disabled options from visibleCount.
  *  11. keydown ArrowDown when closed → opens popover.
@@ -87,7 +87,7 @@ describe('ComboboxController', () => {
     document.documentElement.dir = 'ltr';
     // Inject the shared announcer (declared in base/reset.css in production).
     const announcer = document.createElement('div');
-    announcer.id = 'theme-announcer';
+    announcer.id = 'cremona-announcer';
     announcer.className = 'sr-only';
     announcer.setAttribute('aria-live', 'polite');
     announcer.setAttribute('aria-atomic', 'true');
@@ -125,26 +125,26 @@ describe('ComboboxController', () => {
           ? ' aria-disabled="true" data-state="disabled"'
           : '';
         const sel = o.value === value && value !== '';
-        return `<div class="theme-item theme-combobox__option"
+        return `<div class="cremona-item cremona-combobox__option"
           id="cbx-opt-${i + 1}"
           data-combobox-target="option"
           data-value="${o.value}"
           data-hidden="false"
           role="option"
           aria-selected="${sel ? 'true' : 'false'}"${dis}>
-          <span class="theme-item__text"><span class="theme-item__label">${o.label}</span></span>
+          <span class="cremona-item__text"><span class="cremona-item__label">${o.label}</span></span>
         </div>`;
       })
       .join('');
     const selectedOpt = opts.find((o) => o.value === value && value !== '');
     const initialInputValue = selectedOpt ? selectedOpt.label : '';
     // The announcer was injected by beforeEach — preserve it.
-    const announcer = document.getElementById('theme-announcer');
+    const announcer = document.getElementById('cremona-announcer');
     const wrapper = document.createElement('div');
     wrapper.id = 'host';
     wrapper.innerHTML = `
       <form id="form">
-        <div id="wrap" class="theme-popover theme-combobox"
+        <div id="wrap" class="cremona-popover cremona-combobox"
           data-controller="popover combobox"
           data-action="keydown.esc@window->popover#close keydown->combobox#keydown input->combobox#filter focus->combobox#openOnFocus click->combobox#onOptionClick"
           data-popover-placement-value="bottom-start"
@@ -153,8 +153,8 @@ describe('ComboboxController', () => {
           data-combobox-value-value="${value}"
           data-combobox-placeholder-value="${placeholder}"
           data-combobox-query-value="">
-          <div class="theme-combobox__wrap">
-            <input type="text" class="theme-combobox__input"
+          <div class="cremona-combobox__wrap">
+            <input type="text" class="cremona-combobox__input"
               data-popover-target="trigger"
               data-combobox-target="input"
               data-size="md"
@@ -165,16 +165,16 @@ describe('ComboboxController', () => {
               placeholder="${placeholder}"
               aria-autocomplete="list"
               aria-haspopup="listbox" aria-expanded="false" aria-controls="cbx-listbox">
-            <span class="theme-combobox__chevron" aria-hidden="true">v</span>
+            <span class="cremona-combobox__chevron" aria-hidden="true">v</span>
           </div>
           <input type="hidden" name="lang" value="${value}" data-combobox-target="hiddenInput">
-          <div id="cbx-listbox" class="theme-popover__content theme-combobox__listbox"
+          <div id="cbx-listbox" class="cremona-popover__content cremona-combobox__listbox"
             data-popover-target="content"
             data-state="closed"
             role="listbox"
             hidden>
-            <div class="theme-combobox__options" data-combobox-target="optionsContainer">${optionsHtml}</div>
-            <div class="theme-combobox__empty" data-combobox-target="empty" hidden>Aucun résultat pour « <strong data-combobox-target="emptyQuery"></strong> »</div>
+            <div class="cremona-combobox__options" data-combobox-target="optionsContainer">${optionsHtml}</div>
+            <div class="cremona-combobox__empty" data-combobox-target="empty" hidden>Aucun résultat pour « <strong data-combobox-target="emptyQuery"></strong> »</div>
           </div>
         </div>
       </form>
@@ -184,7 +184,7 @@ describe('ComboboxController', () => {
     // Make sure the announcer stays at body level (Stimulus's app.start
     // scans documentElement for controllers; the announcer outside any
     // controller stays untouched).
-    if (!document.getElementById('theme-announcer')) {
+    if (!document.getElementById('cremona-announcer')) {
       document.body.appendChild(announcer);
     }
 
@@ -200,7 +200,7 @@ describe('ComboboxController', () => {
       empty: document.querySelector('[data-combobox-target="empty"]'),
       emptyQuery: document.querySelector('[data-combobox-target="emptyQuery"]'),
       options: opts.map((_, i) => document.getElementById(`cbx-opt-${i + 1}`)),
-      announcer: document.getElementById('theme-announcer'),
+      announcer: document.getElementById('cremona-announcer'),
       cbxCtrl: app.controllers.find((c) => c.identifier === 'combobox'),
       popoverCtrl: app.controllers.find((c) => c.identifier === 'popover'),
     };
@@ -279,7 +279,7 @@ describe('ComboboxController', () => {
     expect(captured.detail.count).toBe(1);
   });
 
-  it('filter() — announces results count to #theme-announcer (count > 0, plural)', async () => {
+  it('filter() — announces results count to #cremona-announcer (count > 0, plural)', async () => {
     const { input, announcer, cbxCtrl } = await mount();
     // Query 'n' matches Français (fra-n-çais) + English (e-n-glish) = 2.
     // Deutsch has no 'n'; Español has 'ñ' (different codepoint), not 'n'.

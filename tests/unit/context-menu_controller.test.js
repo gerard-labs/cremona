@@ -70,25 +70,25 @@ describe('ContextMenuController', () => {
 
   async function mount({ items = ['Cut', 'Copy', 'Paste'], area = 'self' } = {}) {
     const itemsHtml = items.map((label, i) => (
-      `<div id="ci-${i}" class="theme-item">
-        <div class="theme-item__text"><span class="theme-item__label">${label}</span></div>
+      `<div id="ci-${i}" class="cremona-item">
+        <div class="cremona-item__text"><span class="cremona-item__label">${label}</span></div>
       </div>`
     )).join('');
     document.body.innerHTML = `
       <div id="parent">
-        <div id="wrap" class="theme-popover theme-dropdown-menu theme-context-menu"
+        <div id="wrap" class="cremona-popover cremona-dropdown-menu cremona-context-menu"
           data-controller="popover dropdown-menu context-menu"
           data-action="contextmenu->context-menu#openAt keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
           data-popover-placement-value="bottom-start"
           data-popover-offset-value="0"
           data-popover-open-value="false"
           data-context-menu-area-value="${area}">
-          <span class="theme-context-menu__phantom"
+          <span class="cremona-context-menu__phantom"
             data-popover-target="trigger"
             data-context-menu-target="phantom"
             aria-hidden="true"></span>
           <div id="cm-content"
-            class="theme-popover__content theme-dropdown-menu__content theme-context-menu__content"
+            class="cremona-popover__content cremona-dropdown-menu__content cremona-context-menu__content"
             data-popover-target="content"
             data-state="closed"
             role="menu"

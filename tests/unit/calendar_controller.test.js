@@ -72,23 +72,23 @@ describe('CalendarController', () => {
     if (disabledWeekdays) attrs.push(`data-calendar-disabled-weekdays-value="${disabledWeekdays}"`);
 
     document.body.innerHTML = `
-      <div id="cal" class="theme-calendar" ${attrs.join(' ')}>
-        <header class="theme-calendar__header">
-          <button id="prev" type="button" class="theme-button theme-calendar__nav"
+      <div id="cal" class="cremona-calendar" ${attrs.join(' ')}>
+        <header class="cremona-calendar__header">
+          <button id="prev" type="button" class="cremona-button cremona-calendar__nav"
             data-calendar-target="prevButton"
             data-action="click->calendar#prevMonth"
             aria-label="Mois précédent">‹</button>
-          <h2 id="cal-month" class="theme-calendar__month-label"
+          <h2 id="cal-month" class="cremona-calendar__month-label"
             data-calendar-target="monthLabel"
             aria-live="polite" aria-atomic="true"></h2>
-          <button id="next" type="button" class="theme-button theme-calendar__nav"
+          <button id="next" type="button" class="cremona-button cremona-calendar__nav"
             data-calendar-target="nextButton"
             data-action="click->calendar#nextMonth"
             aria-label="Mois suivant">›</button>
         </header>
-        <div id="cal-weekdays" class="theme-calendar__weekdays"
+        <div id="cal-weekdays" class="cremona-calendar__weekdays"
           data-calendar-target="weekdays" aria-hidden="true"></div>
-        <div id="cal-grid" class="theme-calendar__grid"
+        <div id="cal-grid" class="cremona-calendar__grid"
           role="grid" aria-labelledby="cal-month"
           data-calendar-target="grid"></div>
         ${name ? `<input type="hidden" name="${name}" data-calendar-target="hiddenInput">` : ''}
@@ -112,16 +112,16 @@ describe('CalendarController', () => {
   }
 
   function cellsOf(grid) {
-    return Array.from(grid.querySelectorAll('.theme-calendar__day'));
+    return Array.from(grid.querySelectorAll('.cremona-calendar__day'));
   }
 
   function cellByIso(grid, iso) {
-    return grid.querySelector(`.theme-calendar__day[data-iso="${iso}"]`);
+    return grid.querySelector(`.cremona-calendar__day[data-iso="${iso}"]`);
   }
 
   it('connect() — renders 7 weekday labels and a 5-6 row grid of day cells', async () => {
     const { grid, weekdays } = await mount({ displayMonth: '2026-05' });
-    expect(weekdays.querySelectorAll('.theme-calendar__weekday').length).toBe(7);
+    expect(weekdays.querySelectorAll('.cremona-calendar__weekday').length).toBe(7);
     const cells = cellsOf(grid);
     // May 2026 has 31 days; with weekStart=1 (Mon) and May 1 = Friday,
     // there are 4 leading other-month cells (Mon-Thu of week containing
@@ -134,7 +134,7 @@ describe('CalendarController', () => {
 
   it('weekStart=1 places Monday first; weekStart=0 places Sunday first', async () => {
     const { weekdays: wkMon } = await mount({ displayMonth: '2026-05', weekStart: 1, locale: 'fr' });
-    const labels1 = Array.from(wkMon.querySelectorAll('.theme-calendar__weekday')).map((e) => e.textContent);
+    const labels1 = Array.from(wkMon.querySelectorAll('.cremona-calendar__weekday')).map((e) => e.textContent);
     // FR narrow: L M M J V S D when starting Monday.
     expect(labels1[0]).toBe('L');
     expect(labels1[6]).toBe('D');
@@ -142,7 +142,7 @@ describe('CalendarController', () => {
     document.body.innerHTML = '';
     app.stop();
     const { weekdays: wkSun } = await mount({ displayMonth: '2026-05', weekStart: 0, locale: 'fr' });
-    const labels0 = Array.from(wkSun.querySelectorAll('.theme-calendar__weekday')).map((e) => e.textContent);
+    const labels0 = Array.from(wkSun.querySelectorAll('.cremona-calendar__weekday')).map((e) => e.textContent);
     // Sunday first → D L M M J V S
     expect(labels0[0]).toBe('D');
     expect(labels0[6]).toBe('S');

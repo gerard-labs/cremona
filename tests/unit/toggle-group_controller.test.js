@@ -24,7 +24,7 @@ describe('ToggleGroupController', () => {
   async function mount({ mode = 'single', orientation = 'horizontal', toggles = [] } = {}) {
     const togglesHtml = toggles.map((t, i) => `
       <button type="button"
-        class="theme-toggle"
+        class="cremona-toggle"
         data-controller="toggle"
         data-action="click->toggle#toggle"
         aria-pressed="${t.pressed ? 'true' : 'false'}"
@@ -32,7 +32,7 @@ describe('ToggleGroupController', () => {
         data-test-idx="${i}">Toggle ${i}</button>
     `).join('');
     document.body.innerHTML = `
-      <div class="theme-toggle-group"
+      <div class="cremona-toggle-group"
         role="group"
         data-controller="toggle-group"
         data-action="keydown->toggle-group#keydown toggle->toggle-group#onToggle"
@@ -43,7 +43,7 @@ describe('ToggleGroupController', () => {
     app.register('toggle', ToggleController);
     app.register('toggle-group', ToggleGroupController);
     await new Promise((r) => setTimeout(r, 0));
-    return Array.from(document.querySelectorAll('.theme-toggle'));
+    return Array.from(document.querySelectorAll('.cremona-toggle'));
   }
 
   it('setRovingTabindex() — single mode, pressed toggle gets tabindex=0', async () => {

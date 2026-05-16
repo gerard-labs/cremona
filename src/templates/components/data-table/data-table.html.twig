@@ -14,7 +14,7 @@
   Composes:
     - 1 Stimulus controller `data-table` (orchestrates sort + selection +
       column-visibility + bulk + filter — see data-table_controller.js).
-    - [Table](../table/) primitive — `.theme-table` classes verbatim + the
+    - [Table](../table/) primitive — `.cremona-table` classes verbatim + the
       block-override hook (we render our own <thead> + <tbody> inside).
     - [Pagination](../pagination/) compound — footer with inline page-size.
     - [Checkbox](../checkbox/) primitive — bare-mode for select-all header
@@ -81,7 +81,7 @@
     popover:open / popover:close — from the column-visibility DropdownMenu
 -#}
 
-{%- set htmlId               = htmlId               | default('theme-data-table-' ~ random()) -%}
+{%- set htmlId               = htmlId               | default('cremona-data-table-' ~ random()) -%}
 {%- set caption              = caption              | default(null) -%}
 {%- set captionSrOnly        = captionSrOnly        | default(true) -%}
 {%- set size                 = size                 | default('md') -%}
@@ -133,7 +133,7 @@
   {%- endif -%}
 {%- endfor -%}
 
-{%- set _classes = ['theme-data-table'] -%}
+{%- set _classes = ['cremona-data-table'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -151,29 +151,29 @@
 
   {# ---- Toolbar (bulk-bar + column-vis) ---- #}
   {%- if selectable or bulkActions | length > 0 or showColumnVisibility -%}
-    <div class="theme-data-table__toolbar">
+    <div class="cremona-data-table__toolbar">
 
       {%- if selectable or bulkActions | length > 0 -%}
         <div
-          class="theme-data-table__bulk-bar"
+          class="cremona-data-table__bulk-bar"
           data-data-table-target="bulkBar"
           hidden
         >
           <span
-            class="theme-data-table__bulk-count"
+            class="cremona-data-table__bulk-count"
             data-data-table-target="bulkCount"
             aria-live="polite"
             aria-atomic="true"
           ></span>
-          <div class="theme-data-table__bulk-actions" role="group">
-            {% include '@theme/components/button/button.html.twig' with {
+          <div class="cremona-data-table__bulk-actions" role="group">
+            {% include '@cremona/components/button/button.html.twig' with {
               label: ariaDeselect,
               variant: 'ghost',
               size: 'sm',
               attrs: { 'data-action': 'click->data-table#clearSelection' },
             } only %}
             {%- for action in bulkActions -%}
-              {% include '@theme/components/button/button.html.twig' with {
+              {% include '@cremona/components/button/button.html.twig' with {
                 label: action.label,
                 variant: action.variant | default('secondary'),
                 size: 'sm',
@@ -187,18 +187,18 @@
 
       {%- if showColumnVisibility -%}
         <div
-          class="theme-data-table__column-visibility"
+          class="cremona-data-table__column-visibility"
           data-data-table-target="columnVisibilityTrigger"
         >
-          {% embed '@theme/components/dropdown-menu/dropdown-menu.html.twig' with {
+          {% embed '@cremona/components/dropdown-menu/dropdown-menu.html.twig' with {
             htmlId: htmlId ~ '-col-vis',
             placement: 'bottom-end',
             offset: 4,
             closeOnItemClick: false,
-            className: 'theme-data-table__column-visibility-menu',
+            className: 'cremona-data-table__column-visibility-menu',
           } %}
             {% block trigger %}
-              {% include '@theme/components/button/button.html.twig' with {
+              {% include '@cremona/components/button/button.html.twig' with {
                 label: columnVisibilityLabel,
                 variant: 'secondary',
                 size: 'sm',
@@ -215,12 +215,12 @@
             {% block items %}
               {%- for col in columns -%}
                 {%- if col.togglable | default(true) -%}
-                  {% embed '@theme/components/item/item.html.twig' with { attrs: { role: 'menuitem' } } %}
+                  {% embed '@cremona/components/item/item.html.twig' with { attrs: { role: 'menuitem' } } %}
                     {% block content %}
-                      <label class="theme-data-table__column-visibility-option">
+                      <label class="cremona-data-table__column-visibility-option">
                         <input
                           type="checkbox"
-                          class="theme-checkbox__input"
+                          class="cremona-checkbox__input"
                           data-data-table-column-vis="{{ col.id }}"
                           data-action="change->data-table#toggleColumnVisibility"
                           {%- if col.visible | default(true) %} checked{% endif -%}
@@ -240,20 +240,20 @@
   {%- endif -%}
 
   {# ---- Table — composes the Table primitive via the block override path. ---- #}
-  {% embed '@theme/components/table/table.html.twig' with {
+  {% embed '@cremona/components/table/table.html.twig' with {
     htmlId: htmlId ~ '-table',
     caption: caption,
     captionSrOnly: captionSrOnly,
     size: size,
     variant: variant,
-    className: 'theme-data-table__table',
+    className: 'cremona-data-table__table',
   } %}
     {% block thead %}
-      <thead class="theme-table__thead" data-data-table-target="table-thead">
+      <thead class="cremona-table__thead" data-data-table-target="table-thead">
         <tr>
           {% if selectable %}
-            <th class="theme-data-table__select-all-cell">
-              {% include '@theme/components/checkbox/checkbox.html.twig' with {
+            <th class="cremona-data-table__select-all-cell">
+              {% include '@cremona/components/checkbox/checkbox.html.twig' with {
                 size: 'sm',
                 ariaLabel: ariaSelectAll,
                 attrs: {
@@ -280,12 +280,12 @@
               {%- if colSortable -%}
                 <button
                   type="button"
-                  class="theme-table__sort"
+                  class="cremona-table__sort"
                   data-data-table-column="{{ col.id }}"
                   data-sort-dir="{{ colSortDir }}"
                 >
-                  <span class="theme-table__sort-label">{{ col.label }}</span>
-                  <span class="theme-table__sort-icon" aria-hidden="true"></span>
+                  <span class="cremona-table__sort-label">{{ col.label }}</span>
+                  <span class="cremona-table__sort-icon" aria-hidden="true"></span>
                 </button>
               {%- else -%}
                 {{ col.label }}
@@ -295,7 +295,7 @@
         </tr>
 
         {% if _hasAnyFilter %}
-          <tr class="theme-data-table__filter-row" data-data-table-target="filterRow">
+          <tr class="cremona-data-table__filter-row" data-data-table-target="filterRow">
             {% if selectable %}<th></th>{% endif %}
             {% for col in columns %}
               {%- set colVisible = col.visible | default(true) -%}
@@ -307,12 +307,12 @@
                   {%- if col.filterType != 'text' -%}
                     {# OQ-38: combobox/date filterType warn-fallback to text in S2.4b #}
                   {%- endif -%}
-                  {% include '@theme/components/input/input.html.twig' with {
+                  {% include '@cremona/components/input/input.html.twig' with {
                     type: 'text',
                     size: 'sm',
                     value: col.filterValue | default(''),
                     placeholder: col.filterPlaceholder | default(ariaFilter),
-                    className: 'theme-data-table__filter-input',
+                    className: 'cremona-data-table__filter-input',
                     attrs: {
                       'data-data-table-filter-column': col.id,
                       'data-action': 'input->data-table#filter',
@@ -328,7 +328,7 @@
     {% endblock %}
 
     {% block tbody %}
-      <tbody class="theme-table__tbody">
+      <tbody class="cremona-table__tbody">
         {%- if rows | length > 0 -%}
           {%- for row in rows -%}
             {%- set rowSelected = row.selected | default(false) or row.id in selectedRows -%}
@@ -337,8 +337,8 @@
               {%- if rowSelected %} data-selected="true" aria-selected="true"{% endif -%}
             >
               {%- if selectable -%}
-                <td class="theme-data-table__select-cell">
-                  {% include '@theme/components/checkbox/checkbox.html.twig' with {
+                <td class="cremona-data-table__select-cell">
+                  {% include '@cremona/components/checkbox/checkbox.html.twig' with {
                     size: 'sm',
                     checked: rowSelected,
                     ariaLabel: ariaSelectRow ~ ' ' ~ row.id,
@@ -369,11 +369,11 @@
         {%- else -%}
           {# Empty state row — colspan total = visible cols + (selectable ? 1 : 0) #}
           <tr
-            class="theme-data-table__empty-row"
+            class="cremona-data-table__empty-row"
             data-data-table-target="emptyState"
           >
             <td colspan="{{ _colspanTotal }}">
-              {% include '@theme/components/empty/empty.html.twig' with {
+              {% include '@cremona/components/empty/empty.html.twig' with {
                 size: 'sm',
                 titleLevel: 'h3',
                 title: emptyTitle,
@@ -381,8 +381,8 @@
                 icon: 'search',
               } only %}
               {%- if emptyCta and emptyCtaAction -%}
-                <div class="theme-data-table__empty-cta">
-                  {% include '@theme/components/button/button.html.twig' with {
+                <div class="cremona-data-table__empty-cta">
+                  {% include '@cremona/components/button/button.html.twig' with {
                     label: emptyCta,
                     variant: 'secondary',
                     size: 'sm',
@@ -399,8 +399,8 @@
 
   {# ---- Pagination footer — only when totalRows > pageSize. ---- #}
   {%- if totalRows > pageSize -%}
-    <div class="theme-data-table__pagination-wrap" data-data-table-target="paginationMount">
-      {% include '@theme/components/pagination/pagination.html.twig' with {
+    <div class="cremona-data-table__pagination-wrap" data-data-table-target="paginationMount">
+      {% include '@cremona/components/pagination/pagination.html.twig' with {
         htmlId: htmlId ~ '-pagination',
         page: page,
         pageSize: pageSize,

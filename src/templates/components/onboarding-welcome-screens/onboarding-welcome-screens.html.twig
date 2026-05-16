@@ -17,7 +17,7 @@
     finishHref    (string, optional)  — default null
 -#}
 
-{%- set htmlId      = htmlId      | default('theme-onboarding-welcome-' ~ random()) -%}
+{%- set htmlId      = htmlId      | default('cremona-onboarding-welcome-' ~ random()) -%}
 {%- set currentStep = currentStep | default(0) -%}
 {%- set skipHref    = skipHref    | default(null) -%}
 {%- set finishHref  = finishHref  | default(null) -%}
@@ -27,23 +27,23 @@
 {%- set isLast      = currentStep == totalSteps - 1 -%}
 {%- set step        = steps[currentStep] -%}
 
-<main class="theme-onboarding-welcome-screens" id="{{ htmlId }}">
+<main class="cremona-onboarding-welcome-screens" id="{{ htmlId }}">
   {%- set _stepperSteps = [] -%}
   {%- for s in steps -%}
     {%- set _stepperSteps = _stepperSteps | merge([{ label: s.heading }]) -%}
   {%- endfor -%}
 
-  {% embed '@theme/components/card/card.html.twig' with {
+  {% embed '@cremona/components/card/card.html.twig' with {
     htmlId: null,
-    className: 'theme-onboarding-welcome-screens__card',
-    headerClass: 'theme-onboarding-welcome-screens__header',
-    bodyClass: 'theme-onboarding-welcome-screens__body',
-    footerClass: 'theme-onboarding-welcome-screens__footer',
+    className: 'cremona-onboarding-welcome-screens__card',
+    headerClass: 'cremona-onboarding-welcome-screens__header',
+    bodyClass: 'cremona-onboarding-welcome-screens__body',
+    footerClass: 'cremona-onboarding-welcome-screens__footer',
   } %}
     {% block header %}
-      {% include '@theme/components/typography/typography.html.twig' with { as: 'h1', variant: 'h1', content: title, className: 'theme-onboarding-welcome-screens__title' } only %}
-      <nav class="theme-onboarding-welcome-screens__stepper" aria-label="{{ 'theme.onboarding.welcome-screens.stepper.aria'|trans }}">
-        {% include '@theme/components/stepper/stepper.html.twig' with {
+      {% include '@cremona/components/typography/typography.html.twig' with { as: 'h1', variant: 'h1', content: title, className: 'cremona-onboarding-welcome-screens__title' } only %}
+      <nav class="cremona-onboarding-welcome-screens__stepper" aria-label="{{ 'theme.onboarding.welcome-screens.stepper.aria'|trans }}">
+        {% include '@cremona/components/stepper/stepper.html.twig' with {
           steps: _stepperSteps,
           currentStep: currentStep + 1,
           orientation: 'horizontal',
@@ -53,25 +53,25 @@
     {% endblock %}
 
     {% block body %}
-      <div class="theme-onboarding-welcome-screens__step-icon" aria-hidden="true">
-        {% include '@theme/components/icon/icon.html.twig' with { name: step.icon, size: 'lg' } %}
+      <div class="cremona-onboarding-welcome-screens__step-icon" aria-hidden="true">
+        {% include '@cremona/components/icon/icon.html.twig' with { name: step.icon, size: 'lg' } %}
       </div>
-      {% include '@theme/components/typography/typography.html.twig' with { as: 'h2', variant: 'h2', content: step.heading, className: 'theme-onboarding-welcome-screens__step-heading' } only %}
-      <p class="theme-onboarding-welcome-screens__step-body">{{ step.body }}</p>
+      {% include '@cremona/components/typography/typography.html.twig' with { as: 'h2', variant: 'h2', content: step.heading, className: 'cremona-onboarding-welcome-screens__step-heading' } only %}
+      <p class="cremona-onboarding-welcome-screens__step-body">{{ step.body }}</p>
     {% endblock %}
 
     {% block footer %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: 'theme.onboarding.welcome-screens.skip'|trans,
         variant: 'ghost',
         href: skipHref,
-        className: 'theme-onboarding-welcome-screens__skip',
+        className: 'cremona-onboarding-welcome-screens__skip',
         attrs: skipHref ? {} : { 'data-action': 'click->stepper#skip' },
       } only %}
 
-      <div class="theme-onboarding-welcome-screens__nav">
+      <div class="cremona-onboarding-welcome-screens__nav">
         {%- if not isFirst -%}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: 'theme.onboarding.welcome-screens.previous'|trans,
             variant: 'outline',
             attrs: { 'data-action': 'click->stepper#previous' },
@@ -79,14 +79,14 @@
         {%- endif -%}
 
         {%- if isLast -%}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: 'theme.onboarding.welcome-screens.finish'|trans,
             variant: 'primary',
             href: finishHref,
             attrs: finishHref ? {} : { 'data-action': 'click->stepper#finish' },
           } only %}
         {%- else -%}
-          {% include '@theme/components/button/button.html.twig' with {
+          {% include '@cremona/components/button/button.html.twig' with {
             label: 'theme.onboarding.welcome-screens.next'|trans,
             variant: 'primary',
             attrs: { 'data-action': 'click->stepper#next' },

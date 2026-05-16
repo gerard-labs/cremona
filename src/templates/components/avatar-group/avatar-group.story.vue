@@ -29,26 +29,26 @@ const ICONS = Object.fromEntries(
 );
 
 function renderAvatar({ src, alt = '', initials, name = '', size = 'md', status, statusLabel, hue }) {
-  const classes = ['theme-avatar'];
-  if (status) classes.push('theme-avatar--has-status');
-  const styleAttr = hue ? ` style="--theme-avatar-hue: var(--color-kpi-${hue})"` : '';
+  const classes = ['cremona-avatar'];
+  if (status) classes.push('cremona-avatar--has-status');
+  const styleAttr = hue ? ` style="--cremona-avatar-hue: var(--color-kpi-${hue})"` : '';
   const showIconFallback = !src && !initials;
   let inner;
   if (src) {
-    inner = `<img class="theme-avatar__img" data-avatar-fallback-target="img" src="${src}" alt="${alt}">`;
+    inner = `<img class="cremona-avatar__img" data-avatar-fallback-target="img" src="${src}" alt="${alt}">`;
   } else if (showIconFallback) {
     const iconSize = ['xs', 'sm'].includes(size) ? 'sm' : size === 'xl' ? 'xl' : 'lg';
-    inner = `<span class="theme-icon" data-icon="user" data-size="${iconSize}" aria-hidden="true" role="presentation">${ICONS.user || ''}</span>`;
+    inner = `<span class="cremona-icon" data-icon="user" data-size="${iconSize}" aria-hidden="true" role="presentation">${ICONS.user || ''}</span>`;
   } else {
-    inner = `<span class="theme-avatar__fallback" aria-hidden="true">${initials}</span>`;
+    inner = `<span class="cremona-avatar__fallback" aria-hidden="true">${initials}</span>`;
   }
   const ctrlAttrs = src ? ` data-controller="avatar-fallback" data-avatar-fallback-name-value="${name}" data-avatar-fallback-initials-value="${initials || ''}"` : '';
-  const statusHtml = status ? `<span class="theme-avatar__status" data-status="${status}" role="status" aria-label="${statusLabel || status}"></span>` : '';
+  const statusHtml = status ? `<span class="cremona-avatar__status" data-status="${status}" role="status" aria-label="${statusLabel || status}"></span>` : '';
   return `<span class="${classes.join(' ')}" data-size="${size}"${ctrlAttrs}${styleAttr}>${inner}${statusHtml}</span>`;
 }
 
 function renderGroup({ avatars, max = 4, size = 'md', moreLabel, moreAria, groupAria, className }) {
-  const classes = ['theme-avatar-group'];
+  const classes = ['cremona-avatar-group'];
   if (className) classes.push(className);
   const total = avatars.length;
   const hasOverflow = total > max;
@@ -62,7 +62,7 @@ function renderGroup({ avatars, max = 4, size = 'md', moreLabel, moreAria, group
     .map((a) => renderAvatar({ ...a, size }))
     .join('');
   const overflowHtml = hasOverflow
-    ? `<span class="theme-avatar theme-avatar-group__more" data-size="${size}" role="img" aria-label="${effectiveMoreAria}"><span class="theme-avatar-group__more-label" aria-hidden="true">${effectiveMoreLabel}</span></span>`
+    ? `<span class="cremona-avatar cremona-avatar-group__more" data-size="${size}" role="img" aria-label="${effectiveMoreAria}"><span class="cremona-avatar-group__more-label" aria-hidden="true">${effectiveMoreLabel}</span></span>`
     : '';
   const groupAriaAttr = groupAria ? ` role="group" aria-label="${groupAria}"` : '';
 
@@ -116,19 +116,19 @@ const bodyHtml = `
     </header>
 
     <section class="ag-story__section" aria-labelledby="ag-section-default">
-      <h2 id="ag-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.default')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.default-explainer')}</p>
+      <h2 id="ag-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.default')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.default-explainer')}</p>
       <div class="ag-story__row">
         ${renderGroup({ avatars: AVATARS_4, max: 4, groupAria: t('theme.avatar-group.story.aria.team') + ' : ' + listLabel(AVATARS_4.map((a) => a.name)) })}
       </div>
     </section>
 
     <section class="ag-story__section" aria-labelledby="ag-section-overflow">
-      <h2 id="ag-section-overflow" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.overflow')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.overflow-explainer')}</p>
+      <h2 id="ag-section-overflow" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.overflow')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.overflow-explainer')}</p>
       <div class="ag-story__row ag-story__row--vertical">
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.avatar-group.story.label.team-of-8')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.avatar-group.story.label.team-of-8')}</p>
           ${renderGroup({
             avatars: AVATARS_8,
             max: 5,
@@ -137,7 +137,7 @@ const bodyHtml = `
           })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.avatar-group.story.label.team-of-12')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.avatar-group.story.label.team-of-12')}</p>
           ${renderGroup({
             avatars: AVATARS_12,
             max: 4,
@@ -146,7 +146,7 @@ const bodyHtml = `
           })}
         </div>
         <div>
-          <p class="theme-typography" data-variant="caption" data-color="secondary">${t('theme.avatar-group.story.label.team-of-5')}</p>
+          <p class="cremona-typography" data-variant="caption" data-color="secondary">${t('theme.avatar-group.story.label.team-of-5')}</p>
           ${renderGroup({
             avatars: AVATARS_4.concat([{ initials: 'PR', name: 'Paul Renaud', hue: 2 }]),
             max: 4,
@@ -158,24 +158,24 @@ const bodyHtml = `
     </section>
 
     <section class="ag-story__section" aria-labelledby="ag-section-sizes">
-      <h2 id="ag-section-sizes" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.sizes')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.sizes-explainer')}</p>
+      <h2 id="ag-section-sizes" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.sizes')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.sizes-explainer')}</p>
       <div class="ag-story__row ag-story__row--vertical">
-        ${['xs', 'sm', 'md', 'lg', 'xl'].map((size) => `<div class="ag-story__size-row"><span class="theme-typography" data-variant="caption" data-color="secondary">${size}</span>${renderGroup({ avatars: AVATARS_4, max: 4, size })}</div>`).join('')}
+        ${['xs', 'sm', 'md', 'lg', 'xl'].map((size) => `<div class="ag-story__size-row"><span class="cremona-typography" data-variant="caption" data-color="secondary">${size}</span>${renderGroup({ avatars: AVATARS_4, max: 4, size })}</div>`).join('')}
       </div>
     </section>
 
     <section class="ag-story__section" aria-labelledby="ag-section-status">
-      <h2 id="ag-section-status" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.status')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.status-explainer')}</p>
+      <h2 id="ag-section-status" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.status')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.status-explainer')}</p>
       <div class="ag-story__row">
         ${renderGroup({ avatars: AVATARS_WITH_STATUS, max: 4, groupAria: t('theme.avatar-group.story.aria.online-team') })}
       </div>
     </section>
 
     <section class="ag-story__section" aria-labelledby="ag-section-single">
-      <h2 id="ag-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.single')}</h2>
-      <p class="theme-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.single-explainer')}</p>
+      <h2 id="ag-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.avatar-group.story.section.single')}</h2>
+      <p class="cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.avatar-group.story.section.single-explainer')}</p>
       <div class="ag-story__row">
         ${renderGroup({ avatars: [AVATARS_4[0]], max: 4, groupAria: t('theme.avatar-group.story.aria.single') + ' : ' + AVATARS_4[0].name })}
       </div>

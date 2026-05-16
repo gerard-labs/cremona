@@ -51,7 +51,7 @@
 }
 
 /* Tabular numbers wherever digits compose data (KPIs, table cells). */
-.theme-tabular-nums {
+.cremona-tabular-nums {
   font-variant-numeric: tabular-nums;
   font-feature-settings: var(--font-feature-tabular);
 }

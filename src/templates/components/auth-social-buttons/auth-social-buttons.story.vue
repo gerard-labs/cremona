@@ -42,27 +42,27 @@ function renderSocialButtons({
 } = {}) {
   const headingId = `${htmlId}-heading`;
   const headingHtml = heading
-    ? `<p class="theme-auth-social-buttons__heading" id="${headingId}">${heading}</p>`
+    ? `<p class="cremona-auth-social-buttons__heading" id="${headingId}">${heading}</p>`
     : '';
   const listAriaLabelledBy = heading ? ` aria-labelledby="${headingId}"` : '';
 
   const buttonsHtml = socialProviders.map((p) => `
     <a
-      class="theme-button theme-auth-social-button"
+      class="cremona-button cremona-auth-social-button"
       data-variant="${buttonVariant}"
       data-size="${size}"
       data-social-provider="${p.name}"
       href="${p.action}"
     >
-      <span class="theme-auth-social-button__icon" aria-hidden="true">${p.icon}</span>
-      <span class="theme-button__label">${p.label}</span>
+      <span class="cremona-auth-social-button__icon" aria-hidden="true">${p.icon}</span>
+      <span class="cremona-button__label">${p.label}</span>
     </a>
   `).join('');
 
   return `
-    <div class="theme-auth-social-buttons" data-orientation="${orientation}" id="${htmlId}">
+    <div class="cremona-auth-social-buttons" data-orientation="${orientation}" id="${htmlId}">
       ${headingHtml}
-      <div class="theme-auth-social-buttons__list"${listAriaLabelledBy}>
+      <div class="cremona-auth-social-buttons__list"${listAriaLabelledBy}>
         ${buttonsHtml}
       </div>
     </div>
@@ -117,29 +117,29 @@ function renderInlineWithLogin() {
   // canonical Auth-Login story owns the full pattern ; here we just need
   // to demonstrate where SocialButtons drops in below the password form).
   return `
-    <main class="theme-auth-shell" data-variant="default">
-      <section class="theme-auth-shell__panel">
-        <article class="theme-card theme-auth-shell__card" aria-labelledby="story-social-login-title">
-          <header class="theme-card__header theme-auth-shell__card-header">
-            <h1 id="story-social-login-title" class="theme-auth-shell__title">${t('theme.auth.login.title')}</h1>
-            <p class="theme-auth-shell__subtitle">${t('theme.auth.login.subtitle')}</p>
+    <main class="cremona-auth-shell" data-variant="default">
+      <section class="cremona-auth-shell__panel">
+        <article class="cremona-card cremona-auth-shell__card" aria-labelledby="story-social-login-title">
+          <header class="cremona-card__header cremona-auth-shell__card-header">
+            <h1 id="story-social-login-title" class="cremona-auth-shell__title">${t('theme.auth.login.title')}</h1>
+            <p class="cremona-auth-shell__subtitle">${t('theme.auth.login.subtitle')}</p>
           </header>
-          <div class="theme-card__body theme-auth-shell__card-body">
-            <form class="theme-auth-login" data-state="default">
-              <div class="theme-field">
-                <label class="theme-label" data-size="sm" for="story-social-login-email">
-                  <span class="theme-label__text">${t('theme.auth.login.email')}</span>
+          <div class="cremona-card__body cremona-auth-shell__card-body">
+            <form class="cremona-auth-login" data-state="default">
+              <div class="cremona-field">
+                <label class="cremona-label" data-size="sm" for="story-social-login-email">
+                  <span class="cremona-label__text">${t('theme.auth.login.email')}</span>
                 </label>
-                <input class="theme-input" data-size="md" id="story-social-login-email" type="email" autocomplete="email" placeholder="${t('theme.auth.login.email-placeholder')}"/>
+                <input class="cremona-input" data-size="md" id="story-social-login-email" type="email" autocomplete="email" placeholder="${t('theme.auth.login.email-placeholder')}"/>
               </div>
-              <div class="theme-field">
-                <label class="theme-label" data-size="sm" for="story-social-login-password">
-                  <span class="theme-label__text">${t('theme.auth.login.password')}</span>
+              <div class="cremona-field">
+                <label class="cremona-label" data-size="sm" for="story-social-login-password">
+                  <span class="cremona-label__text">${t('theme.auth.login.password')}</span>
                 </label>
-                <input class="theme-input" data-size="md" id="story-social-login-password" type="password" autocomplete="current-password"/>
+                <input class="cremona-input" data-size="md" id="story-social-login-password" type="password" autocomplete="current-password"/>
               </div>
-              <button class="theme-button theme-button--full-width" data-variant="primary" data-size="md" type="submit">
-                <span class="theme-button__label">${t('theme.auth.login.submit')}</span>
+              <button class="cremona-button cremona-button--full-width" data-variant="primary" data-size="md" type="submit">
+                <span class="cremona-button__label">${t('theme.auth.login.submit')}</span>
               </button>
               ${renderSocialButtons({
                 socialProviders: STANDARD_PROVIDERS,
@@ -162,8 +162,8 @@ const bodyHtml = `
     </header>
 
     <section class="auth-social-buttons-story__section" aria-labelledby="auth-social-section-default">
-      <h2 id="auth-social-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.default')}</h2>
-      <p class="auth-social-buttons-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.default')}</p>
+      <h2 id="auth-social-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.default')}</h2>
+      <p class="auth-social-buttons-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.default')}</p>
       <div class="auth-social-buttons-story__frame">${renderSocialButtons({
         socialProviders: STANDARD_PROVIDERS,
         htmlId: 'story-social-vertical',
@@ -171,8 +171,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-social-buttons-story__section" aria-labelledby="auth-social-section-horizontal">
-      <h2 id="auth-social-section-horizontal" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.horizontal')}</h2>
-      <p class="auth-social-buttons-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.horizontal')}</p>
+      <h2 id="auth-social-section-horizontal" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.horizontal')}</h2>
+      <p class="auth-social-buttons-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.horizontal')}</p>
       <div class="auth-social-buttons-story__frame">${renderSocialButtons({
         socialProviders: STANDARD_PROVIDERS,
         orientation: 'horizontal',
@@ -181,8 +181,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-social-buttons-story__section" aria-labelledby="auth-social-section-single">
-      <h2 id="auth-social-section-single" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.single')}</h2>
-      <p class="auth-social-buttons-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.single')}</p>
+      <h2 id="auth-social-section-single" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.single')}</h2>
+      <p class="auth-social-buttons-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.single')}</p>
       <div class="auth-social-buttons-story__frame">${renderSocialButtons({
         socialProviders: [STANDARD_PROVIDERS[0]],
         heading: null,
@@ -191,8 +191,8 @@ const bodyHtml = `
     </section>
 
     <section class="auth-social-buttons-story__section" aria-labelledby="auth-social-section-no-heading">
-      <h2 id="auth-social-section-no-heading" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.no-heading')}</h2>
-      <p class="auth-social-buttons-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.no-heading')}</p>
+      <h2 id="auth-social-section-no-heading" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.no-heading')}</h2>
+      <p class="auth-social-buttons-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.no-heading')}</p>
       <div class="auth-social-buttons-story__frame">${renderSocialButtons({
         socialProviders: STANDARD_PROVIDERS.slice(0, 2),
         heading: null,
@@ -201,14 +201,14 @@ const bodyHtml = `
     </section>
 
     <section class="auth-social-buttons-story__section" aria-labelledby="auth-social-section-composed">
-      <h2 id="auth-social-section-composed" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.composed')}</h2>
-      <p class="auth-social-buttons-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.composed')}</p>
+      <h2 id="auth-social-section-composed" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.composed')}</h2>
+      <p class="auth-social-buttons-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.composed')}</p>
       <div class="auth-social-buttons-story__frame auth-social-buttons-story__frame--tall">${renderInlineWithLogin()}</div>
     </section>
 
     <section class="auth-social-buttons-story__section" aria-labelledby="auth-social-section-long">
-      <h2 id="auth-social-section-long" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.long')}</h2>
-      <p class="auth-social-buttons-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.long')}</p>
+      <h2 id="auth-social-section-long" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.auth.social-buttons.story.section.long')}</h2>
+      <p class="auth-social-buttons-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.auth.social-buttons.story.explainer.long')}</p>
       <div class="auth-social-buttons-story__frame">${renderSocialButtons({
         socialProviders: LONG_PROVIDERS,
         htmlId: 'story-social-long',

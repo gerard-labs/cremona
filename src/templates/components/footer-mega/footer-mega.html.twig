@@ -14,22 +14,22 @@
     copyright   (string, optional)
 -#}
 
-{%- set htmlId    = htmlId    | default('theme-footer-mega-' ~ random()) -%}
+{%- set htmlId    = htmlId    | default('cremona-footer-mega-' ~ random()) -%}
 {%- set ariaLabel = ariaLabel | default('theme.nav.footer.aria.label'|trans) -%}
 {%- set aside     = aside     | default(null) -%}
 {%- set social    = social    | default([]) -%}
 {%- set legal     = legal     | default([]) -%}
 {%- set copyright = copyright | default(null) -%}
 
-<footer class="theme-footer-mega" id="{{ htmlId }}" aria-label="{{ ariaLabel }}">
-  <div class="theme-footer-mega__top">
-    <div class="theme-footer-mega__columns">
+<footer class="cremona-footer-mega" id="{{ htmlId }}" aria-label="{{ ariaLabel }}">
+  <div class="cremona-footer-mega__top">
+    <div class="cremona-footer-mega__columns">
       {%- for column in columns -%}
-        <section class="theme-footer-mega__column">
-          {% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: column.heading, className: 'theme-footer-mega__column-heading' } only %}
-          <ul class="theme-footer-mega__column-items">
+        <section class="cremona-footer-mega__column">
+          {% include '@cremona/components/typography/typography.html.twig' with { as: 'h3', variant: 'overline', content: column.heading, className: 'cremona-footer-mega__column-heading' } only %}
+          <ul class="cremona-footer-mega__column-items">
             {%- for item in column.items -%}
-              <li><a href="{{ item.href }}" class="theme-footer-mega__item">{{ item.label }}</a></li>
+              <li><a href="{{ item.href }}" class="cremona-footer-mega__item">{{ item.label }}</a></li>
             {%- endfor -%}
           </ul>
         </section>
@@ -37,16 +37,16 @@
     </div>
 
     {%- if aside -%}
-      <aside class="theme-footer-mega__aside" aria-labelledby="{{ htmlId }}-aside">
-        {%- if aside.heading -%}{% include '@theme/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: aside.heading, htmlId: htmlId ~ '-aside' } only %}{%- endif -%}
-        {%- if aside.body -%}<p class="theme-footer-mega__aside-body">{{ aside.body }}</p>{%- endif -%}
-        {%- if aside.html -%}<div class="theme-footer-mega__aside-html">{{ aside.html|raw }}</div>{%- endif -%}
+      <aside class="cremona-footer-mega__aside" aria-labelledby="{{ htmlId }}-aside">
+        {%- if aside.heading -%}{% include '@cremona/components/typography/typography.html.twig' with { as: 'h3', variant: 'h3', content: aside.heading, htmlId: htmlId ~ '-aside' } only %}{%- endif -%}
+        {%- if aside.body -%}<p class="cremona-footer-mega__aside-body">{{ aside.body }}</p>{%- endif -%}
+        {%- if aside.html -%}<div class="cremona-footer-mega__aside-html">{{ aside.html|raw }}</div>{%- endif -%}
 
         {%- if social|length > 0 -%}
-          <ul class="theme-footer-mega__social">
+          <ul class="cremona-footer-mega__social">
             {%- for item in social -%}
               <li>
-                <a href="{{ item.href }}" class="theme-footer-mega__social-link" aria-label="{{ item.label }}" rel="noopener noreferrer" target="_blank">
+                <a href="{{ item.href }}" class="cremona-footer-mega__social-link" aria-label="{{ item.label }}" rel="noopener noreferrer" target="_blank">
                   {{ item.icon|raw }}
                 </a>
               </li>
@@ -58,16 +58,16 @@
   </div>
 
   {%- if legal|length > 0 or copyright -%}
-    <div class="theme-footer-mega__bottom">
+    <div class="cremona-footer-mega__bottom">
       {%- if legal|length > 0 -%}
-        <ul class="theme-footer-mega__legal">
+        <ul class="cremona-footer-mega__legal">
           {%- for item in legal -%}
-            <li><a href="{{ item.href }}" class="theme-footer-mega__legal-link">{{ item.label }}</a></li>
+            <li><a href="{{ item.href }}" class="cremona-footer-mega__legal-link">{{ item.label }}</a></li>
           {%- endfor -%}
         </ul>
       {%- endif -%}
       {%- if copyright -%}
-        <p class="theme-footer-mega__copyright">{{ copyright }}</p>
+        <p class="cremona-footer-mega__copyright">{{ copyright }}</p>
       {%- endif -%}
     </div>
   {%- endif -%}

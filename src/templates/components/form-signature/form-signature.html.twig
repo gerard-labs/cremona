@@ -3,7 +3,7 @@
 
   Per Forms family doctrine (Form-WithSteps.md §1) :
     - Field primitive (Ring 1) is the composition keystone — but Signature is canvas-based,
-      so the wrap is the theme-form-signature class directly (compose Card Ring 1 for surface).
+      so the wrap is the cremona-form-signature class directly (compose Card Ring 1 for surface).
     - signature_pad library lazy-loaded on first pointer-down per ADR-0024 (8e cascade).
     - Synthetic pointerdown replay AFTER lazy load ensures no lost first-stroke coordinates.
     - Fallback `<details>` text input for SR users.
@@ -32,14 +32,14 @@
 
   Usage:
 
-    {% include '@theme/components/form-signature/form-signature.html.twig' with {
+    {% include '@cremona/components/form-signature/form-signature.html.twig' with {
       label: 'theme.form.signature.label.contract'|trans,
       name: 'signature',
       width: 400, height: 200,
     } %}
 -#}
 
-{%- set htmlId          = htmlId          | default('theme-form-signature-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-form-signature-' ~ random()) -%}
 {%- set width           = width           | default(400) -%}
 {%- set height          = height          | default(200) -%}
 {%- set penColor        = penColor        | default('#000000') -%}
@@ -51,8 +51,8 @@
 {%- set className       = className       | default('') -%}
 
 {%- set isInvalid = error is defined and error -%}
-{%- set _classes = ['theme-form-signature'] -%}
-{%- if isInvalid -%}{%- set _classes = _classes | merge(['theme-form-signature--invalid']) -%}{%- endif -%}
+{%- set _classes = ['cremona-form-signature'] -%}
+{%- if isInvalid -%}{%- set _classes = _classes | merge(['cremona-form-signature--invalid']) -%}{%- endif -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <div
@@ -63,17 +63,17 @@
   data-signature-pad-min-width-value="{{ minWidth }}"
   data-signature-pad-max-width-value="{{ maxWidth }}"
 >
-  <span class="theme-form-signature__label" id="{{ htmlId }}-label">{{ label }}</span>
+  <span class="cremona-form-signature__label" id="{{ htmlId }}-label">{{ label }}</span>
 
-  {% embed '@theme/components/card/card.html.twig' with {
+  {% embed '@cremona/components/card/card.html.twig' with {
     variant: 'elevated',
-    className: 'theme-form-signature__surface',
-    bodyClass: 'theme-form-signature__body',
-    footerClass: 'theme-form-signature__footer',
+    className: 'cremona-form-signature__surface',
+    bodyClass: 'cremona-form-signature__body',
+    footerClass: 'cremona-form-signature__footer',
   } %}
     {% block body %}
       <canvas
-        class="theme-form-signature__canvas"
+        class="cremona-form-signature__canvas"
         data-signature-pad-target="canvas"
         role="img"
         aria-labelledby="{{ htmlId }}-label"
@@ -83,7 +83,7 @@
       ></canvas>
     {% endblock %}
     {% block footer %}
-      {% include '@theme/components/button/button.html.twig' with {
+      {% include '@cremona/components/button/button.html.twig' with {
         label: 'theme.form.signature.actions.clear'|trans,
         variant: 'secondary',
         size: 'sm',
@@ -102,9 +102,9 @@
   />
 
   {%- if fallback -%}
-    <details class="theme-form-signature__fallback">
+    <details class="cremona-form-signature__fallback">
       <summary>{{ 'theme.form.signature.fallback.summary'|trans }}</summary>
-      {% include '@theme/components/input/input.html.twig' with {
+      {% include '@cremona/components/input/input.html.twig' with {
         type: 'text',
         name: fallbackName,
         placeholder: 'theme.form.signature.placeholder.fallback'|trans,
@@ -114,9 +114,9 @@
   {%- endif -%}
 
   {%- if help -%}
-    <p class="theme-field__help" id="{{ htmlId }}-help">{{ help }}</p>
+    <p class="cremona-field__help" id="{{ htmlId }}-help">{{ help }}</p>
   {%- endif -%}
   {%- if isInvalid -%}
-    <p class="theme-field__error" id="{{ htmlId }}-error">{{ error }}</p>
+    <p class="cremona-field__error" id="{{ htmlId }}-error">{{ error }}</p>
   {%- endif -%}
 </div>

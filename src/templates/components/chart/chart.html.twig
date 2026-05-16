@@ -45,7 +45,7 @@
 
   Usage:
 
-    {% include '@theme/components/chart/chart.html.twig' with {
+    {% include '@cremona/components/chart/chart.html.twig' with {
       label: 'Ventes mensuelles'|trans,
       variant: 'line',
       categoriesLabel: 'Mois'|trans,
@@ -62,7 +62,7 @@
     chart:series-click    — detail.{ seriesIndex, dataPointIndex, value }.
 -#}
 
-{%- set htmlId          = htmlId          | default('theme-chart-' ~ random()) -%}
+{%- set htmlId          = htmlId          | default('cremona-chart-' ~ random()) -%}
 {%- set label           = label           | default('') -%}
 {%- set variant         = variant         | default('line') -%}
 {%- set series          = series          | default([]) -%}
@@ -75,7 +75,7 @@
 {%- set tableHeaders    = tableHeaders    | default([]) -%}
 {%- set className       = className       | default('') -%}
 
-{%- set _classes = ['theme-chart'] -%}
+{%- set _classes = ['cremona-chart'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 {%- set _isDonut = variant == 'donut' -%}
@@ -96,21 +96,21 @@
   aria-label="{{ label }}"
 >
   <div
-    class="theme-chart__container"
+    class="cremona-chart__container"
     data-chart-target="container"
     style="min-block-size: {{ height }}px;"
     aria-hidden="true"
   ></div>
 
   {%- if showCaption -%}
-    <figcaption class="theme-chart__caption">{{ label }}</figcaption>
+    <figcaption class="cremona-chart__caption">{{ label }}</figcaption>
   {%- endif -%}
 
   {#- sr-only data-table fallback : the authoritative semantic representation
-      of the data. Always rendered ; visible only to SR (per .theme-chart__
+      of the data. Always rendered ; visible only to SR (per .cremona-chart__
       sr-only utility). Provides a permanent fallback if ApexCharts fails
       to load (CSP block, network failure, JS disabled). -#}
-  <div class="theme-chart__sr-only">
+  <div class="cremona-chart__sr-only">
     <table>
       <caption>{{ label }}</caption>
       <thead>

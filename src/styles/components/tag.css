@@ -19,7 +19,7 @@
  *   --motion-easing-accelerate                 dismiss transition
  */
 
-.theme-tag {
+.cremona-tag {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
@@ -35,13 +35,13 @@
   transition: opacity var(--motion-duration-fast) var(--motion-easing-accelerate);
 }
 
-.theme-tag[data-size="sm"] {
+.cremona-tag[data-size="sm"] {
   padding-inline: var(--spacing-1_5);
   padding-block: 1px;
   font-size: var(--font-size-2xs);
 }
 
-.theme-tag[data-size="lg"] {
+.cremona-tag[data-size="lg"] {
   padding-inline: var(--spacing-3);
   padding-block: var(--spacing-1);
   font-size: var(--font-size-sm);
@@ -49,71 +49,71 @@
 }
 
 /* --- Solid variants (mirror Badge solid) ------------------------------ */
-.theme-tag[data-variant="default"] {
+.cremona-tag[data-variant="default"] {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
   border-color: var(--color-border-default);
 }
 
-.theme-tag[data-variant="primary"] {
+.cremona-tag[data-variant="primary"] {
   background: var(--color-primary);
   color: var(--color-primary-foreground);
 }
 
-.theme-tag[data-variant="success"] {
+.cremona-tag[data-variant="success"] {
   background: var(--color-success);
   color: var(--color-success-foreground);
 }
 
-.theme-tag[data-variant="warning"] {
+.cremona-tag[data-variant="warning"] {
   background: var(--color-warning);
   color: var(--color-warning-foreground);
 }
 
-.theme-tag[data-variant="danger"] {
+.cremona-tag[data-variant="danger"] {
   background: var(--color-danger);
   color: var(--color-danger-foreground);
 }
 
-.theme-tag[data-variant="info"] {
+.cremona-tag[data-variant="info"] {
   background: var(--color-info);
   color: var(--color-info-foreground);
 }
 
 /* --- Soft variants (mirror Badge soft) -------------------------------- */
-.theme-tag[data-soft="true"][data-variant="default"] {
+.cremona-tag[data-soft="true"][data-variant="default"] {
   background: var(--color-bg-sunken);
   color: var(--color-text-secondary);
   border-color: var(--color-border-subtle);
 }
 
-.theme-tag[data-soft="true"][data-variant="primary"] {
+.cremona-tag[data-soft="true"][data-variant="primary"] {
   background: var(--color-primary-soft);
   color: var(--color-primary-soft-foreground);
 }
 
-.theme-tag[data-soft="true"][data-variant="success"] {
+.cremona-tag[data-soft="true"][data-variant="success"] {
   background: var(--color-success-soft);
   color: var(--color-success-soft-foreground);
 }
 
-.theme-tag[data-soft="true"][data-variant="warning"] {
+.cremona-tag[data-soft="true"][data-variant="warning"] {
   background: var(--color-warning-soft);
   color: var(--color-warning-soft-foreground);
 }
 
-.theme-tag[data-soft="true"][data-variant="danger"] {
+.cremona-tag[data-soft="true"][data-variant="danger"] {
   background: var(--color-danger-soft);
   color: var(--color-danger-soft-foreground);
 }
 
-.theme-tag[data-soft="true"][data-variant="info"] {
+.cremona-tag[data-soft="true"][data-variant="info"] {
   background: var(--color-info-soft);
   color: var(--color-info-soft-foreground);
 }
 
 /* --- Dismiss button --------------------------------------------------- */
-.theme-tag__dismiss {
+.cremona-tag__dismiss {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -133,27 +133,27 @@
   transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.theme-tag[data-size="sm"] .theme-tag__dismiss {
+.cremona-tag[data-size="sm"] .cremona-tag__dismiss {
   inline-size: 14px;
   block-size: 14px;
 }
 
-.theme-tag[data-size="lg"] .theme-tag__dismiss {
+.cremona-tag[data-size="lg"] .cremona-tag__dismiss {
   inline-size: 18px;
   block-size: 18px;
   margin-inline-start: var(--spacing-1);
 }
 
-.theme-tag__dismiss:hover {
+.cremona-tag__dismiss:hover {
   background: color-mix(in oklch, currentColor 12%, transparent);
 }
 
-.theme-tag__dismiss:focus-visible {
+.cremona-tag__dismiss:focus-visible {
   outline: var(--ring-width) solid currentColor;
   outline-offset: 1px;
 }
 
-.theme-tag__dismiss > span {
+.cremona-tag__dismiss > span {
   font-size: 1.25em;
   font-weight: var(--font-weight-bold);
   line-height: 1;
@@ -162,7 +162,7 @@
 }
 
 /* --- Dismissing state — opacity fade ---------------------------------- */
-.theme-tag[data-state="dismissing"] {
+.cremona-tag[data-state="dismissing"] {
   opacity: 0;
   pointer-events: none;
 }

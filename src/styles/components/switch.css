@@ -3,8 +3,8 @@
  *
  * The native input gets `appearance: none` + `position: absolute; inset: 0;
  * opacity: 0` so it stays focusable / clickable / form-data-complete while
- * the visible UI is a `.theme-switch__track` (the pill background) + a
- * `.theme-switch__thumb` (the moving disc inside).
+ * the visible UI is a `.cremona-switch__track` (the pill background) + a
+ * `.cremona-switch__thumb` (the moving disc inside).
  *
  * The thumb is positioned via logical `inset-inline-start: 1px` at rest and
  * transitions to `inset-inline-start: calc(100% - 1px - thumb-size)` when
@@ -16,25 +16,25 @@
  * §Switch). Reduced-motion zeros transitions via the global override.
  */
 
-.theme-switch {
+.cremona-switch {
   position: relative;
   display: inline-flex;
   flex-shrink: 0;
-  inline-size: var(--theme-switch-track-w);
-  block-size: var(--theme-switch-track-h);
+  inline-size: var(--cremona-switch-track-w);
+  block-size: var(--cremona-switch-track-h);
   /* sm defaults — md overrides via [data-size]. */
-  --theme-switch-track-w: 32px;
-  --theme-switch-track-h: 18px;
-  --theme-switch-thumb-size: 14px;
+  --cremona-switch-track-w: 32px;
+  --cremona-switch-track-h: 18px;
+  --cremona-switch-thumb-size: 14px;
 }
 
-.theme-switch[data-size="md"] {
-  --theme-switch-track-w: 44px;
-  --theme-switch-track-h: 24px;
-  --theme-switch-thumb-size: 20px;
+.cremona-switch[data-size="md"] {
+  --cremona-switch-track-w: 44px;
+  --cremona-switch-track-h: 24px;
+  --cremona-switch-thumb-size: 20px;
 }
 
-.theme-switch__input {
+.cremona-switch__input {
   appearance: none;
   position: absolute;
   inset: 0;
@@ -47,11 +47,11 @@
   z-index: 1;
 }
 
-.theme-switch__input:disabled {
+.cremona-switch__input:disabled {
   cursor: not-allowed;
 }
 
-.theme-switch__track {
+.cremona-switch__track {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
@@ -63,56 +63,56 @@
   pointer-events: none;
 }
 
-.theme-switch__input:hover:not(:disabled, [aria-invalid="true"]) ~ .theme-switch__track {
+.cremona-switch__input:hover:not(:disabled, [aria-invalid="true"]) ~ .cremona-switch__track {
   border-color: var(--color-primary);
 }
 
-.theme-switch__input:focus-visible ~ .theme-switch__track {
+.cremona-switch__input:focus-visible ~ .cremona-switch__track {
   /* Outer ring matches Input / Checkbox / Radio focus envelope. */
   box-shadow: 0 0 0 var(--ring-width) var(--color-border-focus);
 }
 
-.theme-switch__input:checked ~ .theme-switch__track {
+.cremona-switch__input:checked ~ .cremona-switch__track {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
 
-.theme-switch__input:checked:hover:not(:disabled, [aria-invalid="true"]) ~ .theme-switch__track {
+.cremona-switch__input:checked:hover:not(:disabled, [aria-invalid="true"]) ~ .cremona-switch__track {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
 }
 
-.theme-switch__input[aria-invalid="true"] ~ .theme-switch__track {
+.cremona-switch__input[aria-invalid="true"] ~ .cremona-switch__track {
   border-color: var(--color-danger);
 }
 
-.theme-switch__input[aria-invalid="true"]:checked ~ .theme-switch__track {
+.cremona-switch__input[aria-invalid="true"]:checked ~ .cremona-switch__track {
   background-color: var(--color-danger);
   border-color: var(--color-danger);
 }
 
-.theme-switch__input[aria-invalid="true"]:focus-visible ~ .theme-switch__track {
+.cremona-switch__input[aria-invalid="true"]:focus-visible ~ .cremona-switch__track {
   box-shadow: 0 0 0 var(--ring-width) var(--color-danger);
 }
 
-.theme-switch__input:disabled ~ .theme-switch__track {
+.cremona-switch__input:disabled ~ .cremona-switch__track {
   background-color: var(--color-bg-sunken);
   border-color: var(--color-border-default);
   opacity: 0.6;
 }
 
-.theme-switch__input:disabled:checked ~ .theme-switch__track {
+.cremona-switch__input:disabled:checked ~ .cremona-switch__track {
   background-color: var(--color-text-disabled);
   border-color: var(--color-text-disabled);
   opacity: 1;
 }
 
-.theme-switch__thumb {
+.cremona-switch__thumb {
   position: absolute;
   inset-block: 1px;
   inset-inline-start: 1px;
-  inline-size: var(--theme-switch-thumb-size);
-  block-size: var(--theme-switch-thumb-size);
+  inline-size: var(--cremona-switch-thumb-size);
+  block-size: var(--cremona-switch-thumb-size);
   border-radius: 50%;
   background-color: var(--color-bg-elevated);
   box-shadow: var(--shadow-1);
@@ -123,33 +123,33 @@
     background-color var(--motion-duration-base) var(--motion-easing-standard);
 }
 
-.theme-switch__input:checked ~ .theme-switch__track .theme-switch__thumb {
-  inset-inline-start: calc(100% - 1px - var(--theme-switch-thumb-size));
+.cremona-switch__input:checked ~ .cremona-switch__track .cremona-switch__thumb {
+  inset-inline-start: calc(100% - 1px - var(--cremona-switch-thumb-size));
 }
 
-.theme-switch__input:disabled ~ .theme-switch__track .theme-switch__thumb {
+.cremona-switch__input:disabled ~ .cremona-switch__track .cremona-switch__thumb {
   background-color: var(--color-bg-elevated);
   box-shadow: none;
 }
 
-.theme-switch__input:disabled:checked ~ .theme-switch__track .theme-switch__thumb {
+.cremona-switch__input:disabled:checked ~ .cremona-switch__track .cremona-switch__thumb {
   background-color: var(--color-text-inverse);
 }
 
 /* ----- row mode — <label> wraps input + track + thumb + text ----- */
 
-.theme-switch-row {
+.cremona-switch-row {
   display: inline-flex;
   align-items: flex-start;
   gap: var(--spacing-2);
   cursor: pointer;
 }
 
-.theme-switch-row[data-state="disabled"] {
+.cremona-switch-row[data-state="disabled"] {
   cursor: not-allowed;
 }
 
-.theme-switch-row__text {
+.cremona-switch-row__text {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -159,27 +159,27 @@
   user-select: none;
 }
 
-.theme-switch-row[data-size="sm"] .theme-switch-row__text {
+.cremona-switch-row[data-size="sm"] .cremona-switch-row__text {
   font-size: var(--font-size-sm);
 }
 
-.theme-switch-row[data-size="md"] .theme-switch-row__text {
+.cremona-switch-row[data-size="md"] .cremona-switch-row__text {
   font-size: var(--font-size-base);
 }
 
-.theme-switch-row__label {
+.cremona-switch-row__label {
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-snug);
 }
 
-.theme-switch-row__required {
+.cremona-switch-row__required {
   color: var(--color-danger);
   font-weight: var(--font-weight-bold);
   line-height: 1;
   margin-inline-start: calc(var(--spacing-0_5) * -1);
 }
 
-.theme-switch-row__description {
+.cremona-switch-row__description {
   flex-basis: 100%;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
@@ -187,14 +187,14 @@
   line-height: var(--line-height-snug);
 }
 
-.theme-switch-row[data-state="disabled"] .theme-switch-row__label,
-.theme-switch-row[data-state="disabled"] .theme-switch-row__description {
+.cremona-switch-row[data-state="disabled"] .cremona-switch-row__label,
+.cremona-switch-row[data-state="disabled"] .cremona-switch-row__description {
   color: var(--color-text-disabled);
 }
 
 /* ----- bare mode — <span> with just input + track + thumb ----- */
 
-.theme-switch-wrap {
+.cremona-switch-wrap {
   display: inline-flex;
   flex-shrink: 0;
 }
@@ -202,7 +202,7 @@
 /* ----- touch target hardening ----- */
 
 @media (pointer: coarse) {
-  .theme-switch-row {
+  .cremona-switch-row {
     min-block-size: 44px;
     padding-block: var(--spacing-2);
   }

@@ -95,11 +95,11 @@ describe('sortable controller', () => {
     await tick();
     const options = mockSortableOptions.options;
     expect(options.group).toBe('pm-board-foo');
-    expect(options.handle).toBe('.theme-sortable-handle');
+    expect(options.handle).toBe('.cremona-sortable-handle');
     expect(options.animation).toBe(150);
-    expect(options.ghostClass).toBe('theme-sortable-ghost');
-    expect(options.chosenClass).toBe('theme-sortable-chosen');
-    expect(options.dragClass).toBe('theme-sortable-drag');
+    expect(options.ghostClass).toBe('cremona-sortable-ghost');
+    expect(options.chosenClass).toBe('cremona-sortable-chosen');
+    expect(options.dragClass).toBe('cremona-sortable-drag');
   });
 
   it('dispatches sortable:ready after Sortable.js init', async () => {

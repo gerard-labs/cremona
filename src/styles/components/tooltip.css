@@ -28,13 +28,13 @@
  * focusout from the wrap, so the next focus session re-arms the tooltip.
  */
 
-.theme-tooltip-wrap {
+.cremona-tooltip-wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
 
-.theme-tooltip {
+.cremona-tooltip {
   /* Hidden by default. Position: absolute relative to the wrap. */
   position: absolute;
   z-index: var(--z-tooltip);
@@ -63,8 +63,8 @@
 /* Show on hover or focus-within (caller's trigger is inside the wrap) —
    transition-delay: 400 ms makes the show feel intentional (anti-flash
    on accidental mouseover; matches 14-motion-baseline §1 Tooltip pattern). */
-.theme-tooltip-wrap:hover .theme-tooltip,
-.theme-tooltip-wrap:focus-within .theme-tooltip {
+.cremona-tooltip-wrap:hover .cremona-tooltip,
+.cremona-tooltip-wrap:focus-within .cremona-tooltip {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
@@ -73,9 +73,9 @@
 }
 
 /* Esc dismiss — controller stamps data-state="dismissed" on the wrap. */
-.theme-tooltip-wrap[data-state="dismissed"] .theme-tooltip,
-.theme-tooltip-wrap[data-state="dismissed"]:hover .theme-tooltip,
-.theme-tooltip-wrap[data-state="dismissed"]:focus-within .theme-tooltip {
+.cremona-tooltip-wrap[data-state="dismissed"] .cremona-tooltip,
+.cremona-tooltip-wrap[data-state="dismissed"]:hover .cremona-tooltip,
+.cremona-tooltip-wrap[data-state="dismissed"]:focus-within .cremona-tooltip {
   opacity: 0 !important;
   visibility: hidden !important;
   transform: scale(0.95) !important;
@@ -84,53 +84,53 @@
 
 /* ----- placements -------------------------------------------------- */
 
-.theme-tooltip[data-placement="top"] {
+.cremona-tooltip[data-placement="top"] {
   inset-block-end: calc(100% + var(--spacing-2));
   inset-inline-start: 50%;
   transform: translateX(-50%) scale(0.95);
 }
 
-.theme-tooltip-wrap:hover .theme-tooltip[data-placement="top"],
-.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="top"] {
+.cremona-tooltip-wrap:hover .cremona-tooltip[data-placement="top"],
+.cremona-tooltip-wrap:focus-within .cremona-tooltip[data-placement="top"] {
   transform: translateX(-50%) scale(1);
 }
 
-.theme-tooltip[data-placement="bottom"] {
+.cremona-tooltip[data-placement="bottom"] {
   inset-block-start: calc(100% + var(--spacing-2));
   inset-inline-start: 50%;
   transform: translateX(-50%) scale(0.95);
 }
 
-.theme-tooltip-wrap:hover .theme-tooltip[data-placement="bottom"],
-.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="bottom"] {
+.cremona-tooltip-wrap:hover .cremona-tooltip[data-placement="bottom"],
+.cremona-tooltip-wrap:focus-within .cremona-tooltip[data-placement="bottom"] {
   transform: translateX(-50%) scale(1);
 }
 
-.theme-tooltip[data-placement="start"] {
+.cremona-tooltip[data-placement="start"] {
   inset-inline-end: calc(100% + var(--spacing-2));
   inset-block-start: 50%;
   transform: translateY(-50%) scale(0.95);
 }
 
-.theme-tooltip-wrap:hover .theme-tooltip[data-placement="start"],
-.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="start"] {
+.cremona-tooltip-wrap:hover .cremona-tooltip[data-placement="start"],
+.cremona-tooltip-wrap:focus-within .cremona-tooltip[data-placement="start"] {
   transform: translateY(-50%) scale(1);
 }
 
-.theme-tooltip[data-placement="end"] {
+.cremona-tooltip[data-placement="end"] {
   inset-inline-start: calc(100% + var(--spacing-2));
   inset-block-start: 50%;
   transform: translateY(-50%) scale(0.95);
 }
 
-.theme-tooltip-wrap:hover .theme-tooltip[data-placement="end"],
-.theme-tooltip-wrap:focus-within .theme-tooltip[data-placement="end"] {
+.cremona-tooltip-wrap:hover .cremona-tooltip[data-placement="end"],
+.cremona-tooltip-wrap:focus-within .cremona-tooltip[data-placement="end"] {
   transform: translateY(-50%) scale(1);
 }
 
 /* ----- dark mode --------------------------------------------------- */
 
-[data-theme="dark"] .theme-tooltip {
+[data-theme="dark"] .cremona-tooltip {
   background-color: var(--color-bg-sunken);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-default);

@@ -50,47 +50,47 @@ let _mbCounter = 0;
 function nextId(prefix = 'mb') { return `${prefix}-${++_mbCounter}`; }
 
 function icon(name, size = 'sm') {
-  return `<span class="theme-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
+  return `<span class="cremona-icon" data-icon="${name}" data-size="${size}" aria-hidden="true" role="presentation">${ICONS[name] || ''}</span>`;
 }
 
 function kbd(keys) {
   if (!keys || keys.length === 0) return '';
-  const cells = keys.map((k) => `<kbd class="theme-kbd" data-size="sm">${k}</kbd>`).join('<span class="theme-kbd-sep" aria-hidden="true">+</span>');
-  return `<kbd class="theme-kbd-group" data-size="sm">${cells}</kbd>`;
+  const cells = keys.map((k) => `<kbd class="cremona-kbd" data-size="sm">${k}</kbd>`).join('<span class="cremona-kbd-sep" aria-hidden="true">+</span>');
+  return `<kbd class="cremona-kbd-group" data-size="sm">${cells}</kbd>`;
 }
 
 function renderMenuItem({ label, iconLeading = null, kbdShortcut = null, disabled = false }) {
   const dis = disabled ? ' aria-disabled="true" data-state="disabled"' : '';
-  const leadingHtml = iconLeading ? `<span class="theme-item__icon theme-item__icon--leading" aria-hidden="true">${icon(iconLeading)}</span>` : '';
-  const trailingHtml = kbdShortcut ? `<span class="theme-item__trailing">${kbd(kbdShortcut)}</span>` : '';
-  return `<div class="theme-item" role="menuitem" tabindex="-1"${dis}>
+  const leadingHtml = iconLeading ? `<span class="cremona-item__icon cremona-item__icon--leading" aria-hidden="true">${icon(iconLeading)}</span>` : '';
+  const trailingHtml = kbdShortcut ? `<span class="cremona-item__trailing">${kbd(kbdShortcut)}</span>` : '';
+  return `<div class="cremona-item" role="menuitem" tabindex="-1"${dis}>
     ${leadingHtml}
-    <span class="theme-item__text"><span class="theme-item__label">${label}</span></span>
+    <span class="cremona-item__text"><span class="cremona-item__label">${label}</span></span>
     ${trailingHtml}
   </div>`;
 }
 
-function renderSeparator() { return '<hr class="theme-dropdown-menu__separator">'; }
-function renderGroupLabel(label) { return `<div class="theme-dropdown-menu__group-label" role="presentation">${label}</div>`; }
+function renderSeparator() { return '<hr class="cremona-dropdown-menu__separator">'; }
+function renderGroupLabel(label) { return `<div class="cremona-dropdown-menu__group-label" role="presentation">${label}</div>`; }
 
 function renderSubmenu({ triggerLabel, content, triggerDisabled = false }) {
   const id = nextId('sm');
   const dis = triggerDisabled ? 'disabled' : '';
   return `
-    <div class="theme-popover theme-dropdown-menu"
+    <div class="cremona-popover cremona-dropdown-menu"
       data-controller="popover dropdown-menu"
       data-action="click->popover#toggle keydown.esc@window->popover#close keydown->dropdown-menu#keydown click->dropdown-menu#onItemClick"
       data-popover-placement-value="bottom-start"
       data-popover-offset-value="2"
       data-popover-open-value="false">
-      <button type="button" class="theme-menubar__trigger"
+      <button type="button" class="cremona-menubar__trigger"
         data-popover-target="trigger"
         data-menubar-target="trigger"
         ${dis}
         aria-haspopup="menu" aria-expanded="false" aria-controls="${id}-content">
         ${triggerLabel}
       </button>
-      <div id="${id}-content" class="theme-popover__content theme-dropdown-menu__content"
+      <div id="${id}-content" class="cremona-popover__content cremona-dropdown-menu__content"
         data-popover-target="content"
         data-state="closed"
         hidden>
@@ -105,7 +105,7 @@ function renderMenubar({ menus, label = null, labelledBy = null }) {
   const labelAttr = label ? `aria-label="${label}"` : '';
   const labelledByAttr = labelledBy ? `aria-labelledby="${labelledBy}"` : '';
   return `
-    <div id="${id}" class="theme-menubar"
+    <div id="${id}" class="cremona-menubar"
       data-controller="menubar"
       data-action="keydown->menubar#keydown"
       ${labelAttr} ${labelledByAttr}>
@@ -124,8 +124,8 @@ const bodyHtml = `
     </header>
 
     <section class="mb-story__section" aria-labelledby="mb-section-default">
-      <h2 id="mb-section-default" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.default')}</h2>
-      <p class="mb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.default')}</p>
+      <h2 id="mb-section-default" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.default')}</h2>
+      <p class="mb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.default')}</p>
       <div class="mb-story__row">
         ${renderMenubar({
           label: M('aria.label-default'),
@@ -169,8 +169,8 @@ const bodyHtml = `
     </section>
 
     <section class="mb-story__section" aria-labelledby="mb-section-shortcuts">
-      <h2 id="mb-section-shortcuts" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.shortcuts')}</h2>
-      <p class="mb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.shortcuts')}</p>
+      <h2 id="mb-section-shortcuts" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.shortcuts')}</h2>
+      <p class="mb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.shortcuts')}</p>
       <div class="mb-story__row">
         ${renderMenubar({
           label: M('aria.label-shortcuts'),
@@ -199,8 +199,8 @@ const bodyHtml = `
     </section>
 
     <section class="mb-story__section" aria-labelledby="mb-section-cascade">
-      <h2 id="mb-section-cascade" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.cascade')}</h2>
-      <p class="mb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.cascade')}</p>
+      <h2 id="mb-section-cascade" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.cascade')}</h2>
+      <p class="mb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.cascade')}</p>
       <div class="mb-story__row">
         ${renderMenubar({
           label: M('aria.label-cascade'),
@@ -214,8 +214,8 @@ const bodyHtml = `
     </section>
 
     <section class="mb-story__section" aria-labelledby="mb-section-groups">
-      <h2 id="mb-section-groups" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.groups')}</h2>
-      <p class="mb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.groups')}</p>
+      <h2 id="mb-section-groups" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.groups')}</h2>
+      <p class="mb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.groups')}</p>
       <div class="mb-story__row">
         ${renderMenubar({
           label: M('aria.label-groups'),
@@ -224,8 +224,8 @@ const bodyHtml = `
               triggerLabel: M('trigger.view'),
               content: [
                 renderGroupLabel(M('group.theme')),
-                renderMenuItem({ label: M('item.theme-light'), iconLeading: 'sun' }),
-                renderMenuItem({ label: M('item.theme-dark'), iconLeading: 'moon' }),
+                renderMenuItem({ label: M('item.cremona-light'), iconLeading: 'sun' }),
+                renderMenuItem({ label: M('item.cremona-dark'), iconLeading: 'moon' }),
                 renderSeparator(),
                 renderGroupLabel(M('group.density')),
                 renderMenuItem({ label: M('item.density-comfortable') }),
@@ -239,8 +239,8 @@ const bodyHtml = `
     </section>
 
     <section class="mb-story__section" aria-labelledby="mb-section-disabled">
-      <h2 id="mb-section-disabled" class="theme-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.disabled')}</h2>
-      <p class="mb-story__explainer theme-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.disabled')}</p>
+      <h2 id="mb-section-disabled" class="cremona-typography" data-variant="overline" data-color="tertiary">${t('theme.menubar.story.section.disabled')}</h2>
+      <p class="mb-story__explainer cremona-typography" data-variant="caption" data-color="tertiary">${t('theme.menubar.story.explainer.disabled')}</p>
       <div class="mb-story__row">
         ${renderMenubar({
           label: M('aria.label-disabled'),

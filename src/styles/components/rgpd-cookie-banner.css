@@ -12,33 +12,33 @@
  * Dialog size override for full-modal styling on mobile).
  */
 
-.theme-rgpd-cookie-banner {
+.cremona-rgpd-cookie-banner {
   /* Inherits Dialog Ring 2 wrap styling. */
 }
 
-.theme-rgpd-cookie-banner__legal-summary {
+.cremona-rgpd-cookie-banner__legal-summary {
   font: var(--typography-body);
   color: var(--color-text-secondary);
   margin-block-end: var(--spacing-3);
 }
 
-.theme-rgpd-cookie-banner__legal-detail {
+.cremona-rgpd-cookie-banner__legal-detail {
   font: var(--typography-caption);
   color: var(--color-text-tertiary);
   margin-block-end: var(--spacing-3);
 }
 
-.theme-rgpd-cookie-banner__legal-link {
+.cremona-rgpd-cookie-banner__legal-link {
   color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.theme-rgpd-cookie-banner__legal-link:hover {
+.cremona-rgpd-cookie-banner__legal-link:hover {
   text-decoration: none;
 }
 
-.theme-rgpd-cookie-banner__categories-summary {
+.cremona-rgpd-cookie-banner__categories-summary {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-1_5);
@@ -48,7 +48,7 @@
   margin-block-end: var(--spacing-3);
 }
 
-.theme-rgpd-cookie-banner__category {
+.cremona-rgpd-cookie-banner__category {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -56,17 +56,17 @@
   font: var(--typography-caption);
 }
 
-.theme-rgpd-cookie-banner__category-name {
+.cremona-rgpd-cookie-banner__category-name {
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
 }
 
-.theme-rgpd-cookie-banner__category-status {
+.cremona-rgpd-cookie-banner__category-status {
   color: var(--color-text-tertiary);
   font-variant-numeric: tabular-nums;
 }
 
-.theme-rgpd-cookie-banner__actions {
+.cremona-rgpd-cookie-banner__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
@@ -75,11 +75,11 @@
 
 /* Mobile : stack CTAs full-width */
 @media (width <= 640px) {
-  .theme-rgpd-cookie-banner__actions {
+  .cremona-rgpd-cookie-banner__actions {
     flex-direction: column;
   }
 
-  .theme-rgpd-cookie-banner__actions .theme-button {
+  .cremona-rgpd-cookie-banner__actions .cremona-button {
     inline-size: 100%;
   }
 }

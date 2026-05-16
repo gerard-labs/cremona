@@ -24,12 +24,12 @@
   {%- set _keys = [keys] -%}
 {%- endif -%}
 
-{%- set _classes = ['theme-kbd-group'] -%}
+{%- set _classes = ['cremona-kbd-group'] -%}
 {%- if className -%}{%- set _classes = _classes | merge([className]) -%}{%- endif -%}
 
 <kbd class="{{ _classes | join(' ') }}" data-size="{{ size }}">
 {%- for k in _keys -%}
-<kbd class="theme-kbd" data-size="{{ size }}">{{ k }}</kbd>
-{%- if not loop.last -%}<span class="theme-kbd-sep" aria-hidden="true">{{ separator }}</span>{%- endif -%}
+<kbd class="cremona-kbd" data-size="{{ size }}">{{ k }}</kbd>
+{%- if not loop.last -%}<span class="cremona-kbd-sep" aria-hidden="true">{{ separator }}</span>{%- endif -%}
 {%- endfor -%}
 </kbd>

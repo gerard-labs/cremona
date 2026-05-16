@@ -13,7 +13,7 @@
     showMarkAll    (bool, optional)     — default true
 -#}
 
-{%- set htmlId        = htmlId        | default('theme-notification-center-' ~ random()) -%}
+{%- set htmlId        = htmlId        | default('cremona-notification-center-' ~ random()) -%}
 {%- set edge          = edge          | default('end') -%}
 {%- set title         = title         | default('theme.notification-center.title'|trans) -%}
 {%- set notifications = notifications | default([]) -%}
@@ -21,21 +21,21 @@
 {%- set unreadCount   = notifications | filter(n => n.unread) | length -%}
 {%- set isEmpty       = notifications | length == 0 -%}
 
-{% embed '@theme/components/sheet/sheet.html.twig' with {
+{% embed '@cremona/components/sheet/sheet.html.twig' with {
   htmlId: htmlId,
   edge: edge,
-  sheetClassName: 'theme-notification-center',
+  sheetClassName: 'cremona-notification-center',
   closeButton: true,
   closeAriaLabel: 'theme.notification-center.close'|trans,
 } %}
   {% block title %}
     {{- title -}}
     {%- if unreadCount > 0 -%}
-      {% include '@theme/components/badge/badge.html.twig' with {
+      {% include '@cremona/components/badge/badge.html.twig' with {
         variant: 'primary',
         size: 'sm',
         count: unreadCount,
-        className: 'theme-notification-center__badge',
+        className: 'cremona-notification-center__badge',
         attrs: { 'aria-label': 'theme.notification-center.unread-aria'|trans({'{count}': unreadCount}) },
       } only %}
     {%- endif -%}
@@ -43,8 +43,8 @@
 
   {% block body %}
     {%- if isEmpty -%}
-      <div class="theme-notification-center__empty">
-        {% include '@theme/components/empty/empty.html.twig' with {
+      <div class="cremona-notification-center__empty">
+        {% include '@cremona/components/empty/empty.html.twig' with {
           size: 'md',
           icon: 'bell',
           title: 'theme.notification-center.empty.title'|trans,
@@ -52,21 +52,21 @@
         } %}
       </div>
     {%- else -%}
-      <ul class="theme-notification-center__list">
+      <ul class="cremona-notification-center__list">
         {%- for notif in notifications -%}
-          <li class="theme-notification-center__item"{% if notif.unread %} data-unread="true"{% endif %}>
+          <li class="cremona-notification-center__item"{% if notif.unread %} data-unread="true"{% endif %}>
             <a href="{{ notif.href }}"
-               class="theme-notification-center__item-link"
+               class="cremona-notification-center__item-link"
                data-action="click->notification-center#markRead"
                data-notification-id="{{ notif.id }}">
-              {% include '@theme/components/avatar/avatar.html.twig' with { src: notif.avatarUrl, alt: '', size: 'md' } only %}
-              <div class="theme-notification-center__item-body">
-                <p class="theme-notification-center__item-title">{{ notif.title }}</p>
-                <p class="theme-notification-center__item-text">{{ notif.body }}</p>
-                <time class="theme-notification-center__item-time" datetime="{{ notif.timestamp }}">{{ notif.relativeTime }}</time>
+              {% include '@cremona/components/avatar/avatar.html.twig' with { src: notif.avatarUrl, alt: '', size: 'md' } only %}
+              <div class="cremona-notification-center__item-body">
+                <p class="cremona-notification-center__item-title">{{ notif.title }}</p>
+                <p class="cremona-notification-center__item-text">{{ notif.body }}</p>
+                <time class="cremona-notification-center__item-time" datetime="{{ notif.timestamp }}">{{ notif.relativeTime }}</time>
               </div>
               {%- if notif.unread -%}
-                <span class="theme-notification-center__unread-dot" aria-label="{{ 'theme.notification-center.unread'|trans }}"></span>
+                <span class="cremona-notification-center__unread-dot" aria-label="{{ 'theme.notification-center.unread'|trans }}"></span>
               {%- endif -%}
             </a>
           </li>
@@ -76,7 +76,7 @@
   {% endblock %}
 
   {% block footer %}{% if showMarkAll and unreadCount > 0 %}
-    {% include '@theme/components/button/button.html.twig' with {
+    {% include '@cremona/components/button/button.html.twig' with {
       label: 'theme.notification-center.mark-all-read'|trans,
       variant: 'ghost',
       attrs: { 'data-action': 'click->notification-center#markAllRead' },
