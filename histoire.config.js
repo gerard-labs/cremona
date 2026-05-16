@@ -21,6 +21,9 @@ export default defineConfig({
   storyMatch: ['src/**/*.story.vue', 'src/**/*.story.js'],
   outDir: '.histoire/dist',
   vite: {
+    // Served at the domain root locally, but under `/<repo>/` on GitHub
+    // Pages — the deploy workflow sets HISTOIRE_BASE so asset URLs resolve.
+    base: process.env.HISTOIRE_BASE || '/',
     plugins: [vue(), tailwindcss()],
   },
   theme: {

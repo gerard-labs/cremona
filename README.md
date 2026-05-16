@@ -4,6 +4,7 @@
 > Symfony-first, portable to React / Vue / Drupal / plain HTML.
 
 [![CI](https://github.com/gerard-labs/cremona/actions/workflows/ci.yml/badge.svg)](https://github.com/gerard-labs/cremona/actions/workflows/ci.yml)
+[![Catalog](https://img.shields.io/badge/catalog-live-8b5cf6.svg)](https://gerard-labs.github.io/cremona/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22c55e.svg)](./LICENSE)
 ![Version](https://img.shields.io/badge/version-0.2.6-3b82f6.svg)
 ![Node](https://img.shields.io/badge/node-%E2%89%A5%2022-5fa04e.svg)
@@ -18,6 +19,8 @@ driven by one set of design tokens.
 Markup is delivered as **pure-HTML Twig templates** with zero framework lock-in;
 behaviour is delivered as **standalone Stimulus controllers**. A single token
 layer powers light/dark themes, three density modes, and full RTL support.
+
+📖 **[Browse the live component catalog →](https://gerard-labs.github.io/cremona/)**
 
 ---
 
@@ -80,8 +83,10 @@ pnpm test:run       # run the 673 unit tests
 pnpm lint           # stylelint · eslint · anti-drift checks
 ```
 
-`pnpm dev` is the fastest way to explore: the [Histoire](https://histoire.dev)
-catalog renders every component, with light/dark and responsive presets.
+`pnpm dev` is the fastest way to explore locally — or browse the
+**[hosted catalog](https://gerard-labs.github.io/cremona/)**, redeployed from
+`main` on every push. The [Histoire](https://histoire.dev) catalog renders every
+component with light/dark and responsive presets.
 
 ---
 
