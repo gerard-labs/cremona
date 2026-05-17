@@ -7,7 +7,7 @@
   Stimulus controller `popover` (~180 lines) drives open/close + Floating UI
   computePosition + autoUpdate + collision detection (flip + shift) +
   click-outside dismiss (capture-phase) + Esc dismiss (window-scoped).
-  See [docs/specs/ring2/Popover.md] for the full spec + 18-lens audit.
+  See [docs/specs/ring2/Popover.md] for the full spec.
 
   Visual baselines: the popover content is hidden at rest (`hidden` + opacity
   0). To bake the visible state per placement, future targeted screenshots

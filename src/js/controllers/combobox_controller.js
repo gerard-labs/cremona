@@ -5,8 +5,8 @@ import { t } from '../utils/i18n.js';
  * combobox — Search-as-you-type single-select listbox, Input-anchored, with
  * aria-autocomplete="list" (WAI-ARIA APG "Combobox with listbox popup").
  *
- * Architecture: `ComboboxController extends SelectController` (per OQ-32
- * sealed S2.3b opening). Combobox IS-A Select with an Input trigger + filter
+ * Architecture: `ComboboxController extends SelectController`. Combobox
+ * IS-A Select with an Input trigger + filter
  * logic. The inheritance reuses, unchanged:
  *
  *   - aria-activedescendant nav loop (Arrow Up/Down clamp, Home/End, Enter)
@@ -23,20 +23,19 @@ import { t } from '../utils/i18n.js';
  *      Substring case-insensitive match on each option's label. Hidden
  *      options are excluded from nav; empty state renders inline when count = 0.
  *   3. `_announceResults(count)` — pushes a localized "N résultats" message
- *      to the shared `#cremona-announcer` aria-live region (per OQ-31 sealed
- *      S2.3b — single shared region from base/reset.css, NOT per-instance).
+ *      to the shared `#cremona-announcer` aria-live region (single shared
+ *      region from base/reset.css, NOT per-instance).
  *   4. Esc-clear semantics (per WAI-ARIA APG Combobox): first Esc clears the
  *      input query; second Esc (or Esc when query is empty) closes via the
  *      window-scoped popover#close.
- *   5. Focusout dismiss (mirror DropdownMenu OQ-27 S2.2). Tab-out closes the
- *      listbox so aria-expanded never desyncs from focus location.
+ *   5. Focusout dismiss (mirror DropdownMenu). Tab-out closes the listbox so
+ *      aria-expanded never desyncs from focus location.
  *
- * Per S1.4b descriptor-binding gotcha (Collapsible §2, ADR-0008): tests call
- * controller methods directly (`ctrl.filter({target: ...})` / `ctrl.keydown(...)`).
+ * Tests call controller methods directly
+ * (`ctrl.filter({target: ...})` / `ctrl.keydown(...)`).
  *
- * Per OQ-28 doctrine (sealed S2.3a): vanilla implementation, no Tom Select
- * adapter. Async-loading + virtual-scroll + multi-select are out of scope at
- * Ring 2 primitive; a Phase 4 ADR can revisit if real demand emerges.
+ * Vanilla implementation, no Tom Select adapter. Async-loading + virtual-scroll
+ * + multi-select are out of scope at Ring 2 primitive.
  *
  * Targets (in ADDITION to inherited `option`, `hiddenInput` from Select —
  * Stimulus walks the prototype chain for static targets):
@@ -81,7 +80,7 @@ export default class ComboboxController extends SelectController {
 
   connect() {
     super.connect();
-    // Tab-out dismiss — mirror DropdownMenu OQ-27 (sealed S2.2). The user
+    // Tab-out dismiss — mirror DropdownMenu. The user
     // tabs from the input past the last option (the listbox has no tab stops
     // — aria-activedescendant pattern) → focus leaves the wrap → close.
     this.element.addEventListener('focusout', this._onFocusOut);
@@ -356,7 +355,7 @@ export default class ComboboxController extends SelectController {
 
   /**
    * Push a localized "N résultats" message to the shared #cremona-announcer
-   * aria-live region (per OQ-31 sealed S2.3b — single shared region).
+   * aria-live region (single shared region).
    *
    * For count = 0, we deliberately do NOT announce here — the empty state
    * element rendered inline in the listbox carries the message visually AND
@@ -373,7 +372,7 @@ export default class ComboboxController extends SelectController {
       announcer.textContent = '';
       return;
     }
-    // i18n key per [11-naming §i18n]: theme.combobox.aria.results-count.{one,other}.
+    // i18n key: theme.combobox.aria.results-count.{one,other}.
     // t() resolves the plural category via Intl.PluralRules.
     announcer.textContent = t('theme.combobox.aria.results-count', { count });
   }

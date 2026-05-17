@@ -1,10 +1,9 @@
 {#-
   Resizable — 2-pane resizable container with drag handle.
 
-  Per OQ-36 (sealed S2.4 opening): event-only persistence — the controller
-  dispatches `resizable:change` ; the consumer chooses to persist via
-  localStorage / cookie / URL / no persistence. Cohérent kit doctrine
-  "no implicit side effects".
+  Event-only persistence — the controller dispatches `resizable:change` ;
+  the consumer chooses to persist via localStorage / cookie / URL / no
+  persistence. Kit doctrine: "no implicit side effects".
 
   Architecture:
     CSS Grid 2-pane layout with `grid-template-{columns,rows}` deriving

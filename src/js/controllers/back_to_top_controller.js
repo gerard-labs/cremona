@@ -1,5 +1,5 @@
 /**
- * back_to_top_controller.js — Floating back-to-top button (Ring 3 S3.2).
+ * back_to_top_controller.js — Floating back-to-top button (Ring 3).
  *
  * Listens to window scroll. Reveals the button when window.scrollY exceeds
  * `threshold` (default 400 px). Click → smooth scroll to top.

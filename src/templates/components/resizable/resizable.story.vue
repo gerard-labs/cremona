@@ -8,10 +8,10 @@
     4. Composed (editor + preview) — typical IDE pattern.
     5. Events log demo — wire resizable:change to a visible log.
 
-  Stimulus controller `resizable` mounted on the wrap. Per OQ-36 sealed
-  S2.4 opening: event-only persistence — the consumer chooses to persist.
+  Stimulus controller `resizable` mounted on the wrap. Event-only
+  persistence — the consumer chooses to persist.
 
-  Helpers (per S2.3a story doctrine):
+  Helpers:
     - resizable({ id, orientation, size, minSize, maxSize, start, end, ... })
 -->
 <script setup>

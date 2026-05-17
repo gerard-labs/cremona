@@ -1,12 +1,11 @@
 /*
- * Chatbot — conversational UI panel (Ring 3 S3.3c — FINAL Ring 3 pattern).
+ * Chatbot — conversational UI panel (Ring 3).
  *
  * Pure composition Drawer Ring 2 + Input Ring 1 + Item Ring 1. Marker
  * class + auto-scroll target + message bubble alignment + typing
  * indicator visual.
  *
- * Bundle budget : ~0.20 kB gzip per ADR-0034 Path X² CSS marker baseline
- * (Typical bucket).
+ * Bundle budget : ~0.20 kB gzip (CSS marker baseline, typical bucket).
  */
 
 .cremona-chatbot__dialog {

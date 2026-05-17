@@ -1,7 +1,7 @@
 {#-
   Dialog — modal native `<dialog>` element.
 
-  Per OQ-20 doctrine [Ring 2 — pending lock-in ADR]: native `<dialog>`
+  Ring 2 pattern: native `<dialog>`
   with `showModal()`. Top-layer positioning (no z-index war), native
   `::backdrop`, native focus trap (Tab cycles within), native Esc
   dismiss. The `dialog` Stimulus controller handles open/close
@@ -47,8 +47,7 @@
     body (required)    — main content.
     footer (optional)  — button cluster (typically Cancel + Confirm /
                          Save). Rendered at inline-end, naturally
-                         flipping in RTL via flex-row writing direction
-                         (per 12-microcopy-tone §Confirmations).
+                         flipping in RTL via flex-row writing direction.
 -#}
 
 {%- set htmlId               = htmlId               | default('cremona-dialog-' ~ random()) -%}

@@ -1,15 +1,14 @@
 {#-
-  Auth-AccountLocked — terminal account-lock-out pattern (Ring 3 S3.1b).
+  Auth-AccountLocked — terminal account-lock-out pattern (Ring 3).
 
   Composes `_auth-shell` (title null — inner Empty owns the h1) + Empty
-  (lg, h1, icon=alert-triangle substitut OQ-57b) + Button × 1-2 (primary
-  Contact-support + optional secondary Back-to-login).
+  (lg, h1, icon=alert-triangle) + Button × 1-2 (primary Contact-support +
+  optional secondary Back-to-login).
 
-  Pure server-rendered terminal page (OQ-55). 0 Stimulus controller. The
-  consumer's auth back-end determines when an account becomes locked
-  (typically after N failed Auth-Login attempts beyond the soft
-  `rateLimitedNotice` threshold) and surfaces this pattern on the
-  /account/locked route.
+  Pure server-rendered terminal page. 0 Stimulus controller. The consumer's
+  auth back-end determines when an account becomes locked (typically after N
+  failed Auth-Login attempts beyond the soft `rateLimitedNotice` threshold)
+  and surfaces this pattern on the /account/locked route.
 
   Relationship to Error-RateLimited :
     Auth-AccountLocked is the **terminal graduation** of the transient
@@ -17,9 +16,8 @@
     Auth-AccountLocked shows "contact support" (terminal until manual
     unlock).
 
-  Icon choice : `alert-triangle` is the OQ-57b substitut for the missing
-  `lock` / `shield` curated-set icon. Same visual signal as
-  Error-RateLimited.
+  Icon choice : `alert-triangle` substitut for the missing `lock` / `shield`
+  curated-set icon. Same visual signal as Error-RateLimited.
 
   See `docs/specs/ring3/Auth-AccountLocked.md` for full spec.
 -#}

@@ -1,17 +1,15 @@
 import { Controller } from '@hotwired/stimulus';
 
 /**
- * chart — Wrapped ApexCharts adapter (Ring 2 S2.9).
+ * chart — Wrapped ApexCharts adapter (Ring 2).
  *
- * Per ADR-0012 :
- *  - ApexCharts v4.x is the underlying lib (manifest candidate-default).
- *  - **Lazy-loaded** via module-scoped dynamic `import()` mirror
- *    ADR-0011 verbatim. The lib
- *    is fetched on first chart mount per session and cached.
+ * ApexCharts v4.x is the underlying lib. **Lazy-loaded** via module-scoped
+ * dynamic `import()` — the lib is fetched on first chart mount per session
+ * and cached.
  *  - 5 variants out of the box : `line`, `bar`, `donut`, `area`, `sparkline`.
  *    Each variant ships its own ApexCharts options preset ; the kit's tokens
  *    flow through (foreColor, palette, grid border, motion duration).
- *  - Heatmap / sankey / treemap / funnel deferred to Ring 3+ amend with
+ *  - Heatmap / sankey / treemap / funnel deferred to Ring 3+ with
  *    `engine: "echarts"` opt-in.
  *
  * Per WAI-ARIA :
@@ -25,7 +23,7 @@ import { Controller } from '@hotwired/stimulus';
  *    is the SVG, which carries no semantic value to SR — the table fallback
  *    is the source of truth).
  *
- * Stimulus value-changed guard pattern (S2.8 Stepper class-field) :
+ * Stimulus value-changed guard pattern :
  *  - `_lastRenderedSig` class field initialized to `null` BEFORE Stimulus
  *    callbacks fire. `_renderSignature(value)` produces a deterministic
  *    string hash of the current value set ; the render path skips when the
@@ -58,7 +56,7 @@ import { Controller } from '@hotwired/stimulus';
  *                              detail = { seriesIndex, dataPointIndex, value }.
  */
 
-// Module-scoped ApexCharts cache mirror [ADR-0011] popover pattern.
+// Module-scoped ApexCharts cache (mirror popover lazy-load pattern).
 let _apexCharts = null;
 let _apexChartsPromise = null;
 

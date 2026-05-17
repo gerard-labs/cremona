@@ -4,7 +4,7 @@
   Sections (2): default (icon=eye + primary "Retour au tableau de bord")
               · with-request-access (+ secondary "Demander l'accès").
 
-  Icon `eye` substitut per OQ-57b — visual: restricted/hidden view.
+  Icon `eye` substitute — visual: restricted/hidden view.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

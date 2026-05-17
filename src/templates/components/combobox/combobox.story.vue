@@ -9,11 +9,11 @@
     5. In a Field with label + help.
 
   Stimulus controllers `popover` + `combobox` co-mounted (combobox extends
-  select per OQ-32). Per OQ-31: shared #cremona-announcer (declared in
-  base/reset.css). Per OQ-28: vanilla implementation, no Tom Select adapter.
+  select). Shared #cremona-announcer (declared in base/reset.css). Vanilla
+  implementation, no Tom Select adapter.
 
-  Helpers used (per S2.3a story doctrine — nested template literal
-  avoidance to satisfy check-i18n H3 brace-balanced masker):
+  Helpers used (nested template literal avoidance to satisfy check-i18n
+  H3 brace-balanced masker):
     - icon(name, size)
     - renderOption({ id, value, label, selected, disabled })
     - renderCombobox({ name, value, placeholder, options, ... })

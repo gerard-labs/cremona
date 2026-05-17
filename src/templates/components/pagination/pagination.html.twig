@@ -1,15 +1,14 @@
 {#-
   Pagination — Page navigation with first/prev/next/last + inline page-size.
 
-  Per OQ-35 (sealed S2.4 opening): page-size selector inline (Pagination IS
-  the natural surface), NOT a separate compound. Pattern Stripe / Linear /
-  Notion DataTable footer.
+  Page-size selector inline (Pagination IS the natural surface), NOT a
+  separate compound. Pattern Stripe / Linear / Notion DataTable footer.
 
   Composes:
     - `pagination` Stimulus controller (manages page state, disabled buttons,
       range label, dispatches `pagination:change`).
     - Inline [NativeSelect](../native-select/) for the page-size picker
-      (small list → OS picker on mobile per S1.2 doctrine).
+      (small list → OS picker on mobile).
     - 4 [Button]-styled native buttons (variant=ghost, size=sm) for
       first/prev/next/last navigation.
 

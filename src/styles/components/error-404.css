@@ -1,10 +1,9 @@
 /*
- * Error-404 — "Page not found" page (Ring 3 S3.1c).
+ * Error-404 — "Page not found" page (Ring 3).
  *
- * Foundation pattern for the Errors family — see docs/specs/ring3/Error-404.md
- * for the shared family doctrine. Same composition pattern as the other 6
- * error-feel patterns. Icon substitut `search` per OQ-57b (visual:
- * couldn't-find). Marker class only.
+ * Foundation pattern for the Errors family. Same composition pattern as the
+ * other error-feel patterns. Uses the `search` icon (visual: couldn't-find).
+ * Marker class only.
  */
 
 .cremona-error-404 {

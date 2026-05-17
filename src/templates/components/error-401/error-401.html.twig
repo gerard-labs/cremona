@@ -1,20 +1,17 @@
 {#-
-  Error-401 — "Authentication required" page (Ring 3 S3.1c).
+  Error-401 — "Authentication required" page (Ring 3).
 
   Composes:
     - _error-shell (sub-template, default variant) for the centered viewport layout
     - Empty (Ring 1, size=lg, h1 title) for illustration + title + body + actions
-    - Icon `user` (Ring 1, Lucide curated 30-set substitute — per OQ-57b S2.8 Sidebar
-      precedent, no curated-set amend ADR triggered ; substituts retained over
-      ADR-0016 to avoid 3rd doctrine-shift in 11 sessions)
+    - Icon `user` (Ring 1, Lucide curated 30-set substitute)
     - Button (Ring 1) for the primary + secondary CTAs
 
-  No Stimulus controller — pure server-rendered static page (S3.1c doctrine carry
-  from OQ-55). The consumer wraps the kit's pattern in their /401 route handler.
+  No Stimulus controller — pure server-rendered static page. The consumer
+  wraps the kit's pattern in their /401 route handler.
 
   See `docs/specs/ring3/Error-404.md` §1 for the shared Errors family doctrine
-  (composition, anti-enumeration N/A, microcopy verbatim 12-microcopy §"Pages" +
-  §"Messages d'erreur", a11y `<main>` landmark + h1 + Empty region).
+  (composition, microcopy, a11y `<main>` landmark + h1 + Empty region).
 -#}
 
 {%- set title         = title         | default('theme.error.401.title'|trans) -%}

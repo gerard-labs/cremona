@@ -1,5 +1,5 @@
 {#-
-  Auth-Login — login pattern (Ring 3 S3.1).
+  Auth-Login — login pattern (Ring 3).
 
   Composes:
     - _auth-shell (sub-template) for the centered viewport layout
@@ -8,9 +8,9 @@
     - Button (Ring 1) for the primary submit + link forgot + link register
     - Alert (Ring 1) for cross-field global errors + rate-limited notice
 
-  No Stimulus controller — pure server-rendered form (OQ-55 doctrine). The
-  consumer's app (Symfony, Rails, Express) wires the `<form action>` POST
-  handler natively. The kit does not ship JS-side validation in S3.1.
+  No Stimulus controller — pure server-rendered form. The consumer's app
+  (Symfony, Rails, Express) wires the `<form action>` POST handler natively.
+  The kit does not ship JS-side validation.
 
   See `docs/specs/ring3/Auth-Login.md` for the full API + a11y + state
   documentation.

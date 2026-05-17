@@ -1,18 +1,11 @@
 /**
- * tag-input controller — Form-TagInput (Ring 3 S3.3a-2).
+ * tag-input controller — Form-TagInput (Ring 3).
  *
- * 10th Ring 3 controller (after password-strength + session-timeout-countdown
- * + back-to-top + product-tour + form-with-steps + address-autocomplete +
- * form-date-range + color-picker + signature-pad).
+ * Lazy-loads Tagify v4.x on mount. Lazy-on-mount because the chip affordance
+ * must render immediately (first-focus deferral would jank the input → chip
+ * transform visually).
  *
- * Lazy-loads Tagify v4.x on mount per ADR-0023.
- * Mirror ADR-0011 / 0012 / 0013 /
- * 0020 verbatim — lazy-on-mount because the chip affordance must render
- * immediately (first-focus deferral would jank the input → chip transform
- * visually).
- *
- * Plurals via Intl.PluralRules for the chip counter (1 étiquette / X étiquettes)
- * per 15-i18n-and-rtl §Plurals.
+ * Plurals via Intl.PluralRules for the chip counter (1 étiquette / X étiquettes).
  *
  * Surface :
  *   data-controller="tag-input"

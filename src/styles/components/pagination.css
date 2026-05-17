@@ -1,13 +1,13 @@
 /*
  * Pagination — Page navigation with first/prev/next/last + inline page-size.
  *
- * Per OQ-35 (sealed S2.4 opening): inline page-size selector — Pagination
- * is the natural surface. Pattern Stripe / Linear / Notion DataTable footer.
+ * Inline page-size selector — Pagination is the natural surface.
+ * Pattern: Stripe / Linear / Notion DataTable footer.
  *
  * Icons CSS-only via mask-image (cohérent Table sort indicator pattern).
  * First/last use `chevrons-left` / `chevrons-right` double-chevron SVGs
- * inlined as data URIs — these aren't in the Lucide curated 30 set, so the
- * CSS-only path avoids amending the icon set mid-ring.
+ * inlined as data URIs — not in the Lucide curated set, so the CSS-only
+ * path avoids amending the icon set.
  *
  * Prev/next use the curated `chevron-left` / `chevron-right` (also inlined
  * via mask-image for visual consistency with first/last). Both auto-flip

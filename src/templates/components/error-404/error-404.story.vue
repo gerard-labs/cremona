@@ -7,8 +7,7 @@
   Sections (2): default (icon=search + primary "Retour à l'accueil")
               · with-back-link (+ secondary "Page précédente").
 
-  Icon `search` substitut per OQ-57b — visual: couldn't-find. Microcopy
-  verbatim from [12-microcopy-tone.md §"Pages" §404].
+  Icon `search` substitute — visual: couldn't-find.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

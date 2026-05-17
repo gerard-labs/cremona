@@ -3,9 +3,7 @@
 
   Compose Badge visual envelope (soft pill) + a leading colored dot. Used
   for live monitoring contexts (uptime, presence, queue size). The variant
-  drives the live-region role per the OQ-mini Status resolution sealed
-  S2.6 — mirrors Alert.md §"role auto-derives from variant" doctrine
-  sealed in [ADR-0008]:
+  drives the live-region role (mirrors Alert.md §"role auto-derives from variant"):
 
     variant ∈ {success, info, warning} → <output> (implicit role="status",
                                                     aria-live="polite",
@@ -19,8 +17,7 @@
   role='status'>").
 
   Pulse animation (opt-in) is CSS-only :
-    - 1500 ms loop = ~0.67 Hz, well under the 3 Hz epilepsy floor
-      (per [13-a11y §15]).
+    - 1500 ms loop = ~0.67 Hz, well under the 3 Hz epilepsy floor.
     - Animates the dot's scale + a pseudo-element ring outside.
     - prefers-reduced-motion : skip animation, dot stays solid.
 

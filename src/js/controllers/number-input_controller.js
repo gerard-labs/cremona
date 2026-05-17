@@ -3,8 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * number-input — touch-friendly +/- stepper around a native <input type="number">.
  *
- * Per the OQ-mini NumberInput resolution sealed S2.6 :
- *  - The native <input type="number"> handles ALL keyboard semantics
+ * The native <input type="number"> handles ALL keyboard semantics
  *    (Arrow Up / Down, type-to-edit, Tab, native min/max/step on form
  *    submit validation).
  *  - The +/- buttons are an explicit affordance for touch + mouse contexts.
@@ -22,7 +21,7 @@ import { Controller } from '@hotwired/stimulus';
  *
  * The native `input` and `change` events fire after every step — bubble to
  * the consumer ; this controller does NOT dispatch a custom event (the
- * native ones are authoritative — same doctrine as Slider S1.3 / Input S1.2).
+ * native ones are authoritative — same doctrine as Slider / Input Ring 1).
  *
  * Targets:
  *   input    (required) — the <input type="number">

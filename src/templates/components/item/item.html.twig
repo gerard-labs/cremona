@@ -40,12 +40,12 @@
     ariaCurrent   (string, optional)        — 'page' | 'true' | 'step' (nav-menu active item)
     className     (string, optional)
     attrs         (map,    optional)  — passthrough of extra data-* / aria-* / wiring
-                                        attributes onto the root element (ADR-0059)
+                                        attributes onto the root element
 
   Blocks:
     content (optional) — when Item is {% embed %}-ed and this block is
                          overridden, its content replaces the standard
-                         leading / label / trailing slots (ADR-0060).
+                         leading / label / trailing slots.
 -#}
 
 {%- set label        = label        | default(null) -%}

@@ -1,14 +1,14 @@
 {#-
   Form-AddressAutocomplete — debounced async address autocomplete (sibling Form pattern).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) is the composition keystone.
     - Consumer-driven address API — consumer provides `endpoint` URL OR listens
       to `address-autocomplete:fetch` event (cancellable) and dispatches
       `address-autocomplete:suggestions` event with detail.{ suggestions }.
 
   Cross-controller compose with Popover Ring 2 — `data-controller="popover address-autocomplete"`
-  on the wrapper (mirror DatePicker S2.7 + Command S2.9 verbatim).
+  on the wrapper.
 
   Parameters:
     htmlId          (string,  optional) — auto-generated.

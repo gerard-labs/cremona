@@ -3,12 +3,11 @@ import DrawerController from './drawer_controller.js';
 /**
  * sheet — responsive variant of Drawer.
  *
- * Per Ring 2 S2.2 OQ-26 doctrine: bottom-sheet on mobile (< 768 px),
- * side-drawer on desktop (≥ 768 px). The responsive switch is ENTIRELY
- * CSS-time — `sheet.css` has a media query at the 768 px breakpoint
- * that overrides the per-edge pinning to force bottom-sheet semantics
- * regardless of the `data-edge` attribute. The controller doesn't
- * observe the breakpoint.
+ * Ring 2: bottom-sheet on mobile (< 768 px), side-drawer on desktop
+ * (≥ 768 px). The responsive switch is ENTIRELY CSS-time — `sheet.css`
+ * has a media query at the 768 px breakpoint that overrides the per-edge
+ * pinning to force bottom-sheet semantics regardless of the `data-edge`
+ * attribute. The controller doesn't observe the breakpoint.
  *
  * Sheet extends DrawerController to inherit ALL modal mechanics (showModal,
  * focus snapshot+return, cancel/close events, backdrop policy, Esc policy,

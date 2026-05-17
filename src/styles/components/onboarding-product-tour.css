@@ -1,5 +1,5 @@
 /*
- * Onboarding-ProductTour — driver.js lazy adapter (Ring 3 S3.2).
+ * Onboarding-ProductTour — driver.js lazy adapter (Ring 3).
  *
  * Two parts :
  *   1. `.cremona-onboarding-product-tour` — the trigger wrapper (minimal).
@@ -16,10 +16,8 @@
  *   .driver-popover-navigation-btns — the button row
  *   .driver-popover-prev-btn / -next-btn / -close-btn — individual buttons
  *
- * Version pin policy per ADR-0020 §"Version pin policy" : caret ^1.x.x.
+ * Version pin policy : caret ^1.x.x.
  * Manual review at every major bump for CSS class name changes.
- *
- * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-onboarding-product-tour__trigger {

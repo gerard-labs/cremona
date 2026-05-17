@@ -1,9 +1,8 @@
 {#-
   Tabs — accessible tab interface with WAI-ARIA APG "Tabs" semantics.
 
-  Per the mini-OQ Tabs resolution sealed at S2.8 opening :
-    - Activation default `automatic` (Arrow keys focus + select immediately)
-    - Opt-in `manual` for heavy-content tabs (Arrow keys focus only ; Enter / Space activates).
+  Activation default `automatic` (Arrow keys focus + select immediately).
+  Opt-in `manual` for heavy-content tabs (Arrow keys focus only ; Enter / Space activates).
 
   Composes the `tabs` Stimulus controller (roving tabindex + Arrow nav +
   aria-selected stamping + dispatches `tabs:change`).

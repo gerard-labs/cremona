@@ -5,13 +5,13 @@
               · without-heading · composed-with-login · long-labels-rtl
 
   Zero Stimulus controller — Auth-SocialButtons is a pure server-rendered
-  block (OQ-55 doctrine). The story manually mirrors the Twig template's
-  output via the renderSocialButtons() helper below.
+  block. The story manually mirrors the Twig template's output via the
+  renderSocialButtons() helper below.
 
   Sample SVGs : illustrative geometric placeholders, NOT brand-accurate.
   Real consumer integration ships their own brand SVG via the
   `socialProviders[].icon` prop (Simple Icons / brand assets). The kit's
-  Lucide curated 30-set does NOT include brand marks per OQ-52.
+  Lucide curated icon set does NOT include brand marks.
 
   See `docs/specs/ring3/Auth-SocialButtons.md` for the full state matrix.
 -->

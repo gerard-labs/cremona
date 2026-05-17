@@ -1,15 +1,13 @@
 {#-
   Switch — native <input type="checkbox" role="switch"> with a thumb-on-rails
-  visual envelope. Animated thumb slide + bg color (180 ms base / standard
-  easing per 14-motion-baseline.md §Switch).
+  visual envelope. Animated thumb slide + bg color (180 ms base / standard easing).
 
-  Doctrine (OQ-8): native checkbox with `role="switch"` rather than the
-  button-pattern `<button role=switch aria-pressed>`. Reasons:
+  Native checkbox with `role="switch"` rather than the button-pattern
+  `<button role=switch aria-pressed>`. Reasons:
     - 100 % keyboard-complete (Space toggles natively)
     - autofill works
     - form-data inclusion in POST is automatic
     - aria-checked is browser-managed (no manual stamping)
-  See STATE.md S1.3 §"Resolved at session opening" / OQ-8 for the full record.
 
   Two rendering modes (mirrors Checkbox):
     1. `label` set        → <label class="cremona-switch-row"> wraps input + track

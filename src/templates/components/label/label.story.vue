@@ -4,9 +4,9 @@
   Sections (9): default · required · optional · with-hint · disabled · sizes
   · combinations · long-label · associated-input-demo.
 
-  Pattern: SFC + v-html (ADR-0006 §Amends). The Twig template
-  `label.html.twig` is the parallel server-render artifact, hand-reviewed
-  for parity. Stories pre-translate all visible strings via `t()`; the
+  Pattern: SFC + v-html. The Twig template `label.html.twig` is the
+  parallel server-render artifact, hand-reviewed for parity. Stories
+  pre-translate all visible strings via `t()`; the
   Label component itself never owns translation — it ships defaults to a
   FR fallback inside Twig `default()` filters only.
 -->

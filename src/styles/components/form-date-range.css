@@ -1,8 +1,7 @@
 /*
  * Form-DateRange — date range pair (compose 2 DatePicker Ring 2 pure).
  *
- * Per the S3.3a-1 user-validated decision : compose 2 DatePicker instances
- * without Ring 2 amend (per ADR-0015 immutability). Marker class only.
+ * Composes 2 DatePicker instances without Ring 2 amendment. Marker class only.
  */
 
 .cremona-form-date-range__fieldset {

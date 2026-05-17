@@ -7,9 +7,9 @@
   Doctrine:
     - Pure visual composition. Zero Stimulus controller.
     - 3 sizes (sm in-card · md section-default · lg page-hero).
-    - Lucide icons for sm/md; consumer-provided inline SVG for lg (per OQ-18).
+    - Lucide icons for sm/md; consumer-provided inline SVG for lg.
     - Title level overridable (h1 for page-level 404; h2 default).
-    - Microcopy tone: invites, doesn't blame (per 12-microcopy-tone.md §"Empty states").
+    - Microcopy tone: invites, doesn't blame.
     - Composition with Card: Empty inside Card body block — natural.
 -->
 <script setup>

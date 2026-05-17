@@ -10,10 +10,10 @@
 
   Stimulus controllers `popover` + `dropdown-menu` co-mounted on each
   submenu wrap (data-controller="popover dropdown-menu"); `menubar` mounted
-  on the outer wrap. Per OQ-30: per-submenu DropdownMenus + thin
+  on the outer wrap. Architecture: per-submenu DropdownMenus + thin
   orchestrator. WAI-ARIA APG "Menubar".
 
-  Helpers (per S2.3a story doctrine — nested template literal avoidance):
+  Helpers (nested template literal avoidance):
     - icon(name, size)
     - renderMenuItem({ label, iconLeading, kbdShortcut, disabled })
     - renderSubmenu({ triggerLabel, items, groups, htmlId })

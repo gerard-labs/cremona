@@ -2,9 +2,9 @@ import { Controller } from '@hotwired/stimulus';
 import { t } from '../utils/i18n.js';
 
 /**
- * tag-dismiss — minimal dismiss handler for the Tag compound (S2.6 — opt-in).
+ * tag-dismiss — minimal dismiss handler for the Tag compound (Ring 2 — opt-in).
  *
- * Mirrors the alert-dismiss S1.4b pattern verbatim — the only differences :
+ * Mirrors the alert-dismiss pattern — the only differences :
  *   - The Tag's label is interpolated into the announcer message
  *     ("Étiquette « Java » retirée.") so SR users know which tag was
  *     removed when several are present.
@@ -26,10 +26,9 @@ import { t } from '../utils/i18n.js';
  *   the duration to 0.01 ms — transitionend still fires, the remove still
  *   happens, no UX regression).
  *
- * Doctrine (OQ-mini Tag — S2.6) : Tag is opt-in dismissable via the
- * consumer's `dismissable: true` Twig flag. The default Tag is read-only
- * (no controller, no dismiss button) — same "smallest viable surface +
- * opt-in via prop" doctrine as OQ-37 / OQ-38.
+ * Tag is opt-in dismissable via the consumer's `dismissable: true` Twig flag.
+ * The default Tag is read-only (no controller, no dismiss button) — "smallest
+ * viable surface + opt-in via prop" doctrine.
  *
  * Values:
  *   label (string, default '') — the visible Tag label (consumer-resolved).

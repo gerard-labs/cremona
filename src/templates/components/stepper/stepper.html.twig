@@ -1,9 +1,8 @@
 {#-
   Stepper — step-by-step progress indicator (declarative, consumer-driven).
 
-  Per the mini-OQ Stepper resolution sealed at S2.8 opening :
-    - Pure declarative — consumer drives `currentStep` via the value attribute.
-    - No setStep / next / prev API surface — consumer manages state externally.
+  Pure declarative — consumer drives `currentStep` via the value attribute.
+  No setStep / next / prev API surface — consumer manages state externally.
 
   Composes the `stepper` Stimulus controller (stamps data-state + aria-current
   per step based on currentStep ; dispatches `stepper:step-change` on transition).

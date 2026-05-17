@@ -1,12 +1,12 @@
 {#-
-  Auth-SSO — enterprise SSO entry pattern (Ring 3 S3.1b).
+  Auth-SSO — enterprise SSO entry pattern (Ring 3).
 
   Composes _auth-shell + Field × 1 (email organisation) + Button × 1 +
   optional Alert (globalError) + optional footer link (password fallback).
 
-  Pure server-rendered form (OQ-55). 0 Stimulus controller. The consumer's
-  back-end inspects the submitted email domain to determine which IDP
-  (Okta / Auth0 / Azure AD / Google Workspace / …) to redirect to.
+  Pure server-rendered form. 0 Stimulus controller. The consumer's back-end
+  inspects the submitted email domain to determine which IDP (Okta / Auth0 /
+  Azure AD / Google Workspace / …) to redirect to.
 
   Mirror Auth-Login structure — single-field variant for the SSO flow.
 

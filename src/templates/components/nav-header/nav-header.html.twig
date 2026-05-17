@@ -1,5 +1,5 @@
 {#-
-  Nav-Header — page-level top navigation pattern (Ring 3 S3.2).
+  Nav-Header — page-level top navigation pattern (Ring 3).
 
   Foundation pattern for the Nav family. Composes NavigationMenu Ring 2
   (primary nav, with optional Nav-MegaMenu items for multi-column
@@ -12,8 +12,7 @@
   `data-drawer-target-value` on both this header's hamburger and the
   consumer's Nav-MobileDrawer root.
 
-  Composition pattern — Twig {% include %} with blocks (mirror
-  `_auth-shell` precedent verbatim):
+  Composition pattern — Twig {% include %} with blocks:
 
     {% include '@cremona/components/nav-header/nav-header.html.twig' with {
       htmlId: 'app-header',

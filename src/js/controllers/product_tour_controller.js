@@ -1,9 +1,7 @@
 /**
- * product_tour_controller.js — Onboarding-ProductTour (Ring 3 S3.2).
+ * product_tour_controller.js — Onboarding-ProductTour (Ring 3).
  *
- * Lazy-loads driver.js v1.x on first ProductTour mount per
- * ADR-0020. Mirror
- * [ADR-0011 / 0012 / 0013 / 0018] verbatim — module-scoped cache +
+ * Lazy-loads driver.js v1.x on first ProductTour mount. Module-scoped cache +
  * sync mount/ARIA + async tour start + race-check on disconnect.
  *
  * Surface :

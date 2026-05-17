@@ -3,10 +3,10 @@
 
   Sections (4): default · error-code-invalid · with-email-fallback · length-4
 
-  No new Stimulus controller — InputOTP S2.7 (`input-otp`) is composed
-  verbatim. The story renders the static markup ; the controller is
-  registered via `import { register } from '@gerard/cremona'` at boot
-  time (Histoire wires Stimulus through histoire.setup.js).
+  No new Stimulus controller — InputOTP (`input-otp`) is composed verbatim.
+  The story renders the static markup ; the controller is registered via
+  `import { register } from '@gerard/cremona'` at boot time (Histoire wires
+  Stimulus through histoire.setup.js).
 
   See `docs/specs/ring3/Auth-OTP.md` for the full state matrix.
 -->

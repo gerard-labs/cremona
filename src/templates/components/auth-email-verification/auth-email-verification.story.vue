@@ -4,7 +4,7 @@
   Sections (2): default · with-back-to-login
 
   Zero Stimulus controller — Auth-EmailVerification is a pure server-rendered
-  terminal page (OQ-55 doctrine). Story manually mirrors the Twig template's
+  terminal page. Story manually mirrors the Twig template's
   output via renderEmailVerification().
 
   Icon : `check` curated-set match (action-complete semantic). NOT

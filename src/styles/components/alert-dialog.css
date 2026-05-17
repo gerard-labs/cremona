@@ -3,10 +3,10 @@
  * accent. Inherits the full surface envelope from Dialog (.cremona-dialog base
  * class is co-applied on the <dialog>).
  *
- * Per Ring 2 S2.2: this file ONLY adds the icon-wrap + header alignment +
- * tone-driven colors. All modal mechanics (showModal, ::backdrop, motion,
- * sizes, focus trap) are inherited from dialog.css and the `dialog` Stimulus
- * controller — AlertDialog is intentionally a thin layer.
+ * Ring 2: this file ONLY adds the icon-wrap + header alignment + tone-driven
+ * colors. All modal mechanics (showModal, ::backdrop, motion, sizes, focus
+ * trap) are inherited from dialog.css and the `dialog` Stimulus controller —
+ * AlertDialog is intentionally a thin layer.
  *
  * Tone variants (`data-tone="danger|warning|info"`):
  *   - danger  (default): alert-triangle icon, danger-soft bg + foreground

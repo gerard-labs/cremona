@@ -1,11 +1,9 @@
 /**
- * roles_matrix_controller.js — Ring 3 pattern controller (S4.1c Phase 3, post-ADR-0042).
+ * roles_matrix_controller.js — Ring 3 pattern controller.
  *
  * Manages the RolesMatrix N×M cells with per-cell Badge default + Combobox lazy
- * instantiation on cell click (edit mode). Per OQ-NEW-S4.1c-Team-Roles-Matrix-perf-strategy
- * sealed (c) : ~200× perf gain vs pure composition with 200 Combobox at mount.
- *
- * Path X² Typical bucket (~40 % JSDoc) per ADR-0034 + ADR-0042 controller scope.
+ * instantiation on cell click (edit mode). ~200× perf gain vs pure composition
+ * with 200 Combobox at mount.
  *
  * Per-cell editing flow :
  *   1. Cell click → openEditor() → swap cell content from Badge to a select-like
@@ -15,7 +13,7 @@
  *
  * Note : v0 uses a lightweight inline native <select> instead of full Combobox Ring 2
  * to avoid Combobox bundle cost per cell. Combobox upgrade deferred to consumer demand
- * (richer search/filter UX) via amend ADR.
+ * (richer search/filter UX).
  *
  * Events (bubbles + composed) :
  *   roles-matrix:mount             — detail.{}

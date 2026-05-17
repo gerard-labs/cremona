@@ -2,7 +2,7 @@
  * Combobox — Search-as-you-type single-select listbox with an Input trigger.
  *
  * Composes:
- *   - .cremona-popover surface (radius, shadow, motion — Ring 2 S2.1).
+ *   - .cremona-popover surface (radius, shadow, motion — Ring 2).
  *   - .cremona-combobox__input visually mirrors .cremona-input (border, radius,
  *     density-input-height, focus ring) — the trigger LOOKS like an Input
  *     because semantically IT IS an `<input role="combobox">`.
@@ -10,15 +10,14 @@
  *     min-inline-size matched to a comfortable single-select listbox.
  *   - .cremona-item rows for options (inherited from Item.css).
  *
- * Per OQ-32 (sealed S2.3b): ComboboxController extends SelectController.
- * The CSS doesn't inherit through ES classes — we duplicate the trigger
- * envelope here intentionally:
+ * ComboboxController extends SelectController. The CSS doesn't inherit
+ * through ES classes — we duplicate the trigger envelope here intentionally:
  *   - Combobox's trigger is an `<input>`, Select's is a `<button>`.
  *   - Different selectors, different state machines (`:focus-visible` on
  *     input has caret semantics; on button it's just focus ring).
  *   - Brand presets can re-skin Combobox vs Select independently.
  *
- * Per OQ-31: empty state is rendered inline in the listbox (`.cremona-combobox__empty`)
+ * Empty state is rendered inline in the listbox (`.cremona-combobox__empty`)
  * with the user's untrimmed query injected. The shared `#cremona-announcer`
  * (declared in base/reset.css) carries the results count announcement; this
  * file ships no separate aria-live region.
@@ -180,10 +179,10 @@
 /* ----- empty state -------------------------------------------------- */
 
 /*
- * Per OQ-31 (sealed S2.3b): empty state is rendered inline inside the
- * listbox (NOT a separate region), with the user's untrimmed query
- * injected. Auto-announced by AT via DOM mutation observation on the
- * `role="listbox"` content (NVDA + VoiceOver pick this up).
+ * Empty state is rendered inline inside the listbox (NOT a separate region),
+ * with the user's untrimmed query injected. Auto-announced by AT via DOM
+ * mutation observation on the `role="listbox"` content (NVDA + VoiceOver
+ * pick this up).
  *
  * The shared `#cremona-announcer` carries the results-count message for
  * non-zero counts; for count=0 we deliberately defer to this inline

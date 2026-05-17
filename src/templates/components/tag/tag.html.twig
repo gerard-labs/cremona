@@ -4,15 +4,14 @@
   Composes Badge visual envelope (rounded pill, 6 variants × {solid, soft})
   + a leading icon slot (Lucide curated set) + an opt-in dismiss button
   ('×' icon-only, calls tag-dismiss controller). The dismiss is opt-in via
-  `dismissable: true` per OQ-mini Tag doctrine sealed S2.6 — the default
-  Tag is read-only (no controller, no dismiss button, no JS), matching the
-  "smallest viable surface + opt-in via prop" doctrine.
+  `dismissable: true` — the default Tag is read-only (no controller, no
+  dismiss button, no JS), matching the "smallest viable surface + opt-in
+  via prop" doctrine.
 
   Visual difference from Badge :
    - Tag size scale is sm | md | lg (one extra step) — Tag is the labelling
      primitive used in dense contexts (cards, table rows, filter pills).
-   - Tag carries an opt-in dismiss button (alert-dismiss S1.4b pattern
-     mirror via tag-dismiss controller).
+   - Tag carries an opt-in dismiss button (via tag-dismiss controller).
    - Tag is intended to be interactive in clusters (filter pills) — Badge
      is purely informational.
 

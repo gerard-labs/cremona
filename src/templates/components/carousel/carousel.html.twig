@@ -1,7 +1,7 @@
 {#-
   Carousel — slide carousel with optional autoplay + touch swipe + keyboard nav.
 
-  Per OQ-43 (sealed S2.8 opening) :
+  Autoplay behaviour :
     - Autoplay OFF by default ; opt-in via `autoplayInterval` > 0 (ms).
     - Pause-on-pointerenter + pause-on-focuswithin built-in.
     - Skip autoplay sous prefers-reduced-motion (controller window.matchMedia).
@@ -32,9 +32,8 @@
     currentSlide      (int,    optional) — 0-indexed initial slide
                                             (default 0).
     autoplayInterval  (int,    optional) — autoplay tick in ms ; 0 = OFF
-                                            (default 0, per OQ-43).
-    loop              (bool,   optional) — cyclic loop (default true,
-                                            per OQ-mini-43a).
+                                            (default 0).
+    loop              (bool,   optional) — cyclic loop (default true).
     showNav           (bool,   optional) — render prev / next buttons
                                             (default true).
     showDots          (bool,   optional) — render pagination dots

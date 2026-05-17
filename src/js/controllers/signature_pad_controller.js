@@ -1,15 +1,10 @@
 /**
- * signature-pad controller — Form-Signature (Ring 3 S3.3a-2).
+ * signature-pad controller — Form-Signature (Ring 3).
  *
- * 9th Ring 3 controller (after password-strength + session-timeout-countdown +
- * back-to-top + product-tour + form-with-steps + address-autocomplete +
- * form-date-range + color-picker).
- *
- * Lazy-loads signature_pad v5.x on first pointerdown on the canvas per
- * ADR-0024. Mirror ADR-0018
- * lazy-on-first-interaction variant verbatim (2nd use after zxcvbn-on-first-
- * keystroke). The canvas renders empty by default ; signature_pad only runs
- * when the user starts drawing.
+ * Lazy-loads signature_pad v5.x on first pointerdown on the canvas.
+ * Lazy-on-first-interaction variant (2nd use after zxcvbn-on-first-keystroke).
+ * The canvas renders empty by default ; signature_pad only runs when the
+ * user starts drawing.
  *
  * Synthetic pointerdown replay AFTER lazy load ensures no lost first-stroke
  * coordinates : the controller captures the first pointerdown event, lazy-
@@ -48,8 +43,7 @@ function loadSignaturePad() {
 
 /**
  * Reset the module-scoped lazy-load cache. Test-only — exposed for the
- * Vitest unit suite to isolate per-test mock state. Mirror chart /
- * file-upload / product-tour / password-strength / color-picker precedent.
+ * Vitest unit suite to isolate per-test mock state.
  */
 export function __resetSignaturePadCache() {
   _SignaturePad = null;

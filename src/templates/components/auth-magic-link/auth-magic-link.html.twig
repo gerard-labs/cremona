@@ -1,14 +1,13 @@
 {#-
-  Auth-MagicLink — terminal passwordless-login confirmation (Ring 3 S3.1b).
+  Auth-MagicLink — terminal passwordless-login confirmation (Ring 3).
 
   Structural twin of Auth-EmailVerification — same shell + Empty + Resend
   composition, different microcopy + flow (passwordless login vs sign-up).
 
   Composes `_auth-shell` (title null) + Empty (lg, h1, icon=check
-  substitut — see Auth-EmailVerification §1 Doctrine for the curated-set
-  rationale) + Button × 1-2.
+  substitut) + Button × 1-2.
 
-  Pure server-rendered terminal page (OQ-55). 0 Stimulus controller.
+  Pure server-rendered terminal page. 0 Stimulus controller.
   Typical entry point : passwordless login flow (user enters email at
   /login → consumer's auth back-end emails a one-time sign-in link →
   redirects user here).

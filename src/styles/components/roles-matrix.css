@@ -1,5 +1,5 @@
 /*
- * RolesMatrix — Ring 3 pattern CSS (S4.1c Phase 3, post-ADR-0042).
+ * RolesMatrix — Ring 3 pattern CSS.
  *
  * Roles/permissions grid : a Table primitive (members × permissions) whose
  * intersection cells carry a Badge by default and lazily swap to an inline

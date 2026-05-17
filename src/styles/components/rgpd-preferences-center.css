@@ -1,14 +1,12 @@
 /*
- * RGPD-PreferencesCenter — RGPD granular consent preferences (Ring 3 S3.3b-2).
+ * RGPD-PreferencesCenter — RGPD granular consent preferences (Ring 3).
  *
  * Composes Dialog Ring 2 size=lg + Switch Ring 1 per category. Controller
- * preferences-center (18th Ring 3) — multi-category state tracking +
- * dirty detection + explicit Save button per OQ-NEW sealed (RGPD legal
- * intentional commit, NOT instant-save). 12th cross-controller compose
- * instance.
+ * preferences-center — multi-category state tracking + dirty detection +
+ * explicit Save button (RGPD legal intentional commit, NOT instant-save).
  *
- * Bundle budget : ~0.30 kB gzip (per ADR-0031 Path X corrected baseline +
- * category list layout + Switch grid spacing + dirty-state visual hooks).
+ * Bundle budget : ~0.30 kB gzip (category list layout + Switch grid
+ * spacing + dirty-state visual hooks).
  */
 
 .cremona-rgpd-preferences-center {

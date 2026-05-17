@@ -8,17 +8,15 @@
  * the styling is 100% inherited from Menubar + DropdownMenu + Item.
  *
  * The `<nav>` shell allows AT users to skip to / from the nav region
- * via landmark navigation. Per 13-accessibility-baseline §13:
- * `<nav aria-label="...">` is required when multiple navs exist on a page;
- * always-on `aria-label` is safe.
+ * via landmark navigation. `<nav aria-label="...">` is required when
+ * multiple navs exist on a page; always-on `aria-label` is safe.
  *
- * Per OQ-33 (sealed S2.3b opening): submenu items use Item with `as: 'a'
- * href="..."`. Visual is identical to Menubar items (Item.css handles the
- * 3 element forms uniformly).
+ * Submenu items use Item with `as: 'a' href="..."`. Visual is identical
+ * to Menubar items (Item.css handles the 3 element forms uniformly).
  *
- * Per [07-component-catalog Ring 2 §Navigation]: mega-menu (multi-column
- * dropdown layout) is DEFERRED to Ring 3 `pattern:Nav-MegaMenu`. NavigationMenu
- * primitive ships simple-column dropdowns only.
+ * Mega-menu (multi-column dropdown layout) is DEFERRED to Ring 3
+ * `pattern:Nav-MegaMenu`. NavigationMenu primitive ships simple-column
+ * dropdowns only.
  */
 
 /* The <nav> shell is a layout container; no visual decoration of its own.

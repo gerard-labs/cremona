@@ -1,9 +1,7 @@
 /*
- * Footer-Mega — site-level multi-column footer (Ring 3 S3.2).
+ * Footer-Mega — site-level multi-column footer (Ring 3).
  *
  * 4-col @ desktop → 2-col @ tablet → 1-col @ mobile.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-footer-mega {

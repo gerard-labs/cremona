@@ -1,25 +1,24 @@
 import { Controller } from '@hotwired/stimulus';
 
 /**
- * date-picker — Input-anchored single-date picker (Ring 2 S2.7 workhorse).
+ * date-picker — Input-anchored single-date picker (Ring 2).
  *
- * Composition (per the S2.7 design brief) :
+ * Composition:
  *   - Popover (mounted on the SAME wrap via `data-controller="popover
  *     date-picker"`, mirroring the Combobox / Select pattern) provides the
  *     floating panel + click-outside dismiss + Esc dismiss + Floating UI
- *     positioning (lazy-loaded per [ADR-0011]).
- *   - Input (Ring 1 S1.2) provides the trigger envelope. The input is
- *     read-only — typing dates is NOT supported in S2.7 (manual typing is
- *     a future amend if real demand emerges).
- *   - Calendar (Ring 2 S2.7) is rendered inside the popover content. The
+ *     positioning (lazy-loaded).
+ *   - Input (Ring 1) provides the trigger envelope. The input is read-only —
+ *     typing dates is NOT supported (manual typing is a future amend if real
+ *     demand emerges).
+ *   - Calendar (Ring 2) is rendered inside the popover content. The
  *     DatePicker listens for the Calendar's `calendar:select` event
  *     (bubbles + composed → reaches our wrap-level data-action) +
  *     synchronises input.value (formatted via Intl.DateTimeFormat) + the
  *     hidden form input.
  *
- * Per OQ-40 doctrine (sealed S2.7) : vanilla minimal. No Flatpickr adapter.
- * No Day.js dep. Locale formatting via native Intl.DateTimeFormat (zero
- * bundle cost).
+ * Vanilla minimal — no Flatpickr adapter, no Day.js dep. Locale formatting
+ * via native Intl.DateTimeFormat (zero bundle cost).
  *
  * Per WAI-ARIA APG "Date Picker Dialog" :
  *   - input role="combobox" + aria-haspopup="dialog" + aria-expanded

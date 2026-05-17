@@ -6,7 +6,7 @@
  * The drag-handle class (.cremona-sortable-handle) styles the affordance
  * button + provides the cursor feedback.
  *
- * Per ADR-0045 §"Marker class chrome override".
+ * Marker classes override Sortable.js default chrome to use the kit's token vocabulary.
  */
 
 /* Drag handle button — visible cursor affordance + larger touch target. */

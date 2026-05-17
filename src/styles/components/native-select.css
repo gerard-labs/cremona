@@ -9,8 +9,8 @@
  *      text color, so dark mode / theme presets re-tint for free.
  *   2. RTL — `inset-inline-end` flips the chevron naturally without any
  *      `[dir="rtl"]` override.
- *   3. The chevron remains an Icon primitive (already locked-in Ring 1),
- *      so any future icon-set bump propagates automatically.
+ *   3. The chevron remains a Ring 1 Icon primitive, so any future
+ *      icon-set bump propagates automatically.
  *
  * Touch target: same rule as Input — `min-block-size: 44px` under
  * `@media (pointer: coarse)`.

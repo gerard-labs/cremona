@@ -2,14 +2,14 @@
   Chart story — 4 viewport variants (Light/Dark × LTR/RTL).
 
   Sections (6) :
-    1. KPI sparkline cluster — 4 KPI cards with embedded sparklines (S2.9 hero).
+    1. KPI sparkline cluster — 4 KPI cards with embedded sparklines.
     2. Line variant — monthly sales trend with 2 series.
     3. Bar variant — category breakdown with single series.
     4. Donut variant — distribution percentages.
     5. Area variant — stacked area over time.
     6. Events log — chart:series-click + chart:render-complete demo.
 
-  Helpers (per S2.3a/b/...S2.8 nested template literal avoidance) :
+  Helpers (nested template literal avoidance) :
     - chart({ id, variant, series, categories, label, height, ... })
     - kpiCard({ label, value, trend, series })
 

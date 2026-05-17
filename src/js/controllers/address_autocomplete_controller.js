@@ -1,15 +1,13 @@
 /**
  * address-autocomplete controller — debounced async address autocomplete (sibling Form pattern).
  *
- * 6th Ring 3 controller (after password-strength + session-timeout-countdown + back-to-top +
- * product-tour + form-with-steps).
+ * Ring 3 controller.
  *
- * Per the Forms family doctrine (cf. Form-WithSteps.md §1) :
+ * Per the Forms family doctrine :
  *  - Consumer-driven address API — kit doesn't lock the address provider. Consumer
- *    provides the fetch endpoint via `consumerEndpoint` Stimulus value (mirror
- *    SocialButtons consumer-driven brand SVG doctrine S3.1b).
+ *    provides the fetch endpoint via `consumerEndpoint` Stimulus value.
  *  - Cross-controller compose with Popover Ring 2 — `data-controller="popover address-autocomplete"`
- *    on the wrapper. Popover handles positioning (Floating UI lazy per ADR-0011) ;
+ *    on the wrapper. Popover handles positioning (Floating UI lazy-loaded) ;
  *    address-autocomplete owns the fetch + suggestion list rendering.
  *  - Debounced on input (default 250 ms) to avoid hammering the consumer's API.
  *  - Race-check `_destroyed` flag prevents post-disconnect stamp.

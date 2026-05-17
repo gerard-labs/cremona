@@ -12,8 +12,8 @@
  * direction naturally — no `[dir="rtl"]` override needed.
  *
  * Motion: --motion-duration-base (180 ms) + --motion-easing-standard for the
- * thumb slide AND the track bg-color crossfade (per 14-motion-baseline.md
- * §Switch). Reduced-motion zeros transitions via the global override.
+ * thumb slide AND the track bg-color crossfade. Reduced-motion zeros
+ * transitions via the global override.
  */
 
 .cremona-switch {

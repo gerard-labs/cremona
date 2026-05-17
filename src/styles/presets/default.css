@@ -7,7 +7,7 @@
  *
  * Consumers who want their own brand swap a single CSS file, e.g.:
  *
- *   @import "@gerard/cremona/dist/theme.css";
+ *   @import "@gerard/cremona/dist/cremona.css";
  *   @import "./my-brand-orange.css";
  *
  * where my-brand-orange.css redeclares variables like:

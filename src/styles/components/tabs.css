@@ -1,7 +1,6 @@
 /*
  * Tabs — accessible tab interface with underline (default) / pill variant.
  *
- * Per the mini-OQ Tabs resolution sealed at S2.8 opening :
  *  - `data-variant="underline"` (default) : active trigger gets a bottom
  *    border via `::after` pseudo, opacity fade + scaleX animation. No JS
  *    cost for the indicator — each tab paints its own underline based on

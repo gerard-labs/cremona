@@ -1,9 +1,8 @@
 /*
  * Popover — floating panel anchored to a trigger.
  *
- * The pendant JS-positioned de Tooltip (Ring 1 CSS-only 4 placements). Adds
- * viewport-aware collision detection (flip + shift) via Floating UI v1.7 —
- * see OQ-19 doctrine [ADR-0009].
+ * Richer than the Tooltip (Ring 1, CSS-only, 4 placements). Adds
+ * viewport-aware collision detection (flip + shift) via Floating UI v1.7.
  *
  * Visibility is JS-controlled: the `popover` Stimulus controller flips
  * `data-state="open|closed"` on the content sibling. The CSS handles the
@@ -19,7 +18,7 @@
  * direction) is also controller-set via `--cremona-popover-origin` CSS custom
  * property, computed from Floating UI's resolved placement (after flip).
  *
- * Animations (per 14-motion-baseline §1 Popover):
+ * Animations:
  *   open  — opacity 0→1 + scale 0.96→1; duration-base (180 ms) emphasized
  *   close — opacity 1→0 + scale 1→0.96; duration-fast (120 ms) accelerate
  *

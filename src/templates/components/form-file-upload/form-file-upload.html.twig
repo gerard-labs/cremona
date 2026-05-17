@@ -1,13 +1,12 @@
 {#-
   Form-FileUpload — file upload as a Form field (sibling Form pattern).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) is the composition keystone — wraps FileUpload Ring 2.
     - Consumer-side validation — Field's `error` param surfaces server validation ;
       FileUpload's `acceptedFileTypes` + `maxFileSize` cover client-side validation.
 
-  Composes [FileUpload Ring 2](../file-upload/file-upload.html.twig) lazy FilePond
-  per ADR-0013. The Form-FileUpload
+  Composes FileUpload Ring 2 with lazy FilePond. The Form-FileUpload
   pattern is a thin Field wrap around FileUpload — no new controller, no new lazy chunk.
 
   Parameters:

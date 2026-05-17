@@ -4,10 +4,10 @@
   Esc/click-outside dismiss) and the `hover-card` controller (mouseenter
   / mouseleave triggers with delays).
 
-  Per OQ-29 doctrine (sealed S2.3a opening): reuse Tooltip's 400 ms open
-  doctrine via inline timing, NO new motion token. Close delay 200 ms
-  (anti-flash on fast pointer movement). HoverCard is a *visual preview*
-  surface — does NOT open on focus (≠ Tooltip). Esc still dismisses.
+  Reuses Tooltip's 400 ms open delay via inline timing, NO new motion token.
+  Close delay 200 ms (anti-flash on fast pointer movement). HoverCard is a
+  *visual preview* surface — does NOT open on focus (≠ Tooltip). Esc still
+  dismisses.
 
   Use HoverCard for: user mention previews (avatar + name + role + bio),
   link previews (favicon + title + summary), tag previews (description).

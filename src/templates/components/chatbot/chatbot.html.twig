@@ -1,14 +1,13 @@
 {#-
-  Chatbot — conversational UI panel (Ring 3 S3.3c — FINAL Ring 3 pattern, 54e).
+  Chatbot — conversational UI panel (Ring 3).
 
-  Pure composition (per OQ-NEW Chatbot scope sealed pure composition NO lib —
-  preserves Path Z signal NO 10e cascade) :
+  Pure composition (vanilla, no lib) :
     - Drawer Ring 2 (edge=end default ; inline-end anchor for desktop /
       bottom anchor on mobile via consumer responsive class)
     - Input Ring 1 (text input for user message)
     - Item Ring 1 (as='div' for message bubbles, with data-role variants)
 
-  Controller : chatbot (19th Ring 3, thin) — message append + auto-scroll
+  Controller : chatbot (Ring 3, thin) — message append + auto-scroll
   on new message + send action dispatch + typing indicator toggle. Pure
   composition of Drawer/Input/Item ; consumer wires actual streaming /
   markdown rendering server-side or via custom event handler on
@@ -19,10 +18,9 @@
   Doctrine notes :
   - No markdown rendering at kit level (consumer ships plain text or
     pre-rendered HTML safely escaped). marked / similar lazy adapter
-    deferred to Ring 4+ trigger per ADR-0033 §"Trade-offs deferred to
-    Ring 4+" if real consumer demand surfaces.
-  - aria-live="polite" on message list (per 13-accessibility-baseline §9
-    screen-reader announcements for transient updates).
+    deferred to Ring 4+ if real consumer demand surfaces.
+  - aria-live="polite" on message list — screen-reader announcements for
+    transient updates.
   - Typing indicator is decorative ; the actual bot response is announced
     via the new message landing in the aria-live region.
 

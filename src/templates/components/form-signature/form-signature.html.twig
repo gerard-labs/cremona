@@ -1,10 +1,10 @@
 {#-
   Form-Signature — inline signature pad (canvas + lazy signature_pad lib).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) is the composition keystone — but Signature is canvas-based,
       so the wrap is the cremona-form-signature class directly (compose Card Ring 1 for surface).
-    - signature_pad library lazy-loaded on first pointer-down per ADR-0024 (8e cascade).
+    - signature_pad library lazy-loaded on first pointer-down (8e cascade).
     - Synthetic pointerdown replay AFTER lazy load ensures no lost first-stroke coordinates.
     - Fallback `<details>` text input for SR users.
 

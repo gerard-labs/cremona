@@ -14,8 +14,8 @@
  *   end              — to the inline-end of the trigger (visually right in LTR)
  *
  * The caller ensures the viewport edge doesn't clip the tooltip — the
- * kit's CSS-only approach (OQ-14) doesn't do JS edge-detection. For
- * collision detection + portaling, see Ring 2 Popover Compound.
+ * kit's CSS-only approach doesn't do JS edge-detection. For collision
+ * detection + portaling, see Ring 2 Popover Compound.
  *
  * The aria-describedby contract: the trigger inside the wrap carries
  * `aria-describedby="<tooltip-id>"`. SR users hear the tooltip text on
@@ -62,7 +62,7 @@
 
 /* Show on hover or focus-within (caller's trigger is inside the wrap) —
    transition-delay: 400 ms makes the show feel intentional (anti-flash
-   on accidental mouseover; matches 14-motion-baseline §1 Tooltip pattern). */
+   on accidental mouseover). */
 .cremona-tooltip-wrap:hover .cremona-tooltip,
 .cremona-tooltip-wrap:focus-within .cremona-tooltip {
   opacity: 1;

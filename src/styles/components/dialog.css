@@ -1,8 +1,7 @@
 /*
  * Dialog — modal native `<dialog>` element.
  *
- * Per OQ-20 doctrine [ADR-0009-tier — to be sealed in ring2 lock-in ADR]:
- * native `<dialog>` over `<div role="dialog">`. Baseline 2022 (Chrome 37+,
+ * Uses native `<dialog>` over `<div role="dialog">`. Baseline 2022 (Chrome 37+,
  * FF 98+, Safari 15.4+). Native benefits:
  *   - Top-layer auto-positioning (no z-index war ; appears above any
  *     stacking context including `position: fixed`).
@@ -19,7 +18,7 @@
  * top-layer; the older approach (manual data-state + transitionend +
  * deferred close()) is now obsolete.
  *
- * Per 14-motion-baseline §2 Dialog:
+ * Motion:
  *   - Backdrop opacity 0 → 1, --motion-duration-base (180 ms), standard
  *   - Dialog scale(0.96)+opacity(0) → scale(1)+opacity(1),
  *     --motion-duration-slow (260 ms), emphasized
@@ -34,7 +33,7 @@
  *   - DOM order [Cancel, Confirm] renders [Cancel][Confirm] in LTR (Cancel
  *     left of Confirm) and [Confirm][Cancel] in RTL (Cancel right of
  *     Confirm) — natural flex-row + writing-direction handles this.
- *     Matches [12-microcopy-tone.md §Confirmations].
+ *     Matches the microcopy confirmation convention.
  *
  * Size variants (`data-size="sm|md|lg"`):
  *   - sm: 400px max-inline-size (short forms, simple confirmations)

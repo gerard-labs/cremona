@@ -1,9 +1,7 @@
 /**
  * format-date.js — locale-aware date formatting via Day.js.
  *
- * Day.js + relativeTime plugin + fr + en locales bundled eager
- * per OQ-63 sealed S3.2 opening (see ADR-0021 §"Family budgets"
- * and ADR-0021 §"Why not lazy-load Day.js").
+ * Day.js + relativeTime plugin + fr + en locales bundled eager.
  *
  * Initial bundle cost : ~3 kB gzip combined (Day.js core ~2 kB +
  * relativeTime plugin ~1 kB + locales fr+en ~0.5 kB combined).
@@ -118,7 +116,7 @@ export function formatTime(date, { locale, format = 'HH:mm' } = {}) {
  *   - within last 7 days → "lundi à 14:32"
  *   - older → absolute ("13 mai 2026")
  *
- * Matches [12-microcopy-tone.md §"Dates & heures"] guidance.
+ * Matches microcopy-tone guidance for "Dates & heures".
  *
  * @param {string | number | Date | dayjs.Dayjs} date
  * @param {object} [options]

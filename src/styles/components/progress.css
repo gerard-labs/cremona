@@ -21,9 +21,9 @@
  * Sizes: sm (4 px) / md (6 px, default) / lg (8 px). Block-size of the bar
  * itself — the optional row wrapper (label + value display) sits above.
  *
- * Per 14-motion-baseline.md §7-§8: the indeterminate animation runs 1.6s
- * linear infinite. The duration is on the slow side of the loading-spinner
- * window but reads better for a horizontal stripe than a fast one.
+ * The indeterminate animation runs 1.6s linear infinite. The duration is on
+ * the slow side of the loading-spinner window but reads better for a
+ * horizontal stripe than a fast one.
  */
 
 /* ----- track (the background line) -------------------------------- */

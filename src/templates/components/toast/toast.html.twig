@@ -1,10 +1,9 @@
 {#-
-  Toast — re-export of the Sonner viewport (Ring 2 S2.5).
+  Toast — re-export of the Sonner viewport (Ring 2).
 
   Toast and Sonner share the same viewport DOM (only the spec entry is
   separate — Toast.md is the consumer-facing API documentation, Sonner.md
-  is the engine specification). Per [Toast.md §"Why a separate manifest
-  entry from Sonner"]: this two-entry structure keeps discoverability
+  is the engine specification). This two-entry structure keeps discoverability
   for consumers (who search for "toast" by mental model) while letting
   the engine evolve under a stable consumer surface.
 
@@ -22,7 +21,7 @@
   this include unless they prefer SSR-rendered viewport (e.g. for
   layout stability on long FCP).
 
-  See [Sonner.md §3 Anatomy](../sonner/sonner.html.twig) for the full
-  markup contract (data-controller, data-action, queue indicator child).
+  See Sonner (../sonner/sonner.html.twig) for the full markup contract
+  (data-controller, data-action, queue indicator child).
 -#}
 {% include '@cremona/components/sonner/sonner.html.twig' %}

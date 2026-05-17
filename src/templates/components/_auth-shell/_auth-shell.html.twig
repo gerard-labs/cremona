@@ -2,9 +2,9 @@
   _auth-shell — centered viewport-min-height layout shell for Auth patterns.
 
   Composed by Auth-Login, Auth-Register, Auth-ForgotPassword, Auth-ResetPassword
-  (Ring 3 S3.1) and every future Auth pattern that needs the same centered-card
+  (Ring 3) and every future Auth pattern that needs the same centered-card
   layout (Auth-OTP / MagicLink / EmailVerification / PasswordStrength /
-  AccountLocked — Ring 3 S3.1b/c).
+  AccountLocked — Ring 3).
 
   Composition pattern — Twig {% embed %} with blocks:
 
@@ -27,10 +27,9 @@
     - {% embed %} keeps the form as Twig source under autoescape and aligns
       with the kit's established composition pattern (mirror [Card][1] +
       [Empty][2] Ring 1 keystone).
-    - The mini-OQ-53a "include with content" recommendation in S3.1 opening
-      was about the SEMANTIC ("include this shared shell, pass it your
-      content") — not literal Twig {% include %}. Documented in the S3.1
-      session log of `docs/STATE.md`.
+    - The "include with content" pattern refers to the SEMANTIC ("include
+      this shared shell, pass it your content") — not literal Twig
+      {% include %}.
 
     [1] src/templates/components/card/card.html.twig
     [2] src/templates/components/empty/empty.html.twig
@@ -64,8 +63,7 @@
       the inner Empty primitive owns the h1), the aria-labelledby attribute
       is omitted to avoid a dangling ID reference (the Empty inside owns
       its own role=region + aria-labelledby chain so SR users still get
-      proper landmark semantics). This conditional was added in S3.1b
-      opening (Phase 2) as a forward-compat tweak for Ring 3+ terminal
+      proper landmark semantics). Forward-compat for Ring 3+ terminal
       patterns that don't have a "page title + sub-section" structure.
     - illustration <aside aria-hidden="true"> — decorative; the title + body
       carry the semantic content.

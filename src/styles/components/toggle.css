@@ -8,7 +8,7 @@
  *   accent  — filled when pressed: pressed = primary bg + primary-foreground.
  *             For high-emphasis toggles (filter chip, segmented control item).
  *
- * Motion (press-active pattern, see 14-motion-baseline §10):
+ * Motion (press-active pattern):
  *   - bg / border transitions on hover/focus/press: --motion-duration-fast
  *   - :active pressback: scale(0.97) at --motion-duration-instant (snappy
  *     tactile feedback), release scale(1) at --motion-duration-fast/decelerate.

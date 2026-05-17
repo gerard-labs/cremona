@@ -5,8 +5,8 @@
  * Stimulus controller extends DialogController — same open/close + policy
  * semantics, just different event names + an `edge` value.
  *
- * Per Ring 2 S2.2 OQ-25 doctrine: motion tokens REUSED, no new tokens.
- *   - Entry: duration-slow (260 ms) + easing-emphasized — per 14-motion-baseline §3
+ * Motion tokens REUSED, no new tokens.
+ *   - Entry: duration-slow (260 ms) + easing-emphasized
  *   - Exit:  duration-base (180 ms) + easing-accelerate
  *
  * Edges (`data-edge="start|end|top|bottom"`):
@@ -18,8 +18,7 @@
  * RTL handling: inline-axis drawers (start/end) use --cremona-drawer-flip to
  * invert the transform direction in RTL. The inset-* properties are already
  * logical, so the pinning is correct in both directions. Top/bottom drawers
- * are unaffected by direction. Cohérent 15-i18n-and-rtl §"Animation
- * directions" — no physical-CSS exception needed.
+ * are unaffected by direction. No physical-CSS exception needed.
  *
  * Corner radius: only the 2 corners AWAY from the edge are rounded (the 2
  * touching the edge are flush with the viewport). Uses logical corners:

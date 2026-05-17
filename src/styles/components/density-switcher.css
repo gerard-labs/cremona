@@ -1,5 +1,5 @@
 /*
- * DensitySwitcher — density picker (Ring 3 S3.3b-1).
+ * DensitySwitcher — density picker (Ring 3).
  *
  * Composes ToggleGroup Ring 1. Marker class adds minor spacing tweaks
  * for the inline label + slightly tighter group rendering than generic
@@ -7,7 +7,7 @@
  * `density-switcher` controller on documentElement (or other configurable
  * target).
  *
- * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
+ * Bundle budget : ~0.15 kB gzip.
  */
 
 .cremona-density-switcher {

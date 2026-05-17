@@ -20,9 +20,9 @@ import { t } from '../utils/i18n.js';
  *   the duration to 0.01 ms — transitionend still fires, the remove still
  *   happens, no UX regression).
  *
- * Doctrine (OQ-15): Alert is INLINE status, not modal. This controller does
- * NOT trap focus, does NOT push focus, does NOT create a backdrop. For modal
- * alert flows, see the Ring 2 `AlertDialog` compound.
+ * Alert is INLINE status, not modal. This controller does NOT trap focus,
+ * does NOT push focus, does NOT create a backdrop. For modal alert flows,
+ * see the Ring 2 `AlertDialog` compound.
  *
  * Values:
  *   message (string) — i18n key resolved via t() and posted into

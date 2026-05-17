@@ -1,10 +1,9 @@
 <!--
   Sheet story — 4 viewport variants (Light/Dark × LTR/RTL).
 
-  Per OQ-26 doctrine: responsive pivot at 768 px. The story is rendered
-  at the standard Histoire viewports (mobile + desktop captured); resize
-  the page below 768 px in dev to see the auto-bottom-sheet behavior on
-  any edge configuration.
+  Responsive pivot at 768 px. The story is rendered at the standard
+  Histoire viewports (mobile + desktop captured); resize the page below
+  768 px in dev to see the auto-bottom-sheet behavior on any edge configuration.
 
   Sections (5):
     1. Default (edge=end → mobile auto-bottom-sheet)

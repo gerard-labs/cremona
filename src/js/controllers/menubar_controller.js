@@ -4,10 +4,10 @@ import { Controller } from '@hotwired/stimulus';
  * menubar — Pure orchestrator coordinating N standalone DropdownMenu
  * compounds along a horizontal menubar (File / Edit / View / ...).
  *
- * Per OQ-30 (sealed S2.3a opening): per-submenu DropdownMenus (each fully
- * standalone) + a thin menubar orchestrator (~70 effective lines). The N
- * DropdownMenu controllers handle their own role="menu" / role="menuitem"
- * stamping + roving tabindex + Arrow Up/Down + Esc dismiss; Menubar adds
+ * Per-submenu DropdownMenus (each fully standalone) + a thin menubar
+ * orchestrator (~70 effective lines). The N DropdownMenu controllers handle
+ * their own role="menu" / role="menuitem" stamping + roving tabindex +
+ * Arrow Up/Down + Esc dismiss; Menubar adds
  * the horizontal nav between triggers (ArrowLeft/Right cyclic + Home/End)
  * + ArrowDown to open the active trigger's submenu + Enter/Space activate.
  *
@@ -40,13 +40,11 @@ import { Controller } from '@hotwired/stimulus';
  * AND opens the destination's submenu — matching macOS / Apple HIG menubar
  * idiom where "moving along the bar with menus open" feels native.
  *
- * Hover-open is NOT implemented at this layer (per S2.3b decision —
- * keyboard-first orchestrator). Hover-open is opt-in for a future Phase 4
- * `hoverOpen: true` value if real demand emerges. Documented in Menubar.md
- * §"Open trade-offs".
+ * Hover-open is NOT implemented at this layer (keyboard-first orchestrator).
+ * Hover-open is opt-in for a future `hoverOpen: true` value if real demand emerges.
  *
- * Per S1.4b descriptor-binding gotcha: tests call controller methods
- * directly (`ctrl.keydown({key, ...})`, `ctrl.focusTrigger(idx)`).
+ * Tests call controller methods directly
+ * (`ctrl.keydown({key, ...})`, `ctrl.focusTrigger(idx)`).
  */
 export default class MenubarController extends Controller {
   static targets = ['trigger'];

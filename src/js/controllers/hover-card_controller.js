@@ -6,8 +6,7 @@ import { Controller } from '@hotwired/stimulus';
  * (`data-controller="popover hover-card"`). Popover handles surface +
  * positioning + dismiss; hover-card adds the hover-with-delay trigger.
  *
- * Per OQ-29 doctrine (sealed S2.3a opening): reuse Tooltip's 400 ms open
- * doctrine via inline timing, NO new motion token. Close delay 200 ms
+ * Open delay 400 ms (anti-flash, matches Tooltip's doctrine). Close delay 200 ms
  * (anti-flash on fast pointer movements). HoverCard is a *visual preview*
  * surface (≠ Tooltip which is descriptive metadata) — it intentionally
  * does NOT open on focus (would distract keyboard users with non-essential
@@ -27,8 +26,7 @@ import { Controller } from '@hotwired/stimulus';
  *   controller listens on the content for mouseenter (cancel close) +
  *   mouseleave (schedule close).
  *
- * Per S1.4b descriptor-binding gotcha (Collapsible §2 + ADR-0008): tests
- * call controller methods directly (`ctrl.enter()`, `ctrl.leave()`).
+ * Tests call controller methods directly (`ctrl.enter()`, `ctrl.leave()`).
  *
  * Targets: none direct (relies on cross-controller lookup for popover +
  * querySelector for the content element).
@@ -36,7 +34,7 @@ import { Controller } from '@hotwired/stimulus';
  * Values:
  *   openDelay  (Number, default 400) — ms to wait after enter before opening.
  *                                      400 ms matches Tooltip's anti-flash
- *                                      doctrine (per 14-motion-baseline §1).
+ *                                      doctrine.
  *   closeDelay (Number, default 200) — ms to wait after leave before closing.
  *                                      Allows the user to move mouse from
  *                                      trigger to content without losing

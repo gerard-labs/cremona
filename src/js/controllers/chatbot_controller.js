@@ -1,7 +1,5 @@
 /**
- * chatbot controller — Chatbot (Ring 3 S3.3c, 54e Ring 3 pattern — FINAL Ring 3).
- *
- * 19th Ring 3 controller (after preferences-center S3.3b-2).
+ * chatbot controller — Chatbot (Ring 3).
  *
  * Thin controller (~85-110 effective lines) — pure composition of Drawer
  * Ring 2 + Input Ring 1 + Item Ring 1. Manages :
@@ -11,11 +9,11 @@
  *   - Typing indicator toggle via setTyping(flag) public method.
  *
  * NO lib loaded — consumer provides messages content (plain text safely
- * escaped, OR pre-rendered HTML). marked / streaming markdown rendering
- * deferred to Ring 4+ trigger per ADR-0033 §"Trade-offs deferred to Ring 4+"
- * when first consumer Chatbot ships LLM-generated markdown content.
+ * escaped, OR pre-rendered HTML). Marked / streaming markdown rendering
+ * deferred to Ring 4+ when first consumer Chatbot ships LLM-generated
+ * markdown content.
  *
- * 13th cross-controller compose instance : data-controller="drawer chatbot".
+ * Cross-controller compose : data-controller="drawer chatbot".
  *
  * Surface :
  *   data-controller="drawer chatbot"

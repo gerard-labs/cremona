@@ -13,7 +13,7 @@ import vue from '@vitejs/plugin-vue';
  * wires the Histoire `<Story>` / `<Variant>` globals and injects a
  * pure-HTML body via `v-html`. There is no real Vue componentry — Vue
  * is the catalog host runtime ONLY, never shipped to consumers
- * (theme.js carries Stimulus, not Vue).
+ * (cremona.js carries Stimulus, not Vue).
  */
 export default defineConfig({
   plugins: [HstVue()],

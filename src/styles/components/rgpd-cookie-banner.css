@@ -1,15 +1,12 @@
 /*
- * RGPD-CookieBanner — RGPD cookie consent banner (Ring 3 S3.3b-2).
+ * RGPD-CookieBanner — RGPD cookie consent banner (Ring 3).
  *
  * Composes Dialog Ring 2 (closeOnEscape=false + closeOnBackdropClick=false
- * per RGPD legal commit) + Button Ring 1 (3 CTAs : Accept / Reject /
- * Customize). Controller : cookie-banner (17th Ring 3) — defensive Both
- * document.cookie + localStorage persistence per OQ-NEW sealed.
+ * per RGPD legal requirements) + Button Ring 1 (3 CTAs : Accept / Reject /
+ * Customize). Controller : cookie-banner — both document.cookie +
+ * localStorage persistence.
  *
- * 11th cross-controller compose instance : data-controller="dialog cookie-banner"
- *
- * Bundle budget : ~0.25 kB gzip (per ADR-0031 Path X corrected baseline +
- * Dialog size override for full-modal styling on mobile).
+ * Cross-controller composition : data-controller="dialog cookie-banner"
  */
 
 .cremona-rgpd-cookie-banner {

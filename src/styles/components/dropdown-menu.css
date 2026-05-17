@@ -8,7 +8,7 @@
  * roving tabindex + Arrow Up/Down + Home/End + Enter/Space activation +
  * close-on-item-click.
  *
- * Per WAI-ARIA APG "Menu Button" pattern + 13-accessibility-baseline §2.
+ * Per WAI-ARIA APG "Menu Button" pattern.
  *
  * Styling is minimal — the menu surface inherits everything from
  * .cremona-popover__content (bg, border, radius, shadow, padding, scale

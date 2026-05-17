@@ -11,9 +11,8 @@
  *
  * Zero new design tokens — pure composition of Ring 0 vocabulary.
  *
- * Per OQ-34/37/38/39 (sealed S2.4 / S2.4b opening): vanilla implementation,
- * single-col sort default + opt-in multi-col, text Input filter default,
- * AlertDialog for bulk-destructive (Sonner Toast-Undo deferred S2.5+).
+ * Vanilla implementation, single-col sort default + opt-in multi-col, text
+ * Input filter default, AlertDialog for bulk-destructive.
  */
 
 .cremona-data-table {

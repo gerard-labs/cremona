@@ -1,5 +1,5 @@
 {#-
-  Auth-SocialButtons — composable block of OAuth provider buttons (Ring 3 S3.1b).
+  Auth-SocialButtons — composable block of OAuth provider buttons (Ring 3).
 
   NOT a full-page pattern — does NOT compose `_auth-shell`. Drops INTO :
     - Auth-Login form body (below the password form)
@@ -12,20 +12,18 @@
       envelope inherited via the class name). Does NOT `{% include %}`
       button.html.twig because Button's `iconLeading` param expects a
       Lucide curated-set icon name and brand marks (GitHub / Google /
-      Apple / Microsoft) are NOT in the curated 30-set per OQ-52
-      (sealed S3.1b opening).
+      Apple / Microsoft) are NOT in the curated set. The kit's curated icon
+      set does not include brand marks.
 
   No Stimulus controller — pure server-rendered block. Consumer's OAuth
   flow lives on the server (each provider's `action` URL points at the
   consumer's OAuth start endpoint).
 
   Doctrine — consumer-driven raw SVG per provider :
-    OQ-52 (sealed S3.1b opening) — `socialProviders[].icon` is a raw
-    SVG string the consumer ships (Simple Icons / brand-provided assets).
-    The kit renders it via Twig's `|raw` filter. Lucide upstream
-    doesn't ship brand marks (semantic-glyphs-only philosophy) ; the
-    kit's curated 30-set is NOT amended (ADR-0016 declined per S3.1c
-    OQ-57b precedent extended).
+    `socialProviders[].icon` is a raw SVG string the consumer ships
+    (Simple Icons / brand-provided assets). The kit renders it via Twig's
+    `|raw` filter. Lucide upstream doesn't ship brand marks
+    (semantic-glyphs-only philosophy).
 
   Security boundary :
     The consumer's SVG runs in-context — if the consumer ships

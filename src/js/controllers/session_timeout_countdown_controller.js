@@ -3,13 +3,13 @@ import { t, getLocale } from '../utils/i18n.js';
 
 /**
  * session-timeout-countdown — live MM:SS / "X minutes" countdown
- * controller (Ring 3 S3.1b — 2nd new Ring 3 controller).
+ * controller (Ring 3).
  *
  * Cross-controller compose with Dialog (Ring 2) — the wrapping element
  * carries `data-controller="dialog session-timeout-countdown"`. This
  * controller owns the countdown ; Dialog owns the modal mechanics.
  *
- * Per OQ-61 (sealed S3.1b opening) :
+ * Behavior :
  *   - SILENT visual countdown by default. The countdown text mutates
  *     every second visibly, but `aria-live="polite"` only re-announces
  *     on the natural cadence (minute boundaries).
@@ -17,8 +17,8 @@ import { t, getLocale } from '../utils/i18n.js';
  *     the controller re-stamps `aria-live="assertive"` on the countdown
  *     target so screen readers announce the urgency. Fires
  *     `session-timeout:warning` event ONCE at the threshold crossing.
- *   - Avoids SR fatigue per [13-a11y §17 Cognitive] — polite for the
- *     bulk of the countdown, assertive only when truly urgent.
+ *   - Avoids SR fatigue — polite for the bulk of the countdown, assertive
+ *     only when truly urgent.
  *
  * Countdown render :
  *   - Uses `Intl.RelativeTimeFormat` for locale-aware "X minutes" /
@@ -52,7 +52,7 @@ export default class SessionTimeoutCountdownController extends Controller {
     tickMs: { type: Number, default: 1000 },
   };
 
-  // Class-field initial-fire guards (S2.8 doctrine).
+  // Class-field initial-fire guards.
   _destroyed = false;
   _tickInterval = null;
   _warningFired = false;

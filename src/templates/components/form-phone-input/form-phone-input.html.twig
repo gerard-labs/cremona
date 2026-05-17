@@ -1,9 +1,9 @@
 {#-
   Form-PhoneInput — international phone input (intl-tel-input lazy ~25 kB).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) is the composition keystone.
-    - intl-tel-input library lazy-loaded on first focus per ADR-0022 (6e cascade) —
+    - intl-tel-input library lazy-loaded on first focus (6e cascade) —
       saves ~25 kB chunk if user never reaches phone field via Tab.
 
   Parameters:

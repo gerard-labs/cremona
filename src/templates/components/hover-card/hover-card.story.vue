@@ -9,9 +9,9 @@
     5. Custom delays — 100 ms open + 50 ms close (snappier for demo).
 
   Stimulus controllers `popover` + `hover-card` co-mounted on each wrap.
-  Per OQ-29: no new motion tokens — delays are JS-side timeouts in the
-  hover-card controller. Focus on trigger does NOT open (HoverCard is
-  visual preview, not descriptive metadata).
+  No new motion tokens — delays are JS-side timeouts in the hover-card
+  controller. Focus on trigger does NOT open (HoverCard is visual preview,
+  not descriptive metadata).
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

@@ -1,9 +1,9 @@
 /*
- * Chart — ApexCharts-wrapped data visualization (Ring 2 S2.9).
+ * Chart — ApexCharts-wrapped data visualization (Ring 2).
  *
- * Per [ADR-0012] : ApexCharts v4.x lazy-loaded via dynamic import mirror
- * [ADR-0011] verbatim. The chart paints inside `.cremona-chart__container` ;
- * a sr-only <table> data-table fallback lives at `.cremona-chart__sr-only`.
+ * ApexCharts v4.x lazy-loaded via dynamic import. The chart paints inside
+ * `.cremona-chart__container` ; a sr-only <table> data-table fallback lives
+ * at `.cremona-chart__sr-only`.
  *
  * The `data-state` attribute drives the visual lifecycle :
  *   "loading"  → skeleton gradient (the container is still empty, ApexCharts
@@ -35,8 +35,7 @@
 
 .cremona-chart[data-state="loading"] .cremona-chart__container {
   /* Skeleton gradient — visible while the ApexCharts chunk fetches.
-     Per [14-motion §7 Skeleton] : 1500 ms shimmer loop, reduced-motion
-     → flat. */
+     1500 ms shimmer loop, reduced-motion → flat. */
   background: linear-gradient(
     90deg,
     var(--color-bg-elevated) 0%,

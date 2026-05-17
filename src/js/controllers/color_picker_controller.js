@@ -1,26 +1,18 @@
 /**
- * color-picker controller — Form-ColorPicker (Ring 3 S3.3a-2).
+ * color-picker controller — Form-ColorPicker (Ring 3).
  *
- * 8th Ring 3 controller (after password-strength + session-timeout-countdown +
- * back-to-top + product-tour + form-with-steps + address-autocomplete +
- * form-date-range).
- *
- * Lazy-loads Coloris (melloware fork) v0.x on first `popover:open` event
- * per ADR-0025. Mirror
- * ADR-0011 cascade — module-scoped
- * cache + sync mount/ARIA + async init on first Popover open + race-check on
- * disconnect.
+ * Lazy-loads Coloris (melloware fork) v0.x on first `popover:open` event.
+ * Module-scoped cache + sync mount/ARIA + async init on first Popover open +
+ * race-check on disconnect.
  *
  * The cross-controller compose pattern (`data-controller="popover color-picker"`)
  * lets the Popover Ring 2 controller own positioning + open/close mechanics
- * (Floating UI lazy per ADR-0011) ; this controller owns lazy Coloris load +
+ * (Floating UI lazy-loaded) ; this controller owns lazy Coloris load +
  * preview swatch sync.
  *
- * 3-stage lazy variant (3rd use of lazy-on-first-interaction after zxcvbn-
- * on-first-keystroke per ADR-0018 + signature_pad-on-first-pointer-down per
- * ADR-0024). The picker UI is hidden until the user clicks the trigger →
- * `popover:open` event dispatched → this controller's once-listener fires +
- * lazy-loads Coloris.
+ * Lazy-on-first-interaction: the picker UI is hidden until the user clicks
+ * the trigger → `popover:open` event dispatched → this controller's
+ * once-listener fires + lazy-loads Coloris.
  *
  * Surface :
  *   data-controller="popover color-picker"
@@ -70,8 +62,7 @@ export default class ColorPickerController extends Controller {
     defaultColor: { type: String, default: '#000000' },
   };
 
-  // Class-field initial-fire guards (S2.8 doctrine — initialized BEFORE
-  // Stimulus callbacks fire).
+  // Class-field initial-fire guards (initialized BEFORE Stimulus callbacks fire).
   _destroyed = false;
   _initialized = false;
   _popoverOpenBound = null;

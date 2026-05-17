@@ -4,8 +4,8 @@
   Sections (2): default (hero gears + primary "Voir le statut")
               · with-eta (+ body addendum with ETA + secondary "M'avertir").
 
-  Brand-feel pattern per OQ-57. Hero SVG inline (gears motif) — consumer-
-  overridable via {% block illustration %} when embedding.
+  Brand-feel pattern. Hero SVG inline (gears motif) — consumer-overridable
+  via {% block illustration %} when embedding.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

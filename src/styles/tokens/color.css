@@ -53,7 +53,7 @@
   /* --- Status: info (sky) --------------------------------------------- */
   /* `--color-info-foreground` is dark in light mode (symmetric with warning)
      so the solid info chip clears 4.5:1 against the bright sky background.
-     Doctrine sealed in ADR-0007. White-on-sky failed even the 3:1 UI floor. */
+     White-on-sky failed even the 3:1 UI floor. */
   --color-info: oklch(0.68 0.135 235);
   --color-info-foreground: oklch(0.2 0.04 235);
   --color-info-soft: oklch(0.94 0.04 235);

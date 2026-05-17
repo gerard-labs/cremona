@@ -7,9 +7,9 @@ import { resolve } from 'node:path';
  * (Symfony AssetMapper, Webpack Encore, React/Vue, static HTML, CDN).
  *
  * Two passes, both wired into `pnpm build`:
- *  - default mode → `dist/theme.js`  — Stimulus boot + controller register (ESM)
+ *  - default mode → `dist/cremona.js`  — Stimulus boot + controller register (ESM)
  *  - `--mode css` → `dist/cremona.css` — Tailwind v4 processed: tokens + base
- *                                       reset + every component's styles
+ *                                        reset + every component's styles
  *
  * The CSS is a separate pass because the JS entry deliberately does NOT
  * import the stylesheet — consumers decide when/whether to load styles.

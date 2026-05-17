@@ -2,18 +2,15 @@ import { Controller } from '@hotwired/stimulus';
 import { t } from '../utils/i18n.js';
 
 /**
- * file-upload — Wrapped FilePond adapter (Ring 2 S2.9).
+ * file-upload — Wrapped FilePond adapter (Ring 2).
  *
- * Per ADR-0013 :
- *  - FilePond v4.x is the underlying lib (manifest candidate).
- *  - **Lazy-loaded** via module-scoped dynamic `import()` mirror
- *    ADR-0011 verbatim. Core +
- *    3 default plugins (validateType, validateSize, imagePreview) are
- *    fetched on first FileUpload mount per session and cached.
+ * FilePond v4.x is the underlying lib. **Lazy-loaded** via module-scoped
+ * dynamic `import()`. Core + 3 default plugins (validateType, validateSize,
+ * imagePreview) are fetched on first FileUpload mount per session and cached.
  *  - The native `<input type="file">` is always usable even before the
  *    chunk arrives — drop-zone enhancement is progressive enhancement.
  *  - Composes Sonner via `window.themeToast.show()` for upload-complete /
- *    upload-failed (per [ADR-0013 §Sonner compose path]).
+ *    upload-failed.
  *
  * Per WAI-ARIA :
  *  - `role="region"` + `aria-roledescription` (consumer-localized or kit
@@ -22,7 +19,7 @@ import { t } from '../utils/i18n.js';
  *  - File list : FilePond's native semantic (role="list" / role="listitem"
  *    per file row + role="progressbar" per file).
  *
- * Stimulus value-changed guard pattern (S2.8 Stepper class-field) :
+ * Stimulus value-changed guard pattern :
  *  - `_lastConfigSig` class field initialized to `null` BEFORE Stimulus
  *    callbacks fire ; idempotency cache on config-driven re-render.
  *
@@ -55,7 +52,7 @@ import { t } from '../utils/i18n.js';
  *   file-upload:upload-error      — detail.{ file, error: string }.
  */
 
-// Module-scoped FilePond cache mirror [ADR-0011] popover pattern.
+// Module-scoped FilePond cache (mirror popover lazy-load pattern).
 let _filePond = null;
 let _filePondPromise = null;
 

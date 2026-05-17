@@ -4,7 +4,7 @@
   Sections (2): default (hero wifi-off + primary "Réessayer")
               · with-cached-link (+ secondary "Voir les pages en cache").
 
-  Brand-feel pattern per OQ-57. Hero SVG inline (wifi-off motif).
+  Brand-feel pattern. Hero SVG inline (wifi-off motif).
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

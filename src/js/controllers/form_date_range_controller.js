@@ -1,17 +1,16 @@
 /**
  * form-date-range controller — date range pair (start + end) cross-field validation.
  *
- * 7th Ring 3 controller (after password-strength + session-timeout-countdown +
- * back-to-top + product-tour + form-with-steps + address-autocomplete).
+ * Ring 3 controller.
  *
- * Per the Forms family doctrine (cf. Form-WithSteps.md §1) :
- *  - Composes 2 DatePicker Ring 2 instances pure (no Ring 2 amend per ADR-0015 immutability).
+ * Per the Forms family doctrine :
+ *  - Composes 2 DatePicker Ring 2 instances (Ring 2 unchanged).
  *  - Cross-field validation : start ≤ end. Invalid range → dispatches
  *    `form-date-range:invalid` event with detail.{ reason: 'start-after-end' }.
  *  - Cross-step state owned by consumer — kit dispatches `form-date-range:select`
  *    with detail.{ startDate, endDate } on every valid pair update ; consumer persists.
  *  - Listens to `date-picker:select` events from the two child DatePickers (which
- *    bubble via composed:true per Stimulus / DatePicker S2.7 doctrine).
+ *    bubble via composed:true per the Stimulus DatePicker event doctrine).
  *
  * Events dispatched (all bubble + composed) :
  *  form-date-range:mount    — { startDate?, endDate? } (initial values if set)

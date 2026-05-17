@@ -1,11 +1,9 @@
 /*
- * LangSwitcher — locale picker (Ring 3 S3.3b-1).
+ * LangSwitcher — locale picker (Ring 3).
  *
  * Composes DropdownMenu Ring 2. Marker class adds icon + locale-code label
  * spacing inside the trigger Button + per-item flag emoji spacing inside
  * each menu item.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
  */
 
 .cremona-lang-switcher__trigger {

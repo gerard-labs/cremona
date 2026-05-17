@@ -9,9 +9,9 @@
     5. Events log — wired to sidebar:collapse-change demonstration.
 
   Mobile mode (< 768 px) : the desktop sidebar is hidden via CSS. Consumer
-  composes Sheet for the mobile entry point (documented in Sidebar.md §9).
+  composes Sheet for the mobile entry point.
 
-  Helpers (per S2.3a story doctrine — nested template literal avoidance):
+  Helpers (nested template literal avoidance):
     - sidebar({ id, collapsed, brand, sections, footer })
     - item({ label, href, icon, current })
 -->
@@ -21,17 +21,16 @@ import { setTranslations, setLocale, t } from '../../../js/utils/i18n.js';
 import { boot } from '../../../js/index.js';
 import { onMounted } from 'vue';
 
-// Sidebar items in the story use icons from the curated Lucide 30-set
-// (no amend of the curated set per S1.1 doctrine). `home`/`folder`/`users`/
-// `bar-chart`/`log-out` are NOT in the curated set ; story uses close
-// substitutes :
+// Sidebar items in the story use icons from the curated Lucide 30-set.
+// `home`/`folder`/`users`/`bar-chart`/`log-out` are NOT in the curated set ;
+// story uses close substitutes :
 //   - menu      → "Tableau de bord" (generic stand-in for a layout-dashboard)
 //   - option    → "Projets" (stand-in for folder)
 //   - user      → "Équipe" (stand-in for users plural)
 //   - info      → "Analytics" (stand-in for bar-chart)
 //   - settings  → "Paramètres" (canonical)
 //   - arrow-left → "Se déconnecter" (back / exit metaphor)
-// Real consumer apps amend the curated set via an ADR when they need
+// Real consumer apps extend the curated set when they need
 // layout-dashboard / users / log-out / bar-chart.
 import menuSvg from '../../../assets/icons/menu.svg?raw';
 import optionSvg from '../../../assets/icons/option.svg?raw';

@@ -3,7 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * dialog — modal native `<dialog>` controller.
  *
- * Per OQ-20 doctrine [Ring 2 lock-in ADR — pending]: wraps native
+ * Wraps native
  * `<dialog>` element. The native API provides top-layer positioning,
  * `::backdrop` rendering, focus trap (Tab cycles within), and Esc
  * dismiss. This controller adds the missing pieces:
@@ -34,10 +34,8 @@ import { Controller } from '@hotwired/stimulus';
  *      orchestration needed — the browser handles the discrete-step
  *      transition between display: block and display: none.
  *
- * Per the S1.4b descriptor-binding gotcha (see Collapsible §2 +
- * ADR-0008): tests call controller methods directly (`ctrl.open()`,
- * `ctrl.close()`) rather than synthesising clicks through action
- * descriptors.
+ * Tests call controller methods directly (`ctrl.open()`, `ctrl.close()`)
+ * rather than synthesising clicks through action descriptors.
  *
  * Targets:
  *   dialog (required) — the native `<dialog>` element.

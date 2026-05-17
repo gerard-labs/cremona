@@ -1,10 +1,8 @@
 /*
- * KeyboardShortcutsOverlay — full-screen shortcuts modal (Ring 3 S3.3b-1).
+ * KeyboardShortcutsOverlay — full-screen shortcuts modal (Ring 3).
  *
  * Pure composition : Dialog Ring 2 + Kbd Ring 1. Marker class adds grid
  * layout for sections + per-row description/chord alignment. NO controller.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
  */
 
 .cremona-keyboard-shortcuts-overlay__sections {

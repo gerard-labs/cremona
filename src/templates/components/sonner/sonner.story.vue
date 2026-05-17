@@ -178,8 +178,7 @@ onMounted(() => {
 
 // ============================================================
 // Helpers — wrap content fragments so check-i18n's brace-balanced
-// masker can clearly distinguish ${t(...)} interpolations from
-// raw text. Pattern documented in STATE.md S2.3a Choices made.
+// masker can clearly distinguish ${t(...)} interpolations from raw text.
 // ============================================================
 const SEP = '\n      ';
 

@@ -11,7 +11,7 @@
  * popover content live inside the same containing block. Width is zero
  * — the wrap is a "pure logical container", not a visible element.
  *
- * Per Ring 2 S2.3 doctrine: ContextMenu reuses 100 % of DropdownMenu's
+ * Ring 2 doctrine: ContextMenu reuses 100 % of DropdownMenu's
  * surface tokens (radius, shadow, padding, items hover). No new visual
  * tokens — the right-click trigger is a pure behavior change, not a
  * visual variant.

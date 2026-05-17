@@ -3,7 +3,6 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * tabs — accessible tab interface with WAI-ARIA APG "Tabs" semantics.
  *
- * Per the mini-OQ Tabs resolution sealed at S2.8 opening :
  *  - **Activation mode default = `automatic`** (Arrow keys focus + select
  *    immediately — pattern Stripe / Vercel / Notion / Linear, per WAI-ARIA
  *    APG "Tabs with Automatic Activation").
@@ -25,7 +24,7 @@ import { Controller } from '@hotwired/stimulus';
  *   tabs:change — bubbles + composed. detail = { value, previousValue }.
  *                 Fires AFTER the activation transition (NOT on initial render).
  *
- * Stimulus value-changed guard pattern (S2.7 Calendar discovery) :
+ * Stimulus value-changed guard pattern :
  *  - `valueValueChanged` fires BEFORE `connect()` with `previous = null`
  *    (not `undefined`). Defensive `if (this._lastRenderedValue === value)
  *    return` cache prevents double-render + spurious dispatch.
@@ -125,7 +124,7 @@ export default class TabsController extends Controller {
 
   /**
    * Stimulus auto-callback : re-sync DOM whenever the value changes.
-   * Skips spurious initial-fire (Calendar S2.7 pattern) + idempotency cache.
+   * Skips spurious initial-fire (Calendar guard pattern) + idempotency cache.
    */
   valueValueChanged(value, previous) {
     if (this._lastRenderedValue === value) return;

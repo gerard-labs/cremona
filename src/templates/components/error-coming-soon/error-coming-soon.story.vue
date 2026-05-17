@@ -4,7 +4,7 @@
   Sections (2): default (hero sparkles + primary "M'avertir")
               · with-back (+ secondary "Retour à l'accueil").
 
-  Brand-feel marketing pattern per OQ-57. Hero SVG inline (sparkles motif).
+  Brand-feel marketing pattern. Hero SVG inline (sparkles motif).
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

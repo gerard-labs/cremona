@@ -4,7 +4,7 @@
   Sections (2): default (icon=info + primary "Mettre à jour mon navigateur")
               · with-continue (+ secondary "Continuer quand même").
 
-  Icon `info` substitut per OQ-57b — visual: informational guidance.
+  Icon `info` substitute — visual: informational guidance.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

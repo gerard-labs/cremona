@@ -1,15 +1,15 @@
 {#-
   DataTable — the kit's fully-featured workhorse compound for tabular data.
 
-  Composes the 4 S2.4a tables foundations (Table + Pagination + ScrollArea +
+  Composes the 4 table foundations (Table + Pagination + ScrollArea +
   Resizable — the last two are consumer's opt-in wrap) + 4 selection primitives
   (Checkbox bare-mode for select-all header + row checkboxes ; DropdownMenu
   for column-visibility ; AlertDialog for bulk-destructive — wired by the
   consumer via the dispatched `data-table:bulk-action` event).
 
-  Per OQ-34 (vanilla — sealed S2.4 opening), OQ-37 (single-col sort default,
-  opt-in multi-col), OQ-38 (text Input filter default), OQ-39 (AlertDialog
-  for bulk-destructive ; Sonner Toast-with-Undo deferred to S2.5+).
+  Vanilla implementation. Single-col sort default (opt-in multi-col via
+  `multiColumnSort`). Text Input filter default. AlertDialog for
+  bulk-destructive ; Sonner Toast-with-Undo deferred to a future phase.
 
   Composes:
     - 1 Stimulus controller `data-table` (orchestrates sort + selection +
@@ -18,8 +18,8 @@
       block-override hook (we render our own <thead> + <tbody> inside).
     - [Pagination](../pagination/) compound — footer with inline page-size.
     - [Checkbox](../checkbox/) primitive — bare-mode for select-all header
-      + per-row checkboxes (S1.3 indeterminate doctrine via
-      `el.indeterminate = true`, browser-managed aria-checked="mixed").
+      + per-row checkboxes (indeterminate via `el.indeterminate = true`,
+      browser-managed aria-checked="mixed").
     - [Empty](../empty/) primitive — empty-state row when rows array is
       empty (composed via `<tr><td colspan="N">`).
     - [Icon](../icon/) primitive (curated 30 set) — settings, trash-2, etc.
@@ -27,7 +27,7 @@
   Per WAI-ARIA APG: native `<table>` semantic (NOT `role="grid"` — see
   DataTable.md §7 doctrine). aria-sort on sortable headers, aria-selected
   on selected rows, aria-checked="mixed" auto-emitted by the browser when
-  el.indeterminate is true (S1.3 doctrine — NEVER stamp manually).
+  el.indeterminate is true (NEVER stamp manually).
 
   Parameters:
     htmlId                (string,  optional) — auto-generated.
@@ -52,7 +52,7 @@
     selectable            (bool,    optional) — default true. Adds select-all
                                                 + per-row checkboxes.
     selectedRows          (array,   optional) — SSR pre-selection (row.id).
-    multiColumnSort       (bool,    optional) — default false. OQ-37 opt-in.
+    multiColumnSort       (bool,    optional) — default false. Opt-in multi-column sort.
     showColumnVisibility  (bool,    optional) — default true.
     columnVisibilityLabel (string,  optional) — default 'Colonnes'.
     bulkActions           (array,   optional) — toolbar bulk-action buttons.
@@ -111,7 +111,7 @@
 {%- set className            = className            | default('') -%}
 {# controllerExtras (array, optional, default []) — additional Stimulus controllers
    to compose on the same wrap element (e.g. ['sortable'] for sortable rows).
-   Per ADR-0048 Ring 2 amend ; consumer MUST NOT include 'data-table' (auto-injected). #}
+   Consumer MUST NOT include 'data-table' (auto-injected). #}
 {%- set controllerExtras     = controllerExtras     | default([]) -%}
 
 {# Build the list of all visible column ids — used for the initial visibleColumns value. #}
@@ -305,7 +305,7 @@
               >
                 {%- if col.filterType is defined and col.filterType -%}
                   {%- if col.filterType != 'text' -%}
-                    {# OQ-38: combobox/date filterType warn-fallback to text in S2.4b #}
+                    {# combobox/date filterType warn-fallback to text #}
                   {%- endif -%}
                   {% include '@cremona/components/input/input.html.twig' with {
                     type: 'text',

@@ -3,7 +3,7 @@
 
   Sections (4): default · server-flash-error · loading · with-prefill-and-password-fallback
 
-  Zero Stimulus controller — Auth-SSO is a pure server-rendered form (OQ-55).
+  Zero Stimulus controller — Auth-SSO is a pure server-rendered form.
   Story manually mirrors the Twig template's output.
 
   See `docs/specs/ring3/Auth-SSO.md` for the full state matrix.

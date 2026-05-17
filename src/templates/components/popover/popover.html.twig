@@ -2,13 +2,13 @@
   Popover — floating panel anchored to a trigger.
 
   JS-positioned (Floating UI v1.7 via the `popover` Stimulus controller) with
-  viewport-aware collision detection (flip + shift). Per OQ-19 doctrine
-  [ADR-0009]: the kit's overlay foundation; downstream compounds (Combobox,
-  DropdownMenu, ContextMenu, HoverCard, DatePicker, Select) all compose this.
+  viewport-aware collision detection (flip + shift). The kit's overlay
+  foundation; downstream compounds (Combobox, DropdownMenu, ContextMenu,
+  HoverCard, DatePicker, Select) all compose this.
 
   Popover is **non-modal** — the trigger keeps focus on open; the user Tabs
   into the content when they choose. For modal flows (focus trap, backdrop,
-  blocks rest of page), use `Dialog` (Ring 2 S2.1 too).
+  blocks rest of page), use `Dialog` (Ring 2).
 
   Stimulus controller `popover`:
     - `toggle()` flips openValue; the value-changed callback dispatches

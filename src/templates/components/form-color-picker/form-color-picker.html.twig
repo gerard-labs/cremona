@@ -1,11 +1,11 @@
 {#-
   Form-ColorPicker — color selection input (HSV/HSL/RGB/HEX + preset palette + optional alpha).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) is the composition keystone.
     - Cross-controller compose with Popover Ring 2 — `data-controller="popover color-picker"`
-      on the wrapper (mirror DatePicker S2.7 + Form-AddressAutocomplete S3.3a-1 verbatim).
-    - Coloris library lazy-loaded on first popover:open per ADR-0025 (9e cascade).
+      on the wrapper.
+    - Coloris library lazy-loaded on first popover:open (9e cascade).
 
   Parameters:
     htmlId          (string,  optional) — auto-generated.

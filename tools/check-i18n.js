@@ -3,7 +3,7 @@
  * tools/check-i18n.js — locale parity + template hardcoded-string detection.
  *
  * Rules enforced:
- *  H1. fr.json exists and is the reference locale (per ADR-0006).
+ *  H1. fr.json exists and is the reference locale.
  *  H2. Every other locale defines exactly the same key set as fr.json.
  *      Missing or extra keys block CI.
  *  H3. No hardcoded user-facing strings in templates. Scans:
@@ -17,9 +17,6 @@
  *                                Text outside ${…} interpolation must use
  *                                ${t('theme.…')}.
  *       - src/**\/*.story.js  — same logic, programmatic story pattern.
- *
- *  H3 added in Ring 1 S1.1 per OQ-3 in STATE.md (the first `.html.twig`
- *  template lands this session — see Typography primitive).
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -155,13 +152,10 @@ function scanTwig(file, src) {
   // Length-preserving so m.index line lookup stays aligned with the
   // original source.
   //
-  // The "scan attrs through blocksStripped" branch was tightened in S3.1
-  // opening — pre-S3.1 file-upload.html.twig had an `aria-roledescription
-  // ="zone de téléversement"` quoted example inside its {#- ... -#} doc
-  // block and `scanAttrs(src, ...)` (un-stripped) flagged it as H3. Twig
-  // comments are doc, not user-facing — the tool now matches the
-  // invariant's intent. Precedent S1.1 (the H3 invariant itself landed
-  // without ADR — pure tool tweak).
+  // The "scan attrs through blocksStripped" branch: Twig comments are doc,
+  // not user-facing — the tool strips them before scanning attrs, so a
+  // quoted example inside a {#- ... -#} doc block (e.g. an aria attribute
+  // in a usage example) does not trigger H3.
   const blank = (m) => m.replace(/[^\n]/g, ' ');
   const blocksStripped = src
     .replace(/\{\{[\s\S]*?\}\}/g, blank)
@@ -200,7 +194,7 @@ function scanStoryJs(file, src) {
 function scanTemplateLiterals(file, src, body, bodyOffset) {
   // Crude but effective: a non-greedy backtick pair. Doesn't handle
   // escaped backticks or nested template literals — acceptable for the
-  // SFC + v-html pattern locked in ADR-0006.
+  // SFC + v-html pattern used in stories.
   const litRe = /`([\s\S]*?)`/g;
   let m;
   while ((m = litRe.exec(body))) {
@@ -211,8 +205,8 @@ function scanTemplateLiterals(file, src, body, bodyOffset) {
     //   2. HTML attribute-value masker (both " and ' quoting) so a `>`
     //      inside an attribute value — typical of Stimulus actions like
     //      `data-action="click->controller#method"` — isn't mistaken for
-    //      end-of-tag. Mirrors the OQ-3 attr-value masker in scanTwig.
-    //      Length-preserving so the post-masking line counts stay aligned.
+    //      end-of-tag. Length-preserving so the post-masking line counts
+    //      stay aligned.
     const masked = maskAttrs(maskInterpolations(lit));
     const tagRe = />([^<]+)</g;
     let tm;

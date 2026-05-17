@@ -5,7 +5,7 @@
               · long-window (60 min — text expansion test).
 
   The body's `{minutes}` placeholder is consumer-interpolated. Live
-  countdown deferred per S3.1 trade-off log.
+  countdown deferred — static message preferred for maintainability.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

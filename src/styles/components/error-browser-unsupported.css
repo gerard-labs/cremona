@@ -1,8 +1,8 @@
 /*
- * Error-BrowserUnsupported — "Unsupported browser" page (Ring 3 S3.1c).
+ * Error-BrowserUnsupported — "Unsupported browser" page (Ring 3).
  *
- * Same composition doctrine. Icon substitut `info` per OQ-57b (visual:
- * informational guidance). Marker class only.
+ * Same composition doctrine. Uses the `info` icon (visual: informational
+ * guidance). Marker class only.
  */
 
 .cremona-error-browser-unsupported {

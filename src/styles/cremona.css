@@ -1,5 +1,5 @@
 /*
- * theme.css — main entry, consumed by Vite + Tailwind v4.
+ * cremona.css — main entry, consumed by Vite + Tailwind v4.
  * Order matters: Tailwind first (preflight), then tokens, then base,
  * then preset, then Tailwind v4 @theme mapping.
  */
@@ -23,7 +23,7 @@
 /* Default preset — Samurai indigo (no-op by design; tokens already match). */
 @import "./presets/default.css";
 
-/* Components — per-primitive CSS (Ring 1 S1.1 +). */
+/* Components — per-primitive CSS (Ring 1). */
 @import "./components/typography.css";
 @import "./components/icon.css";
 @import "./components/separator.css";
@@ -33,7 +33,7 @@
 @import "./components/badge.css";
 @import "./components/avatar.css";
 
-/* Components — Ring 1 S1.2 (form atoms — text). */
+/* Components — Ring 1 (form atoms — text). */
 @import "./components/label.css";
 @import "./components/input.css";
 @import "./components/textarea.css";
@@ -41,7 +41,7 @@
 @import "./components/input-group.css";
 @import "./components/field.css";
 
-/* Components — Ring 1 S1.3 (form atoms — selection). */
+/* Components — Ring 1 (form atoms — selection). */
 @import "./components/checkbox.css";
 @import "./components/radio-group.css";
 @import "./components/switch.css";
@@ -49,7 +49,7 @@
 @import "./components/toggle-group.css";
 @import "./components/slider.css";
 
-/* Components — Ring 1 S1.4a (buttons + containers + indicators). */
+/* Components — Ring 1 (buttons + containers + indicators). */
 @import "./components/button.css";
 @import "./components/button-group.css";
 @import "./components/divider.css";
@@ -59,76 +59,76 @@
 @import "./components/progress.css";
 @import "./components/tooltip.css";
 
-/* Components — Ring 1 S1.4b (status + disclosure + navigation). */
+/* Components — Ring 1 (status + disclosure + navigation). */
 @import "./components/alert.css";
 @import "./components/empty.css";
 @import "./components/collapsible.css";
 @import "./components/accordion.css";
 @import "./components/breadcrumb.css";
 
-/* Components — Ring 2 S2.1 (overlay foundations). */
+/* Components — Ring 2 (overlay foundations). */
 @import "./components/popover.css";
 @import "./components/dialog.css";
 @import "./components/dropdown-menu.css";
 
-/* Components — Ring 2 S2.2 (drawer family). */
+/* Components — Ring 2 (drawer family). */
 @import "./components/alert-dialog.css";
 @import "./components/drawer.css";
 @import "./components/sheet.css";
 
-/* Components — Ring 2 S2.3a (selection family — visual-priority). */
+/* Components — Ring 2 (selection family — visual-priority). */
 @import "./components/context-menu.css";
 @import "./components/hover-card.css";
 @import "./components/select.css";
 
-/* Components — Ring 2 S2.3b (selection family — interaction-priority). */
+/* Components — Ring 2 (selection family — interaction-priority). */
 @import "./components/combobox.css";
 @import "./components/menubar.css";
 @import "./components/navigation-menu.css";
 
-/* Components — Ring 2 S2.4a (tables family — foundations). */
+/* Components — Ring 2 (tables family — foundations). */
 @import "./components/table.css";
 @import "./components/pagination.css";
 @import "./components/scroll-area.css";
 @import "./components/resizable.css";
 
-/* Components — Ring 2 S2.4b (tables family — DataTable workhorse). */
+/* Components — Ring 2 (tables family — DataTable workhorse). */
 @import "./components/data-table.css";
 
-/* Components — Ring 2 S2.5 (toasts family — Sonner engine + Toast wrapper). */
+/* Components — Ring 2 (toasts family — Sonner engine + Toast wrapper). */
 @import "./components/sonner.css";
 
-/* Components — Ring 2 S2.6 (indicators batch). */
+/* Components — Ring 2 (indicators batch). */
 @import "./components/description-list.css";
 @import "./components/avatar-group.css";
 @import "./components/status.css";
 @import "./components/tag.css";
 @import "./components/number-input.css";
 
-/* Components — Ring 2 S2.7 (pickers family). */
+/* Components — Ring 2 (pickers family). */
 @import "./components/calendar.css";
 @import "./components/input-otp.css";
 @import "./components/date-picker.css";
 
-/* Components — Ring 2 S2.8 (navigation extras). */
+/* Components — Ring 2 (navigation extras). */
 @import "./components/tabs.css";
 @import "./components/stepper.css";
 @import "./components/sidebar.css";
 @import "./components/carousel.css";
 
-/* Components — Ring 2 S2.9 (heavyweights — Chart + Command + FileUpload). */
+/* Components — Ring 2 (heavyweights — Chart + Command + FileUpload). */
 @import "./components/chart.css";
 @import "./components/file-upload.css";
 @import "./components/command.css";
 
-/* Components — Ring 3 S3.1 (Auth core — sub-template + 4 patterns). */
+/* Components — Ring 3 (Auth core — sub-template + 4 patterns). */
 @import "./components/_auth-shell.css";
 @import "./components/auth-login.css";
 @import "./components/auth-register.css";
 @import "./components/auth-forgot-password.css";
 @import "./components/auth-reset-password.css";
 
-/* Components — Ring 3 S3.1c (Errors family — sub-template + 10 patterns). */
+/* Components — Ring 3 (Errors family — sub-template + 10 patterns). */
 @import "./components/_error-shell.css";
 @import "./components/error-401.css";
 @import "./components/error-403.css";
@@ -141,7 +141,7 @@
 @import "./components/error-offline.css";
 @import "./components/error-coming-soon.css";
 
-/* Components — Ring 3 S3.1b (Auth extras family — 8 patterns + 2 new controllers). */
+/* Components — Ring 3 (Auth extras family — 8 patterns + 2 controllers). */
 @import "./components/auth-social-buttons.css";
 @import "./components/auth-account-locked.css";
 @import "./components/auth-email-verification.css";
@@ -151,7 +151,7 @@
 @import "./components/auth-password-strength.css";
 @import "./components/auth-session-timeout-modal.css";
 
-/* Components — Ring 3 S3.2 (Nav + Onboarding + Notif/Feed — 12 patterns + 2 new controllers + driver.js lazy adapter). */
+/* Components — Ring 3 (Nav + Onboarding + Notif/Feed — 12 patterns + 2 controllers + driver.js lazy adapter). */
 @import "./components/nav-header.css";
 @import "./components/nav-mega-menu.css";
 @import "./components/nav-sidebar-app.css";
@@ -165,26 +165,26 @@
 @import "./components/activity-feed.css";
 @import "./components/back-to-top.css";
 
-/* Components — Ring 3 S3.3a-1 (Forms family foundation + light patterns — Form-WithSteps + Form-FileUpload + Form-AddressAutocomplete + Form-DateRange + 3 new controllers + 2 ADRs 0026/0029). */
+/* Components — Ring 3 (Forms family foundation + light patterns — Form-WithSteps + Form-FileUpload + Form-AddressAutocomplete + Form-DateRange + 3 controllers). */
 @import "./components/form-with-steps.css";
 @import "./components/form-file-upload.css";
 @import "./components/form-address-autocomplete.css";
 @import "./components/form-date-range.css";
 
-/* Components — Ring 3 S3.3a-2 (Forms family heavy — Form-ColorPicker + Form-Signature + Form-TagInput + Form-PhoneInput + 4 new adapter controllers + 5 ADRs 0022/0023/0024/0025 + 0027 ceiling 50→58 kB honest re-calibration). */
+/* Components — Ring 3 (Forms family heavy — Form-ColorPicker + Form-Signature + Form-TagInput + Form-PhoneInput + 4 adapter controllers). */
 @import "./components/form-color-picker.css";
 @import "./components/form-signature.css";
 @import "./components/form-tag-input.css";
 @import "./components/form-phone-input.css";
 
-/* Components — Ring 3 S3.3b-1 (Utilities chapter — LangSwitcher + DensitySwitcher + ThemeSwitcher + DangerZone + KeyboardShortcutsOverlay + 3-4 new thin controllers + ADR-0028 ceiling 58→60 kB +2 cadence return). */
+/* Components — Ring 3 (Utilities chapter — LangSwitcher + DensitySwitcher + ThemeSwitcher + DangerZone + KeyboardShortcutsOverlay + thin controllers). */
 @import "./components/lang-switcher.css";
 @import "./components/density-switcher.css";
 @import "./components/theme-switcher.css";
 @import "./components/danger-zone.css";
 @import "./components/keyboard-shortcuts-overlay.css";
 
-/* Components — Ring 3 S3.3b-2 (Search + RGPD families — Search-Results + Search-FacetedFilters + Search-CommandPalette + RGPD-DataExport + RGPD-CookieBanner + RGPD-PreferencesCenter + 3 new thin controllers + ADR-0030 ceiling 60→62 kB +2 cadence consecutive Path Z TRIGGERED + ADR-0031 Path X heuristic + ADR-0032 Path Y check-budget). */
+/* Components — Ring 3 (Search + RGPD families — Search-Results + Search-FacetedFilters + Search-CommandPalette + RGPD-DataExport + RGPD-CookieBanner + RGPD-PreferencesCenter + thin controllers). */
 @import "./components/search-results.css";
 @import "./components/search-faceted-filters.css";
 @import "./components/search-command-palette.css";
@@ -192,10 +192,10 @@
 @import "./components/rgpd-cookie-banner.css";
 @import "./components/rgpd-preferences-center.css";
 
-/* Components — Ring 3 S3.3c (Chatbot 54e + FINAL Ring 3 — pure composition Drawer + Input + Item + 1 new thin chatbot controller 19e Ring 3 — ADR-0034 Path X² JSDoc-density buckets pre-Phase-1 + ADR-0033 ring-3-lockin CLOSING + version 0.1.0 → 0.2.0 + Ring 4 UNBLOCK). */
+/* Components — Ring 3 (Chatbot — pure composition Drawer + Input + Item + thin chatbot controller). */
 @import "./components/chatbot.css";
 
-/* Ring 3 — pattern:RolesMatrix (S4.1c Phase 3 post-ADR-0042 Ring 3 amend) — composes Table Ring 2 + Badge + lazy inline select per cell ; reusable across 5+ Ring 4 domains. */
+/* Ring 3 — pattern:RolesMatrix — composes Table Ring 2 + Badge + lazy inline select per cell ; reusable across Ring 4 domains. */
 @import "./components/roles-matrix.css";
 @import "./components/sortable.css";
 

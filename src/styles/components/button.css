@@ -14,7 +14,7 @@
  *   3. Touch hardening: every size gets min-block-size / min-inline-size
  *      ≥ 44 px under coarse pointer (the sm 32-px desktop size ramps up
  *      to 44 on touch — WCAG 2.5.5).
- *   4. Press feedback follows the [14-motion-baseline] §10 pattern:
+ *   4. Press feedback follows the press pattern:
  *        :active scale(0.97) at --motion-duration-instant,
  *        release scale(1) at --motion-duration-fast / decelerate.
  *      Matches Toggle exactly for cohesion.

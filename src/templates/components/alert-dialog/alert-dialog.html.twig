@@ -1,9 +1,8 @@
 {#-
   AlertDialog — destructive-confirm wrapper around Dialog.
 
-  Per Ring 2 S2.2 doctrine [pending lock-in ADR]: AlertDialog is NOT a
-  standalone compound — it's a wrapper that bakes Dialog's 3 destructive
-  policies + injects a leading status icon:
+  AlertDialog is NOT a standalone compound — it's a wrapper that bakes
+  Dialog's 3 destructive policies + injects a leading status icon:
 
     1. `closeOnEscape: false` — Esc does NOT dismiss.
     2. `closeOnBackdropClick: false` — backdrop click does NOT dismiss.
@@ -19,7 +18,7 @@
   Events dispatched are `dialog:open` / `dialog:close` (consumer can wire
   these the same way as for plain Dialog).
 
-  Per 12-microcopy-tone §Confirmations:
+  Microcopy conventions:
     - Title NAMES the resource ("Supprimer 'Arcelor' ?")
     - Body NAMES the consequence ("142 tâches perdues")
     - Confirm button NAMES the action ("Supprimer définitivement"),

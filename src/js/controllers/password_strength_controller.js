@@ -2,18 +2,13 @@ import { Controller } from '@hotwired/stimulus';
 import { t } from '../utils/i18n.js';
 
 /**
- * password-strength — live password strength meter controller (Ring 3 S3.1b).
+ * password-strength — live password strength meter controller (Ring 3).
  *
- * Per ADR-0018 :
- *  - zxcvbn-ts v3.x is the underlying scoring library (manifest candidate
- *    flipped to `chosen` at S3.1b landing).
- *  - **Lazy-loaded** via module-scoped dynamic `import()` mirror
- *    ADR-0011 +
- *    ADR-0012 +
- *    ADR-0013 verbatim.
- *  - Lazy-on-FIRST-KEYSTROKE (not on `connect()`) — saves the ~30 kB
- *    zxcvbn chunk for users who land on Auth-Register but bail without
- *    typing. Distinct from Chart / FileUpload lazy-on-mount strategy.
+ * zxcvbn-ts v3.x is the underlying scoring library. **Lazy-loaded** via
+ * module-scoped dynamic `import()`. Lazy-on-FIRST-KEYSTROKE (not on
+ * `connect()`) — saves the ~30 kB zxcvbn chunk for users who land on
+ * Auth-Register but bail without typing (distinct from Chart / FileUpload
+ * lazy-on-mount strategy).
  *
  * 3-tier score mapping (kit-owned doctrine — not consumer-overridable
  * in v1) :
@@ -37,9 +32,8 @@ import { t } from '../utils/i18n.js';
  *
  * Idempotency cache :
  *  - `_lastScore` class field initialized to `null` BEFORE Stimulus
- *    callbacks fire (mirror S2.8 class-field initial-fire guard pattern
- *    from Tabs / Stepper / Sidebar / Carousel). `_renderScore` skips when
- *    the score is unchanged.
+ *    callbacks fire (class-field initial-fire guard pattern). `_renderScore`
+ *    skips when the score is unchanged.
  *
  * Events emitted :
  *  - `password-strength:mount`  — on connect(). bubbles + composed.
@@ -87,8 +81,7 @@ export default class PasswordStrengthController extends Controller {
     debounceMs: { type: Number, default: 150 },
   };
 
-  // Class-field initial-fire guards (S2.8 doctrine — initialized BEFORE
-  // Stimulus value-changed callbacks fire).
+  // Class-field initial-fire guards (initialized BEFORE Stimulus value-changed callbacks fire).
   _destroyed = false;
   _debounceTimer = null;
   _lastScore = null;

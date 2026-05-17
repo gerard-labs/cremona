@@ -28,7 +28,7 @@
  * keep their own 120 ms transitions per their primitive's CSS.
  *
  * Doctrine cascade : mirror `_auth-shell.css` verbatim where possible. The
- * `_pattern-shell` generic future (Onboarding-WelcomeScreens S3.2 may reuse)
+ * A `_pattern-shell` generic future (Onboarding-WelcomeScreens may reuse)
  * inherits this layout doctrine.
  */
 

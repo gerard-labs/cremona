@@ -1,21 +1,21 @@
 {#-
   DatePicker — Input-anchored single-date picker with Calendar popover.
 
-  Workhorse of the S2.7 pickers family. Composes :
-   - Popover (Ring 2 S2.1) — JS-positioned dialog popover via Floating UI
-     (lazy-loaded per [ADR-0011]). The Input acts as the trigger ; the
-     Calendar instance is the content.
-   - Input (Ring 1 S1.2) — the trigger looks + feels like a standard
-     `<input type="text">` (read-only — typing is not supported in S2.7 ;
+  Composes :
+   - Popover (Ring 2) — JS-positioned dialog popover via Floating UI
+     (lazy-loaded). The Input acts as the trigger ; the Calendar instance
+     is the content.
+   - Input (Ring 1) — the trigger looks + feels like a standard
+     `<input type="text">` (read-only — typing is not supported ;
      manual date typing is a future amend if real demand emerges).
-   - Calendar (Ring 2 S2.7) — the grid inside the popover. The DatePicker
+   - Calendar (Ring 2) — the grid inside the popover. The DatePicker
      controller listens for Calendar's `calendar:select` event +
      synchronises Input.value (formatted via Intl.DateTimeFormat) +
      the hidden form input.
 
-  Per OQ-40 doctrine (sealed S2.7) : vanilla minimal, no Flatpickr
-  adapter. Locale formatting via native Intl.DateTimeFormat. Day.js
-  deferred until relative-time UX surfaces in Ring 3+.
+  Vanilla minimal, no Flatpickr adapter. Locale formatting via native
+  Intl.DateTimeFormat. Day.js deferred until relative-time UX surfaces
+  in Ring 3+.
 
   Per WAI-ARIA APG "Date Picker Dialog" : the input has role="combobox"
   + aria-haspopup="dialog" + aria-expanded chain managed by the Popover

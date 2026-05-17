@@ -1,12 +1,12 @@
 /*
- * ThemeSwitcher — light / dark / system theme picker (Ring 3 S3.3b-1).
+ * ThemeSwitcher — light / dark / system theme picker (Ring 3).
  *
  * Composes ToggleGroup Ring 1. Marker class adds inline label spacing for
  * the wrap. The `data-theme` attribute is flipped by the `theme-switcher`
  * controller on documentElement (or other configurable target). System mode
  * resolves via prefers-color-scheme + listens for OS-level theme changes.
  *
- * Bundle budget : ~0.15 kB gzip (per ADR-0028 §"Family budgets sealed at S3.3b-1 opening").
+ * Bundle budget : ~0.15 kB gzip.
  */
 
 .cremona-theme-switcher {

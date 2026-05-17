@@ -3,7 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * calendar — month-grid date display.
  *
- * Foundation compound for DatePicker (S2.7). Renders a 7-column × N-row
+ * Foundation compound for DatePicker. Renders a 7-column × N-row
  * grid of day cells (~5-6 rows depending on month length and week-start
  * offset). Pure WAI-ARIA APG "Date Picker Dialog" / "Grid" pattern :
  *
@@ -18,7 +18,7 @@ import { Controller } from '@hotwired/stimulus';
  *   - aria-disabled="true" on out-of-range, disabled-weekday, OR other-month
  *     days that fall outside the displayed month's chronological range.
  *
- * Keyboard nav (sealed S2.7) :
+ * Keyboard nav :
  *
  *   - ArrowLeft / ArrowRight     ±1 day (chronological — same in LTR and RTL)
  *   - ArrowUp / ArrowDown        ±7 days (previous / next week)
@@ -27,8 +27,7 @@ import { Controller } from '@hotwired/stimulus';
  *   - Home / End                 first / last day of the focused week
  *   - Enter / Space              select the focused day
  *
- * Locale-aware via Intl.DateTimeFormat (NOT Day.js — deferred until
- * relative-time UX surfaces, per OQ-40 doctrine "natif d'abord"). Month
+ * Locale-aware via Intl.DateTimeFormat (NOT Day.js — zero bundle cost). Month
  * label "mai 2026" / "May 2026" + weekday narrow labels (L M M J V S D /
  * S M T W T F S) computed at runtime.
  *

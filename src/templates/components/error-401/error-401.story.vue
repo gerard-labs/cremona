@@ -6,7 +6,7 @@
               · primary-only (icon=user + primary "Se connecter" only).
 
   Composes _error-shell (default variant) + Empty (lg, h1) + Icon `user`
-  (Lucide curated 30-set substitut per OQ-57b).
+  (Lucide curated 30-set substitute).
 
   See `docs/specs/ring3/Error-401.md` for the spec.
 -->

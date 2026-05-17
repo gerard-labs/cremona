@@ -12,7 +12,7 @@
     - Items: `role="menuitem"` + roving tabindex (controller-stamped)
     - Keyboard: Arrow Up/Down (cyclic), Home/End, Enter/Space activate, Esc closes
 
-  Per S1.4b descriptor-binding gotcha: the `data-action` is on the wrap.
+  Note: the `data-action` is on the wrap.
   Stimulus action descriptors fire on bubble — clicks on inner items
   bubble to the wrap where dropdown-menu's `onItemClick` handler runs
   AFTER the consumer's data-action on the item itself.
@@ -24,7 +24,7 @@
     placement      (string, optional)  — bottom (default) | top | start | end
     offset         (int,    optional)  — gap from trigger in px (default 8)
     className      (string, optional)  — extra classes on the wrapper.
-    closeOnItemClick (bool, optional) — default true; false omits the close-on-item-click action descriptor (ADR-0060).
+    closeOnItemClick (bool, optional) — default true; false omits the close-on-item-click action descriptor.
 
   Blocks:
     trigger (required) — the menu button. Consumer stamps `aria-haspopup="menu"`,

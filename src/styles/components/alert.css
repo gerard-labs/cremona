@@ -14,8 +14,8 @@
  * Doctrine:
  *   - role="alert" (danger) → assertive aria-live implicit, no extra attrs.
  *   - role="status" (others) → polite aria-live implicit.
- *   - Animation appear: opacity + small translateY, 180 ms emphasized (per
- *     14-motion-baseline §1 "Popover/dropdown open" pattern, subtle variant).
+ *   - Animation appear: opacity + small translateY, 180 ms emphasized
+ *     (popover/dropdown open pattern, subtle variant).
  *   - Animation dismiss: opacity 1→0, 120 ms accelerate; controller listens
  *     for transitionend then removes the element + announces.
  */

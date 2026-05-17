@@ -2,8 +2,7 @@
   RolesMatrix story — 4 viewport variants (Light/Dark × LTR/RTL).
   Variants : default · bulk-edit-on · empty.
 
-  55th Ring 3 pattern (post-Ring-3-lock-in per ADR-0042).
-  All visible strings via t('theme.roles-matrix.story.sample.<key>').
+  Ring 3 pattern. All visible strings via t('theme.roles-matrix.story.sample.<key>').
 -->
 <script setup>
 import { onMounted } from 'vue';

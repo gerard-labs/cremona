@@ -5,7 +5,7 @@ import { t } from '../utils/i18n.js';
  * data-table — the kit's fully-featured DataTable workhorse.
  *
  * Composition pure (PAS d'héritage ES). Coordinates 6 UX concerns:
- *   1. Sort — single-col by default (OQ-37), opt-in multi-col via
+ *   1. Sort — single-col by default, opt-in multi-col via
  *      multiColumnSortValue + event.shiftKey | event.metaKey.
  *   2. Selection — per-row checkbox + bulk-select header with
  *      indeterminate state (per S1.3 doctrine: el.indeterminate = true,
@@ -15,7 +15,7 @@ import { t } from '../utils/i18n.js';
  *      DropdownMenu (its own popover + dropdown-menu controllers).
  *   4. Bulk actions — emits `data-table:bulk-action` with detail.{actionId,
  *      selectedRows}. Destructive actions wired by consumer to AlertDialog
- *      open (per OQ-39 — Sonner Toast-with-Undo deferred to S2.5+).
+ *      open.
  *   5. Filter — emits `data-table:filter-change` with detail.{column, query,
  *      allFilters}. The controller does NOT mutate row visibility for
  *      filters — that's data-source concern (consumer-owned, server-side
@@ -31,8 +31,7 @@ import { t } from '../utils/i18n.js';
  *   data-table:bulk-action — detail.{actionId, selectedRows}
  *   data-table:filter-change — detail.{column, query, allFilters}
  *
- * Per S1.4b descriptor-binding gotcha (Collapsible §2 + ADR-0008): tests
- * call controller methods directly (`ctrl.toggleSort({...})`) rather than
+ * Tests call controller methods directly (`ctrl.toggleSort({...})`) rather than
  * synthesising events through Stimulus's action descriptors.
  *
  * Targets:
@@ -52,7 +51,7 @@ import { t } from '../utils/i18n.js';
  *   selectedRows (Array, default []) — row IDs.
  *   visibleColumns (Array, default []) — column IDs (default = all from DOM).
  *   totalRows (Number, default 0) — drives Pagination footer.
- *   multiColumnSort (Boolean, default false) — OQ-37 opt-in.
+ *   multiColumnSort (Boolean, default false) — opt-in multi-column sort.
  */
 export default class DataTableController extends Controller {
   static targets = [
@@ -102,8 +101,8 @@ export default class DataTableController extends Controller {
    *   - Same column re-clicked: ascending → descending → ascending (cycle).
    *   - Different column clicked: switches column, sets ascending.
    *   - Shift-click OR Cmd-click + multiColumnSortValue=true:
-   *     event flag is set in detail.isMultiCol; visual stays single-col in
-   *     S2.4b (multi-col priority indicators deferred to a future amend).
+   *     event flag is set in detail.isMultiCol; visual stays single-col
+   *     (multi-col priority indicators deferred to a future amend).
    */
   toggleSort(event) {
     if (!event || !event.target) return;
@@ -231,8 +230,7 @@ export default class DataTableController extends Controller {
    *   - 0 selected here → checked=false, indeterminate=false
    *   - all selected here → checked=true, indeterminate=false
    *   - some selected here → checked=false, indeterminate=true (browser emits
-   *     aria-checked="mixed" automatically — per S1.3 doctrine, NEVER stamp
-   *     aria-checked manually).
+   *     aria-checked="mixed" automatically — NEVER stamp aria-checked manually).
    *
    * Also stamps data-indeterminate on the checkbox so a future reconnect
    * (HTMX morphdom swap, async re-render) doesn't resurrect a stale state

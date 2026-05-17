@@ -23,9 +23,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *     // Or directly use the translation keys:
  *     {{ 'theme.common.actions.save'|trans }}     {# → "Enregistrer" / "Save" #}
  *
- * `getAlias()` is `theme` (drops the trailing "Bundle" + lowercases) — that
- * is the namespace consumer apps would use in `config/packages/theme.yaml`
- * if we ever expose a config tree. Today the bundle has zero config.
+ * `getAlias()` is `cremona` — the namespace consumer apps would use in
+ * `config/packages/cremona.yaml` if we ever expose a config tree. Today the
+ * bundle has zero config.
  *
  * Optional Stimulus integration: if `symfony/ux-stimulus-bundle` is installed,
  * a hint is logged in `load()` for the consumer to wire the kit's controllers
@@ -43,8 +43,7 @@ final class CremonaExtension extends Extension implements PrependExtensionInterf
         $loader->load('services.yaml');
 
         // Optional: hint at Stimulus integration when the UX bundle is present.
-        // The actual import-map / controllers wiring is the consumer's call for
-        // now (Ring 1 lock-in deferred this to a separate ADR — see ADR-0008).
+        // The actual import-map / controllers wiring is the consumer's call.
         if (class_exists(\Symfony\UX\StimulusBundle\StimulusBundle::class)) {
             $container->setParameter('theme.ux_stimulus_bundle_present', true);
         }
@@ -62,7 +61,6 @@ final class CremonaExtension extends Extension implements PrependExtensionInterf
         // 2. Translator — register the kit's i18n directory so fr.json / en.json
         //    are picked up automatically. The Translator looks for files named
         //    `<catalog>.<format>` (e.g. fr.json) inside any registered path.
-        //    OQ-6 resolution (ADR-0008): ship in bloc at Ring-1 lock-in.
         $container->prependExtensionConfig('framework', [
             'translator' => [
                 'paths' => [

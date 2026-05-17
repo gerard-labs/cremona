@@ -2,15 +2,14 @@ import { Controller } from '@hotwired/stimulus';
 import { t } from '../utils/i18n.js';
 
 /**
- * sonner — toast queue engine (Ring 2 S2.5).
+ * sonner — toast queue engine (Ring 2).
  *
  * The controller manages the single fixed-position viewport injected by
  * the `ensureSonnerViewport()` helper (called from boot() in index.js, or
  * pre-rendered by consumer markup, or pushed by test setup). Multiple
  * SonnerController connects target the same viewport — idempotent.
  *
- * Per the OQ-42 resolution sealed in STATE.md (S2.5 opening): max 5
- * visible toasts + N queued. When `_queue.length > 0`, the queue
+ * Max 5 visible toasts + N queued. When `_queue.length > 0`, the queue
  * indicator button shows "+N autres" (Intl.PluralRules — CLDR FR
  * `one | other`, EN `one | other`). Click on the indicator promotes all
  * queued toasts to visible (capped at MAX_VISIBLE_EXPANDED).
@@ -26,7 +25,7 @@ import { t } from '../utils/i18n.js';
  * or `duration: null` = persistent (no auto-dismiss).
  *
  * Polite vs assertive announcement (per Alert.md §"Alert role auto-derives
- * from variant" sealed in ADR-0008):
+ * from variant"):
  *   - variant ∈ {success, info, warning} → toast is a native <output>
  *     (implicit role="status" + aria-live="polite" + aria-atomic="true").
  *     Controller pushes the message to `#cremona-announcer` as a backup
@@ -62,8 +61,7 @@ import { t } from '../utils/i18n.js';
 
 // Lucide v0.469.0 SVG paths — inlined to avoid the Icon primitive's Twig
 // include dependency at runtime. The 4 icons used (check, info, alert-
-// triangle, alert-circle) are all in the curated 30-icon set sealed in
-// S1.1 — no additions to the curated set.
+// triangle, alert-circle) are all in the curated 30-icon set.
 const ICONS = {
   success:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
@@ -317,7 +315,7 @@ export default class SonnerController extends Controller {
         const finalize = (event) => {
           // Filter to the opacity transition so concurrent transform
           // transitions don't trigger the cleanup early — mirrors the
-          // alert-dismiss S1.4b + popover finalize pattern.
+          // alert-dismiss + popover finalize pattern.
           if (event && event.propertyName && event.propertyName !== 'opacity') {
             el.addEventListener('transitionend', finalize, { once: true });
             return;

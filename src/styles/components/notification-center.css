@@ -1,9 +1,7 @@
 /*
- * NotificationCenter — slide-over notifications panel (Ring 3 S3.2).
+ * NotificationCenter — slide-over notifications panel (Ring 3).
  *
  * Composes Sheet Ring 2 (responsive side-drawer desktop / bottom-sheet mobile).
- *
- * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-notification-center {

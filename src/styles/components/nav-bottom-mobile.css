@@ -1,9 +1,7 @@
 /*
- * Nav-BottomMobile — iOS / Material bottom tab bar (Ring 3 S3.2).
+ * Nav-BottomMobile — iOS / Material bottom tab bar (Ring 3).
  *
  * Mobile-only. Fixed at viewport bottom with safe-area-inset.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-nav-bottom-mobile {

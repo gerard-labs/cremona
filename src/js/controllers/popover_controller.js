@@ -5,15 +5,15 @@ import { Controller } from '@hotwired/stimulus';
  *
  * The kit's Ring 2 overlay foundation. Provides JS-positioned, viewport-aware
  * positioning (collision detection via `flip` + `shift`) on top of the trigger.
- * Per OQ-19 doctrine ([ADR-0009]): Floating UI v1.7 over Popper.js v2
- * (maintenance) or hand-rolled math (brittle). CSS native `position-anchor`
+ * Floating UI v1.7 over Popper.js v2 (maintenance) or hand-rolled math
+ * (brittle). CSS native `position-anchor`
  * is the future Baseline (Chrome 125+ shipped Q1 2025, FF + Safari Q4 2025,
  * Baseline target ~2026-08) — the controller's API will absorb the swap
  * behind closed doors when Baseline lands.
  *
- * **Floating UI is lazy-loaded** per ADR-0011
- * (S2.7 mid-session amend, triggered by Calendar busting the 30 kB ceiling).
- * The module is fetched on the first popover `show()` and cached for the
+ * **Floating UI is lazy-loaded** (triggered by Calendar busting the 30 kB
+ * bundle ceiling). The module is fetched on the first popover `show()` and
+ * cached for the
  * rest of the session. On first open, the popover content appears
  * immediately (visibility + ARIA stamps + `popover:open` event fire
  * synchronously) ; positioning catches up after the chunk arrives (5-200 ms
@@ -33,10 +33,9 @@ import { Controller } from '@hotwired/stimulus';
  *
  * Targets:
  *   trigger (required) — the element that toggles the popover. Stimulus
- *                        action `click->popover#toggle` is on the wrapper
- *                        (per S1.4b descriptor-binding gotcha — see
- *                        Collapsible.md §2). The controller filters
- *                        clicks on content via event.target.
+ *                        action `click->popover#toggle` is on the wrapper.
+ *                        The controller filters clicks on content via
+ *                        event.target.
  *   content (required) — the floating panel.
  *
  * Values:

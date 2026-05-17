@@ -1,10 +1,7 @@
 /*
- * Onboarding-WelcomeScreens — multi-step welcome flow (Ring 3 S3.2).
+ * Onboarding-WelcomeScreens — multi-step welcome flow (Ring 3).
  *
- * No dedicated shell per mid-session OQ-64 resolution. Composes Card +
- * Stepper directly.
- *
- * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
+ * Composes Card + Stepper directly (no dedicated shell).
  */
 
 .cremona-onboarding-welcome-screens {

@@ -1,5 +1,5 @@
 /*
- * Auth-Register — registration pattern (Ring 3 S3.1).
+ * Auth-Register — registration pattern (Ring 3).
  *
  * Same composition doctrine as Auth-Login : _auth-shell layout + Field
  * stack + primary submit. Auth-Register adds the terms checkbox row.

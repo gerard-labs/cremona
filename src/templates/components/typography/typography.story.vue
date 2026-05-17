@@ -8,9 +8,8 @@
 
   HTML body is produced via the helper functions below, mirroring what
   the Twig template (`typography.html.twig`) outputs at server-side. We
-  do NOT import twig-js — per ADR-0006 §Amends + OQ-2 S1.1 resolution,
-  stories carry pure HTML via v-html; the Twig file is a structurally
-  parallel artifact, hand-reviewed for parity.
+  do NOT import twig-js — stories carry pure HTML via v-html; the Twig
+  file is a structurally parallel artifact, hand-reviewed for parity.
 
   Every user-facing string is keyed via `t()` (FR/EN parity enforced by
   `tools/check-i18n.js`).

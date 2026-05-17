@@ -1,10 +1,8 @@
 /**
  * form-with-steps controller — multi-step form wizard (foundation pattern of the Forms family).
  *
- * 5th Ring 3 controller (after password-strength + session-timeout-countdown
- * + back-to-top + product-tour).
+ * Ring 3 controller (multi-step form wizard — foundation pattern of the Forms family).
  *
- * Per the Forms family doctrine sealed at S3.3a-1 opening (cf. Form-WithSteps.md §1) :
  *  - Consumer-side validation only — kit dispatches `form-with-steps:before-next`
  *    (cancellable) before advancing ; consumer wires preventDefault if validation
  *    fails.
@@ -12,11 +10,11 @@
  *  - Cross-controller compose with Stepper Ring 2 via `data-controller="stepper
  *    form-with-steps"`. Stepper observes the same `currentStepValue` Stimulus value
  *    via shared data attribute.
- *  - Pure declarative consumer-driven `currentStep` (mirror OQ-mini-Stepper doctrine).
+ *  - Pure declarative consumer-driven `currentStep`.
  *
- * Class-field initial-fire guard (`_lastRenderedStep = null`) per S2.8 Stepper
- * doctrine — initialized at construction (BEFORE Stimulus callbacks fire) to
- * distinguish "initial fire vs real transition" without the `undefined`-vs-`null`
+ * Class-field initial-fire guard (`_lastRenderedStep = null`) — initialized at
+ * construction (BEFORE Stimulus callbacks fire) to distinguish "initial fire vs
+ * real transition" without the `undefined`-vs-`null`
  * strict-inequality trap.
  *
  * Events dispatched on `this.element` (all bubble + composed) :
@@ -39,7 +37,7 @@ export default class FormWithStepsController extends Controller {
   };
 
   // Class fields initialized at construction — runs BEFORE Stimulus callbacks fire,
-  // sidesteps the `undefined`-vs-`null` strict-inequality trap that bit S2.8 mid-Stepper.
+  // sidesteps the `undefined`-vs-`null` strict-inequality trap.
   _lastRenderedStep = null;
   _destroyed = false;
 

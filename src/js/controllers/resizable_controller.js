@@ -3,10 +3,10 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * resizable — 2-pane resizable container with pointer + keyboard drag handle.
  *
- * Per OQ-36 (sealed S2.4 opening): event-only persistence. The controller
- * dispatches `resizable:change` detail.{size, direction} on every drag
- * commit; the consumer chooses whether to persist (localStorage / cookie /
- * URL / no persistence). Cohérent kit doctrine "no implicit side effects".
+ * Event-only persistence. The controller dispatches `resizable:change`
+ * detail.{size, direction} on every drag commit; the consumer chooses whether
+ * to persist (localStorage / cookie / URL / no persistence). Kit doctrine:
+ * "no implicit side effects".
  *
  * Architecture:
  *   CSS Grid 2-pane layout with the start pane's size driven by a CSS
@@ -28,8 +28,8 @@ import { Controller } from '@hotwired/stimulus';
  *   - Home / End: snap to minSize / maxSize.
  *   - Enter: no-op (separator is not an action button).
  *
- * Per S1.4b descriptor-binding gotcha: tests call controller methods
- * directly (`ctrl._onPointerDown({...})`, `ctrl._onKeyDown({key: 'ArrowRight'})`).
+ * Tests call controller methods directly
+ * (`ctrl._onPointerDown({...})`, `ctrl._onKeyDown({key: 'ArrowRight'})`).
  *
  * Targets:
  *   handle (required) — the drag handle element.

@@ -13,10 +13,9 @@
  *      - per-hover background variants where they're paired with
  *        the same -foreground (danger-hover, primary-hover, …)
  *
- *  Ring 1 S1.1 expansion (Task #13 in STATE.md): the inline oklch →
- *  sRGB converter lets us assert every pair without adding a colour
- *  library dependency. The math follows Björn Ottosson's OkLab/OkLch
- *  formulae (public domain).
+ *  The inline oklch → sRGB converter lets us assert every pair without
+ *  adding a colour library dependency. The math follows Björn Ottosson's
+ *  OkLab/OkLch formulae (public domain).
  *
  *  Pairs that fail are reported with the exact ratio so a brand-preset
  *  audit can quickly see which combination needs an adjustment.
@@ -135,11 +134,10 @@ function resolveValueToHex(rawValue, themeMap) {
 //           component, the **color** is the state signal. Soft variants
 //           and neutral-text-on-bg keep the 4.5:1 bar.
 //
-// This per-pair classification was raised by Task #13 in S1.1 — the
-// solid pairs (white-on-mid-lightness brand colors) cleared 3:1 but
-// not 4.5:1. The user / project may decide via amend ADR to migrate to
-// stricter foregrounds (e.g. darker text inside Badge solid) — see the
-// Open question in STATE.md "Foreground contrast doctrine".
+// This per-pair classification covers solid pairs where the background
+// color is the semantic signal: solid pairs (white-on-mid-lightness brand
+// colors) clear 3:1 but not 4.5:1. The project may migrate to stricter
+// foregrounds (e.g. darker text inside Badge solid) if needed.
 const MATRIX = [
   // Brand — solid pairs at 3:1 (UI component); soft pairs at 4.5:1.
   { fg: '--color-primary-foreground', bg: '--color-primary', threshold: 3.0 },
@@ -154,10 +152,9 @@ const MATRIX = [
   { fg: '--color-warning-foreground', bg: '--color-warning', threshold: 4.5 }, // dark fg → meets 4.5
   { fg: '--color-danger-foreground', bg: '--color-danger', threshold: 3.0 },
   { fg: '--color-danger-foreground', bg: '--color-danger-hover', threshold: 3.0 },
-  // After ADR-0007 amend: light-mode `--color-info-foreground` is now dark
-  // text (symmetric with warning's amber-on-dark pattern), so the solid info
-  // chip clears the body-text 4.5:1 bar in both themes. Threshold raised
-  // from 3.0 → 4.5 and the prior `debt: true` flag dropped so any future
+  // light-mode `--color-info-foreground` is dark text (symmetric with
+  // warning's amber-on-dark pattern), so the solid info chip clears the
+  // body-text 4.5:1 bar in both themes. Threshold is 4.5 so any future
   // regression hard-fails CI instead of silently warning.
   { fg: '--color-info-foreground', bg: '--color-info', threshold: 4.5 },
   // Status — soft

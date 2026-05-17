@@ -10,14 +10,12 @@
   Esc dismiss requires JS — a minimal Stimulus controller `tooltip`
   (≈ 15 lines) stamps `data-state="dismissed"` on the wrapper when Esc
   fires inside it, suppressing the show until the user moves focus out
-  and back in. Per [13-accessibility-baseline.md §2] "Tooltip — Hover or
-  focus shows; Esc dismisses".
+  and back in ("Tooltip — Hover or focus shows; Esc dismisses").
 
-  Positioning is CSS-only (OQ-14 doctrine): 4 placements via
-  `data-placement` (top default | bottom | start | end). The caller is
-  responsible for ensuring the viewport edge doesn't clip the tooltip.
-  JS-positioned tooltips with viewport-collision detection live in the
-  Ring 2 Popover Compound (which can compose Tooltip).
+  Positioning is CSS-only: 4 placements via `data-placement` (top default |
+  bottom | start | end). The caller is responsible for ensuring the viewport
+  edge doesn't clip the tooltip. JS-positioned tooltips with viewport-collision
+  detection live in the Ring 2 Popover Compound (which can compose Tooltip).
 
   Parameters:
     label       (string, required)  — tooltip text content (already |trans'd)

@@ -1,14 +1,13 @@
 {#-
   Table — Pure-CSS HTML <table> structural primitive.
 
-  Foundation for DataTable (S2.4b) — DataTable composes the same `.cremona-table`
+  Foundation for DataTable — DataTable composes the same `.cremona-table`
   CSS classes via a Stimulus controller that generates rows reactively. This
   template covers the "static table" use case (Settings tables, audit logs,
   rendered server-side) AND exposes the structural classes for richer compounds.
 
-  Per OQ-34 doctrine (sealed S2.4 opening): vanilla implementation; no
-  Tabulator adapter at this layer. Per [13-accessibility-baseline.md §8]:
-  sortable th carries `aria-sort` (none|ascending|descending); selected
+  Vanilla implementation; no Tabulator adapter at this layer.
+  Sortable th carries `aria-sort` (none|ascending|descending); selected
   rows carry `aria-selected` + `data-selected` for CSS.
 
   Composes:

@@ -1,9 +1,9 @@
 /*
- * BackToTop — floating back-to-top button (Ring 3 S3.2).
+ * BackToTop — floating back-to-top button (Ring 3).
  *
  * Fixed bottom-end. Visible only when controller sets data-visible="true".
  *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
+ * Bundle budget : ~0.15 kB gzip.
  */
 
 .cremona-back-to-top {

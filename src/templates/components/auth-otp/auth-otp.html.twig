@@ -1,22 +1,21 @@
 {#-
-  Auth-OTP — 6-digit verification-code pattern (Ring 3 S3.1b).
+  Auth-OTP — 6-digit verification-code pattern (Ring 3).
 
-  Composes `_auth-shell` + InputOTP (Ring 2 S2.7 — verbatim, no new
-  controller) + Button × 1-3 (primary submit "Vérifier" + Resend link
-  + optional email-fallback link) + optional Alert (globalError) +
-  optional footer back-to-login.
+  Composes `_auth-shell` + InputOTP (Ring 2 — verbatim, no new controller)
+  + Button × 1-3 (primary submit "Vérifier" + Resend link + optional
+  email-fallback link) + optional Alert (globalError) + optional footer
+  back-to-login.
 
-  Pure server-rendered form (OQ-55). 0 new Stimulus controller — InputOTP
-  S2.7's `input-otp` controller handles paste auto-distribute + auto-tab +
-  iOS SMS auto-fill + backspace-on-empty.
+  Pure server-rendered form. 0 new Stimulus controller — the `input-otp`
+  controller handles paste auto-distribute + auto-tab + iOS SMS auto-fill
+  + backspace-on-empty.
 
   Consumer can hook `input-otp:complete` event on the form for auto-
   submit (typical pattern, 5-line consumer JS — defer to consumer).
 
-  Email-fallback opt-in (mini-OQ S3.1b) — when emailFallbackHref is set,
-  the kit renders a "Recevoir par email" link alongside Resend. Pure
-  static link, no JS. Useful when the consumer ships BOTH SMS-OTP and
-  email-OTP paths.
+  Email-fallback opt-in — when emailFallbackHref is set, the kit renders
+  a "Recevoir par email" link alongside Resend. Pure static link, no JS.
+  Useful when the consumer ships BOTH SMS-OTP and email-OTP paths.
 
   See `docs/specs/ring3/Auth-OTP.md` for full spec.
 -#}

@@ -11,8 +11,8 @@
     4. Scrollbar sizes — sm / md / lg side-by-side.
     5. Composed inside a Card — ScrollArea wrapping a long list of Items.
 
-  Per OQ-34 "natif d'abord" + pure-CSS design: 0 Stimulus, 0 ResizeObserver
-  at primitive layer. Custom-scrollbar visuals via ::-webkit-scrollbar +
+  Pure-CSS design: 0 Stimulus, 0 ResizeObserver at primitive layer.
+  Custom-scrollbar visuals via ::-webkit-scrollbar +
   Firefox-native scrollbar-* properties.
 -->
 <script setup>

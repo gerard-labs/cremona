@@ -3,8 +3,7 @@
 
   Parameters:
     name        (string, required) — icon basename without .svg; one of the 42 names listed
-                                     in src/assets/icons/README.md (S1.1 30-set + S4.1 12-set
-                                     extension per ADR-0038).
+                                     in src/assets/icons/README.md.
     label       (string, optional) — accessible name. Required when decorative=false; if both
                                      decorative=false AND label is empty, the icon falls back
                                      to aria-hidden to avoid an empty aria-label.
@@ -14,8 +13,7 @@
 
   RTL: icons in the bidi whitelist (arrow-*, chevron-*-horizontal, corner-down-left,
   send, log-out — 7 icons) auto-flip via the .cremona-icon-bidi class. The other 35 icons
-  stay identical (semantic, non-directional). Whitelist extended S4.1 via ADR-0038
-  (curated set 30 → 42 + bidi whitelist 5 → 7).
+  stay identical (semantic, non-directional).
 -#}
 
 {%- set name       = name       | default('') -%}
@@ -25,8 +23,7 @@
 {%- set className  = className  | default('') -%}
 
 {#- _bidiIcons : icons that flip horizontally in RTL via .cremona-icon-bidi class.
-    S1.1 sealed 5 icons (arrow-* / chevron-*-horizontal / corner-down-left).
-    S4.1 extends to 7 via ADR-0038 (send + log-out — both directional). -#}
+    7 directional icons: arrow-* / chevron-*-horizontal / corner-down-left / send / log-out. -#}
 {%- set _bidiIcons = ['arrow-left', 'arrow-right', 'chevron-left', 'chevron-right', 'corner-down-left', 'send', 'log-out'] -%}
 {%- set _isBidi    = name in _bidiIcons -%}
 {%- set _effectivelyDecorative = decorative or (label is empty) -%}

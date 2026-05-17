@@ -2,12 +2,12 @@
   Auth-Login story — 4 viewport variants (Light/Dark × LTR/RTL).
 
   Sections (6): default · with-server-flash · error-inline · rate-limited
-                · loading-submit · pre-fill + +30% FR + RTL.
+                · loading-submit · pre-fill.
 
-  Zero Stimulus controller — Auth-Login is a pure server-rendered form
-  (OQ-55 doctrine). The story manually mirrors the Twig template's output
-  via the renderAuthLogin() helper below (consistent with the Card / Empty
-  / Dialog story precedent).
+  Zero Stimulus controller — Auth-Login is a pure server-rendered form.
+  The story manually mirrors the Twig template's output via the
+  renderAuthLogin() helper below (consistent with the Card / Empty /
+  Dialog story precedent).
 
   See `docs/specs/ring3/Auth-Login.md` for the full state matrix.
 -->

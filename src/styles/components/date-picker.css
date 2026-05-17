@@ -2,7 +2,7 @@
  * DatePicker — Input-anchored single-date picker with Calendar popover.
  *
  * Composes :
- *   - .cremona-popover surface (border, shadow, motion — Ring 2 S2.1).
+ *   - .cremona-popover surface (border, shadow, motion — Ring 2).
  *   - .cremona-date-picker__input visually mirrors .cremona-input (same height,
  *     border, radius, focus ring) — the trigger LOOKS like an Input because
  *     semantically it IS an `<input role="combobox">`.

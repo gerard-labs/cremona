@@ -1,6 +1,6 @@
 /**
  * sonner-viewport.js — idempotent viewport DOM injector for the Sonner
- * compound (Ring 2 S2.5).
+ * compound (Ring 2).
  *
  * The Sonner toasts engine needs a single fixed-position <aside> at the
  * bottom-end of the viewport, with `data-controller="sonner"` so Stimulus

@@ -18,9 +18,9 @@
  *     as part of a form. The hidden input carries the value for form-data
  *     submission (form integration symmetry with NativeSelect).
  *
- * Per OQ-28 doctrine (sealed S2.3a opening): vanilla implementation,
- * no Tom Select adapter. For 200+ options or async-loading, the consumer
- * adopts Combobox (S2.3b) — same controller foundation + filterable input.
+ * Vanilla implementation, no Tom Select adapter. For 200+ options or
+ * async-loading, the consumer adopts Combobox — same controller foundation
+ * + filterable input.
  *
  * Logical CSS throughout — chevron sits at `inline-end`, check icon
  * (selected state indicator) at `inline-end` of the option row.

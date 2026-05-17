@@ -2,19 +2,19 @@
   NavigationMenu — Horizontal web-navigation menu. Wraps a Menubar in a
   <nav aria-label> landmark + signals identity via data-controller="navigation-menu".
 
-  Per OQ-33 (sealed S2.3b opening): submenu items use Item with `as: 'a'
-  href="..."` (real navigation destinations). aria-current="page" on the
-  active nav item — consumer stamps per the current URL.
+  Submenu items use Item with `as: 'a' href="..."` (real navigation
+  destinations). aria-current="page" on the active nav item — consumer
+  stamps per the current URL.
 
-  Per OQ-30 architecture (sealed S2.3a): per-submenu DropdownMenus (each
-  fully standalone) + a thin orchestrator (NavigationMenuController extends
-  MenubarController verbatim — same mechanics, different semantic shell).
+  Architecture: per-submenu DropdownMenus (each fully standalone) + a thin
+  orchestrator (NavigationMenuController extends MenubarController verbatim —
+  same mechanics, different semantic shell).
 
   Mega-menu (multi-column dropdown layout) is DEFERRED to Ring 3
-  `pattern:Nav-MegaMenu`. S2.3b ships simple-column dropdowns only.
+  `pattern:Nav-MegaMenu`. Simple-column dropdowns ship here.
 
   Composes:
-    - <nav aria-label="..."> landmark (per 13-a11y-baseline §13).
+    - <nav aria-label="..."> landmark (WCAG 4.1.2 / ARIA).
     - navigation-menu Stimulus controller (extends MenubarController).
     - N child DropdownMenu compounds (consumer-provided via {% block menus %}).
     - Submenu items: Item with `as: 'a' href`.
@@ -34,7 +34,7 @@
     menus (required) — N DropdownMenu embeds. Each child's trigger MUST stamp
                        `data-navigation-menu-target="trigger"` AND
                        `data-popover-target="trigger"`. Submenu items SHOULD
-                       use Item with `as: 'a' href="..."` (per OQ-33).
+                       use Item with `as: 'a' href="..."`.
 
   Usage example (3 nav menus):
 

@@ -4,7 +4,7 @@
   Sections (2): default · with-back-to-login
 
   Zero Stimulus controller — Auth-AccountLocked is a pure server-rendered
-  terminal page (OQ-55 doctrine). The story manually mirrors the Twig
+  terminal page. The story manually mirrors the Twig
   template's output via the renderAccountLocked() helper below.
 
   See `docs/specs/ring3/Auth-AccountLocked.md` for the full state matrix.

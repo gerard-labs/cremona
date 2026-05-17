@@ -4,15 +4,14 @@ import DropdownMenuController from './dropdown-menu_controller.js';
  * context-menu — DropdownMenu opened by `contextmenu` (right-click) at the
  * pointer coordinates instead of by clicking a visible trigger.
  *
- * Architecture (per Ring 2 S2.3 doctrine):
+ * Architecture:
  *   - Inherits DropdownMenuController for ALL menu mechanics: role="menu" +
  *     role="menuitem" stamping, roving tabindex, Arrow Up/Down (cyclic),
- *     Home/End, Enter/Space activate, close-on-item-click, focusout
- *     dismiss (OQ-27 from S2.2).
+ *     Home/End, Enter/Space activate, close-on-item-click, focusout dismiss.
  *   - Composes `popover` co-controller on the same wrap (data-controller=
  *     "popover dropdown-menu context-menu") for surface positioning +
  *     animation + Esc/click-outside dismiss — ZERO modification to the
- *     locked-in Popover code.
+ *     Popover code.
  *   - Adds: a `contextmenu` event listener on a configurable area (the
  *     wrap by default; `parent`, `window`, or a CSS selector also work).
  *     On fire: `event.preventDefault()` (suppresses the native browser
@@ -24,11 +23,10 @@ import DropdownMenuController from './dropdown-menu_controller.js';
  * Per WAI-ARIA APG: same keyboard / SR pattern as DropdownMenu (the user
  * doesn't perceive a difference except for the right-click trigger).
  *
- * Per S1.4b descriptor-binding gotcha (Collapsible §2 + ADR-0008): tests
- * call controller methods directly (`ctrl.openAt({clientX, clientY, ...})`)
+ * Tests call controller methods directly (`ctrl.openAt({clientX, clientY, ...})`)
  * rather than synthesising contextmenu events through descriptors.
  *
- * Trade-off documented in [ContextMenu.md §1]: by suppressing the native
+ * Trade-off: by suppressing the native
  * context menu in the area, we lose access to the browser's
  * back/forward/inspect entries inside that region. Standard for in-app
  * menus (Notion, Linear, Figma) — accepted.

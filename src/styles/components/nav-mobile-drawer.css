@@ -1,10 +1,8 @@
 /*
- * Nav-MobileDrawer — mobile slide-from-edge nav drawer (Ring 3 S3.2).
+ * Nav-MobileDrawer — mobile slide-from-edge nav drawer (Ring 3).
  *
  * Composes Drawer Ring 2. Visible only < 768 px (Nav-Header takes over above).
  * Cross-controller bridge with Nav-Header via matching id.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-nav-mobile-drawer {

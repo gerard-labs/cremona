@@ -4,7 +4,7 @@
  * Pure layout shell + trigger styling. The submenus themselves render via
  * each child DropdownMenu (their own CSS handles role="menu" content).
  *
- * Per OQ-30 (sealed S2.3a): per-submenu DropdownMenus + thin orchestrator.
+ * Architecture: per-submenu DropdownMenus + thin orchestrator.
  *
  * The `.cremona-menubar__trigger` class is the standard Menubar trigger
  * visual: compact ghost-style button with active-when-expanded state via

@@ -9,7 +9,7 @@ import { Controller } from '@hotwired/stimulus';
  *  - **Backspace on empty cell** — pressing Backspace on an empty cell
  *    moves focus to the previous cell + clears it (single press deletes
  *    the previous digit + lands focus on it).
- *  - **Paste auto-distribute** (OQ-41 sealed S2.7) — pasting a string
+ *  - **Paste auto-distribute** — pasting a string
  *    from the clipboard validates it's 4-8 digits then distributes one
  *    digit per cell starting from the first ; trailing cells are left
  *    empty if the pasted string is shorter than `length`. Non-numeric
@@ -20,16 +20,15 @@ import { Controller } from '@hotwired/stimulus';
  *  - **input-otp:change** — fires on every value change with detail.{code, complete}.
  *  - **input-otp:complete** — fires only when length === filled count.
  *
- * Per [13-a11y §10 Forms] : the consumer's Twig wraps the cluster in a
+ * The consumer's Twig wraps the cluster in a
  * `<fieldset>` + visible `<legend>`. Each cell carries an Intl-interpolated
  * `aria-label` ("Chiffre 3 sur 6") so SR reads which position the cursor
  * is on. The kit does not double-stamp `aria-labelledby` (the legend
  * already labels every cell via the implicit fieldset semantic).
  *
- * Per OQ-41 doctrine (sealed S2.7) : the kit ships paste auto-distribute
- * out-of-the-box ; no opt-in flag. Standard SaaS pattern (Stripe / Linear
- * / Vercel) — users expect to paste an OTP from email / clipboard and
- * have it just work.
+ * The kit ships paste auto-distribute out-of-the-box; no opt-in flag.
+ * Standard SaaS pattern (Stripe / Linear / Vercel) — users expect to paste
+ * an OTP from email / clipboard and have it just work.
  *
  * Targets :
  *   input        (multiple, required) — the N cell `<input>`s.

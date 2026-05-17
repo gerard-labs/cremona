@@ -1,24 +1,22 @@
 {#-
-  Auth-EmailVerification — terminal "check your email" pattern (Ring 3 S3.1b).
+  Auth-EmailVerification — terminal "check your email" pattern (Ring 3).
 
   Composes `_auth-shell` (title null — inner Empty owns the h1) + Empty
   (lg, h1, icon=check — see §1 Doctrine for icon-choice rationale) +
   Button × 1-2 (primary Resend + optional secondary Back-to-login).
 
-  Pure server-rendered terminal page (OQ-55). 0 Stimulus controller.
+  Pure server-rendered terminal page. 0 Stimulus controller.
   Typical entry point : post-Register flow (user signs up → consumer's
   auth back-end sends a verification email → redirects user here).
 
-  Microcopy : body verbatim from 12-microcopy §Auth §"Email sent" :
-    "Email envoyé. Vérifie ta boîte (et tes spams)."
+  Microcopy : body "Email envoyé. Vérifie ta boîte (et tes spams)."
 
   Icon choice : `check` (action-complete) instead of envelope/mail. The
-  Lucide curated 30-set sealed S1.1 does NOT include `mail.svg`. Pre-
-  existing S3.1 bug : Auth-Register + Auth-ForgotPassword success states
-  reference `icon: 'mail'` which would throw at render time. This pattern
-  uses the curated `check` substitut to ship a working integration.
-  Ring 3 lock-in ADR-NN+ should either add mail.svg to curated set OR
-  rewrite S3.1 templates. See spec §1 Doctrine + §Open trade-offs.
+  Lucide curated 30-set does NOT include `mail.svg`. Pre-existing bug :
+  Auth-Register + Auth-ForgotPassword success states reference `icon: 'mail'`
+  which would throw at render time. This pattern uses the curated `check`
+  substitut to ship a working integration. A future update should either add
+  mail.svg to curated set OR rewrite those templates.
 
   See `docs/specs/ring3/Auth-EmailVerification.md` for the full spec.
 -#}

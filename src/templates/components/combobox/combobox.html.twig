@@ -2,12 +2,11 @@
   Combobox — Search-as-you-type single-select listbox with an Input trigger
   + aria-autocomplete="list" (WAI-ARIA APG "Combobox with listbox popup").
 
-  ComboboxController extends SelectController (per OQ-32 sealed S2.3b). The
-  shared mechanics — aria-activedescendant nav, hidden input form integration,
-  selection on Enter/click — come from Select. Combobox adds: an Input
-  trigger, on-input filter logic, an inline empty state, results-count
-  announcement via the shared #cremona-announcer (per OQ-31), and tab-out
-  dismiss (mirror DropdownMenu OQ-27).
+  ComboboxController extends SelectController. The shared mechanics —
+  aria-activedescendant nav, hidden input form integration, selection on
+  Enter/click — come from Select. Combobox adds: an Input trigger, on-input
+  filter logic, an inline empty state, results-count announcement via the
+  shared #cremona-announcer, and tab-out dismiss (mirrors DropdownMenu).
 
   Composes:
     - Popover (positioning + dismiss).
@@ -15,10 +14,10 @@
     - Item visual envelope for each option (.cremona-item).
     - Input visual envelope for the trigger (.cremona-input mirror).
 
-  Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter. For
-  async-loading / virtual-scroll / multi-select, a Phase 4 ADR can revisit.
+  Vanilla implementation, no Tom Select adapter. For async-loading /
+  virtual-scroll / multi-select, a future phase can revisit.
 
-  Per OQ-31: empty state inline in listbox; shared #cremona-announcer carries
+  Empty state inline in listbox; shared #cremona-announcer carries
   results count via aria-live="polite".
 
   Parameters:
@@ -29,9 +28,8 @@
                                                           The input.value will display the
                                                           matching option's label.
     placeholder (string,  optional, recommended)        — text shown in the
-                                                          empty <input>. Per
-                                                          12-microcopy-tone §"Empty states":
-                                                          invitation-style
+                                                          empty <input>. Use
+                                                          invitation-style phrasing
                                                           ("Rechercher une langue…").
     placement   (string,  optional)                     — Floating UI placement
                                                           (default 'bottom-start').

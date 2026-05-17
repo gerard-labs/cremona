@@ -5,9 +5,9 @@
                 · composition-with-card · long-content.
 
   Doctrine:
-    - Custom <button aria-expanded> + sibling content (OQ-16 — native <details>
+    - Custom <button aria-expanded> + sibling content (native <details>
       doesn't animate without JS interception).
-    - Animation: grid-template-rows: 0fr → 1fr (CSS-only, 14-motion-baseline §6).
+    - Animation: grid-template-rows: 0fr → 1fr (CSS-only).
     - Controller `collapsible` ~25 lines effective — flips aria-expanded +
       data-state, dispatches `collapsible:toggle`. Accordion (next primitive)
       composes N Collapsible and listens for bubble.

@@ -1,12 +1,11 @@
 /*
- * Search-Results — search results list (Ring 3 S3.3b-2).
+ * Search-Results — search results list (Ring 3).
  *
  * Pure composition Item Ring 1 list. No controller. Consumer provides
  * the results array via Twig + handles row click (each row is an
  * `<a href>` or `<button>` Item per consumer choice).
  *
- * Bundle budget : ~0.20 kB gzip (per ADR-0031 Path X corrected baseline
- * for thin marker class).
+ * Bundle budget : ~0.20 kB gzip (thin marker class).
  */
 
 .cremona-search-results {

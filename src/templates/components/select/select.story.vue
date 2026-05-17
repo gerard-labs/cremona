@@ -9,7 +9,7 @@
     5. In a Field (with label + help).
 
   Stimulus controllers `popover` + `select` co-mounted on each wrap.
-  Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter.
+  Vanilla implementation, no Tom Select adapter.
   WAI-ARIA APG "Listbox (Collapsible)" — aria-activedescendant pattern.
 -->
 <script setup>

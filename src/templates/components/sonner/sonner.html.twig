@@ -1,5 +1,5 @@
 {#-
-  Sonner — toast viewport markup (Ring 2 S2.5).
+  Sonner — toast viewport markup (Ring 2).
 
   This template renders the viewport `<aside>` that the SonnerController
   manages at runtime. In normal Stimulus boot (`boot()` from
@@ -26,9 +26,9 @@
   the SonnerController at runtime (`window.themeToast.show({...})` or
   `document.dispatchEvent(new CustomEvent('theme:toast:show', {...}))`).
 
-  Per [12-microcopy-tone.md §Toasts] the variant/duration defaults are
-  baked into the controller (success 4s, success+undo 10s, info ∞,
-  warning 6s, danger ∞). Consumers override per-call via the JS API.
+  Variant/duration defaults are baked into the controller (success 4s,
+  success+undo 10s, info ∞, warning 6s, danger ∞). Consumers override
+  per-call via the JS API.
 
   Microcopy keys used by the controller:
     - theme.sonner.aria.viewport    — landmark aria-label
@@ -39,8 +39,8 @@
     - theme.sonner.default-undo-label — fallback when consumer's
       `undoLabel` is absent
 
-  Doctrine (per Sonner spec §3, §7):
-    - role: native <aside> with aria-label (landmark per 13-a11y §13).
+  Doctrine:
+    - role: native <aside> with aria-label (landmark).
     - Per-toast role auto-derives from variant — set by the controller
       (success/info/warning → <output> with implicit role="status" +
       aria-live="polite" ; danger → <div role="alert"> assertive).

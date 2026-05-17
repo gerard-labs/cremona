@@ -2,11 +2,11 @@
   _error-shell — centered viewport-min-height layout shell for Error patterns.
 
   Composed by Error-{404,403,401,500,503,Maintenance,Offline,RateLimited,
-  BrowserUnsupported,ComingSoon} (Ring 3 S3.1c) and every future error-like
+  BrowserUnsupported,ComingSoon} (Ring 3) and every future error-like
   page that needs the same centered-viewport layout.
 
   Composition pattern — Twig {% embed %} with blocks (mirror `_auth-shell`
-  verbatim per S3.1 doctrine cascade):
+  verbatim):
 
     {% embed '@cremona/components/_error-shell/_error-shell.html.twig' with {
       variant: 'default',                  # default | hero
@@ -55,15 +55,13 @@
     - <main> landmark — the error screen is the page's primary content.
     - The inner Empty primitive (Ring 1) carries the <h1> + region landmark
       (role="region" + aria-labelledby pointing at the h1 id).
-    - Per [13-a11y §13 Landmarks] : one <main> per page ; this shell IS the
-      page's primary content (errors are full-page).
-    - Per [13-a11y §12 Heading hierarchy] : Empty.titleLevel='h1' for page-
-      level error pages (lg size + h1).
-    - Per [13-a11y §11 Images/icons] : hero SVG inside the content block
-      should be aria-hidden=true (Empty's `__illustration` wrapper enforces
-      this automatically).
-    - Per [13-a11y §17 Cognitive] : every error names the situation + proposes
-      an action via the Empty body + actions slots (no dead-ends).
+    - One <main> per page ; this shell IS the page's primary content
+      (errors are full-page).
+    - Empty.titleLevel='h1' for page-level error pages (lg size + h1).
+    - Hero SVG inside the content block should be aria-hidden=true
+      (Empty's `__illustration` wrapper enforces this automatically).
+    - Every error names the situation + proposes an action via the Empty
+      body + actions slots (no dead-ends).
 -#}
 
 {%- set htmlId      = htmlId      | default('cremona-error-shell-' ~ random()) -%}

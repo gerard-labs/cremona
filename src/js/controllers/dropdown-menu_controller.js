@@ -35,8 +35,7 @@ import { Controller } from '@hotwired/stimulus';
  *   5. Focus first item on open — listens for `popover:open` and moves
  *      focus + roving to the first non-disabled item.
  *
- * Per S1.4b descriptor-binding gotcha (Collapsible §2 + ADR-0008): tests
- * call controller methods directly (`ctrl.keydown({key:'ArrowDown', ...})`)
+ * Tests call controller methods directly (`ctrl.keydown({key:'ArrowDown', ...})`)
  * rather than synthesising keydown events through Stimulus's descriptors.
  */
 export default class DropdownMenuController extends Controller {
@@ -44,11 +43,10 @@ export default class DropdownMenuController extends Controller {
     this._initRoles();
     this._initRovingTabindex();
     this.element.addEventListener('popover:open', this._onPopoverOpen);
-    // Tab-out dismiss (OQ-27 — sealed S2.2 opening). When focus leaves the
-    // wrap (relatedTarget outside this.element), close the popover via
-    // cross-controller lookup. WCAG SC 2.4.7 focus-management; prevents
-    // an "aria-expanded=true while focus is gone" inconsistency that
-    // Menubar / NavigationMenu (Ring 2 future) would otherwise inherit.
+    // Tab-out dismiss. When focus leaves the wrap (relatedTarget outside
+    // this.element), close the popover via cross-controller lookup.
+    // WCAG SC 2.4.7 focus-management; prevents an "aria-expanded=true
+    // while focus is gone" inconsistency.
     this.element.addEventListener('focusout', this._onFocusOut);
   }
 

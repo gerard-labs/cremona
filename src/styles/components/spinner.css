@@ -4,8 +4,8 @@
  * `currentColor` propagates the arc color; the inverted variant flips
  * to primary-foreground for placement on a primary-colored surface.
  *
- * Reduced-motion: slows the rotation to 3s (per 14-motion-baseline.md
- * §Loading spinner). We intentionally don't freeze the animation — a
+ * Reduced-motion: slows the rotation to 3s (Loading spinner). We
+ * intentionally don't freeze the animation — a
  * frozen partial arc reads as a broken-looking line; slowing keeps the
  * "loading" affordance while respecting vestibular sensitivity.
  */

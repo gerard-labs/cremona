@@ -1,11 +1,11 @@
 {#-
-  RolesMatrix — Ring 3 pattern (S4.1c Phase 3, added post-Ring-3-lock-in per ADR-0042).
+  RolesMatrix — Ring 3 pattern.
 
   Role-matrix UX composing Table layout (rows × cols intersection) + per-cell
   Badge default + Combobox lazy-instantiated on cell click (edit mode).
 
-  Per OQ-NEW-S4.1c-Team-Roles-Matrix-perf-strategy sealed (c) : ~200× perf
-  gain by lazy-mounting Combobox only on cell click (vs 200 Combobox at mount).
+  Performance: ~200× gain by lazy-mounting Combobox only on cell click
+  (vs mounting 200 Combobox instances at mount time).
 
   Parameters: htmlId, caption, members, permissions, cells, roles, bulkEdit, className.
 -#}

@@ -6,7 +6,7 @@ import { Controller } from '@hotwired/stimulus';
  * Responsibilities:
  *   1. `toggle()` — flips aria-expanded on the trigger AND data-state on the
  *      content wrapper (open/closed). The CSS handles the visual animation
- *      via grid-template-rows: 0fr ↔ 1fr (14-motion-baseline §6).
+ *      via grid-template-rows: 0fr ↔ 1fr.
  *   2. `toggle()` dispatches `collapsible:toggle` (bubbles + composed) with
  *      `detail = { open: boolean }`. Accordion (the orchestrator) listens
  *      for this event to enforce single-mode mutex.

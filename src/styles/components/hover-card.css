@@ -11,7 +11,7 @@
  * The wrap inherits .cremona-popover's `display: inline-block` so the
  * trigger sits inline with surrounding text (typical mention-link pattern).
  *
- * Per OQ-29: NO new motion token — the open/close delays (400 ms / 200 ms)
+ * NO new motion token — the open/close delays (400 ms / 200 ms)
  * are JS-side timeouts in the hover-card controller, NOT CSS timing
  * (CSS handles the visual fade via Popover's existing motion-base /
  * motion-fast). The total user-perceived delay is timer + animation.

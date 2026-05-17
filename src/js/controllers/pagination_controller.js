@@ -6,8 +6,8 @@ import { t } from '../utils/i18n.js';
  *
  * Composes 4 native <button> elements (first/prev/next/last) + an inline
  * NativeSelect for page-size + an aria-live range label ("1-25 sur 142
- * éléments"). Per OQ-35 (sealed S2.4 opening): page-size selector inline,
- * NO separate compound — Pagination IS the natural surface for this control.
+ * éléments"). Page-size selector inline, NO separate compound — Pagination
+ * IS the natural surface for this control.
  *
  * Per WAI-ARIA APG "Pagination":
  *   - role="navigation" + aria-label on the wrap (consumer-stamped via Twig).
@@ -26,8 +26,7 @@ import { t } from '../utils/i18n.js';
  * "preserve current row range" can compute it themselves via the dispatched
  * detail and call the action method `goToPage(newPage)`.
  *
- * Per S1.4b descriptor-binding gotcha: tests call controller methods
- * directly (`ctrl.next()`, `ctrl.changePageSize({...})`).
+ * Tests call controller methods directly (`ctrl.next()`, `ctrl.changePageSize({...})`).
  *
  * Targets:
  *   firstButton, prevButton, nextButton, lastButton (required) — the 4

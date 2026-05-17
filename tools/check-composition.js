@@ -2,9 +2,9 @@
 /**
  * tools/check-composition.js — primitive composition contract gate.
  *
- * Enforces ADR-0058: a component template MUST consume any other kit
- * component via {% include %} / {% embed %} — never by reproducing that
- * component's ROOT class inline.
+ * A component template MUST consume any other kit component via
+ * {% include %} / {% embed %} — never by reproducing that component's
+ * ROOT class inline.
  *
  * Detection model:
  *  - Each component dir <c> under src/templates/components/ owns the
@@ -20,16 +20,16 @@
  *  - Whole-token matching: `cremona-button-group` is its own token, never
  *    confused with `cremona-button`.
  *
- * Transitional baseline (ADR-0058 §2): tools/check-composition.allow.txt
+ * Allowlist: tools/check-composition.allow.txt
  *  - one repo-relative path per line (`#` comments allowed);
- *  - violation in a baselined file → notice; in a fresh file → FAIL;
- *  - baselined file now clean → FAIL ("stale — remove it"): shrink-only.
+ *  - violation in an allowlisted file → notice; in a fresh file → FAIL;
+ *  - allowlisted file now clean → FAIL ("stale — remove it"): shrink-only.
  *
  * Usage:
  *  node tools/check-composition.js                   # the gate (CI)
  *  node tools/check-composition.js --write-baseline  # one-time bootstrap
  *
- * Exit 0 on success, 1 on any hard violation. Ran in CI per .gitlab-ci.yml.
+ * Exit 0 on success, 1 on any hard violation. Ran in CI per .github/workflows/ci.yml.
  */
 
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -84,7 +84,7 @@ const CLASS_ATTR = /class\s*=\s*("([^"]*)"|'([^']*)')/g;
 const CLASS_TOKEN =
   /cremona-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?/g;
 
-// --- baseline --------------------------------------------------------------
+// --- allowlist --------------------------------------------------------------
 const baseline =
   !writeBaseline && existsSync(BASELINE_FILE)
     ? new Set(
@@ -130,7 +130,7 @@ for (const file of twigFiles) {
 if (writeBaseline) {
   const files = [...new Set(hard.map((v) => v.split(' — ')[0].replace(/:\d+$/, '')))].sort();
   const header =
-    '# check-composition.allow.txt — ADR-0058 transitional baseline.\n' +
+    '# check-composition.allow.txt — composition contract allowlist.\n' +
     '# Files with pre-existing inline-reproduction violations, grandfathered\n' +
     '# until remediated. This list can only SHRINK; delete the file when empty.\n' +
     '# Bootstrap only: node tools/check-composition.js --write-baseline\n';
@@ -172,7 +172,7 @@ if (stale.length) {
 if (!failed) {
   console.log(
     baseline.size
-      ? `[check-composition] OK — no new violations. ${baseline.size} file(s) still in the ADR-0058 transitional baseline.`
+      ? `[check-composition] OK — no new violations. ${baseline.size} file(s) still in the allowlist.`
       : '[check-composition] OK — composition contract clean, kit-wide.',
   );
 }

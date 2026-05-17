@@ -1,15 +1,9 @@
 /**
- * phone-input controller — Form-PhoneInput (Ring 3 S3.3a-2).
+ * phone-input controller — Form-PhoneInput (Ring 3).
  *
- * 11th Ring 3 controller (after password-strength + session-timeout-countdown
- * + back-to-top + product-tour + form-with-steps + address-autocomplete +
- * form-date-range + color-picker + signature-pad + tag-input).
- *
- * Lazy-loads intl-tel-input v25.x on first focus event per
- * ADR-0022. Mirror
- * ADR-0018 lazy-on-first-keystroke
- * variant verbatim — first-focus saves the ~25 kB chunk for users who land
- * on a form with a phone field but never reach it via Tab.
+ * Lazy-loads intl-tel-input v25.x on first focus event. First-focus saves
+ * the ~25 kB chunk for users who land on a form with a phone field but
+ * never reach it via Tab.
  *
  * Surface :
  *   data-controller="phone-input"

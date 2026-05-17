@@ -12,8 +12,8 @@ import MenubarController from './menubar_controller.js';
  *   1. The whole structure is wrapped in a `<nav aria-label="...">` landmark
  *      (per [13-accessibility-baseline §13 Landmarks](../../13-accessibility-baseline.md))
  *      so AT users can jump straight to the navigation region.
- *   2. Submenu items use Item with `as: 'a' href="..."` (per OQ-33 sealed
- *      S2.3b opening) instead of `as: 'div'` (Menubar's DropdownMenu doctrine).
+ *   2. Submenu items use Item with `as: 'a' href="..."` instead of `as: 'div'`
+ *      (Menubar's DropdownMenu doctrine).
  *      Rationale: NavigationMenu items are typically real navigation
  *      destinations (URLs) — `<a href>` preserves middle-click open-in-new-tab,
  *      right-click open-in-new-window, scraper-followable links, and SR's
@@ -22,8 +22,8 @@ import MenubarController from './menubar_controller.js';
  *      stamps this at server render time per the request's current URL.
  *   4. Mega-menu support (multi-column grid layout inside dropdown) is
  *      DEFERRED to Ring 3 `pattern:Nav-MegaMenu` (which composes NavigationMenu
- *      with a custom dropdown content layout). S2.3b ships simple-column
- *      dropdowns only.
+ *      with a custom dropdown content layout). Simple-column dropdowns only
+ *      at this stage.
  *
  * The controller exists for identifier symmetry — consumers mount
  * `data-controller="navigation-menu"` to signal the compound's identity
@@ -31,15 +31,14 @@ import MenubarController from './menubar_controller.js';
  * inherited verbatim from MenubarController. Stimulus's static targets +
  * values inherit unchanged via the ES prototype chain.
  *
- * Note on `<a href>` triggers (not submenu items — the TOP-LEVEL nav
- * items): for the case where a consumer wants a direct nav link at the
- * menubar level (no submenu), they can place an `<a href>` outside the
- * NavigationMenu wrap. NavigationMenu's controller assumes every
- * `data-menubar-target="trigger"` is a button that opens a submenu (matches
- * Menubar's contract). Mixing direct-link top-level items with submenu
- * triggers would require an `is-link` discriminator — out of scope for
- * S2.3b; defer to a Ring 3 amend if real demand emerges.
+ * Note on `<a href>` triggers (not submenu items — the TOP-LEVEL nav items):
+ * for the case where a consumer wants a direct nav link at the menubar level
+ * (no submenu), they can place an `<a href>` outside the NavigationMenu wrap.
+ * NavigationMenu's controller assumes every `data-menubar-target="trigger"` is
+ * a button that opens a submenu (matches Menubar's contract). Mixing
+ * direct-link top-level items with submenu triggers would require an `is-link`
+ * discriminator — out of scope; defer to a Ring 3 amend if real demand emerges.
  *
- * Per S1.4b descriptor-binding gotcha: tests call controller methods directly.
+ * Tests call controller methods directly.
  */
 export default class NavigationMenuController extends MenubarController {}

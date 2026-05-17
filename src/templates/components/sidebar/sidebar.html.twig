@@ -1,11 +1,11 @@
 {#-
   Sidebar — vertical application navigation with collapsible icon-only mode.
 
-  Per OQ-44 (sealed S2.8 opening) : event-only persistence — the controller
-  dispatches `sidebar:collapse-change` ; consumer owns persistence.
+  Event-only persistence — the controller dispatches `sidebar:collapse-change` ;
+  consumer owns persistence.
 
-  Per OQ-26 (sealed S2.2) : mobile mode is consumer-owned composition —
-  wrap the same nav inside a Sheet (data-controller="sheet" data-edge="start").
+  Mobile mode is consumer-owned composition — wrap the same nav inside a
+  Sheet (data-controller="sheet" data-edge="start").
 
   Composes the `sidebar` Stimulus controller (collapse toggle + DOM sync +
   dispatch). Items are [Item](../item/item.html.twig) primitives (Ring 1).
@@ -37,7 +37,7 @@
     mobileSheet    (bool,    optional) — when true, stamps `data-mobile-sheet`
                                           on the <aside> to opt-in to the
                                           always-visible behavior inside a
-                                          consumer's Sheet (per OQ-26).
+                                          consumer's Sheet.
                                           Defaults to false.
     className      (string,  optional)
 

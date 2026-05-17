@@ -1,13 +1,13 @@
 /*
- * Search-FacetedFilters — facet filter panel (Ring 3 S3.3b-2).
+ * Search-FacetedFilters — facet filter panel (Ring 3).
  *
  * Composes Checkbox Ring 1 (multi-select facets), optional Slider Ring 1
  * (range facets), optional Popover Ring 2 (mobile filter chips).
- * Controller : faceted-filters (16th Ring 3, thin) — aggregates input
- * changes into a single state object + dispatches faceted-filters:change.
+ * Controller : faceted-filters (thin) — aggregates input changes into a
+ * single state object + dispatches faceted-filters:change.
  *
- * Bundle budget : ~0.25 kB gzip (per ADR-0031 Path X corrected baseline
- * for thin pattern + slight overhead for facet group layout).
+ * Bundle budget : ~0.25 kB gzip (thin pattern + slight overhead for facet
+ * group layout).
  */
 
 .cremona-search-faceted-filters {

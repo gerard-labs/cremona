@@ -5,7 +5,7 @@
     1. Destructive confirm (danger — default tone)
     2. Warning (archive, cancel order — primary confirm)
     3. Info (mark as complete — primary confirm)
-    4. Multi-consequence (counts of lost items per 12-microcopy)
+    4. Multi-consequence (counts of lost items)
     5. Events log (alias for dialog:open / dialog:close)
 
   AlertDialog reuses the dialog Stimulus controller — no new JS. The

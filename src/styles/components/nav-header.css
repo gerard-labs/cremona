@@ -1,17 +1,15 @@
 /*
- * Nav-Header — page-level top navigation pattern (Ring 3 S3.2).
+ * Nav-Header — page-level top navigation pattern (Ring 3).
  *
  * Foundation pattern for the Nav family. Composes NavigationMenu Ring 2
  * + brand block + utility cluster. Responsive pivot at 768 px (Tailwind
- * md — same OQ-26 doctrine as Drawer / Sheet).
+ * md — same doctrine as Drawer / Sheet).
  *
  * Heavy lifting :
  *   - flex row layout with brand → nav → utility ordering
  *   - sticky variant (`.cremona-nav-header--sticky`) sets position:sticky + shadow
  *     appearance on scroll
  *   - mobile breakpoint < 768 px hides the primary nav + reveals hamburger
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-nav-header {
@@ -71,7 +69,7 @@
   min-inline-size: 44px;
 }
 
-/* Responsive pivot at 768 px (Tailwind md) — OQ-26 doctrine carry. */
+/* Responsive pivot at 768 px (Tailwind md). */
 @media (width <= 767.98px) {
   .cremona-nav-header__nav {
     display: none;

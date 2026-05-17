@@ -1,10 +1,8 @@
 /*
- * Nav-SidebarApp — app-level vertical nav (Ring 3 S3.2).
+ * Nav-SidebarApp — app-level vertical nav (Ring 3).
  *
  * 3-zone : workspace header + nav sections (flex-grow) + user footer.
  * Collapsed mode shrinks to 56 px icons-only. Hidden < 768 px.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-nav-sidebar-app {

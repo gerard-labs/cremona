@@ -1,14 +1,13 @@
 {#-
-  Error-RateLimited — "Too many requests" page (Ring 3 S3.1c).
+  Error-RateLimited — "Too many requests" page (Ring 3).
 
   Composes _error-shell (default) + Empty (lg, h1) + Icon `alert-triangle`
-  (substitut per OQ-57b — visual: warning, too fast) + Button × 1 (primary
-  "Réessayer").
+  (visual: warning, too fast) + Button × 1 (primary "Réessayer").
 
   The body's `{minutes}` placeholder is consumer-interpolated via `t()`
   params on each render. Live countdown (Intl.RelativeTimeFormat →
-  `rate-limit-countdown` controller ~30 lines) is deferred per S3.1
-  trade-off log — see [STATE.md §"Trade-offs documented in S3.1"](../STATE.md).
+  `rate-limit-countdown` controller ~30 lines) is deferred — the simpler
+  static message is preferred for maintainability.
 
   See `docs/specs/ring3/Error-404.md` §1 for shared Errors family doctrine.
 -#}

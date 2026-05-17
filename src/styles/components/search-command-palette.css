@@ -1,12 +1,12 @@
 /*
- * Search-CommandPalette — global ⌘K command palette wrapper (Ring 3 S3.3b-2).
+ * Search-CommandPalette — global ⌘K command palette wrapper (Ring 3).
  *
  * Pure composition Command Ring 2 with search-themed defaults + optional
  * consumer-provided launcher button (typically in the app header).
  * NO controller — Command Ring 2 already ships its own (dialog+combobox+command).
  *
- * Bundle budget : ~0.20 kB gzip (per ADR-0031 Path X corrected baseline
- * for thin pattern — marker class + launcher button styling only).
+ * Bundle budget : ~0.20 kB gzip (thin pattern — marker class + launcher
+ * button styling only).
  */
 
 .cremona-search-command-palette {

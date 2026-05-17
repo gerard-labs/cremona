@@ -1,18 +1,12 @@
 /**
- * lang-switcher controller — LangSwitcher (Ring 3 S3.3b-1).
- *
- * 12th Ring 3 controller (after password-strength + session-timeout-countdown
- * + back-to-top + product-tour + form-with-steps + address-autocomplete +
- * form-date-range + color-picker + signature-pad + tag-input + phone-input).
+ * lang-switcher controller — LangSwitcher (Ring 3).
  *
  * Thin controller (~50 lines effective) — composes DropdownMenu Ring 2 +
  * dispatches `lang-switcher:change` event + persists selection to
  * localStorage. Consumer wires actual page reload OR client-side i18n
  * locale flip on the change event.
  *
- * No lazy lib load — pattern is pure composition + thin event/persistence
- * logic. Mirror back-to-top controller precedent (the closest thin-controller
- * template).
+ * No lazy lib load — pattern is pure composition + thin event/persistence logic.
  *
  * Surface :
  *   data-controller="popover dropdown-menu lang-switcher"
@@ -37,8 +31,7 @@ export default class LangSwitcherController extends Controller {
     storageKey: { type: String, default: 'theme.locale' },
   };
 
-  // Class-field initial-fire guards (S2.8 doctrine — initialized BEFORE
-  // Stimulus callbacks fire).
+  // Class-field initial-fire guards (initialized BEFORE Stimulus callbacks fire).
   _destroyed = false;
   _previousLocale = null;
 

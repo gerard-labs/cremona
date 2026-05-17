@@ -1,13 +1,10 @@
 /*
- * Nav-MegaMenu — multi-column dropdown panel (Ring 3 S3.2).
+ * Nav-MegaMenu — multi-column dropdown panel (Ring 3).
  *
- * Per Nav-Header.md §1 doctrine. Composes NavigationMenu Ring 2 trigger
- * + Popover-positioned panel via lazy-loaded Floating UI (ADR-0011).
+ * Composes NavigationMenu Ring 2 trigger + Popover-positioned panel via
+ * lazy-loaded Floating UI.
  *
  * Width strategy : contained (max 1280 px — Notion-style) or full (100vw).
- * Mini-OQ sealed S3.2 opening.
- *
- * Bundle budget : ~0.15 kB gzip (per ADR-0021 §"Family budgets").
  */
 
 .cremona-nav-mega-menu {

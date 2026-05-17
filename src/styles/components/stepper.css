@@ -1,10 +1,9 @@
 /*
  * Stepper — step-by-step progress indicator (declarative).
  *
- * Per the mini-OQ Stepper resolution sealed at S2.8 opening :
- *  - Pure declarative — consumer drives `currentStep` via the controller value.
- *  - Each step paints its own indicator state based on `data-state` attribute
- *    set by the controller (`completed` / `current` / `upcoming` / `disabled`).
+ * Pure declarative — consumer drives `currentStep` via the controller value.
+ * Each step paints its own indicator state based on `data-state` attribute
+ * set by the controller (`completed` / `current` / `upcoming` / `disabled`).
  *
  * Anatomy :
  *   <ol class="cremona-stepper" data-orientation="horizontal" data-size="md">

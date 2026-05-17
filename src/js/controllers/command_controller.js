@@ -1,14 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
 
 /**
- * command — ⌘K Command palette (Ring 2 S2.9 heavyweight).
+ * command — ⌘K Command palette (Ring 2).
  *
- * Per OQ-47 (sealed S2.9 opening per manifest `thirdPartyLibs.search-on-keys.
- * ninja-keys = rejected` — "custom Command palette built on Stimulus is
- * preferred for theme cohesion") :
- *  - **Vanilla custom** — no ninja-keys adapter.
+ * Vanilla custom implementation — no ninja-keys adapter.
  *  - **Cross-controller compose** via `data-controller="dialog combobox command"`
- *    on the same wrap (mirror DatePicker S2.7 cross-controller lookup verbatim).
+ *    on the same wrap (mirrors DatePicker cross-controller lookup).
  *  - **⌘K / Ctrl+K global hotkey** (window-scoped) opens the palette.
  *  - **Grouped results** rendered as Twig-level `<li role="presentation">`
  *    section headers between options ; controller doesn't manage groups.
@@ -22,7 +19,7 @@ import { Controller } from '@hotwired/stimulus';
  *     listbox + option semantics + aria-activedescendant.
  *   - Kbd — footer hint render (consumer-Twig).
  *
- * Stimulus value-changed guard pattern (S2.8 class-field) :
+ * Stimulus value-changed guard pattern :
  *  - `_lastSelectedId = null` initialized BEFORE Stimulus callbacks fire ;
  *    sidesteps the undefined-vs-null trap on selection idempotency.
  *

@@ -1,16 +1,12 @@
 /**
- * sortable_controller.js — Ring 4 PM domain — 10e lazy adapter cascade.
+ * sortable_controller.js — Ring 4 PM domain.
  *
- * Wraps Sortable.js v1.15.x with the kit's lazy-on-mount discipline per
- * ADR-0045 (mirror ADR-0023 Tagify verbatim). The ~12 kB Sortable.js chunk
- * is fetched lazily on first connect ; the drag-handle affordance becomes
- * functional within ~5-200 ms. Keyboard reorder (Space grab + Arrow keys +
- * Escape) is wired SYNC and works even before the lazy chunk arrives —
- * preserves a11y for screen-reader + keyboard-only users.
- *
- * Lazy adapter cascade : 10e after Floating UI / ApexCharts / FilePond /
- * zxcvbn-ts / driver.js / intl-tel-input / Tagify / signature_pad / Coloris.
- * Lazy-on-mount variant — 5e use after FilePond / Chart / Tagify / driver.js.
+ * Wraps Sortable.js v1.15.x with the kit's lazy-on-mount discipline. The
+ * ~12 kB Sortable.js chunk is fetched lazily on first connect ; the
+ * drag-handle affordance becomes functional within ~5-200 ms. Keyboard
+ * reorder (Space grab + Arrow keys + Escape) is wired SYNC and works even
+ * before the lazy chunk arrives — preserves a11y for screen-reader +
+ * keyboard-only users.
  *
  * Events emitted (bubbles + composed) :
  *   sortable:mount         — detail.{ group, itemCount }       on connect()

@@ -3,8 +3,8 @@
  * Rules kept deliberately small: anti-drift defaults + Stimulus-friendly
  * globals. Tighten per ring as patterns emerge.
  *
- * NOTE: no @hotwired/stimulus-eslint-plugin — not published as of 2026
- * (see ADR-0006 §Open questions). Reassess at Ring 1 lock-in.
+ * NOTE: no @hotwired/stimulus-eslint-plugin — not published as of 2026.
+ * Reassess when Ring 1 patterns stabilize.
  */
 
 import js from '@eslint/js';

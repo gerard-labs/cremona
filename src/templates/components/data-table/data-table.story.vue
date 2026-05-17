@@ -6,9 +6,8 @@
        column-visibility trigger + Pagination footer. Verifies the canonical
        happy path.
     2. Column visibility menu open — same data, demonstrating column-vis
-       interaction. (User opens the menu in dev; we ship the closed state
-       in the baseline.)
-    3. Per-column filter row (OQ-38) — 3 columns with filterType='text';
+       interaction.
+    3. Per-column filter row — 3 columns with filterType='text';
        1 filter pre-filled to demonstrate filter-active state.
     4. Empty state — filtered no-results. Renders the Empty primitive inside
        <tr><td colspan="N"> with a "Effacer les filtres" CTA.
@@ -18,14 +17,14 @@
     6. Events log — wired to ALL 5 emitted events (sort/selection/column-vis/
        bulk-action/filter).
 
-  Per S2.3a/b/S2.4a story doctrine (nested template-literal avoidance):
-    Helpers `S(key)`, `nextId(prefix)`, `nativeSelect(...)`, `pagination(...)`,
+  Helpers (nested template-literal avoidance):
+    `S(key)`, `nextId(prefix)`, `nativeSelect(...)`, `pagination(...)`,
     `checkbox(...)`, `sortableHeader(...)`, `nonSortableHeader(...)`,
     `dataTable(...)`. Each takes a config object and returns an HTML string.
 
-  Per OQ-34 (vanilla), OQ-37 (single-col sort default + opt-in multi-col),
-  OQ-38 (text Input filter default), OQ-39 (AlertDialog for bulk-destructive,
-  Sonner Toast-Undo deferred to S2.5+).
+  Vanilla implementation. Single-col sort default (opt-in multi-col).
+  Text Input filter default. AlertDialog for bulk-destructive; Sonner
+  Toast-Undo deferred to a future phase.
 -->
 <script setup>
 import frDict from '../../../js/i18n/fr.json';

@@ -15,19 +15,17 @@ import { Controller } from '@hotwired/stimulus';
  *      id). Different from DropdownMenu's roving tabindex — but the
  *      listbox pattern is the WAI-ARIA APG canonical for selection
  *      surfaces, AND it pre-pares Combobox (which mandates this pattern)
- *      to land in S2.3b without re-architecture.
+ *      without re-architecture.
  *   3. ArrowDown/Up + Home/End + Enter/Space + typeahead-friendly stub
- *      (typeahead implementation deferred — placeholder for amend).
+ *      (typeahead implementation deferred — placeholder for future enhancement).
  *   4. Hidden <input type="hidden" name="..."> for form integration.
  *      The select's value flows into form-data on submit, indistinguishable
  *      from <select>.
  *
- * Per OQ-28 doctrine: vanilla implementation, no Tom Select adapter in
- * S2.3a. Combobox (S2.3b) uses the same controller as foundation +
- * adds the search-as-you-type filter.
+ * Vanilla implementation, no Tom Select adapter. Combobox (Ring 2) uses the
+ * same controller as foundation + adds the search-as-you-type filter.
  *
- * Per S1.4b descriptor-binding gotcha (Collapsible §2 + ADR-0008): tests
- * call controller methods directly (`ctrl.keydown({key, ...})`).
+ * Tests call controller methods directly (`ctrl.keydown({key, ...})`).
  *
  * Targets:
  *   button       (required) — the visible trigger button (looks like Input).

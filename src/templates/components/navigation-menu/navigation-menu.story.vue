@@ -8,8 +8,8 @@
     4. Cascading-open demo (same as Menubar — inherited mechanics).
     5. Brand + nav + actions (composition example with NavigationMenu at center).
 
-  Per OQ-30: per-submenu DropdownMenus + thin orchestrator (inherited from
-  MenubarController). Per OQ-33: submenu items use Item with `as: 'a' href`.
+  Architecture: per-submenu DropdownMenus + thin orchestrator (inherited from
+  MenubarController). Submenu items use Item with `as: 'a' href`.
 
   Stimulus controllers `popover` + `dropdown-menu` co-mounted on each submenu
   wrap; `navigation-menu` mounted on the inner .cremona-menubar (the <nav> shell

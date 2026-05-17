@@ -1,8 +1,8 @@
 /*
  * Resizable — 2-pane resizable container with drag handle.
  *
- * Per OQ-36 (sealed S2.4 opening): event-only persistence — the kit
- * dispatches resizable:change ; the consumer persists.
+ * Event-only persistence — the kit dispatches resizable:change ; the consumer
+ * persists.
  *
  * Architecture: CSS Grid 2-pane layout. The `--cremona-resizable-size` custom
  * property (set by the controller) drives the start pane's main-axis size.

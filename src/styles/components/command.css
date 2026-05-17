@@ -1,10 +1,9 @@
 /*
- * Command — ⌘K Command palette (Ring 2 S2.9 heavyweight).
+ * Command — ⌘K Command palette (Ring 2).
  *
- * Per OQ-47 (sealed S2.9) :
- *  - Vanilla custom (no ninja-keys per manifest reject).
+ *  - Vanilla custom (no third-party ninja-keys dependency).
  *  - Cross-controller compose via data-controller="dialog combobox command"
- *    on the SAME wrap (mirror DatePicker S2.7 pattern verbatim).
+ *    on the SAME wrap (mirrors DatePicker cross-controller pattern).
  *
  * Anatomy :
  *   <div class="cremona-command" data-controller="dialog combobox command">

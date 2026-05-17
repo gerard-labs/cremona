@@ -1,5 +1,5 @@
 /*
- * Auth-Login — login pattern (Ring 3 S3.1).
+ * Auth-Login — login pattern (Ring 3).
  *
  * Composes _auth-shell (layout) + Ring 1 primitives (Field / Input / Button /
  * Checkbox / Alert). This file only adds the inline-axis row that pairs the

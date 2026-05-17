@@ -1,11 +1,11 @@
 {#-
   Form-TagInput — chip-style tag input (Tagify lazy ~12 kB).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) is the composition keystone.
-    - Tagify library lazy-loaded on mount per ADR-0023 (7e cascade) — chip
+    - Tagify library lazy-loaded on mount (7e cascade) — chip
       affordance must render immediately (first-focus deferral would jank).
-    - Plurals via Intl.PluralRules per 15-i18n-and-rtl §Plurals.
+    - Plurals via Intl.PluralRules.
 
   Parameters:
     htmlId         (string,  optional) — auto-generated.

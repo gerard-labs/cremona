@@ -1,14 +1,13 @@
 /*
  * Sidebar — vertical application navigation with collapsible icon-only mode.
  *
- * Per OQ-44 (sealed S2.8 opening) : event-only persistence — the controller
- * dispatches `sidebar:collapse-change` on every toggle ; consumer owns
- * persistance (localStorage / cookie / URL / no persist).
+ * Event-only persistence — the controller dispatches `sidebar:collapse-change`
+ * on every toggle ; consumer owns persistance (localStorage / cookie / URL /
+ * no persist).
  *
- * Per OQ-26 (sealed S2.2) : mobile mode at < 768 px is consumer-owned —
- * the desktop `<aside>` is `display: none` under 768 px ; consumer wraps
- * the same nav inside a Sheet (data-controller="sheet" data-edge="start")
- * for the hamburger-driven drawer.
+ * Mobile mode at < 768 px is consumer-owned — the desktop `<aside>` is
+ * `display: none` under 768 px ; consumer wraps the same nav inside a Sheet
+ * (data-controller="sheet" data-edge="start") for the hamburger-driven drawer.
  *
  * Per WAI-ARIA :
  *  - `<aside>` landmark with `aria-label`.

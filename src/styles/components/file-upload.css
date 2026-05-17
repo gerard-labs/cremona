@@ -1,9 +1,9 @@
 /*
- * FileUpload — Drop zone + multi-file + preview + progress + cancel (Ring 2 S2.9).
+ * FileUpload — Drop zone + multi-file + preview + progress + cancel (Ring 2).
  *
- * Per [ADR-0013] : FilePond v4.x lazy-loaded via dynamic import mirror
- * [ADR-0011] verbatim. The native <input type="file"> always works ; the
- * FilePond enhancement is progressive (5-200 ms first-mount delay).
+ * FilePond v4.x lazy-loaded via dynamic import. The native <input type="file">
+ * always works ; the FilePond enhancement is progressive (5-200 ms first-mount
+ * delay).
  *
  * The kit themes FilePond via CSS custom prop overrides on the wrap. The
  * full FilePond CSS is lazy-loaded together with the JS chunk (FilePond

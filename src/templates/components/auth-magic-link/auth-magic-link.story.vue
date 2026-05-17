@@ -4,7 +4,7 @@
   Sections (2): default · with-back-and-custom-expiration
 
   Zero Stimulus controller — Auth-MagicLink is a pure server-rendered
-  terminal page (OQ-55). Mirrors Auth-EmailVerification structure.
+  terminal page. Mirrors Auth-EmailVerification structure.
 
   Icon : `check` curated-set substitut. Tinted via the `.cremona-auth-magic-link`
   marker class to `--color-primary` (vs success for EmailVerification).

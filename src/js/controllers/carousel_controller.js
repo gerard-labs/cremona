@@ -3,14 +3,14 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * carousel — slide carousel with optional autoplay + touch swipe + keyboard nav.
  *
- * Per OQ-43 (sealed S2.8 opening) :
+ * Autoplay behavior :
  *  - **Autoplay OFF by default**, opt-in via `data-carousel-autoplay-interval-
  *    value=<ms>`. Pause-on-pointerenter + pause-on-focuswithin obligatoires.
  *    Skip autoplay sous `prefers-reduced-motion: reduce` via
  *    `window.matchMedia` check at `connect()` time.
  *  - **Loop direction** : back-to-first after the last slide (Stripe / Vercel /
- *    Notion pattern — mini-OQ-43a sealed). Configurable via
- *    `loop: false` to opt-out (rebound at last / first ; no cyclic).
+ *    Notion pattern). Configurable via `loop: false` to opt-out
+ *    (rebound at last / first ; no cyclic).
  *  - **Pause button visible when autoplay active** (WCAG SC 2.2.2
  *    Pause/Stop/Hide). The consumer's Twig template renders the autoplay
  *    toggle button if it passes an `autoplayInterval` ; the kit's
@@ -31,7 +31,7 @@ import { Controller } from '@hotwired/stimulus';
  *    retreat. Otherwise no-op (no drag preview animation — keeps controller
  *    surface tight).
  *
- * Stimulus value-changed guard pattern (S2.8 Stepper class-field) :
+ * Stimulus value-changed guard pattern :
  *  - `_lastRenderedSlide` class field initialized to `null` BEFORE Stimulus
  *    callbacks fire. `currentSlideValueChanged` skips spurious initial-fire.
  *
@@ -84,7 +84,7 @@ export default class CarouselController extends Controller {
       this.viewportTarget.addEventListener('pointerup', this._onPointerUp);
       this.viewportTarget.addEventListener('pointercancel', this._onPointerCancel);
     }
-    // Auto-pause autoplay on pointerenter + focusin (per OQ-43 doctrine).
+    // Auto-pause autoplay on pointerenter + focusin.
     this._onPointerEnter = () => this._pauseAutoplayTransient();
     this._onPointerLeave = () => this._resumeAutoplayTransient();
     this._onFocusIn = () => this._pauseAutoplayTransient();

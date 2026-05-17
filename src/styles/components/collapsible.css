@@ -1,7 +1,7 @@
 /*
  * Collapsible — show/hide disclosure region.
  *
- * Animation doctrine (OQ-16, 14-motion-baseline §6):
+ * Animation doctrine :
  *   The content's `display: grid` with `grid-template-rows: 0fr → 1fr`
  *   transition is the canonical CSS-only height animation. The inner child
  *   carries `overflow: hidden` so content clips during the transition.

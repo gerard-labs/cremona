@@ -1,7 +1,7 @@
 /*
- * ActivityFeed — time-bucketed activity stream (Ring 3 S3.2).
+ * ActivityFeed — time-bucketed activity stream (Ring 3).
  *
- * Bundle budget : ~0.2 kB gzip (per ADR-0021 §"Family budgets").
+ * Bundle budget : ~0.2 kB gzip.
  */
 
 .cremona-activity-feed {

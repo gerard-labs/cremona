@@ -16,7 +16,7 @@ import { Controller } from '@hotwired/stimulus';
  * Disabled buttons short-circuit at the browser level (click event never
  * fires on a `disabled` <button>) — no need to check here.
  *
- * Used as the base for ToggleGroup (S1.3 #5) which orchestrates N Toggles
+ * Used as the base for ToggleGroup which orchestrates N Toggles
  * with arrow-key navigation + mutex / multi selection modes.
  */
 export default class ToggleController extends Controller {

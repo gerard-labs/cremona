@@ -3,7 +3,6 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * stepper — step-by-step progress indicator (declarative, consumer-driven).
  *
- * Per the mini-OQ Stepper resolution sealed at S2.8 opening :
  *  **Pure declarative — consumer drives `currentStep` via the value attribute.**
  *  The controller computes derived per-step state (completed / current /
  *  upcoming) + stamps `aria-current="step"` on the current step + emits
@@ -12,10 +11,8 @@ import { Controller } from '@hotwired/stimulus';
  *  Stimulus controller listens to validation events and increments
  *  `currentStep` after each step passes).
  *
- *  Cohérent kit doctrine "no implicit side effects" + "consumer owns state"
- *  (mirror S2.6 NumberInput — controller doesn't dispatch a custom event
- *  beyond the change ; mirror S2.4a Resizable — controller doesn't persist
- *  size to localStorage).
+ *  Kit doctrine "no implicit side effects" + "consumer owns state" :
+ *  controller doesn't persist size to localStorage.
  *
  * Per WAI-ARIA :
  *  - `<ol>` for ordered list semantics (linear flow).
@@ -25,7 +22,7 @@ import { Controller } from '@hotwired/stimulus';
  *    description carries the accessible name. Completed step paints a
  *    check-mark icon in the indicator (decorative).
  *
- * Stimulus value-changed guard pattern (S2.7 Calendar discovery) :
+ * Stimulus value-changed guard pattern :
  *  - `currentStepValueChanged` fires BEFORE `connect()` with `previous = null`
  *    (not `undefined`). The defensive `if (this._lastRenderedStep === value)
  *    return` cache prevents double-render + spurious dispatch on initial fire.
@@ -57,8 +54,7 @@ export default class StepperController extends Controller {
   // runs first, then Stimulus reads values + invokes `currentStepValueChanged`
   // BEFORE `connect()`). Null sentinel lets the value-changed callback detect
   // "first fire vs real transition" — the `undefined`-vs-`null` strict
-  // inequality trap (S2.8 mid-Stepper bug-fix) is sidestepped by class-field
-  // init. Mirror the S2.7 Calendar guard pattern, hardened.
+  // inequality trap is sidestepped by class-field init.
   _lastRenderedStep = null;
 
   connect() {

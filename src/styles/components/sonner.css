@@ -1,5 +1,5 @@
 /*
- * Sonner — toast queue engine (Ring 2 S2.5).
+ * Sonner — toast queue engine (Ring 2).
  *
  * The viewport is a single fixed-position <aside> at bottom-end, injected
  * once into <body> by SonnerController on first connect (idempotent).
@@ -7,22 +7,19 @@
  *
  * Per-toast visual envelope reuses Alert primitive's soft-tone vocabulary
  * (--color-{success,info,warning,danger}-soft + soft-foreground + border).
- * No new tokens introduced in S2.5.
  *
  * Doctrine:
  *   - role="status" (native <output>) for polite variants (success/info/
  *     warning) → implicit aria-live="polite" + aria-atomic="true".
  *   - role="alert" (<div>) for danger → implicit aria-live="assertive".
- *     Mirrors Alert.md §"Alert role auto-derives from variant" sealed in
- *     ADR-0008.
+ *     Mirrors Alert.md §"Alert role auto-derives from variant".
  *   - Enter: translateY(100%) + opacity 0 → translateY(0) + opacity 1
- *     over --motion-duration-base emphasized (per 14-motion §4 Toast
- *     appear).
+ *     over --motion-duration-base emphasized (Toast appear).
  *   - Exit: opacity 1 → 0 + translateY(0) → translateY(8px) over
  *     --motion-duration-fast accelerate. Short translate (8px) signals
  *     "settling out" without feeling thrown away.
- *   - transitionend opacity filter for DOM cleanup (alert-dismiss S1.4b
- *     pattern verbatim).
+ *   - transitionend opacity filter for DOM cleanup (alert-dismiss pattern
+ *     verbatim).
  *   - Reduced-motion: skip translateY (opacity-only fade). Browser still
  *     fires transitionend at 0.01 ms so the controller's removal step
  *     still runs.
@@ -32,7 +29,7 @@
  *     additions so toasts clear iOS home indicator / Android nav bar.
  *   - inline-size capped at 420px on desktop, shrinks on narrow viewport.
  *   - flex column-reverse so new toasts enter at the visual bottom (closest
- *     to thumb-zone on mobile per 09-design-lenses §L14).
+ *     to thumb-zone on mobile).
  *
  * Touch hardening: Undo + dismiss-x buttons inherit ≥44px tap zone from
  * the Button primitive ghost variant.

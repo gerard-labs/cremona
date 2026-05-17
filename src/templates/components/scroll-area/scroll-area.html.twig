@@ -11,13 +11,13 @@
   `<html dir="rtl">` — no kit code needed. Logical CSS (`overflow-inline`,
   `overflow-block`) provides the axis abstraction.
 
-  Per OQ-34 doctrine "natif d'abord" sealed S2.4 opening — no library
-  adapter (OverlayScrollbars / SimpleBar deferred to a future amend ADR if
-  cross-browser scrollbar styling drift surfaces).
+  Doctrine "natif d'abord" — no library adapter (OverlayScrollbars /
+  SimpleBar deferred to a future amend if cross-browser scrollbar styling
+  drift surfaces).
 
   Composes (no explicit deps): used as a wrap around any tall/wide content.
-  DataTable (S2.4b) will compose ScrollArea around its `<table>` when the
-  consumer's data exceeds the viewport's inline-size.
+  DataTable will compose ScrollArea around its `<table>` when the consumer's
+  data exceeds the viewport's inline-size.
 
   Parameters:
     htmlId          (string,  optional) — auto-generated.

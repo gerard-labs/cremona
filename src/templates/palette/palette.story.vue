@@ -6,12 +6,10 @@
   the kit exposes. Used by Playwright to baseline the kit's vocabulary
   before Ring 1 introduces the first component.
 
-  Q3 option B materialized: this SFC merely WIRES the story metadata
-  (`<Story>` / `<Variant>` globals from plugin-vue) and injects a pure-HTML
-  body via `v-html`. There is no real Vue componentry — Vue is dev-only
-  Histoire infrastructure. The kit's runtime (theme.js) carries Stimulus.
-  See ADR-0006 §Amends (clarifies ADR-0005 .story.html → .story.vue with
-  innerHTML-equivalent body).
+  This SFC merely WIRES the story metadata (`<Story>` / `<Variant>` globals
+  from plugin-vue) and injects a pure-HTML body via `v-html`. There is no
+  real Vue componentry — Vue is dev-only Histoire infrastructure. The kit's
+  runtime (cremona.js) carries Stimulus.
 -->
 <script setup>
 import frDict from '../../js/i18n/fr.json';

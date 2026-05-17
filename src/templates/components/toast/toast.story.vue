@@ -1,5 +1,5 @@
 <!--
-  Toast story — focused JS API demo (Ring 2 S2.5).
+  Toast story — focused JS API demo (Ring 2).
 
   Toast is the consumer-facing surface ; Sonner is the engine. This
   story emphasizes the JS API call pattern (`window.themeToast.show`)

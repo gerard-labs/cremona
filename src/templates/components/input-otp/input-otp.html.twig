@@ -6,15 +6,15 @@
   `input-otp` Stimulus controller wires :
    - auto-tab to the next cell on input
    - backspace-on-empty moves focus to the previous cell + clears it
-   - paste auto-distribute (OQ-41 sealed S2.7) — pasting N digits from the
-     clipboard fills the first N cells
+   - paste auto-distribute — pasting N digits from the clipboard fills the
+     first N cells
    - aggregated `value` (concatenated digits) mirrored on an optional
      hidden input for form integration
    - `input-otp:change` (every change) + `input-otp:complete` (when all
      cells filled) custom events
 
-  ARIA semantics : `<fieldset>` + `<legend>` is the canonical group wrap
-  per [13-a11y §10 Forms]. Each cell carries an Intl-interpolated
+  ARIA semantics : `<fieldset>` + `<legend>` is the canonical group wrap.
+  Each cell carries an Intl-interpolated
   `aria-label` ("Chiffre 3 sur 6") computed via the consumer's i18n on
   initial render. `inputmode="numeric"` triggers the numeric keyboard on
   iOS / Android ; `autocomplete="one-time-code"` enables iOS SMS-OTP

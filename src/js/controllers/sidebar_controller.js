@@ -3,17 +3,14 @@ import { Controller } from '@hotwired/stimulus';
 /**
  * sidebar — vertical application navigation with collapsible icon-only mode.
  *
- * Per OQ-44 (sealed S2.8 opening) :
  *  - **Event-only persistence** : the controller dispatches
  *    `sidebar:collapse-change` detail.{collapsed} on every toggle ; the
  *    consumer chooses persistance (localStorage / cookie / URL / no persist).
- *  - Cohérent kit doctrine "no implicit side effects" — mirror OQ-36
- *    Resizable, Combobox / Select / Tabs / Stepper dispatch patterns. A
- *    `theme.sidebar.collapsed` localStorage helper utility opens later as a
- *    candidate Ring 3+ if real demand surfaces.
+ *  - Kit doctrine "no implicit side effects" — mirrors Resizable, Combobox /
+ *    Select / Tabs / Stepper dispatch patterns.
  *
- * Per OQ-26 (sealed S2.2, Sheet) : mobile mode at < 768 px is consumer-owned
- *  composition — the Sidebar's content is wrapped inside a Sheet
+ *  Mobile mode at < 768 px is consumer-owned composition — the Sidebar's
+ *  content is wrapped inside a Sheet
  *  (`data-controller="sheet" data-sheet-edge-value="start"`) for the
  *  hamburger-driven drawer. The Sidebar controller itself does NOT inspect
  *  `window.matchMedia` — keeps the responsibility surface clean and the
@@ -41,8 +38,7 @@ import { Controller } from '@hotwired/stimulus';
  * Events emitted (raw CustomEvent) :
  *   sidebar:collapse-change — bubbles + composed. detail = { collapsed:
  *                             boolean }. Fires AFTER the transition
- *                             (NOT on initial render — class-field guard
- *                             per S2.8 mid-Stepper bug-fix pattern).
+ *                             (NOT on initial render — class-field guard).
  */
 export default class SidebarController extends Controller {
   static targets = ['collapseToggle'];
@@ -53,7 +49,7 @@ export default class SidebarController extends Controller {
 
   // Class field initialized BEFORE any Stimulus callback fires.
   // Null sentinel lets `collapsedValueChanged` detect initial-fire vs real
-  // transition. Mirror S2.8 Stepper guard pattern.
+  // transition. Mirror Stepper guard pattern.
   _lastRenderedCollapsed = null;
 
   connect() {

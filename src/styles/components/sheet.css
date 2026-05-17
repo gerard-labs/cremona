@@ -1,12 +1,12 @@
 /*
  * Sheet — responsive variant of Drawer.
  *
- * Per Ring 2 S2.2 OQ-26 doctrine (sealed S2.2 opening): the responsive
- * pivot lives at 768 px (Tailwind `md` breakpoint, the canonical device
- * boundary for tablet portrait). Above 768 px, Sheet behaves like Drawer
- * with the consumer-configured `data-edge`. At and below 767.98 px, the
- * mobile media query overrides all edges to bottom-sheet semantics —
- * the side-drawer becomes a bottom-sheet automatically.
+ * The responsive pivot lives at 768 px (Tailwind `md` breakpoint, the
+ * canonical device boundary for tablet portrait). Above 768 px, Sheet
+ * behaves like Drawer with the consumer-configured `data-edge`. At and
+ * below 767.98 px, the mobile media query overrides all edges to
+ * bottom-sheet semantics — the side-drawer becomes a bottom-sheet
+ * automatically.
  *
  * Inheritance from Drawer: Sheet shares the modal envelope (background,
  * shadow, border, motion). The .cremona-sheet base class duplicates Drawer's
@@ -208,10 +208,10 @@
 
 /* ----- Mobile override (< 768 px) — force bottom-sheet semantics -- */
 /*
- * Per OQ-26 doctrine (sealed S2.2 opening): at and below 767.98 px,
- * the sheet becomes a bottom-sheet REGARDLESS of the configured
- * data-edge. The consumer's edge prop is preserved (still reported in
- * the sheet:open event detail.edge), but the visual is responsive.
+ * At and below 767.98 px, the sheet becomes a bottom-sheet REGARDLESS of
+ * the configured data-edge. The consumer's edge prop is preserved (still
+ * reported in the sheet:open event detail.edge), but the visual is
+ * responsive.
  *
  * The selectors below match all 4 edge values so the mobile override
  * always wins via source-order in the cascade (same specificity, later

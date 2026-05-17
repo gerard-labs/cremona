@@ -1,12 +1,11 @@
 {#-
   Form-DateRange — date range pair (start + end) (sibling Form pattern).
 
-  Per the user-validated S3.3a-1 opening decision : compose 2 DatePicker Ring 2
-  pure (no Ring 2 amend per ADR-0015 immutability). The form-date-range controller
+  Composes 2 DatePicker Ring 2 instances. The form-date-range controller
   listens to date-picker:select events from both children + cross-field validates
   (start ≤ end).
 
-  Per Forms family doctrine (Form-WithSteps.md §1) :
+  Forms family pattern:
     - Field primitive (Ring 1) carries label + help + error display.
     - Cross-controller compose : data-controller="form-date-range" on the wrap.
 
