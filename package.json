@@ -46,7 +46,8 @@
     "lint:manifest": "node tools/check-manifest.js",
     "lint:tokens": "node tools/check-tokens.js",
     "lint:composition": "node tools/check-composition.js",
-    "format": "prettier --write 'src/**/*.{js,css,md}'"
+    "format": "prettier --write 'src/**/*.{js,css,md}'",
+    "skill:catalog": "node tools/gen-skill-catalog.js"
   },
   "dependencies": {
     "apexcharts": "^4.5.0",

@@ -33,6 +33,7 @@ layer powers light/dark themes, three density modes, and full RTL support.
 - [Design tokens & theming](#design-tokens--theming)
 - [Internationalization & RTL](#internationalization--rtl)
 - [Component catalog](#component-catalog)
+- [AI agents & Claude Code](#ai-agents--claude-code)
 - [Project layout](#project-layout)
 - [Development](#development)
 - [Browser support](#browser-support)
@@ -301,6 +302,35 @@ so the base bundle stays small.
 
 ---
 
+## AI agents & Claude Code
+
+Cremona ships a **Claude Code skill** at
+[`.claude/skills/cremona-ui/`](./.claude/skills/cremona-ui/). Its job: make any
+AI coding agent reach for Cremona's components *first* — surveying what the kit
+already provides before hand-writing HTML/CSS — so it never reinvents a button,
+a dialog, or a whole auth page the kit already ships.
+
+The skill is two files:
+
+- **`SKILL.md`** — the workflow an agent follows for every UI element: look it
+  up, reuse it, compose it, or (last resort) create it. Its `description` is
+  written so the agent loads the skill automatically whenever it builds or
+  edits any page, view, or component.
+- **`catalog.md`** — the generated inventory of all 124 components (slug,
+  one-line purpose, whether it carries a Stimulus controller), grouped by ring.
+
+**Working inside this repo** — Claude Code discovers the skill automatically;
+nothing to set up.
+
+**Using Cremona in another project** — copy the `.claude/skills/cremona-ui/`
+folder into that project's `.claude/` directory. Agents working there will then
+default to Cremona for UI work instead of writing markup from scratch.
+
+`catalog.md` is generated — after adding or removing a component, run
+`pnpm skill:catalog` to refresh it.
+
+---
+
 ## Project layout
 
 ```
@@ -346,6 +376,7 @@ theme/
 | `pnpm test:visual`     | Visual-regression screenshots (Playwright) |
 | `pnpm lint`            | All 7 lint gates (see below) |
 | `pnpm format`          | Prettier write |
+| `pnpm skill:catalog`   | Regenerate the AI-agent skill catalog ([AI agents](#ai-agents--claude-code)) |
 
 ### Quality gates
 
